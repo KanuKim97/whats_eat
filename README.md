@@ -1,2 +1,2 @@
 # WhatsEatApp
- What;s Eat? Kotlin Application
+ What's Eat? Kotlin Application
