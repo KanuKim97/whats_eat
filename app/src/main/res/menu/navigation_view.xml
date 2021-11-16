@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home">
+        <menu>
+            <item
+                android:id="@+id/menuHome"
+                android:title="Home"/>
+        </menu>
+    </item>
+
+
+    <item android:title="Profile">
+        <menu>
+            <item
+                android:id="@+id/menuProfile"
+                android:title="Profile"/>
+        </menu>
+    </item>
+
+
+    <item android:title="Maps">
+        <menu>
+            <item
+                android:id="@+id/menuMaps"
+                android:title="Maps"/>
+        </menu>
+    </item>
+
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/menuSetting"
+                android:title="Setting" />
+
+            <item
+                android:id="@+id/menuSignOut"
+                android:title="Sign Out"
+                android:onClick="signOut"/>
+
+        </menu>
+    </item>
+
+</menu>

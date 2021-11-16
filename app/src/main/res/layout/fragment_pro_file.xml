@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".proFile">
+
+    <LinearLayout
+        android:id="@+id/profileFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:padding="20dp"
+            android:background="#403E3E" >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="75dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/imgHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/nameTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_toRightOf="@+id/CardView"
+                android:layout_toEndOf="@+id/CardView"
+                android:text="Example"
+                android:textSize="25sp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/emailTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toRightOf="@+id/CardView"
+                android:layout_toEndOf="@+id/CardView"
+                android:includeFontPadding="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/nameTxt"
+                android:text="User@Example.com"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_marginTop="-100dp" >
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardElevation="10dp"
+                app:cardBackgroundColor="#403E3E" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_rate"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:id="@+id/profile_rate_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="5 Star"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:includeFontPadding="false" />
+
+                    <TextView
+                        android:id="@+id/profile_rate_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_rate_num"
+                        android:layout_centerHorizontal="true"
+                        android:text="collection"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:includeFontPadding="false" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardElevation="10dp"
+                app:cardBackgroundColor="#403E3E" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_reply"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:id="@+id/profile_comment_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="10 Comment"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:includeFontPadding="false" />
+
+                    <TextView
+                        android:id="@+id/profile_comment_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_comment_num"
+                        android:layout_centerHorizontal="true"
+                        android:text="Comment"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:includeFontPadding="false" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"/>
+            <Button
+                android:id="@+id/updateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update User Account"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="#000" />
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Delete User Account"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="#000"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
