@@ -25,5 +25,11 @@
         tools:layout="@layout/fragment_collection"
         />
 
+    <fragment
+        android:id="@+id/menuMaps"
+        android:name="com.example.whats_eat.Maps"
+        android:label="fragment_Maps"
+        android:layout="@layout/fragment_maps"
+        />
 
 </navigation>
