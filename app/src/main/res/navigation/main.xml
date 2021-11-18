@@ -18,4 +18,12 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_pro_file" />
 
+    <fragment
+        android:id="@+id/menuCollection"
+        android:name="com.example.whats_eat.collection"
+        android:label="fragment_collection"
+        tools:layout="@layout/fragment_collection"
+        />
+
+
 </navigation>

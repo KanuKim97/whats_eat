@@ -53,6 +53,7 @@ class proFile : Fragment() {
             currentUser.delete()
                 .addOnCompleteListener {
                     if(it.isSuccessful){
+                        database.getReference("userInfo").child(currentUser.uid).removeValue()
                         startActivity(Intent(this.context, logIn::class.java))
                     }
                 }
