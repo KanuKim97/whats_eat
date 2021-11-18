@@ -6,6 +6,7 @@
         <menu>
             <item
                 android:id="@+id/menuHome"
+                android:icon="@drawable/ic_home"
                 android:title="Home"/>
         </menu>
     </item>
@@ -15,7 +16,14 @@
         <menu>
             <item
                 android:id="@+id/menuProfile"
+                android:icon="@drawable/ic_profile"
                 android:title="Profile"/>
+
+            <item
+                android:id="@+id/menuCollection"
+                android:icon="@drawable/ic_collection"
+                android:title="Collection"/>
+
         </menu>
     </item>
 
@@ -24,6 +32,7 @@
         <menu>
             <item
                 android:id="@+id/menuMaps"
+                android:icon="@drawable/ic_map"
                 android:title="Maps"/>
         </menu>
     </item>
@@ -33,10 +42,12 @@
         <menu>
             <item
                 android:id="@+id/menuSetting"
+                android:icon="@drawable/ic_settings"
                 android:title="Setting" />
 
             <item
                 android:id="@+id/menuSignOut"
+                android:icon="@drawable/ic_signout"
                 android:title="Sign Out"
                 android:onClick="signOut"/>
 

@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.whats_eat.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
