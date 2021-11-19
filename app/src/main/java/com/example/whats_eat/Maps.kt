@@ -31,7 +31,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.util.jar.Manifest
 
 class Maps : Fragment() {
-    private lateinit var mMap : GoogleMap
+    private var mMap : GoogleMap? = null
 
     private var latitude : Double = 0.toDouble()
     private var longitude : Double = 0.toDouble()
@@ -43,6 +43,7 @@ class Maps : Fragment() {
     lateinit var locationRequest: com.google.android.gms.location.LocationRequest
     lateinit var locationCallback: LocationCallback
 
+
     companion object{
         private const val MY_PERMISSION_CODE : Int = 1000
     }
@@ -51,9 +52,10 @@ class Maps : Fragment() {
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
-        mMap.isMyLocationEnabled = true
+        mMap!!.isMyLocationEnabled = true
+        mMap!!.uiSettings.isZoomControlsEnabled=true
 
-        mMap.uiSettings.isZoomControlsEnabled=true
+
     }
 
     override fun onCreateView(inflater: LayoutInflater,
