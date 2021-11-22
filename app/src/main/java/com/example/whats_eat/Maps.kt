@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,14 +21,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.*
 import java.util.jar.Manifest
 
 class Maps : Fragment() {
@@ -54,8 +52,6 @@ class Maps : Fragment() {
         mMap = googleMap
         mMap!!.isMyLocationEnabled = true
         mMap!!.uiSettings.isZoomControlsEnabled=true
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -64,24 +60,13 @@ class Maps : Fragment() {
 
         checkPermission()
 
-
+        //Request
         buildLocationRequest()
-        buildLocationCallBack()
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-
-        return inflater.inflate(R.layout.fragment_maps, container, false)
-    }
-
-    private fun buildLocationCallBack() {
+        //callback
         locationCallback = object : LocationCallback(){
             override fun onLocationResult(p0: LocationResult) {
-                mLastLocation = p0!!.locations.get(p0!!.locations.size-1) //GetLastLocation
-
-                if (mMarker != null){
-                    mMarker!!.remove()
-                }
+                mLastLocation = p0.locations.get(p0.locations.size-1)
 
                 latitude = mLastLocation.latitude
                 longitude = mLastLocation.longitude
@@ -92,14 +77,53 @@ class Maps : Fragment() {
                         .title("Your Here")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
 
-                mMarker = mMap!!.addMarker(markerOptions)
+                if(mMarker != null){
+                    mMarker!!.remove()
+                } else {
+                    mMarker = mMap?.addMarker(markerOptions)
+                    mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                    mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
+                }
+
+
+            }
+        }
+
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+
+        return inflater.inflate(R.layout.fragment_maps, container, false)
+    }
+/*
+    private fun buildLocationCallBack() {
+        locationCallback = object : LocationCallback(){
+            override fun onLocationResult(p0: LocationResult) {
+                mLastLocation = p0!!.locations.get(p0!!.locations.size-1) //GetLastLocation
+
+                latitude = mLastLocation.latitude
+                longitude = mLastLocation.longitude
+
+                val latLng = LatLng(latitude, longitude)
+                val markerOptions = MarkerOptions()
+                        .position(latLng)
+                        .title("Your Here")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+
+                if (mMarker != null){
+                    mMarker!!.remove()
+                } else {
+                    Log.d("Maker", mMarker.toString())
+                    mMarker = mMap!!.addMarker(markerOptions)
+                }
+
 
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 mMap!!.moveCamera(CameraUpdateFactory.zoomBy(15f))
             }
         }
     }
-
+*/
     private fun buildLocationRequest() {
         locationRequest = com.google.android.gms.location.LocationRequest()
         locationRequest.priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -108,6 +132,8 @@ class Maps : Fragment() {
         locationRequest.smallestDisplacement = 10f
     }
 
+
+    // Permission
     private fun checkPermission() : Boolean {
         if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED ) {
@@ -147,4 +173,6 @@ class Maps : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
+
+
 }
