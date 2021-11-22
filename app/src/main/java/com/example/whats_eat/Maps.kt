@@ -82,48 +82,20 @@ class Maps : Fragment() {
                 } else {
                     mMarker = mMap?.addMarker(markerOptions)
                     mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                    mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
                 }
 
-
+                mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
             }
         }
 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+        startLocationUpdate()
 
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
-/*
-    private fun buildLocationCallBack() {
-        locationCallback = object : LocationCallback(){
-            override fun onLocationResult(p0: LocationResult) {
-                mLastLocation = p0!!.locations.get(p0!!.locations.size-1) //GetLastLocation
 
-                latitude = mLastLocation.latitude
-                longitude = mLastLocation.longitude
-
-                val latLng = LatLng(latitude, longitude)
-                val markerOptions = MarkerOptions()
-                        .position(latLng)
-                        .title("Your Here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-
-                if (mMarker != null){
-                    mMarker!!.remove()
-                } else {
-                    Log.d("Maker", mMarker.toString())
-                    mMarker = mMap!!.addMarker(markerOptions)
-                }
-
-
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                mMap!!.moveCamera(CameraUpdateFactory.zoomBy(15f))
-            }
-        }
-    }
-*/
+    //Location Request
     private fun buildLocationRequest() {
         locationRequest = com.google.android.gms.location.LocationRequest()
         locationRequest.priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -168,11 +140,25 @@ class Maps : Fragment() {
         }
     }
 
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdate(){
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+    }
+
+    private fun stopLocationUpdate(){
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdate()
+    }
 
 }
