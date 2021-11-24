@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -58,6 +59,7 @@ class Maps : Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        //Permission Check
         checkPermission()
 
         //Request
@@ -84,7 +86,7 @@ class Maps : Fragment() {
                     mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 }
 
-                mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
+                mMap?.moveCamera(CameraUpdateFactory.zoomBy(12f))
             }
         }
 
@@ -127,7 +129,7 @@ class Maps : Fragment() {
 
         when(requestCode){
             MY_PERMISSION_CODE -> {
-                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                         if(checkPermission()) {
                             mMap!!.isMyLocationEnabled = true
@@ -143,7 +145,7 @@ class Maps : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdate(){
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
     private fun stopLocationUpdate(){
@@ -160,5 +162,11 @@ class Maps : Fragment() {
         super.onPause()
         stopLocationUpdate()
     }
+
+    override fun onStop() {
+        super.onStop()
+        stopLocationUpdate()
+    }
+
 
 }
