@@ -27,37 +27,9 @@
                 android:layout_height="match_parent"
                 android:padding="5dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_rate"
-                    android:layout_centerHorizontal="true" />
-
-                <TextView
-                    android:id="@+id/profile_rate_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="5 Star"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:includeFontPadding="false" />
-
-                <TextView
-                    android:id="@+id/profile_rate_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/profile_rate_num"
-                    android:layout_centerHorizontal="true"
-                    android:text="collection"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:includeFontPadding="false" />
-
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
 
     </LinearLayout>
 
