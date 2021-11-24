@@ -18,12 +18,14 @@
  - Maps (Working on it)
  - Setting (Not yet)
 
-### APIs
- 1. Firebase Authentication
- 2. Firebase Realtime Database 
- 3. Google Maps Api
- 
- 
+## APIs
+ ### Firebase Authentication
+   - Implement with Firebase Authentication when user SignUp and login 
+ ### Firebase Realtime Database 
+   - Store User Data (Email, UserName, User's FullName)
+ ### Google Maps Api
+   - tracking user's current location and check nearby food resturant
+
 ## Sdk Build Version
  - minSdkVersion : 19
  - targetSdkVersion : 31
@@ -35,23 +37,39 @@
 
 ## Dependency
 ```
+ //firebase
  com.google.firebase:firebase-bom:28.4.0
  com.google.firebase:firebase-analytics-ktx
  com.google.firebase:firebase-core:17.2.1
  com.google.firebase:firebase-auth:19.1.0
  com.firebaseui:firebase-ui-auth:4.2.1
+ 
+ //glide
  com.github.bumptech.glide:glide:4.11.0
+ 
+ //multidex
  com.android.support:multidex:1.0.3
- com.makeramen:roundedimageview:2.3.0
+ 
+ //android material 
  com.google.android.material:material:1.2.1
+ 
+ //preference 
  androidx.preference:preference-ktx:1.1.1
- com.google.android.gms:play-services-location:18.0.0
+ 
+ //location service
+ com.google.android.gms:play-services-location:18.0.0 
+ 
+ //retrofit2
+ com.squareup.retrofit2:retrofit:2.3.0
+ com.squareup.retrofit2:converter-gson:2.3.0
 ```
 
 ## Preference
 ```
- Android Devs Maps Api Documentation
+ Android Devs Maps Api Documentation (location)
  https://developer.android.com/training/location/request-updates?hl=ko
+ Retrofit Kr Document 
+ https://devflow.github.io/retrofit-kr/
 ```
  
 
