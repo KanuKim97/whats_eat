@@ -17,6 +17,9 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import com.example.whats_eat.Common.Common
+import com.example.whats_eat.Model.Myplaces
+import com.example.whats_eat.remote.IGoogleAPIService
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -27,7 +30,11 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.*
+import retrofit2.Call
+import retrofit2.Response
+import java.lang.StringBuilder
 import java.util.jar.Manifest
+import javax.security.auth.callback.Callback
 
 class Maps : Fragment() {
     private var mMap : GoogleMap? = null
@@ -38,9 +45,12 @@ class Maps : Fragment() {
     private lateinit var mLastLocation : Location
     private var mMarker : Marker? = null
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: com.google.android.gms.location.LocationRequest
-    lateinit var locationCallback: LocationCallback
+    lateinit var fusedLocationProviderClient : FusedLocationProviderClient
+    lateinit var locationRequest : com.google.android.gms.location.LocationRequest
+    lateinit var locationCallback : LocationCallback
+
+    lateinit var mServices : IGoogleAPIService
+    internal lateinit var currentPlace : Myplaces
 
 
     companion object{
@@ -58,7 +68,6 @@ class Maps : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         //Permission Check
         checkPermission()
 
@@ -93,6 +102,11 @@ class Maps : Fragment() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         startLocationUpdate()
+
+        //Init Service
+        nearByPlace("restaurant")
+        mServices = Common.googleApiService
+
 
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
@@ -140,6 +154,59 @@ class Maps : Fragment() {
                 }
             }
         }
+    }
+
+
+    //near by place
+    private fun nearByPlace(typePlace: String){
+        // Clear all marker on Maps
+        mMap?.clear()
+        // build URL request based on location
+
+        val url = getUrl(latitude, longitude, typePlace)
+
+        mServices.getNearbyPlaces(url)
+                .enqueue(object : retrofit2.Callback<Myplaces>{
+                    override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
+                        currentPlace = response.body()!!
+
+                        if(response.isSuccessful){
+                            for(element in response.body()!!.results!!){
+                                val markerOptions = MarkerOptions()
+                                val googlePlace = element
+                                val lat = googlePlace.geometry!!.location!!.lat
+                                val lng = googlePlace.geometry!!.location!!.lng
+                                val placeName = googlePlace.name
+                                val latLng = LatLng(lat, lng)
+
+                                markerOptions.position(latLng)
+                                markerOptions.title(placeName)
+
+                                if(typePlace == "restaurant"){
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_baseline_food_bank_24))
+                                } else {
+                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                }
+
+                                markerOptions.snippet(element.toString())
+                                mMap!!.addMarker(markerOptions)
+                                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                                mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
+                            }
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<Myplaces>, t: Throwable) {
+                        Toast.makeText(requireContext(), ""+t.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+    }
+
+    private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
+        val googlePlaceUrl = StringBuilder("")
     }
 
 
