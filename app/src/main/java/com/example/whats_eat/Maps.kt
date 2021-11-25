@@ -49,7 +49,7 @@ class Maps : Fragment() {
     lateinit var locationRequest : com.google.android.gms.location.LocationRequest
     lateinit var locationCallback : LocationCallback
 
-    lateinit var mServices : IGoogleAPIService
+    private var mServices : IGoogleAPIService? = null
     internal lateinit var currentPlace : Myplaces
 
 
@@ -104,7 +104,7 @@ class Maps : Fragment() {
         startLocationUpdate()
 
         //Init Service
-        nearByPlace("restaurant")
+        nearByPlace(latitude,longitude,"restaurant")
         mServices = Common.googleApiService
 
 
@@ -158,15 +158,15 @@ class Maps : Fragment() {
 
 
     //near by place
-    private fun nearByPlace(typePlace: String){
+    private fun nearByPlace(latitude: Double, longitude: Double ,typePlace: String){
         // Clear all marker on Maps
         mMap?.clear()
         // build URL request based on location
 
         val url = getUrl(latitude, longitude, typePlace)
 
-        mServices.getNearbyPlaces(url)
-                .enqueue(object : retrofit2.Callback<Myplaces>{
+        mServices?.getNearbyPlaces(url)
+                ?.enqueue(object : retrofit2.Callback<Myplaces>{
                     override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
                         currentPlace = response.body()!!
 
@@ -190,8 +190,6 @@ class Maps : Fragment() {
 
                                 markerOptions.snippet(element.toString())
                                 mMap!!.addMarker(markerOptions)
-                                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                                mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
                             }
 
                         }
@@ -206,7 +204,14 @@ class Maps : Fragment() {
     }
 
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
-        val googlePlaceUrl = StringBuilder("")
+        val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
+        googlePlaceUrl.append("?location=$latitude,$longitude")
+        googlePlaceUrl.append("&radius=1000")
+        googlePlaceUrl.append("&type=$typePlace")
+        googlePlaceUrl.append("&key=AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM")
+
+        Log.d("URL_debug", googlePlaceUrl.toString())
+        return googlePlaceUrl.toString()
     }
 
 
