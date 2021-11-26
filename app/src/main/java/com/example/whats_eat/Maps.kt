@@ -95,7 +95,11 @@ class Maps : Fragment() {
                     mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 }
 
-                mMap?.moveCamera(CameraUpdateFactory.zoomBy(12f))
+                mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
+                //Init Service
+                nearByPlace("restaurant")
+                mServices = Common.googleApiService
+
             }
         }
 
@@ -103,9 +107,6 @@ class Maps : Fragment() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         startLocationUpdate()
 
-        //Init Service
-        nearByPlace(latitude,longitude,"restaurant")
-        mServices = Common.googleApiService
 
 
         return inflater.inflate(R.layout.fragment_maps, container, false)
@@ -158,18 +159,21 @@ class Maps : Fragment() {
 
 
     //near by place
-    private fun nearByPlace(latitude: Double, longitude: Double ,typePlace: String){
+    private fun nearByPlace(typePlace: String){
         // Clear all marker on Maps
         mMap?.clear()
-        // build URL request based on location
 
         val url = getUrl(latitude, longitude, typePlace)
+
+        Log.d("url", url.toString())
+        Log.d("type", typePlace)
 
         mServices?.getNearbyPlaces(url)
                 ?.enqueue(object : retrofit2.Callback<Myplaces>{
                     override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
+                        Log.d("test", "test")
                         currentPlace = response.body()!!
-
+                        Log.w("currentPlace", currentPlace.toString())
                         if(response.isSuccessful){
                             for(element in response.body()!!.results!!){
                                 val markerOptions = MarkerOptions()
@@ -178,6 +182,8 @@ class Maps : Fragment() {
                                 val lng = googlePlace.geometry!!.location!!.lng
                                 val placeName = googlePlace.name
                                 val latLng = LatLng(lat, lng)
+
+                                Log.w("elements", element.toString())
 
                                 markerOptions.position(latLng)
                                 markerOptions.title(placeName)
@@ -190,6 +196,9 @@ class Maps : Fragment() {
 
                                 markerOptions.snippet(element.toString())
                                 mMap!!.addMarker(markerOptions)
+                                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                                mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))
+
                             }
 
                         }
@@ -206,7 +215,7 @@ class Maps : Fragment() {
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
         val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
         googlePlaceUrl.append("?location=$latitude,$longitude")
-        googlePlaceUrl.append("&radius=1000")
+        googlePlaceUrl.append("&radius=10000")
         googlePlaceUrl.append("&type=$typePlace")
         googlePlaceUrl.append("&key=AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM")
 
