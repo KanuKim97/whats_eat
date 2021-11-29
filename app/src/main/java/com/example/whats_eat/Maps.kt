@@ -1,5 +1,6 @@
 package com.example.whats_eat
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
@@ -27,6 +28,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.*
+import pub.devrel.easypermissions.EasyPermissions
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
@@ -39,19 +41,13 @@ class Maps : Fragment(R.layout.fragment_maps) {
     private var longitude : Double = 0.toDouble()
 
     private lateinit var mLastLocation : Location
-    private var mMarker : Marker? = null
 
     lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     lateinit var locationRequest : com.google.android.gms.location.LocationRequest
     lateinit var locationCallback : LocationCallback
-
     lateinit var mServices : IGoogleAPIService
+
     internal lateinit var currentPlace : Myplaces
-
-
-    companion object{
-        private const val MY_PERMISSION_CODE : Int = 1000
-    }
 
 
     @SuppressLint("MissingPermission")
@@ -65,7 +61,7 @@ class Maps : Fragment(R.layout.fragment_maps) {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         //Permission Check
-        checkPermission()
+        // checkPermission()
 
         //Request
         buildLocationRequest()
@@ -79,21 +75,13 @@ class Maps : Fragment(R.layout.fragment_maps) {
                 longitude = mLastLocation.longitude
 
                 val latLng = LatLng(latitude, longitude)
-                val markerOptions = MarkerOptions()
-                        .position(latLng)
-                        .title("Your Here")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
 
-                if(mMarker != null){
-                    mMarker!!.remove()
-                } else {
-                    mMarker = mMap?.addMarker(markerOptions)
-                    mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                }
-
+                mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
-                mServices = Common.googleApiService
+
                 //Init Service
+                mServices = Common.googleApiService
+
                 nearByPlace("restaurant")
 
             }
@@ -102,8 +90,6 @@ class Maps : Fragment(R.layout.fragment_maps) {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         startLocationUpdate()
-
-
 
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
@@ -117,7 +103,7 @@ class Maps : Fragment(R.layout.fragment_maps) {
         locationRequest.smallestDisplacement = 10f
     }
 
-
+/*
     // Permission
     private fun checkPermission() : Boolean {
         if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -153,6 +139,18 @@ class Maps : Fragment(R.layout.fragment_maps) {
         }
     }
 
+ */
+
+    //Easy Permission TestCode
+
+    private fun hasLocationPermission() =
+            EasyPermissions.hasPermissions(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            )
+
+
+    //Easy Permission TestCode
 
     //near by place
     private fun nearByPlace(typePlace: String){
@@ -161,7 +159,7 @@ class Maps : Fragment(R.layout.fragment_maps) {
 
         val url = getUrl(latitude, longitude, typePlace)
 
-        mServices?.getNearbyPlaces(url)?.enqueue(object : Callback<Myplaces>{
+        mServices.getNearbyPlaces(url).enqueue(object : Callback<Myplaces>{
             override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
 
                 currentPlace = response.body()!!
@@ -185,27 +183,27 @@ class Maps : Fragment(R.layout.fragment_maps) {
                         }
 
                         markerOptions.snippet(i.toString())
-
                         mMap?.addMarker(markerOptions)
                     }
                 }
             }
 
             override fun onFailure(call: Call<Myplaces>, t: Throwable) {
-                TODO("Not yet implemented")
+                Toast.makeText(requireContext(), "$t Error plz try again", Toast.LENGTH_SHORT).show()
+                onDestroy()
             }
         })
 
     }
 
+    // Url : get maps near by place to Json Code
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
         val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
         googlePlaceUrl.append("?location=$latitude,$longitude")
-        googlePlaceUrl.append("&radius=10000")
+        googlePlaceUrl.append("&radius=1000")
         googlePlaceUrl.append("&type=$typePlace")
         googlePlaceUrl.append("&key=AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM")
 
-        Log.d("URL_debug", googlePlaceUrl.toString())
         return googlePlaceUrl.toString()
     }
 
@@ -229,11 +227,5 @@ class Maps : Fragment(R.layout.fragment_maps) {
         super.onPause()
         stopLocationUpdate()
     }
-
-    override fun onStop() {
-        super.onStop()
-        stopLocationUpdate()
-    }
-
 
 }
