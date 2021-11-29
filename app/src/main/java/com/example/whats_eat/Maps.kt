@@ -3,8 +3,6 @@ package com.example.whats_eat
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationRequest
-import android.os.Build
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -16,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
 import com.example.whats_eat.Common.Common
 import com.example.whats_eat.Model.Myplaces
 import com.example.whats_eat.remote.IGoogleAPIService
@@ -32,9 +29,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.*
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.Callback
 import java.lang.StringBuilder
-import java.util.jar.Manifest
-import javax.security.auth.callback.Callback
 
 class Maps : Fragment() {
     private var mMap : GoogleMap? = null
@@ -49,7 +45,7 @@ class Maps : Fragment() {
     lateinit var locationRequest : com.google.android.gms.location.LocationRequest
     lateinit var locationCallback : LocationCallback
 
-    private var mServices : IGoogleAPIService? = null
+    private lateinit var mServices : IGoogleAPIService
     internal lateinit var currentPlace : Myplaces
 
 
@@ -168,48 +164,16 @@ class Maps : Fragment() {
         Log.d("url", url.toString())
         Log.d("type", typePlace)
 
-        mServices?.getNearbyPlaces(url)
-                ?.enqueue(object : retrofit2.Callback<Myplaces>{
-                    override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
-                        Log.d("test", "test")
-                        currentPlace = response.body()!!
-                        Log.w("currentPlace", currentPlace.toString())
-                        if(response.isSuccessful){
-                            for(element in response.body()!!.results!!){
-                                val markerOptions = MarkerOptions()
-                                val googlePlace = element
-                                val lat = googlePlace.geometry!!.location!!.lat
-                                val lng = googlePlace.geometry!!.location!!.lng
-                                val placeName = googlePlace.name
-                                val latLng = LatLng(lat, lng)
+        mServices.getNearbyPlaces(url).enqueue(object : Callback<Myplaces>{
+            override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
+                Log.d("Success", "Success")
+            }
 
-                                Log.w("elements", element.toString())
+            override fun onFailure(call: Call<Myplaces>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
 
-                                markerOptions.position(latLng)
-                                markerOptions.title(placeName)
-
-                                if(typePlace == "restaurant"){
-                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_baseline_food_bank_24))
-                                } else {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                                }
-
-                                markerOptions.snippet(element.toString())
-                                mMap!!.addMarker(markerOptions)
-                                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                                mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-                            }
-
-                        }
-
-                    }
-
-                    override fun onFailure(call: Call<Myplaces>, t: Throwable) {
-                        Toast.makeText(requireContext(), ""+t.message, Toast.LENGTH_SHORT).show()
-                    }
-
-                })
     }
 
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
