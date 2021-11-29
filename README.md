@@ -5,6 +5,10 @@
  
 ## Project Description 
  - This application is introduce near by food restaurant at your current location 
+ 
+## Project Snapshot Example
+![제목 없음](https://user-images.githubusercontent.com/74421057/143890681-21abab98-976c-44d6-811a-b1fef5c9bfb2.png)
+
 
 ### Application main Fuction 
  1. introduce near by food restaurant 
