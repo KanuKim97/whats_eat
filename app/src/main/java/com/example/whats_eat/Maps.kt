@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.whats_eat.Common.Common
+import com.example.whats_eat.Common.Constant
 import com.example.whats_eat.Model.Myplaces
 import com.example.whats_eat.remote.IGoogleAPIService
 
@@ -28,13 +29,14 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.*
+import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
 import java.lang.StringBuilder
 
-class Maps : Fragment(R.layout.fragment_maps) {
+class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbacks {
     private var mMap : GoogleMap? = null
 
     private var latitude : Double = 0.toDouble()
@@ -49,6 +51,9 @@ class Maps : Fragment(R.layout.fragment_maps) {
 
     internal lateinit var currentPlace : Myplaces
 
+    companion object {
+        const val PERMISSION_LOCATION_REQUEST_CODE = 1
+    }
 
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
@@ -146,11 +151,41 @@ class Maps : Fragment(R.layout.fragment_maps) {
     private fun hasLocationPermission() =
             EasyPermissions.hasPermissions(
                     requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
             )
 
+    private fun requestLocationPermission() {
+        EasyPermissions.requestPermissions(
+                this,
+                "Location Permission",
+                Constant.Location_PERMISSION_CODE,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    }
 
-    //Easy Permission TestCode
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        Toast.makeText(requireContext(), "Permission Granted!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+//Easy Permission TestCode
 
     //near by place
     private fun nearByPlace(typePlace: String){
@@ -202,7 +237,7 @@ class Maps : Fragment(R.layout.fragment_maps) {
         googlePlaceUrl.append("?location=$latitude,$longitude")
         googlePlaceUrl.append("&radius=1000")
         googlePlaceUrl.append("&type=$typePlace")
-        googlePlaceUrl.append("&key=AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM")
+        googlePlaceUrl.append("&key=${Constant.API_KEYS}")
 
         return googlePlaceUrl.toString()
     }
