@@ -32,7 +32,7 @@ import retrofit2.Response
 import retrofit2.Callback
 import java.lang.StringBuilder
 
-class Maps : Fragment() {
+class Maps : Fragment(R.layout.fragment_maps) {
     private var mMap : GoogleMap? = null
 
     private var latitude : Double = 0.toDouble()
@@ -45,7 +45,7 @@ class Maps : Fragment() {
     lateinit var locationRequest : com.google.android.gms.location.LocationRequest
     lateinit var locationCallback : LocationCallback
 
-    private lateinit var mServices : IGoogleAPIService
+    lateinit var mServices : IGoogleAPIService
     internal lateinit var currentPlace : Myplaces
 
 
@@ -92,9 +92,9 @@ class Maps : Fragment() {
                 }
 
                 mMap?.moveCamera(CameraUpdateFactory.zoomBy(15f))
+                mServices = Common.googleApiService
                 //Init Service
                 nearByPlace("restaurant")
-                mServices = Common.googleApiService
 
             }
         }
@@ -161,12 +161,34 @@ class Maps : Fragment() {
 
         val url = getUrl(latitude, longitude, typePlace)
 
-        Log.d("url", url.toString())
-        Log.d("type", typePlace)
-
-        mServices.getNearbyPlaces(url).enqueue(object : Callback<Myplaces>{
+        mServices?.getNearbyPlaces(url)?.enqueue(object : Callback<Myplaces>{
             override fun onResponse(call: Call<Myplaces>, response: Response<Myplaces>) {
-                Log.d("Success", "Success")
+
+                currentPlace = response.body()!!
+
+                if (response.isSuccessful) {
+                    for (i in 0 until response.body()!!.results!!.size) {
+                        val markerOptions = MarkerOptions()
+
+                        val googlePlace = response.body()!!.results?.get(i)
+                        val lat = googlePlace?.geometry!!.location!!.lat
+                        val lng = googlePlace.geometry!!.location!!.lng
+                        val placeName = googlePlace.name
+                        val latLng = LatLng(lat, lng)
+
+                        markerOptions.position(latLng)
+                        markerOptions.title(placeName)
+                        if (typePlace == "restaurant") {
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                        } else {
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        }
+
+                        markerOptions.snippet(i.toString())
+
+                        mMap?.addMarker(markerOptions)
+                    }
+                }
             }
 
             override fun onFailure(call: Call<Myplaces>, t: Throwable) {
