@@ -1,8 +1,10 @@
 package com.example.whats_eat
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +18,6 @@ class proFile : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +37,7 @@ class proFile : Fragment() {
                 proFileBinding.emailTxt.text = snapshot.child("eMail").value.toString()
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
+            override fun onCancelled(error: DatabaseError) { }
         })
 
         proFileBinding.updateBtn.setOnClickListener {
@@ -50,13 +46,30 @@ class proFile : Fragment() {
 
         proFileBinding.deleteBtn.setOnClickListener {
 
-            currentUser.delete()
-                .addOnCompleteListener {
-                    if(it.isSuccessful){
-                        database.getReference("userInfo").child(currentUser.uid).removeValue()
-                        startActivity(Intent(this.context, logIn::class.java))
+            val deleteDialog = AlertDialog.Builder(activity)
+
+            deleteDialog.setTitle("Notice!")
+                    .setMessage("Do you Want Delete Your Account?")
+                    .setPositiveButton("Yes") { dialog, which ->
+                        Log.d("Log", dialog.toString())
+                        Log.d("Log", which.toString())
                     }
-                }
+                    .setNegativeButton("No") { dialog, which ->
+                        Log.d("Log", dialog.toString())
+                        Log.d("Log", which.toString())
+                    }.show()
+
+        /*
+            //delete UserPart
+            currentUser.delete()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            database.getReference("userInfo").child(currentUser.uid).removeValue()
+                            startActivity(Intent(requireContext(), logIn::class.java))
+                        }
+                    }
+        */
+
         }
 
         return proFileBinding.root

@@ -3,6 +3,7 @@ package com.example.whats_eat
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.whats_eat.databinding.ActivitySignInBinding
@@ -35,27 +36,61 @@ class SignIn : AppCompatActivity() {
             val confPassword = signInBinding.localConfPasswordInput.text.toString()
 
             when {
-                passWord != confPassword -> {
-                    Toast.makeText(this, "Password is not correct", Toast.LENGTH_SHORT).show()
-                    signInBinding.localConfPasswordInput.text?.clear()
+                validateEmailAddress(eMail) -> {
+                    onSignUpComplete(fullName, userName, eMail, passWord, confPassword)
                 }
-                fullName.isEmpty() -> {
-                    signInBinding.localNameInput.error = "Plz enter your Name"
-                }
-                userName.isEmpty() -> {
-                    signInBinding.localUserNameInput.error = "Plz enter your User Name"
-                }
-                eMail.isEmpty() -> {
-                    signInBinding.localEmailInput.error = "Plz enter your User Name"
-                }
-                passWord.isEmpty() -> {
-                    signInBinding.localPasswordInput.error = "Plz enter your User Name"
-                }
-                confPassword.isEmpty() -> {
-                    signInBinding.localConfPasswordInput.error = "Plz enter your User Name"
-                }
-                else -> {
-                    auth.createUserWithEmailAndPassword(eMail, passWord)
+            }
+
+        }
+
+        signInBinding.toLoginBtn.setOnClickListener {
+            startActivity(Intent(this, logIn::class.java))
+            finish()
+        }
+    }
+
+
+    private fun validateEmailAddress(eMail : String): Boolean {
+        val emailInput : String = eMail
+
+        return if (Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            true
+        } else {
+            Toast.makeText(this, "Invalid Email Address! Plz Type again", Toast.LENGTH_SHORT).show()
+            signInBinding.localEmailInput.text?.clear()
+            false
+        }
+    }
+
+    private fun onSignUpComplete(
+            fullName : String,
+            userName : String,
+            eMail : String,
+            passWord : String,
+            confPassword : String
+    ){
+        when {
+            passWord != confPassword -> {
+                Toast.makeText(this, "Password is not correct", Toast.LENGTH_SHORT).show()
+                signInBinding.localConfPasswordInput.text?.clear()
+            }
+            fullName.isEmpty() -> {
+                signInBinding.localNameInput.error = "Plz enter your Name"
+            }
+            userName.isEmpty() -> {
+                signInBinding.localUserNameInput.error = "Plz enter your User Name"
+            }
+            eMail.isEmpty() -> {
+                signInBinding.localEmailInput.error = "Plz enter your User Name"
+            }
+            passWord.isEmpty() -> {
+                signInBinding.localPasswordInput.error = "Plz enter your User Name"
+            }
+            confPassword.isEmpty() -> {
+                signInBinding.localConfPasswordInput.error = "Plz enter your User Name"
+            }
+            else -> {
+                auth.createUserWithEmailAndPassword(eMail, passWord)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 val currentUser = auth.currentUser
@@ -80,14 +115,8 @@ class SignIn : AppCompatActivity() {
                                 signInBinding.localConfPasswordInput.text?.clear()
                             }
                         }
-                }
-
             }
         }
-
-        signInBinding.toLoginBtn.setOnClickListener {
-            startActivity(Intent(this, logIn::class.java))
-            finish()
-        }
     }
+
 }

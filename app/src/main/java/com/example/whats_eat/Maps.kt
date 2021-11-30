@@ -1,20 +1,16 @@
 package com.example.whats_eat
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+
 import com.example.whats_eat.Common.Common
 import com.example.whats_eat.Common.Constant
 import com.example.whats_eat.Model.Myplaces
@@ -24,19 +20,19 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.*
+
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.*
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
+
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
 import java.lang.StringBuilder
 
-class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbacks {
+class Maps : Fragment(R.layout.fragment_maps) {
     private var mMap : GoogleMap? = null
 
     private var latitude : Double = 0.toDouble()
@@ -51,9 +47,6 @@ class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbac
 
     internal lateinit var currentPlace : Myplaces
 
-    companion object {
-        const val PERMISSION_LOCATION_REQUEST_CODE = 1
-    }
 
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
@@ -65,8 +58,6 @@ class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbac
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        //Permission Check
-        // checkPermission()
 
         //Request
         buildLocationRequest()
@@ -88,7 +79,6 @@ class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbac
                 mServices = Common.googleApiService
 
                 nearByPlace("restaurant")
-
             }
         }
 
@@ -107,10 +97,10 @@ class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbac
         locationRequest.fastestInterval = 1000
         locationRequest.smallestDisplacement = 10f
     }
-    
+
     //near by place
     private fun nearByPlace(typePlace: String){
-        // Clear all marker on Maps
+        // Clear all marker on Maps and Maps Init
         mMap?.clear()
 
         val url = getUrl(latitude, longitude, typePlace)
@@ -129,6 +119,7 @@ class Maps : Fragment(R.layout.fragment_maps), EasyPermissions.PermissionCallbac
                         val lng = googlePlace.geometry!!.location!!.lng
                         val placeName = googlePlace.name
                         val latLng = LatLng(lat, lng)
+
 
                         markerOptions.position(latLng)
                         markerOptions.title(placeName)
