@@ -76,8 +76,10 @@
 ```
  Android Devs Maps Api Documentation (location)
  https://developer.android.com/training/location/request-updates?hl=ko
+ 
  Retrofit Kr Document 
  https://devflow.github.io/retrofit-kr/
+ 
  JSON to Csharp (API Result Json Parsing to Kotlin)
  https://json2csharp.com/
 ```
