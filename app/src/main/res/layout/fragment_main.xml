@@ -13,24 +13,6 @@
         android:layout_height="match_parent"
         android:padding="20dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="125dp"
-            android:layout_weight="1"
-            android:layout_margin="10dp"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            app:cardElevation="10dp"
-            app:cardBackgroundColor="#403E3E" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="5dp">
-
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
     </LinearLayout>
 
 

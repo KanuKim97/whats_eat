@@ -18,6 +18,6 @@ class PlaceViewModel : ViewModel() {
     fun updateValue(googlePlace : Results?){
         Log.d("Value lat", googlePlace?.geometry!!.location!!.lat.toString())
         Log.d("Value lng", googlePlace.geometry!!.location!!.lng.toString())
-        Log.d("Value Name", googlePlace?.name.toString())
+        Log.d("Value Name", googlePlace.name.toString())
     }
 }

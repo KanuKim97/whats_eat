@@ -1,6 +1,7 @@
 package com.example.whats_eat
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Location
 import androidx.fragment.app.Fragment
 
@@ -53,6 +54,12 @@ class Maps : Fragment(R.layout.fragment_maps) {
         mMap = googleMap
         mMap!!.isMyLocationEnabled = true
         mMap!!.uiSettings.isZoomControlsEnabled=true
+
+        mMap!!.setOnMarkerClickListener { marker ->
+            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(marker.snippet))
+            startActivity(Intent(requireContext(), viewPlace::class.java))
+            true
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -120,9 +127,9 @@ class Maps : Fragment(R.layout.fragment_maps) {
                         val placeName = googlePlace.name
                         val latLng = LatLng(lat, lng)
 
-
                         markerOptions.position(latLng)
                         markerOptions.title(placeName)
+
                         if (typePlace == "restaurant") {
                             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                         } else {

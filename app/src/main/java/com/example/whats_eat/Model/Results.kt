@@ -15,4 +15,13 @@ class Results {
     var types:Array<String>? = null
     var vicinity : String? = null
     var opening_hours : OpeningHours? = null
+
+    var address_components : Array<AddressComponent>? = null
+    var adr_address : String? = null
+    var formatted_address : String? = null
+    var international_phone_number : String? = null
+    var reviews : Array<Review>? = null
+    var utc_offset : Int? = null
+
+
 }
