@@ -24,11 +24,15 @@
 
 ## APIs
  ### Firebase Authentication
-   - Implement with Firebase Authentication when user SignUp and login 
+  - Implement with Firebase Authentication when user SignUp and login 
  ### Firebase Realtime Database 
-   - Store User Data (Email, UserName, User's FullName)
+  - Store User Data (Email, UserName, User's FullName)
  ### Google Maps Api
-   - tracking user's current location and check nearby food resturant
+  - tracking user's current location and check nearby food resturant
+ 
+ ### Place Api
+  - Found place near by user's current location 
+  - Return Value is Json Document, So I used Json2csharp for parsing json document 
 
 ## Sdk Build Version
  - minSdkVersion : 19
@@ -74,6 +78,8 @@
  https://developer.android.com/training/location/request-updates?hl=ko
  Retrofit Kr Document 
  https://devflow.github.io/retrofit-kr/
+ JSON to Csharp (API Result Json Parsing to Kotlin)
+ https://json2csharp.com/
 ```
  
 
