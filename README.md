@@ -7,8 +7,13 @@
  - This application is introduce near by food restaurant at your current location 
  
 ## Project Snapshot Example
+
+### near by Place -> User's current location 
 ![제목 없음](https://user-images.githubusercontent.com/74421057/143890681-21abab98-976c-44d6-811a-b1fef5c9bfb2.png)
 
+### marker click event -> show Place Detail
+
+![제목 없음](https://user-images.githubusercontent.com/74421057/144457716-072d53cf-5a3d-4867-8d43-49d5c9d16b43.png)
 
 ### Application main Fuction 
  1. introduce near by food restaurant 
