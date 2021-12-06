@@ -33,6 +33,7 @@ import retrofit2.Response
 import retrofit2.Callback
 import java.lang.StringBuilder
 
+//TODO : Permission Add and Check How it works
 class Maps : Fragment(R.layout.fragment_maps) {
     private var mMap : GoogleMap? = null
 

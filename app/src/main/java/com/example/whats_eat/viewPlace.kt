@@ -1,6 +1,5 @@
 package com.example.whats_eat
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +12,9 @@ import com.example.whats_eat.Model.*
 import com.example.whats_eat.remote.IGoogleAPIService
 
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,9 +22,13 @@ import java.lang.StringBuilder
 
 class viewPlace : AppCompatActivity() {
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
-
     private lateinit var mService : IGoogleAPIService
+    private lateinit var database : FirebaseDatabase
+    private lateinit var databaseReference : DatabaseReference
+    private lateinit var auth : FirebaseAuth
+
     var mPlace : placeDetail? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +38,13 @@ class viewPlace : AppCompatActivity() {
 
         mService = Common.googleApiService
 
-        viewPlaceBinding.placeName.text=""
-        viewPlaceBinding.placeAddress.text=""
-        viewPlaceBinding.openTime.text=""
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        databaseReference = database.reference.child("userInfo")
+                .child("${auth.currentUser?.uid}")
+                .child("Collection")
+
 
         if(Common.currentPlace!!.photos != null && Common.currentPlace!!.photos!!.isNotEmpty()) {
             Glide.with(this)
@@ -77,8 +87,47 @@ class viewPlace : AppCompatActivity() {
                 })
 
         viewPlaceBinding.showMap.setOnClickListener {
-        // need to write it    
-        // startActivity(Intent(this, Maps::class.java))
+            // TODO: Go back to maps fragment1 (How?)
+            // startActivity(Intent(this, Maps::class.java))
+        }
+
+        viewPlaceBinding.addCollection.setOnClickListener {
+
+            val restaurantName : String = mPlace!!.result!!.name.toString()
+            val restaurantAddress : String = mPlace!!.result!!.formatted_address.toString()
+            val restaurantRating : Float = Common.currentPlace!!.rating.toFloat()
+            val restaurantPhotos : String
+
+            if(Common.currentPlace!!.photos == null) {
+                restaurantPhotos = null.toString()
+
+                val detailArray = mutableListOf(restaurantName,
+                        restaurantAddress,
+                        restaurantRating,
+                        restaurantPhotos )
+
+                databaseReference.push().setValue(detailArray)
+            } else {
+                restaurantPhotos = getPhotoPlace(Common.currentPlace!!.photos!![0].photo_reference!!, 1000)
+
+                val detailArray = mutableListOf(restaurantName,
+                        restaurantAddress,
+                        restaurantRating,
+                        restaurantPhotos )
+
+                databaseReference.push().setValue(detailArray)
+            }
+
+
+            // TODO: Go back to maps fragment2 (How?)
+            /* startActivity(Intent(this, Maps::class.java))
+            supportFragmentManager.beginTransaction()
+                    .replace(
+                            R.id.nav_host_fragment_container,
+                            supportFragmentManager.findFragmentById(R.id.map)!!
+                    )
+                    .commit()
+            */ //-----------------------------------------------------
         }
     }
 

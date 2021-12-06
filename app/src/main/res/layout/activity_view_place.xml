@@ -77,6 +77,17 @@
                 android:textColor="#fff"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/addCollection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#000"
+                android:text="Add Collection"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>
