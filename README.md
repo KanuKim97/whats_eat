@@ -30,21 +30,9 @@
  - Setting (Not yet)
 
 ### FireBase RealTime DataBase Design (noSql DataBase)
- - userInfo (Collection)
- - Document Desc
- ```
-  - Document (Firebase user's uid Value)
-   eMail : User's Email Field
-   fullName : User's FullName Field
-   userName : User's Name Field that used in Application
-    - Collection (Document : When user's add place that user's like)
-      Collection Document (Push.key Value) 
-       - 0 : Place Name Field
-       - 1 : Place Address Field
-       - 2 : Place Rating Field
-       - 3 : Place Photos Url Field
- ```
- 
+
+ ![rtdb](https://user-images.githubusercontent.com/74421057/145072849-9cac85e6-1f86-4d23-aa16-e6845399b550.png)
+
 ## APIs
  ### Firebase Authentication
   - Implement with Firebase Authentication when user SignUp and login 
