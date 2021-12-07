@@ -1,6 +1,7 @@
 package com.example.whats_eat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import com.example.whats_eat.CollectionFragment.placeData
 import com.example.whats_eat.databinding.FragmentCollectionBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class collection : Fragment() {
@@ -38,7 +38,7 @@ class collection : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
-        placeArray = arrayListOf()
+        placeArray = arrayListOf<placeData>()
 
         collectionAdapter = collectionAdapter(placeArray)
 
@@ -50,15 +50,21 @@ class collection : Fragment() {
     private fun collectionEventListener() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-        databaseReference = database.reference.child("userInfo")
+        databaseReference = database.reference
+                .child("userInfo")
+                .child(auth.currentUser!!.uid)
+                .child("Collection")
 
-        val userRef = databaseReference.child(auth.currentUser!!.uid).child("collection")
-                .addValueEventListener(object : ValueEventListener{
+        databaseReference.addValueEventListener(object : ValueEventListener{
+
                     override fun onDataChange(snapshot: DataSnapshot) {
+
                         if(snapshot.exists()) {
 
-                            for(i in  snapshot.children) {
-                                val place = i.getValue(placeData::class.java)
+                            for(placeSnapshot in snapshot.children) {
+
+                                val place = placeSnapshot.getValue(placeData::class.java)
+                                Log.d("placeString", place.toString())
                                 placeArray.add(place!!)
                             }
 

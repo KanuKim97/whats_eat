@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.whats_eat.Common.Common
 import com.example.whats_eat.Common.Constant
 import com.example.whats_eat.Model.*
+import com.example.whats_eat.PlaceDataModel.viewPlaceModel
 import com.example.whats_eat.remote.IGoogleAPIService
 
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
@@ -101,21 +102,25 @@ class viewPlace : AppCompatActivity() {
             if(Common.currentPlace!!.photos == null) {
                 restaurantPhotos = null.toString()
 
-                val detailArray = mutableListOf(restaurantName,
+                val placeDetailArray = viewPlaceModel(
+                        restaurantName,
                         restaurantAddress,
                         restaurantRating,
-                        restaurantPhotos )
+                        restaurantPhotos)
 
-                databaseReference.push().setValue(detailArray)
+                databaseReference.push().setValue(placeDetailArray)
+
             } else {
+
                 restaurantPhotos = getPhotoPlace(Common.currentPlace!!.photos!![0].photo_reference!!, 1000)
 
-                val detailArray = mutableListOf(restaurantName,
+                val placeDetailArray = viewPlaceModel(
+                        restaurantName,
                         restaurantAddress,
                         restaurantRating,
-                        restaurantPhotos )
+                        restaurantPhotos)
 
-                databaseReference.push().setValue(detailArray)
+                databaseReference.push().setValue(placeDetailArray)
             }
 
 

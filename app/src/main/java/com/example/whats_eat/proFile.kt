@@ -38,10 +38,23 @@ class proFile : Fragment() {
             override fun onCancelled(error: DatabaseError) { }
         })
 
+        userRef.child(auth.currentUser!!.uid).child("Collection")
+                .addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.d("count", snapshot.children.count().toString())
+                        //TODO : profileBinding Rating Number need to write it
+                        //proFileBinding.profileRateNum.text = "${snapshot.children.count()} Stars"
+                    }
+
+                    override fun onCancelled(error: DatabaseError) { }
+                })
+
+        //TODO : profile updateBtn Function need to be write it
         proFileBinding.updateBtn.setOnClickListener {
 
         }
 
+        //TODO : User Account Delete Btn Function need to be write it
         proFileBinding.deleteBtn.setOnClickListener {
 
             val deleteDialog = AlertDialog.Builder(activity)
