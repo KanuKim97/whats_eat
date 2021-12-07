@@ -9,11 +9,13 @@
 ## Project Snapshot Example
 
 ### near by Place -> User's current location 
-![제목 없음](https://user-images.githubusercontent.com/74421057/143890681-21abab98-976c-44d6-811a-b1fef5c9bfb2.png)
+![Maps Location](https://user-images.githubusercontent.com/74421057/143890681-21abab98-976c-44d6-811a-b1fef5c9bfb2.png)
 
 ### marker click event -> show Place Detail
+![Place Detail](https://user-images.githubusercontent.com/74421057/144457716-072d53cf-5a3d-4867-8d43-49d5c9d16b43.png)
 
-![제목 없음](https://user-images.githubusercontent.com/74421057/144457716-072d53cf-5a3d-4867-8d43-49d5c9d16b43.png)
+### Collection Fragment -> RecyclerView 
+![collection](https://user-images.githubusercontent.com/74421057/145036116-3a52fbc0-a7db-49ea-805e-8065a95e91c6.png)
 
 ### Application main Fuction 
  1. introduce near by food restaurant 
@@ -91,6 +93,9 @@
  //retrofit2
  com.squareup.retrofit2:retrofit:2.3.0
  com.squareup.retrofit2:converter-gson:2.3.0
+ 
+ //Easy Permission 
+ pub.devrel:easypermissions:1.3.+
 ```
 
 ## Preference
