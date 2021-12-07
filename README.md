@@ -54,7 +54,7 @@
  - Android Virtual Device 
  - Pixel 3a (Android Version 11.0 & API 30)
  
- ### Espresso Test (Expected)
+ ### Espresso UI Test (Expected Soon) Alpha Test
  
 ## Dependency
 ```
