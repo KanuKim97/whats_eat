@@ -53,7 +53,9 @@
 ## Test Enviroment
  - Android Virtual Device 
  - Pixel 3a (Android Version 11.0 & API 30)
-
+ 
+ ### Espresso Test (Expected)
+ 
 ## Dependency
 ```
  //firebase
