@@ -2,16 +2,6 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home">
-        <menu>
-            <item
-                android:id="@+id/menuHome"
-                android:icon="@drawable/ic_home"
-                android:title="Home"/>
-        </menu>
-    </item>
-
-
     <item android:title="Profile">
         <menu>
             <item
@@ -40,11 +30,6 @@
 
     <item android:title="Others">
         <menu>
-            <item
-                android:id="@+id/menuSetting"
-                android:icon="@drawable/ic_settings"
-                android:title="Setting" />
-
             <item
                 android:id="@+id/menuSignOut"
                 android:icon="@drawable/ic_signout"

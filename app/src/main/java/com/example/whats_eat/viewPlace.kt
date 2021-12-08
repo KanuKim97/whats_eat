@@ -1,10 +1,13 @@
 package com.example.whats_eat
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.whats_eat.Common.Common
 import com.example.whats_eat.Common.Constant
@@ -19,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
 import java.lang.StringBuilder
 
 class viewPlace : AppCompatActivity() {
@@ -88,8 +92,7 @@ class viewPlace : AppCompatActivity() {
                 })
 
         viewPlaceBinding.showMap.setOnClickListener {
-            // TODO: Go back to maps fragment1 (How?)
-            // startActivity(Intent(this, Maps::class.java))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(mPlace!!.result!!.url)))
         }
 
         viewPlaceBinding.addCollection.setOnClickListener {
@@ -124,15 +127,7 @@ class viewPlace : AppCompatActivity() {
             }
 
 
-            // TODO: Go back to maps fragment2 (How?)
-            /* startActivity(Intent(this, Maps::class.java))
-            supportFragmentManager.beginTransaction()
-                    .replace(
-                            R.id.nav_host_fragment_container,
-                            supportFragmentManager.findFragmentById(R.id.map)!!
-                    )
-                    .commit()
-            */ //-----------------------------------------------------
+            // TODO: Go back to Collection fragment2 (How?)
         }
     }
 

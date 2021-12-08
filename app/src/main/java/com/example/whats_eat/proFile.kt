@@ -1,12 +1,14 @@
 package com.example.whats_eat
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.whats_eat.CollectionFragment.placeData
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -38,48 +40,39 @@ class proFile : Fragment() {
             override fun onCancelled(error: DatabaseError) { }
         })
 
-        userRef.child(auth.currentUser!!.uid).child("Collection")
-                .addValueEventListener(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        Log.d("count", snapshot.children.count().toString())
-                        //TODO : profileBinding Rating Number need to write it
-                        //proFileBinding.profileRateNum.text = "${snapshot.children.count()} Stars"
-                    }
 
-                    override fun onCancelled(error: DatabaseError) { }
-                })
+        userRef.child("Collection")
+                .get()
+                .addOnCompleteListener {
+                    if(it.isSuccessful) {
+
+                        proFileBinding.profileRateNum.text = "${it.result.childrenCount} Star"
+                    }
+                }
 
         //TODO : profile updateBtn Function need to be write it
         proFileBinding.updateBtn.setOnClickListener {
 
         }
 
-        //TODO : User Account Delete Btn Function need to be write it
         proFileBinding.deleteBtn.setOnClickListener {
 
             val deleteDialog = AlertDialog.Builder(activity)
 
             deleteDialog.setTitle("Notice!")
                     .setMessage("Do you Want Delete Your Account?")
-                    .setPositiveButton("Yes") { dialog, which ->
-                        Log.d("Log", dialog.toString())
-                        Log.d("Log", which.toString())
-                    }
-                    .setNegativeButton("No") { dialog, which ->
-                        Log.d("Log", dialog.toString())
-                        Log.d("Log", which.toString())
-                    }.show()
+                    .setPositiveButton("Yes") { _, _ ->
 
-        /*
-            //delete UserPart
-            currentUser.delete()
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            database.getReference("userInfo").child(currentUser.uid).removeValue()
-                            startActivity(Intent(requireContext(), logIn::class.java))
+                        currentUser.delete().addOnCompleteListener {
+
+                            if(it.isSuccessful) {
+                                database.getReference("userInfo").child(currentUser.uid).removeValue()
+                                startActivity(Intent(requireContext(), logIn::class.java))
+                            }
+
                         }
                     }
-        */
+                    .setNegativeButton("No") { _, _ -> }.show()
 
         }
 

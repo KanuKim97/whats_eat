@@ -28,7 +28,7 @@ class collectionAdapter(private val placeList : ArrayList<placeData>) : Recycler
         holder.placeAddress.text = place.placeAddress
         holder.placeRating.text = place.ratingNum.toString()
 
-        if (place.placePhotoUrl == null) {
+        if (place.placePhotoUrl.isNullOrEmpty()) {
 
             holder.placePhoto.visibility = View.GONE
         } else {
