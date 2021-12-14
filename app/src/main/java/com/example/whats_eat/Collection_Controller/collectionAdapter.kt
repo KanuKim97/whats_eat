@@ -1,4 +1,4 @@
-package com.example.whats_eat.CollectionFragment
+package com.example.whats_eat.Collection_Controller
 
 import android.net.Uri
 import android.util.Log
@@ -10,9 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.whats_eat.DataModel.placeData
 import com.example.whats_eat.R
 
-class collectionAdapter(private val placeList : ArrayList<placeData>) : RecyclerView.Adapter<collectionAdapter.collectionViewHolder>() {
+class collectionAdapter(private val placeList : ArrayList<placeData>)
+    : RecyclerView.Adapter<collectionAdapter.collectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): collectionViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.collection_item, parent, false)

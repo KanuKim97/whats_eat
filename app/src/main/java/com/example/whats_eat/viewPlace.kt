@@ -7,12 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.whats_eat.Common.Common
 import com.example.whats_eat.Common.Constant
 import com.example.whats_eat.Model.*
-import com.example.whats_eat.PlaceDataModel.viewPlaceModel
+import com.example.whats_eat.DataModel.viewPlaceModel
 import com.example.whats_eat.remote.IGoogleAPIService
 
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Url
 import java.lang.StringBuilder
 
 class viewPlace : AppCompatActivity() {
