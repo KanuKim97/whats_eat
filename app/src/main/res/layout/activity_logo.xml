@@ -8,7 +8,7 @@
     android:weightSum="1"
     android:background="#fff"
     android:orientation="vertical"
-    tools:context=".logo">
+    tools:context=".Logo">
 
     <ImageView
         android:layout_width="match_parent"

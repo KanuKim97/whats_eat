@@ -1,6 +1,6 @@
-package com.example.whats_eat.DataModel
+package com.example.whats_eat.dataModel
 
-data class viewPlaceModel(
+data class ViewPlaceModel(
     var placeName : String? = null,
     var placeAddress : String? = null,
     var ratingNum : Float? = null,

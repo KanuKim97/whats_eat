@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
 import com.example.whats_eat.databinding.ActivitySignInBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +43,7 @@ class SignIn : AppCompatActivity() {
         }
 
         signInBinding.toLoginBtn.setOnClickListener {
-            startActivity(Intent(this, logIn::class.java))
+            startActivity(Intent(this, Login::class.java))
             finish()
         }
     }
@@ -102,7 +101,7 @@ class SignIn : AppCompatActivity() {
 
                                 Toast.makeText(this, "Registration Success", Toast.LENGTH_SHORT).show()
 
-                                startActivity(Intent(this, logIn::class.java))
+                                startActivity(Intent(this, Login::class.java))
                                 finish()
 
                             } else {

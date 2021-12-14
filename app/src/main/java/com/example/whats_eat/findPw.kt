@@ -42,7 +42,7 @@ class findPw : AppCompatActivity() {
         }
 
         findPwBinding.toLoginBtn.setOnClickListener {
-            startActivity(Intent(this, logIn::class.java))
+            startActivity(Intent(this, Login::class.java))
             finish()
         }
 

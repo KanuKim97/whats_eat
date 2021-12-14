@@ -11,7 +11,7 @@ import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class proFile : Fragment() {
+class Profile : Fragment() {
     private lateinit var proFileBinding: FragmentProFileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -65,7 +65,7 @@ class proFile : Fragment() {
 
                             if(it.isSuccessful) {
                                 database.getReference("userInfo").child(currentUser.uid).removeValue()
-                                startActivity(Intent(requireContext(), logIn::class.java))
+                                startActivity(Intent(requireContext(), Login::class.java))
                             }
 
                         }

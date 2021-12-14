@@ -1,12 +1,12 @@
-package com.example.whats_eat.Common
+package com.example.whats_eat.common
 
-import com.example.whats_eat.Model.Results
+import com.example.whats_eat.model.Results
 import com.example.whats_eat.remote.IGoogleAPIService
 import com.example.whats_eat.remote.RetrofitClient
 
 object Common {
 
-    private val googleApiUrl = "https://maps.googleapis.com/"
+    private const val googleApiUrl = "https://maps.googleapis.com/"
 
     var currentPlace : Results? = null
 

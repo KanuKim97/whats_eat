@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     fun signOut(item: MenuItem){
         auth.signOut()
-        startActivity(Intent(this, logIn::class.java))
+        startActivity(Intent(this, Login::class.java))
         finish()
     }
 }

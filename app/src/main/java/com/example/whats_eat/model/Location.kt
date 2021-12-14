@@ -1,4 +1,4 @@
-package com.example.whats_eat.Model
+package com.example.whats_eat.model
 
 class Location {
     var lat : Double = 0.0

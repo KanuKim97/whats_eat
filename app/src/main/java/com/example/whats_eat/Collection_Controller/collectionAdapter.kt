@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.whats_eat.DataModel.placeData
+import com.example.whats_eat.dataModel.placeData
 import com.example.whats_eat.R
 
 class collectionAdapter(private val placeList : ArrayList<placeData>)

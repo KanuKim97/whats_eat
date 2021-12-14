@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.google.firebase.auth.FirebaseAuth
 
-class logo : AppCompatActivity() {
+class Logo : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class logo : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                startActivity(Intent(this, logIn::class.java))
+                startActivity(Intent(this, Login::class.java))
                 finish()
             }
         }, 5000)

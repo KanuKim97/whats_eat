@@ -7,7 +7,7 @@
     app:startDestination="@id/menuProfile">
     <fragment
         android:id="@+id/menuProfile"
-        android:name="com.example.whats_eat.proFile"
+        android:name="com.example.whats_eat.Profile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_pro_file" />
 
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/menuMaps"
-        android:name="com.example.whats_eat.Maps"
+        android:name="com.example.whats_eat.MapsFragment"
         android:label="fragment_Maps"
         android:layout="@layout/fragment_maps"
         />

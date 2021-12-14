@@ -8,10 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.whats_eat.Common.Common
-import com.example.whats_eat.Common.Constant
-import com.example.whats_eat.Model.*
-import com.example.whats_eat.DataModel.viewPlaceModel
+import com.example.whats_eat.common.Common
+import com.example.whats_eat.common.Constant
+import com.example.whats_eat.model.*
+import com.example.whats_eat.dataModel.ViewPlaceModel
 import com.example.whats_eat.remote.IGoogleAPIService
 
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
@@ -23,7 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.StringBuilder
 
-class viewPlace : AppCompatActivity() {
+class ViewPlace : AppCompatActivity() {
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
     private lateinit var mService : IGoogleAPIService
     private lateinit var database : FirebaseDatabase
@@ -103,7 +103,7 @@ class viewPlace : AppCompatActivity() {
             if(Common.currentPlace!!.photos == null) {
                 restaurantPhotos = null.toString()
 
-                val placeDetailArray = viewPlaceModel(
+                val placeDetailArray = ViewPlaceModel(
                         restaurantName,
                         restaurantAddress,
                         restaurantRating,
@@ -115,7 +115,7 @@ class viewPlace : AppCompatActivity() {
 
                 restaurantPhotos = getPhotoPlace(Common.currentPlace!!.photos!![0].photo_reference!!, 1000)
 
-                val placeDetailArray = viewPlaceModel(
+                val placeDetailArray = ViewPlaceModel(
                         restaurantName,
                         restaurantAddress,
                         restaurantRating,

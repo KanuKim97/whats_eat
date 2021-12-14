@@ -1,7 +1,6 @@
-package com.example.whats_eat.Model
+package com.example.whats_eat.model
 
-class Northeast {
+class Southwest {
     var lat : Double = 0.0
     var lng : Double = 0.0
-
 }

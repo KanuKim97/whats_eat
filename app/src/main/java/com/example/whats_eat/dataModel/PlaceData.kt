@@ -1,4 +1,4 @@
-package com.example.whats_eat.DataModel
+package com.example.whats_eat.dataModel
 
 data class placeData(
     var placeName : String? = null,

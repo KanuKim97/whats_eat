@@ -1,6 +1,6 @@
-package com.example.whats_eat.Model
+package com.example.whats_eat.model
 
-class Close {
+class Open {
     var day : Int? = 0
     var time : String? = null
 }
