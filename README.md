@@ -1,5 +1,5 @@
 # What's Eat? Application
- Android Studio Version : 4.1.2
+ Android Studio Version : Arctic Fox 
  
  Language : Kotlin
  
