@@ -46,7 +46,7 @@
   - Return Value is Json Document, So I used Json2csharp for parsing json document 
 
 ## Sdk Build Version
- - minSdkVersion : 19
+ - minSdkVersion : 25
  - targetSdkVersion : 31
  - compileSdkVersion : 31
 
