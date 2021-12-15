@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Home">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp" >
+
+                <TextView
+                    android:id="@+id/Welcome_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome!"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="26sp"/>
+
+                <TextView
+                    android:id="@+id/User_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/Welcome_txt"
+                    android:layout_marginLeft="10dp"
+                    android:text="Example!"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="26sp"/>
+
+            </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="have a nice day!"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/desc_comment"
+                        android:text="Today's Restaurant!"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/restName"
+                        android:text="restaurant_Name"
+                        android:paddingTop="5dp"
+                        android:layout_below = "@id/desc_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/restAddress"
+                        android:text="restaurant_Address"
+                        android:paddingTop="5dp"
+                        android:layout_below="@id/restName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Collections"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:paddingBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ScrollView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

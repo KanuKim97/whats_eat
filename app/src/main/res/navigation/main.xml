@@ -6,6 +6,12 @@
     android:id="@+id/main"
     app:startDestination="@id/menuProfile">
     <fragment
+        android:id="@+id/menuHome"
+        android:name="com.example.whats_eat.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
         android:id="@+id/menuProfile"
         android:name="com.example.whats_eat.Profile"
         android:label="fragment_profile"
