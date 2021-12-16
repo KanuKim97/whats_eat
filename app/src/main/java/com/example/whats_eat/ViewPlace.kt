@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -30,7 +29,7 @@ class ViewPlace : AppCompatActivity() {
     private lateinit var databaseReference : DatabaseReference
     private lateinit var auth : FirebaseAuth
 
-    var mPlace : placeDetail? = null
+    var mPlace : PlaceDetail? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +55,6 @@ class ViewPlace : AppCompatActivity() {
         }
 
         if(Common.currentPlace!!.rating != null) {
-            Log.d("rating", Common.currentPlace!!.rating.toString())
             viewPlaceBinding.rating.rating = Common.currentPlace!!.rating.toFloat()
         } else {
             viewPlaceBinding.rating.visibility = View.GONE
@@ -76,15 +74,15 @@ class ViewPlace : AppCompatActivity() {
         }
 
         mService.getDetailPlace(getPlaceDetailUrl(Common.currentPlace!!.place_id))
-                .enqueue(object : Callback<placeDetail> {
-                    override fun onResponse(call: Call<placeDetail>, response: Response<placeDetail>) {
+                .enqueue(object : Callback<PlaceDetail> {
+                    override fun onResponse(call: Call<PlaceDetail>, response: Response<PlaceDetail>) {
                         mPlace = response.body()
 
                         viewPlaceBinding.placeName.text = mPlace!!.result!!.name
                         viewPlaceBinding.placeAddress.text = mPlace!!.result!!.formatted_address
                     }
 
-                    override fun onFailure(call: Call<placeDetail>, t: Throwable) {
+                    override fun onFailure(call: Call<PlaceDetail>, t: Throwable) {
                         Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
                     }
                 })

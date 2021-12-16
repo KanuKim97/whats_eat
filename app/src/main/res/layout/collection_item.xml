@@ -28,6 +28,7 @@
             android:id="@+id/placeNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="15dp"
             android:text="Name : "
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/placeImage"/>
@@ -44,6 +45,7 @@
             android:id="@+id/placeAddressView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="15dp"
             android:text="Address : "
             app:layout_constraintTop_toBottomOf="@id/placeNameView"
             app:layout_constraintLeft_toRightOf="@id/placeImage"/>
@@ -61,6 +63,7 @@
             android:id="@+id/placeRatingView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="15dp"
             android:text="Rating : "
             app:layout_constraintTop_toBottomOf="@id/placeAddressView"
             app:layout_constraintLeft_toRightOf="@id/placeImage"/>

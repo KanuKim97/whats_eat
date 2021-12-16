@@ -35,7 +35,7 @@ class SignIn : AppCompatActivity() {
             val confPassword = signInBinding.localConfPasswordInput.text.toString()
 
             when {
-                validateEmailAddress(eMail) -> {
+                validateEmailAddress(eMail) && validateUserName(userName) -> {
                     onSignUpComplete(fullName, userName, eMail, passWord, confPassword)
                 }
             }
@@ -59,6 +59,15 @@ class SignIn : AppCompatActivity() {
             signInBinding.localEmailInput.text?.clear()
             false
         }
+    }
+
+    private fun validateUserName(userName: String): Boolean {
+        return if(userName.length > 15) {
+            Toast.makeText(this, "UserName is so long!", Toast.LENGTH_SHORT).show()
+            signInBinding.localUserNameInput.text?.clear()
+            false
+        } else
+            true
     }
 
     private fun onSignUpComplete(

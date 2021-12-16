@@ -37,6 +37,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:scaleType="centerCrop"
+                    android:contentDescription="profileImage"
                     app:srcCompat="@mipmap/ic_launcher" />
 
             </androidx.cardview.widget.CardView>
@@ -46,15 +47,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_toRightOf="@+id/CardView"
                 android:layout_toEndOf="@+id/CardView"
                 android:text="Example"
                 android:textSize="25sp"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -62,16 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
-                android:layout_toRightOf="@+id/CardView"
                 android:layout_toEndOf="@+id/CardView"
                 android:includeFontPadding="false"
                 android:layout_gravity="center_horizontal"
                 android:layout_below="@+id/nameTxt"
                 android:text="User@Example.com"
                 android:textSize="15sp"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
         </RelativeLayout>

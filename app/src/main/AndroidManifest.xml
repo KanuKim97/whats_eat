@@ -33,7 +33,7 @@
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".SignIn" />
-        <activity android:name=".findPw" />
+        <activity android:name=".FindPw" />
         <activity android:name=".MainActivity" />
 
         <meta-data

@@ -3,6 +3,7 @@ package com.example.whats_eat
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.whats_eat.databinding.ActivityLogInBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -29,7 +30,7 @@ class Login : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         logInBinding.findPwBtn.setOnClickListener {
-            startActivity(Intent(this, findPw::class.java))
+            startActivity(Intent(this, FindPw::class.java))
             finish()
         }
 
@@ -67,9 +68,12 @@ class Login : AppCompatActivity() {
                 if(it.isSuccessful){
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
-                } else {
-                    Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
                 }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, it.message.toString(), Toast.LENGTH_LONG).show()
+                logInBinding.emailInput.text?.clear()
+                logInBinding.passwordInput.text?.clear()
             }
     }
 

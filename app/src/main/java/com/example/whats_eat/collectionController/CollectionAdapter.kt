@@ -1,4 +1,4 @@
-package com.example.whats_eat.Collection_Controller
+package com.example.whats_eat.collectionController
 
 import android.net.Uri
 import android.util.Log
@@ -10,21 +10,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.whats_eat.dataModel.placeData
+import com.example.whats_eat.dataModel.PlaceData
 import com.example.whats_eat.R
 
-class collectionAdapter(private val placeList : ArrayList<placeData>)
-    : RecyclerView.Adapter<collectionAdapter.collectionViewHolder>() {
+class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
+    : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): collectionViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.collection_item, parent, false)
 
-        return collectionViewHolder(itemView)
+        return CollectionViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: collectionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CollectionViewHolder, position: Int) {
 
-        val place : placeData = placeList[position]
+        val place : PlaceData = placeList[position]
 
         holder.placeName.text = place.placeName
         holder.placeAddress.text = place.placeAddress
@@ -48,7 +48,7 @@ class collectionAdapter(private val placeList : ArrayList<placeData>)
         return placeList.size
     }
 
-    class collectionViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    class CollectionViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val placeName : TextView = itemView.findViewById(R.id.placeName)
         val placeAddress : TextView = itemView.findViewById(R.id.addressName)
         val placeRating : TextView = itemView.findViewById(R.id.ratingNum)

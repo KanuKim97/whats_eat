@@ -1,6 +1,6 @@
 package com.example.whats_eat.dataModel
 
-data class placeData(
+data class PlaceData(
     var placeName : String? = null,
     var placeAddress : String? = null,
     var ratingNum : Float? = null,

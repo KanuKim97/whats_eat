@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class findPw : AppCompatActivity() {
+class FindPw : AppCompatActivity() {
 
     private lateinit var findPwBinding: ActivityFindPwBinding
     private lateinit var auth: FirebaseAuth
@@ -32,7 +32,7 @@ class findPw : AppCompatActivity() {
 
                 if(it.isSuccessful) {
                     Toast.makeText(this, "Check your Email and reset Password!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, SignIn::class.java))
+                    startActivity(Intent(this, Login::class.java))
                     finish()
                 } else {
                     Toast.makeText(this, "Try again! Something wrong happened!", Toast.LENGTH_SHORT).show()

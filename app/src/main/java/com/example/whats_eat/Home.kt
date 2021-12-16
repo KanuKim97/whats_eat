@@ -27,7 +27,7 @@ class Home : Fragment() {
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference
             .child("userInfo")
-            .child(currentUser.toString())
+            .child(currentUser!!.uid)
 
         databaseReference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

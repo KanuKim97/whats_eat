@@ -8,18 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.whats_eat.Collection_Controller.collectionAdapter
-import com.example.whats_eat.dataModel.placeData
+import com.example.whats_eat.collectionController.CollectionAdapter
+import com.example.whats_eat.dataModel.PlaceData
 import com.example.whats_eat.databinding.FragmentCollectionBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlin.collections.ArrayList
 
-class collection : Fragment() {
+class Collection : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var placeArray: ArrayList<placeData>
-    private lateinit var collectionAdapter: collectionAdapter
+    private lateinit var placeArray: ArrayList<PlaceData>
+    private lateinit var CollectionAdapter: CollectionAdapter
 
     private lateinit var databaseReference: DatabaseReference
     private lateinit var database: FirebaseDatabase
@@ -38,9 +38,9 @@ class collection : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
-        placeArray = arrayListOf<placeData>()
+        placeArray = arrayListOf()
 
-        collectionAdapter = collectionAdapter(placeArray)
+        CollectionAdapter = CollectionAdapter(placeArray)
 
         collectionEventListener()
 
@@ -63,12 +63,12 @@ class collection : Fragment() {
 
                             for(placeSnapshot in snapshot.children) {
 
-                                val place = placeSnapshot.getValue(placeData::class.java)
+                                val place = placeSnapshot.getValue(PlaceData::class.java)
                                 Log.d("placeString", place.toString())
                                 placeArray.add(place!!)
                             }
 
-                            recyclerView.adapter = collectionAdapter(placeArray)
+                            recyclerView.adapter = CollectionAdapter(placeArray)
 
                         }
                     }
