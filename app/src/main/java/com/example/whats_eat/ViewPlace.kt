@@ -122,8 +122,6 @@ class ViewPlace : AppCompatActivity() {
                 databaseReference.push().setValue(placeDetailArray)
             }
 
-
-            // TODO: Go back to Collection fragment2 (How?)
         }
     }
 
