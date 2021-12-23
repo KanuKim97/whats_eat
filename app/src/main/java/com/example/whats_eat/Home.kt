@@ -29,7 +29,7 @@ class Home : Fragment() {
             .child("userInfo")
             .child(currentUser!!.uid)
 
-        databaseReference.addValueEventListener(object : ValueEventListener{
+        databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 homeBinding.UserTxt.text = snapshot.child("userName").value.toString()
             }
@@ -37,7 +37,17 @@ class Home : Fragment() {
             override fun onCancelled(error: DatabaseError) { }
         })
 
+        databaseReference.child("Collection")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    //TODO : Push keyValue Need it
+                }
+
+                override fun onCancelled(error: DatabaseError) { }
+            })
+
+
         return homeBinding.root
     }
-
+    
 }

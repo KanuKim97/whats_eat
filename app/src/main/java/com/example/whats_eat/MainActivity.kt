@@ -2,6 +2,7 @@ package com.example.whats_eat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@MainActivity, "LoadFailed", Toast.LENGTH_SHORT).show()
+                Log.d("DBError", error.message)
             }
         })
 

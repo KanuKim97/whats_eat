@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -55,15 +53,10 @@ class Profile : Fragment() {
         //TODO : profile updateBtn Function need to be write it
         proFileBinding.updateBtn.setOnClickListener {
             val intent = Intent()
-            val activityLauncher: ActivityResultLauncher<Intent> =
-                registerForActivityResult(ActivityResultContracts.StartActivityForResult){
-                    it.data
-                }
 
             intent.type = "Images/"
             intent.action = Intent.ACTION_GET_CONTENT
 
-            activityLauncher.launch(intent)
         }
 
         proFileBinding.deleteBtn.setOnClickListener {
