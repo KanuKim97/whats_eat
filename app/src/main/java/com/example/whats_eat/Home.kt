@@ -49,5 +49,5 @@ class Home : Fragment() {
 
         return homeBinding.root
     }
-    
+
 }
