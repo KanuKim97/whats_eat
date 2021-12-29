@@ -48,7 +48,6 @@ class FragmentViewPlace : Fragment() {
         return viewPlaceBinding.root
     }
 
-    
 
     private fun getPlaceDetailUrl(placeId: String?): String {
         val placeDetailUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/details/json")

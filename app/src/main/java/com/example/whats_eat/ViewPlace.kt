@@ -141,6 +141,5 @@ class ViewPlace : AppCompatActivity() {
         placePhotoUrl.append("&key=${Constant.API_KEYS}")
 
         return placePhotoUrl.toString()
-
     }
 }

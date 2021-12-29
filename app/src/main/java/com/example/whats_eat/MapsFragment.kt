@@ -1,9 +1,11 @@
 package com.example.whats_eat
 
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Looper
@@ -11,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.whats_eat.common.Common
 import com.example.whats_eat.common.Constant
 
@@ -48,11 +52,20 @@ class MapsFragment : Fragment() {
 
     internal lateinit var currentPlace: Myplaces
 
-    @SuppressLint("MissingPermission")
+
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
+
+        //TODO: permission Error?
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mMap!!.isMyLocationEnabled = true
+            }
+        } else {
+            mMap!!.isMyLocationEnabled = true
+        }
+
         mMap!!.isBuildingsEnabled = false
-        mMap!!.isMyLocationEnabled = true
         mMap!!.uiSettings.isZoomControlsEnabled = true
 
         mMap!!.setOnMarkerClickListener {
@@ -62,12 +75,65 @@ class MapsFragment : Fragment() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        return inflater.inflate(R.layout.fragment_maps, container, false)
+    }
+
+    private fun checkLocationPermission(): Boolean {
+        if(ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION )
+            != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION))
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                ), Constant.Location_PERMISSION_CODE)
+            else
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                ), Constant.Location_PERMISSION_CODE)
+            return false
+        }
+        else
+            return true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+       when(requestCode){
+
+           Constant.Location_PERMISSION_CODE -> {
+               if(grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                   if(ContextCompat.checkSelfPermission(
+                           requireContext(),
+                           Manifest.permission.ACCESS_FINE_LOCATION )
+                       == PackageManager.PERMISSION_GRANTED)
+                           if(checkLocationPermission()) {
+                               mMap!!.isMyLocationEnabled = true
+                           }
+               }
+               else {
+                   Toast.makeText(requireContext(), "Denied", Toast.LENGTH_SHORT).show()
+               }
+           }
+       }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            checkLocationPermission()
 
         buildLocationRequest()
         locationCallback()
@@ -81,20 +147,12 @@ class MapsFragment : Fragment() {
                 locationCallback,
                 Looper.getMainLooper()
             )
-
-        return inflater.inflate(R.layout.fragment_maps, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
     }
 
     private fun buildLocationRequest(){
         locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 3000
+            interval = 5000
             fastestInterval = 1000
             smallestDisplacement = 10f
         }
@@ -172,7 +230,6 @@ class MapsFragment : Fragment() {
 
     }
 
-
     private fun getUrl(latitude: Double, longitude: Double): String {
         val googlePlaceUrl =
             StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
@@ -183,4 +240,6 @@ class MapsFragment : Fragment() {
 
         return googlePlaceUrl.toString()
     }
+
+
 }
