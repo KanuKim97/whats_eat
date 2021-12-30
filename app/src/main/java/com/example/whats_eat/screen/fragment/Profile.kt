@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.fragment
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.whats_eat.screen.activity.Login
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -23,6 +24,7 @@ class Profile : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         proFileBinding = FragmentProFileBinding.inflate(layoutInflater)
+
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("userInfo")
@@ -45,22 +47,14 @@ class Profile : Fragment() {
                 .addOnCompleteListener {
                     if(it.isSuccessful) {
 
-                        proFileBinding.profileRateNum.text = "${it.result.childrenCount} Star"
+                        proFileBinding.profileRateNum.text = it.result.childrenCount.toString()
                     }
                 }
 
-        //Test Code
         //TODO : profile updateBtn Function need to be write it
-        proFileBinding.updateBtn.setOnClickListener {
-            val intent = Intent()
-
-            intent.type = "Images/"
-            intent.action = Intent.ACTION_GET_CONTENT
-
-        }
+        proFileBinding.updateBtn.setOnClickListener { }
 
         proFileBinding.deleteBtn.setOnClickListener {
-
             val deleteDialog = AlertDialog.Builder(activity)
 
             deleteDialog.setTitle("Notice!")

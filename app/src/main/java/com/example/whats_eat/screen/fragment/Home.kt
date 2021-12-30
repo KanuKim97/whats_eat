@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

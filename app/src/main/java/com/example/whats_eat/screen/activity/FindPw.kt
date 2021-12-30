@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.google.firebase.auth.FirebaseAuth
+
+// Find Password -> Activity_FindPassword.xml Controller
 
 class FindPw : AppCompatActivity() {
 

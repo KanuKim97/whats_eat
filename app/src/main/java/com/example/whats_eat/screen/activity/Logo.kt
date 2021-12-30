@@ -1,10 +1,12 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import com.example.whats_eat.screen.MainActivity
+import com.example.whats_eat.R
 import com.google.firebase.auth.FirebaseAuth
 
 class Logo : AppCompatActivity() {

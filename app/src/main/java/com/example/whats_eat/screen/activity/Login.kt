@@ -1,14 +1,18 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+
+import com.example.whats_eat.R
+import com.example.whats_eat.screen.MainActivity
 import com.example.whats_eat.databinding.ActivityLogInBinding
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+
 import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
@@ -19,6 +23,7 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logInBinding = ActivityLogInBinding.inflate(layoutInflater)
+
         setContentView(logInBinding.root)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -29,31 +34,16 @@ class Login : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = FirebaseAuth.getInstance()
 
+        logInBinding.logInBtn.setOnClickListener {
+            validateUserData(
+                logInBinding.emailInput.text.toString(),
+                logInBinding.passwordInput.text.toString()
+            )
+        }
+
         logInBinding.findPwBtn.setOnClickListener {
             startActivity(Intent(this, FindPw::class.java))
             finish()
-        }
-
-        logInBinding.logInBtn.setOnClickListener {
-            val userEmail : String = logInBinding.emailInput.text.toString()
-            val userPassword :  String = logInBinding.passwordInput.text.toString()
-
-            if(userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
-                readUserData(userEmail, userPassword)
-
-            } else {
-                when {
-                    userEmail.isEmpty() -> {
-                        Toast.makeText(this, "Plz Enter Email", Toast.LENGTH_SHORT).show()
-                    }
-                    userPassword.isEmpty() -> {
-                        Toast.makeText(this, "Plz Enter Password", Toast.LENGTH_SHORT).show()
-                    }
-                    else -> {
-                        Toast.makeText(this, "Plz Enter Email & Password", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
         }
 
         logInBinding.signUpBtn.setOnClickListener {
@@ -62,6 +52,7 @@ class Login : AppCompatActivity() {
         }
     }
 
+    //Read Login User Data in TextInputBox
     private fun readUserData(userEmail: String, userPassword: String) {
         auth.signInWithEmailAndPassword(userEmail, userPassword)
             .addOnCompleteListener {
@@ -77,5 +68,23 @@ class Login : AppCompatActivity() {
             }
     }
 
+    // Validate User Login Data When TextBox is Empty
+    private fun validateUserData(userEmail: String, userPassword: String){
+        if(userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
+            readUserData(userEmail, userPassword)
+        } else {
+            when {
+                userEmail.isEmpty() -> {
+                    Toast.makeText(this, "Plz Enter Email", Toast.LENGTH_SHORT).show()
+                }
+                userPassword.isEmpty() -> {
+                    Toast.makeText(this, "Plz Enter Password", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(this, "Plz Enter Email & Password", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -36,10 +36,15 @@ class SignIn : AppCompatActivity() {
 
             when {
                 validateEmailAddress(eMail) && validateUserName(userName) -> {
-                    onSignUpComplete(fullName, userName, eMail, passWord, confPassword)
+                    onSignUpComplete(
+                        fullName,
+                        userName,
+                        eMail,
+                        passWord,
+                        confPassword
+                    )
                 }
             }
-
         }
 
         signInBinding.toLoginBtn.setOnClickListener {
@@ -49,10 +54,9 @@ class SignIn : AppCompatActivity() {
     }
 
 
-    private fun validateEmailAddress(eMail : String): Boolean {
-        val emailInput : String = eMail
 
-        return if (Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+    private fun validateEmailAddress(eMail : String): Boolean {
+        return if (Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) {
             true
         } else {
             Toast.makeText(this, "Invalid Email Address! Plz Type again", Toast.LENGTH_SHORT).show()

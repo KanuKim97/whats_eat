@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.example.whats_eat.R
+import com.example.whats_eat.screen.activity.Login
 import com.example.whats_eat.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

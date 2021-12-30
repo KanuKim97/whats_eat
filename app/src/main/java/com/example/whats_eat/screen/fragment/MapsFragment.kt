@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.fragment
 
 
 import android.Manifest
@@ -15,6 +15,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.whats_eat.R
+import com.example.whats_eat.screen.activity.ViewPlace
 import com.example.whats_eat.common.Common
 import com.example.whats_eat.common.Constant
 

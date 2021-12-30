@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +19,7 @@ class Collection : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var placeArray: ArrayList<PlaceData>
-    private lateinit var CollectionAdapter: CollectionAdapter
+    private lateinit var collectionAdapter: CollectionAdapter
 
     private lateinit var databaseReference: DatabaseReference
     private lateinit var database: FirebaseDatabase
@@ -40,7 +40,7 @@ class Collection : Fragment() {
 
         placeArray = arrayListOf()
 
-        CollectionAdapter = CollectionAdapter(placeArray)
+        collectionAdapter = CollectionAdapter(placeArray)
 
         collectionEventListener()
 

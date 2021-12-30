@@ -22,9 +22,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".ViewPlace" />
+        <activity android:name=".screen.activity.ViewPlace" />
         <activity
-            android:name=".Logo"
+            android:name=".screen.activity.Logo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
-        <activity android:name=".SignIn" />
-        <activity android:name=".FindPw" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".screen.activity.Login" />
+        <activity android:name=".screen.activity.SignIn" />
+        <activity android:name=".screen.activity.FindPw" />
+        <activity android:name=".screen.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

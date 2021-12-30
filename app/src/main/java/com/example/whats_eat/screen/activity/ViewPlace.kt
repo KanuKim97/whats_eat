@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.example.whats_eat.screen.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -21,6 +21,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.StringBuilder
+
+//TODO: Clean This Activity Code And Check Need it
 
 class ViewPlace : AppCompatActivity() {
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
