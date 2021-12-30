@@ -53,28 +53,6 @@ class MapsFragment : Fragment() {
     internal lateinit var currentPlace: Myplaces
 
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        mMap = googleMap
-
-        //TODO: permission Error?
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                mMap!!.isMyLocationEnabled = true
-            }
-        } else {
-            mMap!!.isMyLocationEnabled = true
-        }
-
-        mMap!!.isBuildingsEnabled = false
-        mMap!!.uiSettings.isZoomControlsEnabled = true
-
-        mMap!!.setOnMarkerClickListener {
-            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(it.snippet.toString()))
-            startActivity(Intent(requireContext(), ViewPlace::class.java))
-            true
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -101,6 +79,28 @@ class MapsFragment : Fragment() {
         }
         else
             return true
+    }
+
+    private val callback = OnMapReadyCallback { googleMap ->
+        mMap = googleMap
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mMap!!.isMyLocationEnabled=true
+        }
+
+
+        mMap!!.isBuildingsEnabled = false
+        mMap!!.uiSettings.isZoomControlsEnabled = true
+
+        mMap!!.setOnMarkerClickListener {
+            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(it.snippet.toString()))
+            startActivity(Intent(requireContext(), ViewPlace::class.java))
+            true
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -132,7 +132,7 @@ class MapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
             checkLocationPermission()
 
         buildLocationRequest()
