@@ -60,8 +60,42 @@ class MapsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_maps, container, false)
+    }
+
+    private val callback = OnMapReadyCallback { googleMap ->
+        mMap = googleMap
+        enabledMyLocation()
+        mMap!!.isBuildingsEnabled = false
+        mMap!!.uiSettings.isZoomControlsEnabled = true
+
+        mMap!!.setOnMarkerClickListener {
+            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(it.snippet.toString()))
+            startActivity(Intent(requireContext(), ViewPlace::class.java))
+            true
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+            checkLocationPermission()
+
+        buildLocationRequest()
+        locationCallback()
+
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
+
+        fusedLocationProviderClient
+            .requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
     }
 
     private fun checkLocationPermission(): Boolean {
@@ -81,28 +115,6 @@ class MapsFragment : Fragment() {
         }
         else
             return true
-    }
-
-    private val callback = OnMapReadyCallback { googleMap ->
-        mMap = googleMap
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            mMap!!.isMyLocationEnabled=true
-        }
-
-
-        mMap!!.isBuildingsEnabled = false
-        mMap!!.uiSettings.isZoomControlsEnabled = true
-
-        mMap!!.setOnMarkerClickListener {
-            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(it.snippet.toString()))
-            startActivity(Intent(requireContext(), ViewPlace::class.java))
-            true
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -127,28 +139,6 @@ class MapsFragment : Fragment() {
                }
            }
        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-            checkLocationPermission()
-
-        buildLocationRequest()
-        locationCallback()
-
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireContext())
-
-        fusedLocationProviderClient
-            .requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.getMainLooper()
-            )
     }
 
     private fun buildLocationRequest(){
@@ -177,6 +167,19 @@ class MapsFragment : Fragment() {
                 nearByPlace()
 
             }
+        }
+    }
+
+    private fun enabledMyLocation() {
+        if(
+            ContextCompat.checkSelfPermission(
+                requireContext()
+                , Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mMap!!.isMyLocationEnabled = true
+        } else {
+            checkLocationPermission()
         }
     }
 
