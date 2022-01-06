@@ -53,8 +53,6 @@ class SignIn : AppCompatActivity() {
         }
     }
 
-
-
     private fun validateEmailAddress(eMail : String): Boolean {
         return if (Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) {
             true

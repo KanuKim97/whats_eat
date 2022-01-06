@@ -77,7 +77,4 @@ class Profile : Fragment() {
         return proFileBinding.root
     }
 
-
-
-
 }

@@ -75,7 +75,6 @@ class Collection : Fragment() {
 
                     override fun onCancelled(error: DatabaseError) { }
                 })
-
     }
 
 }

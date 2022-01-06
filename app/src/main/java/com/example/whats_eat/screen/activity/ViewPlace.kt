@@ -54,6 +54,8 @@ class ViewPlace : AppCompatActivity() {
             Glide.with(this)
                 .load(getPhotoPlace(Common.currentPlace!!.photos!![0].photo_reference!!, 1000))
                 .into(viewPlaceBinding.placeImg)
+        } else {
+
         }
 
         if(Common.currentPlace!!.rating != null) {
@@ -109,7 +111,8 @@ class ViewPlace : AppCompatActivity() {
                         restaurantRating,
                         restaurantPhotos)
 
-                databaseReference.push().setValue(placeDetailArray)
+                databaseReference.push()
+                    .setValue(placeDetailArray)
 
             } else {
 
@@ -122,6 +125,8 @@ class ViewPlace : AppCompatActivity() {
                         restaurantPhotos)
 
                 databaseReference.push().setValue(placeDetailArray)
+
+                onBackPressed()
             }
 
         }

@@ -51,7 +51,6 @@ class MapsFragment : Fragment() {
     private lateinit var locationRequest: LocationRequest
 
     lateinit var mServices: IGoogleAPIService
-
     internal lateinit var currentPlace: Myplaces
 
 
