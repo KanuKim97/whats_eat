@@ -5,7 +5,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Build
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Looper
@@ -80,8 +79,7 @@ class MapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-            checkLocationPermission()
+        checkLocationPermission()
 
         buildLocationRequest()
         locationCallback()
