@@ -41,7 +41,6 @@ class Profile : Fragment() {
             override fun onCancelled(error: DatabaseError) { }
         })
 
-
         userRef.child("Collection")
                 .get()
                 .addOnCompleteListener {
@@ -71,7 +70,6 @@ class Profile : Fragment() {
                         }
                     }
                     .setNegativeButton("No") { _, _ -> }.show()
-
         }
 
         return proFileBinding.root
