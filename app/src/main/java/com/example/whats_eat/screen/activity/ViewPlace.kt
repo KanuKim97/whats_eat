@@ -91,6 +91,10 @@ class ViewPlace : AppCompatActivity() {
                 onBackPressed()
             }
 
+            viewPlaceBinding.backToMap.setOnClickListener {
+                onBackPressed()
+            }
+
         }
     }
 

@@ -87,6 +87,17 @@
                 android:textColor="#fff"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/backToMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="#000"
+                android:text="Go Back To maps"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>

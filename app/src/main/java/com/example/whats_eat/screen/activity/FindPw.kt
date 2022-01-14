@@ -53,6 +53,5 @@ class FindPw : AppCompatActivity() {
             finish()
         }
 
-
     }
 }
