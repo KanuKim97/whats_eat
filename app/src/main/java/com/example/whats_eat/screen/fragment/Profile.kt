@@ -51,7 +51,9 @@ class Profile : Fragment() {
                 }
 
         //TODO : profile updateBtn Function need to be write it
-        proFileBinding.updateBtn.setOnClickListener { }
+        proFileBinding.updateBtn.setOnClickListener {
+
+        }
 
         proFileBinding.deleteBtn.setOnClickListener {
             val deleteDialog = AlertDialog.Builder(activity)
