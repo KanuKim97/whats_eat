@@ -22,12 +22,11 @@
  2. bookmark (Your food restaurant Collection)
 
 ### Application Progress
- - Sign Up, Sign Out, Log In Fuction (Finished)
- - Reset Password function when Users are forgot their password (Finished)
+ - Sign Up, Sign Out, Log In Fuction
+ - Reset Password function when Users are forgot their password 
  - Profile (Working on it) 
  - Collection (Not yet)
- - Maps (Working on it)
- - Setting (Not yet)
+ - Maps 
 
 ### FireBase RealTime DataBase Design (noSql DataBase)
 
