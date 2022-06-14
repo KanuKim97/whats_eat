@@ -1,4 +1,8 @@
 <resources>
+
     <string name="app_name">what\'s_eat</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="API_KEYS">AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM</string>
+    <string name="TypePlace"> restaurant </string>
+
 </resources>

@@ -1,8 +1,11 @@
 package com.example.whats_eat.common
 
 object Constant {
-    //Permission Code
-    const val Location_PERMISSION_CODE : Int = 1000
-    const val API_KEYS : String = "AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM"
-    const val TypePlace : String = "restaurant"
+    // Permission Code
+    const val Location_PERMISSION_CODE: Int = 1000
+    // const val API_KEYS: String = "AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM"
+    const val TypePlace: String = "restaurant"
+
+    const val INearPlaceAPIUri: String = "https://maps.googleapis.com/maps/api/place/nearbysearch"
+    const val IPlaceDetailAPIUri: String = "https://maps.googleapis.com/maps/api/place/details"
 }

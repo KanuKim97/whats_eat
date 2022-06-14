@@ -19,8 +19,8 @@ import com.example.whats_eat.screen.activity.ViewPlace
 import com.example.whats_eat.common.Common
 import com.example.whats_eat.common.Constant
 
-import com.example.whats_eat.model.Myplaces
-import com.example.whats_eat.remote.IGoogleAPIService
+import com.example.whats_eat.data.model.nearByPlace.Myplaces
+import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices

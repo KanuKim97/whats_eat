@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.whats_eat.collectionController.CollectionAdapter
-import com.example.whats_eat.dataModel.PlaceData
+import com.example.whats_eat.data.model.nearByPlace.PlaceData
 import com.example.whats_eat.databinding.FragmentCollectionBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

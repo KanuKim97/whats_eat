@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.whats_eat.dataModel.PlaceData
+import com.example.whats_eat.data.model.nearByPlace.PlaceData
 import com.example.whats_eat.R
 
 class CollectionAdapter(private val placeList : ArrayList<PlaceData>)

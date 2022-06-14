@@ -1,8 +1,8 @@
 package com.example.whats_eat.common
 
-import com.example.whats_eat.model.Results
-import com.example.whats_eat.remote.IGoogleAPIService
-import com.example.whats_eat.remote.RetrofitClient
+import com.example.whats_eat.data.model.commonModel.Results
+import com.example.whats_eat.data.remote.IGoogleAPIService
+import com.example.whats_eat.data.remote.RetrofitClient
 
 object Common {
 

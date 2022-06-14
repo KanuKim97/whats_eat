@@ -1,4 +1,4 @@
-package com.example.whats_eat.model
+package com.example.whats_eat.data.model.commonModel.modelContent.loaction
 
 class Northeast {
     var lat : Double = 0.0

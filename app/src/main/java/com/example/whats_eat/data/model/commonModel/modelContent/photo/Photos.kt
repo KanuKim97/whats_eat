@@ -1,4 +1,4 @@
-package com.example.whats_eat.model
+package com.example.whats_eat.data.model.commonModel.modelContent.photo
 
 class Photos {
     var height : Int = 0
