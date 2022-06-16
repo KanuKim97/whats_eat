@@ -3,6 +3,7 @@ package com.example.whats_eat.screen.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 
 import com.example.whats_eat.R
@@ -15,7 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 import com.google.firebase.auth.FirebaseAuth
 
-class Login : AppCompatActivity() {
+class Login : AppCompatActivity(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var logInBinding: ActivityLogInBinding
@@ -26,30 +27,56 @@ class Login : AppCompatActivity() {
 
         setContentView(logInBinding.root)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+    }
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+    override fun onResume() {
+        super.onResume()
+
+        val googleSignOption =
+            GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignOption)
         auth = FirebaseAuth.getInstance()
 
-        logInBinding.logInBtn.setOnClickListener {
-            validateUserData(
-                logInBinding.emailInput.text.toString(),
-                logInBinding.passwordInput.text.toString()
-            )
+        logInBinding.logInBtn.setOnClickListener(this)
+        logInBinding.findPwBtn.setOnClickListener(this)
+        logInBinding.signUpBtn.setOnClickListener(this)
+
+    }
+
+    override fun onClick(v: View?){
+
+        when (v?.id) {
+
+            R.id.logInBtn ->
+                validateUserData(
+                    logInBinding.emailInput.text.toString(),
+                    logInBinding.passwordInput.text.toString()
+                )
+
+            R.id.findPwBtn -> {
+                startActivity(Intent(this, FindPw::class.java))
+                finish()
+            }
+
+            R.id.signUpBtn -> {
+                startActivity(Intent(this, SignIn::class.java))
+                finish()
+            }
+
         }
 
-        logInBinding.findPwBtn.setOnClickListener {
-            startActivity(Intent(this, FindPw::class.java))
-            finish()
-        }
+    }
 
-        logInBinding.signUpBtn.setOnClickListener {
-            startActivity(Intent(this, SignIn::class.java))
-            finish()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+
+        logInBinding.emailInput.text?.clear()
+        logInBinding.passwordInput.text?.clear()
     }
 
     //Read Login User Data in TextInputBox

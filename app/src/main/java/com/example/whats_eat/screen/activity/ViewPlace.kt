@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.whats_eat.R
 import com.example.whats_eat.common.Common
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
@@ -150,7 +151,7 @@ class ViewPlace : AppCompatActivity() {
     private fun getPlaceDetailUrl(placeId: String?): String {
         val placeDetailUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/details/json")
         placeDetailUrl.append("?place_id=$placeId")
-        placeDetailUrl.append("&key=${Constant.API_KEYS}")
+        placeDetailUrl.append("&key=${R.string.API_KEYS}")
 
         return placeDetailUrl.toString()
     }
@@ -160,7 +161,7 @@ class ViewPlace : AppCompatActivity() {
         val placePhotoUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/photo")
         placePhotoUrl.append("?maxwidth=$maxWidth")
         placePhotoUrl.append("&photo_reference=$photoReference")
-        placePhotoUrl.append("&key=${Constant.API_KEYS}")
+        placePhotoUrl.append("&key=${R.string.API_KEYS}")
 
         return placePhotoUrl.toString()
     }

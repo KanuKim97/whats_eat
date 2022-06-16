@@ -61,19 +61,6 @@ class MapsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        mMap = googleMap
-        enabledMyLocation()
-        mMap!!.isBuildingsEnabled = false
-        mMap!!.uiSettings.isZoomControlsEnabled = true
-
-        mMap!!.setOnMarkerClickListener {
-            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(it.snippet.toString()))
-            startActivity(Intent(requireContext(), ViewPlace::class.java))
-            true
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -93,6 +80,19 @@ class MapsFragment : Fragment() {
                 locationCallback,
                 Looper.getMainLooper()
             )
+    }
+
+    private val callback = OnMapReadyCallback { googleMap ->
+        mMap = googleMap
+        enabledMyLocation()
+        mMap!!.isBuildingsEnabled = false
+        mMap!!.uiSettings.isZoomControlsEnabled = true
+
+        mMap!!.setOnMarkerClickListener {
+            Common.currentPlace = currentPlace.results?.get(Integer.parseInt(it.snippet.toString()))
+            startActivity(Intent(requireContext(), ViewPlace::class.java))
+            true
+        }
     }
 
     private fun checkLocationPermission(): Boolean {
@@ -203,7 +203,7 @@ class MapsFragment : Fragment() {
                         markerOptions.position(latLng)
                         markerOptions.title(placeName)
 
-                        if (Constant.TypePlace == "restaurant") {
+                        if ((R.string.TypePlace).equals("restaurant")) {
                             markerOptions.icon(
                                 BitmapDescriptorFactory.defaultMarker(
                                     BitmapDescriptorFactory.HUE_BLUE
@@ -237,8 +237,8 @@ class MapsFragment : Fragment() {
             StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
         googlePlaceUrl.append("?location=$latitude,$longitude")
         googlePlaceUrl.append("&radius=1000")
-        googlePlaceUrl.append("&type=${Constant.TypePlace}")
-        googlePlaceUrl.append("&key=${Constant.API_KEYS}")
+        googlePlaceUrl.append("&type=${R.string.TypePlace}")
+        googlePlaceUrl.append("&key=${R.string.API_KEYS}")
 
         return googlePlaceUrl.toString()
     }
