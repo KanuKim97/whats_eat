@@ -1,4 +1,4 @@
-package com.example.whats_eat.common
+package com.example.whats_eat.data.common
 
 object Constant {
 

@@ -8,8 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.whats_eat.R
-import com.example.whats_eat.common.Common
-import com.example.whats_eat.common.Constant
+import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
 import com.example.whats_eat.data.remote.IGoogleAPIService
 
@@ -23,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.StringBuilder
 
-class ViewPlace : AppCompatActivity() {
+class ViewPlace : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
     private lateinit var mService : IGoogleAPIService
     private lateinit var database : FirebaseDatabase
@@ -47,56 +46,75 @@ class ViewPlace : AppCompatActivity() {
                 .child("${auth.currentUser?.uid}")
                 .child("Collection")
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         viewControl()
         serviceCall()
 
-        viewPlaceBinding.showMap.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(mPlace!!.result!!.url)))
-        }
+        viewPlaceBinding.showMap.setOnClickListener(this)
+        viewPlaceBinding.addCollection.setOnClickListener(this)
+        viewPlaceBinding.backToMap.setOnClickListener(this)
+    }
 
-        viewPlaceBinding.addCollection.setOnClickListener {
-            val restaurantName : String = mPlace!!.result!!.name.toString()
-            val restaurantAddress : String = mPlace!!.result!!.formatted_address.toString()
-            val restaurantRating : Float = Common.currentPlace!!.rating.toFloat()
-            val restaurantPhotos : String
+    override fun onClick(v: View?) {
 
-            if(Common.currentPlace!!.photos == null) {
-                restaurantPhotos = null.toString()
+        when(v?.id) {
+            R.id.backToMap ->
+                onBackPressed()
 
-                val placeDetailArray = ViewPlaceModel(
+            R.id.showMap ->
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(mPlace!!.result!!.url)
+                    )
+                )
+
+            R.id.addCollection -> {
+                val restaurantName : String = mPlace!!.result!!.name.toString()
+                val restaurantAddress : String = mPlace!!.result!!.formatted_address.toString()
+                val restaurantRating : Float = Common.currentPlace!!.rating.toFloat()
+                val restaurantPhotos : String
+
+                if(Common.currentPlace!!.photos == null) {
+                    restaurantPhotos = null.toString()
+
+                    val placeDetailArray = ViewPlaceModel(
                         restaurantName,
                         restaurantAddress,
                         restaurantRating,
                         restaurantPhotos)
 
-                databaseReference
-                    .push()
-                    .setValue(placeDetailArray)
+                    databaseReference
+                        .push()
+                        .setValue(placeDetailArray)
 
-            } else {
-                restaurantPhotos =
-                    getPhotoPlace(
-                        Common.currentPlace!!.photos!![0].photo_reference!!
-                        ,viewPlaceBinding.placeImg.width)
+                } else {
+                    restaurantPhotos =
+                        getPhotoPlace(
+                            Common.currentPlace!!.photos!![0].photo_reference!!
+                            ,viewPlaceBinding.placeImg.width)
 
-                val placeDetailArray = ViewPlaceModel(
+                    val placeDetailArray = ViewPlaceModel(
                         restaurantName,
                         restaurantAddress,
                         restaurantRating,
                         restaurantPhotos)
 
-                databaseReference
-                    .push()
-                    .setValue(placeDetailArray)
+                    databaseReference
+                        .push()
+                        .setValue(placeDetailArray)
 
-                onBackPressed()
-            }
+                    onBackPressed()
+                }
 
-            viewPlaceBinding.backToMap.setOnClickListener {
-                onBackPressed()
             }
 
         }
+
     }
 
     private fun viewControl() {

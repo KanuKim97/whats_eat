@@ -16,8 +16,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.whats_eat.R
 import com.example.whats_eat.screen.activity.ViewPlace
-import com.example.whats_eat.common.Common
-import com.example.whats_eat.common.Constant
+import com.example.whats_eat.data.common.Common
+import com.example.whats_eat.data.common.Constant
 
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.IGoogleAPIService

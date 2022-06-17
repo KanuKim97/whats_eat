@@ -1,4 +1,4 @@
-package com.example.whats_eat.common
+package com.example.whats_eat.data.common
 
 import com.example.whats_eat.data.model.commonModel.Results
 import com.example.whats_eat.data.remote.IGoogleAPIService

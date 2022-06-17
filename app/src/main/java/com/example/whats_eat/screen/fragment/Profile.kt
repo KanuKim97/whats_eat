@@ -7,17 +7,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.whats_eat.R
 import com.example.whats_eat.screen.activity.Login
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class Profile : Fragment() {
+class Profile : Fragment(), View.OnClickListener {
     private lateinit var proFileBinding: FragmentProFileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+        databaseReference = database.reference.child("userInfo")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,56 +34,105 @@ class Profile : Fragment() {
     ): View {
         proFileBinding = FragmentProFileBinding.inflate(layoutInflater)
 
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
-        databaseReference = database.reference.child("userInfo")
+        return proFileBinding.root
+    }
 
-        val currentUser = auth.currentUser
-        val userRef = databaseReference.child(currentUser?.uid!!)
+    override fun onResume() {
+        super.onResume()
 
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                proFileBinding.nameTxt.text = snapshot.child("userName").value.toString()
-                proFileBinding.emailTxt.text = snapshot.child("eMail").value.toString()
-            }
+        showUserProfile()
+        proFileBinding.updateBtn.setOnClickListener(this)
+        proFileBinding.deleteBtn.setOnClickListener(this)
+    }
 
-            override fun onCancelled(error: DatabaseError) { }
-        })
+    override fun onClick(v: View?) {
 
-        userRef.child("Collection")
-                .get()
-                .addOnCompleteListener {
-                    if(it.isSuccessful) {
+        when(v?.id) {
 
-                        proFileBinding.profileRateNum.text = it.result.childrenCount.toString()
-                    }
-                }
+            R.id.updateBtn ->
+                Toast.makeText(
+                    requireContext(),
+                    "not updated yet",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-        //TODO : profile updateBtn Function need to be write it
-        proFileBinding.updateBtn.setOnClickListener {
+            R.id.deleteBtn -> {
 
-        }
+                val profileDeleteDialog = AlertDialog.Builder(activity)
+                val currentUser = auth.currentUser
 
-        proFileBinding.deleteBtn.setOnClickListener {
-            val deleteDialog = AlertDialog.Builder(activity)
-
-            deleteDialog.setTitle("Notice!")
+                profileDeleteDialog
+                    .setTitle("Notice!")
                     .setMessage("Do you Want Delete Your Account?")
                     .setPositiveButton("Yes") { _, _ ->
 
-                        currentUser.delete().addOnCompleteListener {
+                        currentUser?.delete()?.addOnCompleteListener {
 
-                            if(it.isSuccessful) {
-                                database.getReference("userInfo").child(currentUser.uid).removeValue()
+                            if (it.isSuccessful) {
+                                database
+                                    .getReference("userInfo")
+                                    .child(currentUser.uid)
+                                    .removeValue()
                                 startActivity(Intent(requireContext(), Login::class.java))
                             }
 
                         }
-                    }
-                    .setNegativeButton("No") { _, _ -> }.show()
-        }
 
-        return proFileBinding.root
+                    }
+                    .setNegativeButton("No") { _, _ ->}
+                    .show()
+
+            }
+
+        }
     }
+
+    private fun showUserProfile() {
+        val currentUser = auth.currentUser
+        val userRef = databaseReference.child(currentUser?.uid!!)
+        val userColRef = userRef.child("Collection")
+
+        userRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                proFileBinding.nameTxt.text =
+                    snapshot.child("userName").value.toString()
+
+                proFileBinding.emailTxt.text =
+                    snapshot.child("eMail").value.toString()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+                Toast.makeText(
+                    requireContext(),
+                    error.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+        })
+
+        userColRef
+            .get()
+            .addOnCompleteListener {
+
+                proFileBinding.profileRateNum.text =
+                    it.result.childrenCount.toString()
+
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(
+                    requireContext(),
+                    it.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+    }
+
 
 }

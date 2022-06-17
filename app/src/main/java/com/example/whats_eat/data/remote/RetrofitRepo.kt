@@ -1,6 +1,6 @@
 package com.example.whats_eat.data.remote
 
-import com.example.whats_eat.common.Constant
+import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.detailPlace.PlaceDetail
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
 import retrofit2.Call
