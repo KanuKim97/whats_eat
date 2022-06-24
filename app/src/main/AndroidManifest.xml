@@ -12,9 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,9 +21,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".screen.activity.ViewPlace" />
+        <activity android:name=".screen.activity.ViewPlaceActivity" />
         <activity
-            android:name=".screen.activity.Logo"
+            android:name=".screen.activity.LogoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,9 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.activity.Login" />
-        <activity android:name=".screen.activity.SignIn" />
-        <activity android:name=".screen.activity.FindPw" />
+        <activity android:name=".screen.activity.LoginActivity" />
+        <activity android:name=".screen.activity.SignInActivity" />
+        <activity android:name=".screen.activity.FindPwActivity" />
         <activity android:name=".screen.MainActivity" />
 
         <meta-data

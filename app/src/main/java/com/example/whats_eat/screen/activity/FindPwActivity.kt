@@ -9,7 +9,7 @@ import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class FindPw : AppCompatActivity(), View.OnClickListener {
+class FindPwActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var findPwBinding: ActivityFindPwBinding
     private lateinit var auth: FirebaseAuth
@@ -35,12 +35,12 @@ class FindPw : AppCompatActivity(), View.OnClickListener {
         when(v?.id){
 
             R.id.toLoginBtn -> {
-                startActivity(Intent(this, Login::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
 
             R.id.toSignInBtn -> {
-                startActivity(Intent(this, SignIn::class.java))
+                startActivity(Intent(this, SignInActivity::class.java))
                 finish()
             }
 
@@ -57,7 +57,7 @@ class FindPw : AppCompatActivity(), View.OnClickListener {
                     auth.sendPasswordResetEmail(findPwEmail).addOnCompleteListener {
                         if(it.isSuccessful) {
                             Toast.makeText(this, "Check your Email and reset Password!", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, Login::class.java))
+                            startActivity(Intent(this, LoginActivity::class.java))
                             finish()
                         } else {
                             Toast.makeText(this, "Try again! Something wrong happened!", Toast.LENGTH_SHORT).show()

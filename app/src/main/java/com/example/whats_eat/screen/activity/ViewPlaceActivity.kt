@@ -22,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.StringBuilder
 
-class ViewPlace : AppCompatActivity(), View.OnClickListener {
+class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
     private lateinit var mService : IGoogleAPIService
     private lateinit var database : FirebaseDatabase

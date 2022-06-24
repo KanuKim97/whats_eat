@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.whats_eat.R
-import com.example.whats_eat.screen.activity.Login
+import com.example.whats_eat.screen.activity.LoginActivity
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class Profile : Fragment(), View.OnClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var proFileBinding: FragmentProFileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -73,7 +73,7 @@ class Profile : Fragment(), View.OnClickListener {
                                     .getReference("userInfo")
                                     .child(currentUser.uid)
                                     .removeValue()
-                                startActivity(Intent(requireContext(), Login::class.java))
+                                startActivity(Intent(requireContext(), LoginActivity::class.java))
                             }
 
                         }

@@ -11,6 +11,8 @@ object Common {
     var currentPlace : Results? = null
 
     val googleApiService : IGoogleAPIService
-        get() = RetrofitClient.getClient(googleApiUrl).create(IGoogleAPIService::class.java)
+        get() = RetrofitClient
+            .getClient(googleApiUrl)
+            .create(IGoogleAPIService::class.java)
 
 }

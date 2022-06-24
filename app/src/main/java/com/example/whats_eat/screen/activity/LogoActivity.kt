@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.whats_eat.screen.MainActivity
-import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityLogoBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class Logo : AppCompatActivity() {
+class LogoActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var logoBinding: ActivityLogoBinding
 
@@ -36,7 +35,7 @@ class Logo : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                startActivity(Intent(this, Login::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
 

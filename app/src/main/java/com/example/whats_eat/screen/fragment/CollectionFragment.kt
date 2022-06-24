@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlin.collections.ArrayList
 
-class Collection : Fragment() {
+class CollectionFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var collectionAdapter: CollectionAdapter
@@ -63,7 +63,7 @@ class Collection : Fragment() {
 
         collectionEventListener()
     }
-
+    //TODO: Collection DataBase Exception Handling
     private fun collectionEventListener() {
 
         databaseReference.addValueEventListener(object : ValueEventListener{

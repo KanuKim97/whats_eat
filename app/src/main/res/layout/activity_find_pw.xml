@@ -7,7 +7,7 @@
     android:paddingHorizontal="20dp"
     android:orientation="vertical"
     android:background="#ffffff"
-    tools:context=".screen.activity.FindPw">
+    tools:context=".screen.activity.FindPwActivity">
 
     <ImageView
         android:layout_width="150dp"

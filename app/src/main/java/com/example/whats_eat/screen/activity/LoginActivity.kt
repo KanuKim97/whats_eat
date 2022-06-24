@@ -16,7 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 import com.google.firebase.auth.FirebaseAuth
 
-class Login : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var logInBinding: ActivityLogInBinding
@@ -59,12 +59,12 @@ class Login : AppCompatActivity(), View.OnClickListener {
                 )
 
             R.id.findPwBtn -> {
-                startActivity(Intent(this, FindPw::class.java))
+                startActivity(Intent(this, FindPwActivity::class.java))
                 finish()
             }
 
             R.id.signUpBtn -> {
-                startActivity(Intent(this, SignIn::class.java))
+                startActivity(Intent(this, SignInActivity::class.java))
                 finish()
             }
 

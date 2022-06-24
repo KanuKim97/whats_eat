@@ -1,35 +1,5 @@
 package com.example.whats_eat.screen.fragment
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Location
-import android.os.Bundle
-import android.os.Looper
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.example.whats_eat.R
-import com.example.whats_eat.data.common.Common
-import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.model.nearByPlace.Myplaces
-import com.example.whats_eat.data.remote.IGoogleAPIService
-import com.example.whats_eat.screen.activity.ViewPlace
-import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 /*
 class Map {
     private var mMap: GoogleMap? = null

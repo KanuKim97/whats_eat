@@ -11,7 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.whats_eat.R
-import com.example.whats_eat.screen.activity.Login
+import com.example.whats_eat.screen.activity.LoginActivity
 import com.example.whats_eat.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     fun signOut(item: MenuItem){
         auth.signOut()
-        startActivity(Intent(this, Login::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }

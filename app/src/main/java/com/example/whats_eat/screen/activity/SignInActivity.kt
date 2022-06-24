@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class SignIn : AppCompatActivity(), View.OnClickListener {
+class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var signInBinding: ActivitySignInBinding
@@ -65,7 +65,7 @@ class SignIn : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.toLoginBtn -> {
-                startActivity(Intent(this, Login::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
 
@@ -136,7 +136,7 @@ class SignIn : AppCompatActivity(), View.OnClickListener {
 
                                 Toast.makeText(this, "Registration Success", Toast.LENGTH_SHORT).show()
 
-                                startActivity(Intent(this, Login::class.java))
+                                startActivity(Intent(this, LoginActivity::class.java))
                                 finish()
 
                             } else {
