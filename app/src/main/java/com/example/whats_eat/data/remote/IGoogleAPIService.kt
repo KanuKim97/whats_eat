@@ -12,21 +12,18 @@ import retrofit2.http.Url
 interface IGoogleAPIService {
 
     @GET
-    fun getNearbyPlaces(@Url url : String) : Call<Myplaces>
-
-    @GET
     fun getDetailPlace(@Url url : String) : Call<PlaceDetail>
 
-    //Test Code
-    @GET("/json&radius={radius}&type={Type}&key={API_KEY}")
+
+    @GET("/json")
     fun getNearPlaces(
         @Query("location")
         latLng: String,
-        @Path("radius")
+        @Query("radius")
         radius: String,
-        @Path("Type")
+        @Query("type")
         type: String,
-        @Path("API_KEY")
+        @Query("key")
         Api_Key: String
     ): Call<Myplaces>
 

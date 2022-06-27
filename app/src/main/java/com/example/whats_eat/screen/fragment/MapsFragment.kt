@@ -2,19 +2,21 @@ package com.example.whats_eat.screen.fragment
 
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationRequest
+import com.google.android.gms.location.LocationRequest
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
-import com.example.whats_eat.data.remote.IGoogleAPIService
+import com.example.whats_eat.data.remote.RetrofitRepo
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -24,8 +26,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import java.util.jar.Manifest
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MapsFragment : Fragment() {
 
@@ -39,7 +42,6 @@ class MapsFragment : Fragment() {
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
     private lateinit var myLocationRequest: LocationRequest
 
-    lateinit var myMapService: IGoogleAPIService
     lateinit var currentPlace: Myplaces
 
     private val mapsCallback =
@@ -59,6 +61,13 @@ class MapsFragment : Fragment() {
         myFusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
 
+        myLocationRequest =
+            LocationRequest.create().apply {
+                this.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                this.interval = 5000
+                this.fastestInterval = 1000
+                this.smallestDisplacement = 10f
+            }
 
     }
 
@@ -81,6 +90,31 @@ class MapsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        checkUserPermission()
+        locationCallBack()
+
+        myFusedLocationClient.requestLocationUpdates(
+            myLocationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+
+
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+
+        myLocationRequest.priority = LocationRequest.PRIORITY_LOW_POWER
+        myLocationRequest.interval = 10000
+        myLocationRequest.fastestInterval = 5000
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myMap.clear()
     }
 
     private fun enableMyLocation() {
@@ -186,12 +220,49 @@ class MapsFragment : Fragment() {
                 myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
                 myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
 
-
-
             }
 
         }
 
     }
+
+    private fun getNearbyPlace() {
+        val mNearByApiResponse =
+            RetrofitRepo.getNearbySingleton(
+                LatLng(myLatitude, myLongitude).toString(),
+                radius = "1000",
+                R.string.TypePlace.toString(),
+                R.string.API_KEYS.toString()
+            )
+
+        mNearByApiResponse.enqueue(object: Callback<Myplaces>{
+
+            override fun onResponse(
+                call: Call<Myplaces>,
+                response: Response<Myplaces>
+            ) {
+
+                if(response.isSuccessful) {
+
+                    currentPlace = response.body()!!
+                    Log.d("Success", "response is successful")
+
+                } else { Log.d("Error", "response is failed") }
+
+            }
+
+            override fun onFailure(call: Call<Myplaces>, t: Throwable) {
+                Log.d("Error", "${t.message}")
+                Toast.makeText(
+                    requireContext(),
+                    "${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+
+    }
+
 
 }
