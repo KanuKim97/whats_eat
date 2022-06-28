@@ -27,13 +27,13 @@ interface IGoogleAPIService {
         Api_Key: String
     ): Call<Myplaces>
 
-    @GET("/json&photo_reference={photoRef}&key={API_KEY}")
+    @GET("/json")
     fun getPlaceDetail(
         @Query("maxwidth")
         maxWidth: String,
-        @Path("photoRef")
+        @Query("photoRef")
         photoRef: String,
-        @Path("API_KEY")
+        @Query("key")
         Api_key: String
     ): Call<PlaceDetail>
 

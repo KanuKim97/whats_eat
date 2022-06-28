@@ -2,25 +2,22 @@ package com.example.whats_eat.screen.fragment
 
 import android.content.pm.PackageManager
 import android.location.Location
-import com.google.android.gms.location.LocationRequest
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.whats_eat.R
+import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
+import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.data.remote.RetrofitRepo
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -35,12 +32,15 @@ class MapsFragment : Fragment() {
     private var myLatitude: Double = 0.0
     private var myLongitude: Double = 0.0
 
+    private lateinit var myLatLng: String
+
     private lateinit var myMap: GoogleMap
 
     private lateinit var myLastLocation: Location
     private lateinit var locationCallback: LocationCallback
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
     private lateinit var myLocationRequest: LocationRequest
+    private lateinit var mGoogleApiService: IGoogleAPIService
 
     lateinit var currentPlace: Myplaces
 
@@ -55,15 +55,19 @@ class MapsFragment : Fragment() {
 
         }
 
+    private var mapsFragment: SupportMapFragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mGoogleApiService = Common.googleApiService
 
         myFusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
 
         myLocationRequest =
             LocationRequest.create().apply {
-                this.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                this.priority = Priority.PRIORITY_HIGH_ACCURACY
                 this.interval = 5000
                 this.fastestInterval = 1000
                 this.smallestDisplacement = 10f
@@ -82,10 +86,11 @@ class MapsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapsFragment = childFragmentManager
+        mapsFragment = this.childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
 
-        mapsFragment.getMapAsync(mapsCallback)
+        mapsFragment!!.getMapAsync(mapsCallback)
+
     }
 
     override fun onResume() {
@@ -93,6 +98,9 @@ class MapsFragment : Fragment() {
 
         checkUserPermission()
         locationCallBack()
+
+        //Test
+        //getNearbyPlace()
 
         myFusedLocationClient.requestLocationUpdates(
             myLocationRequest,
@@ -106,16 +114,22 @@ class MapsFragment : Fragment() {
     override fun onLowMemory() {
         super.onLowMemory()
 
-        myLocationRequest.priority = LocationRequest.PRIORITY_LOW_POWER
+        myLocationRequest.priority = Priority.PRIORITY_LOW_POWER
         myLocationRequest.interval = 10000
         myLocationRequest.fastestInterval = 5000
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         myMap.clear()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapsFragment?.onDestroy()
+    }
+
 
     private fun enableMyLocation() {
 
@@ -226,14 +240,21 @@ class MapsFragment : Fragment() {
 
     }
 
+    private fun getLatLng(
+        myLatitude: Double,
+        myLongitude: Double
+    ): String { return "$myLatitude, $myLongitude" }
+
     private fun getNearbyPlace() {
+
         val mNearByApiResponse =
             RetrofitRepo.getNearbySingleton(
-                LatLng(myLatitude, myLongitude).toString(),
+                myLatLng,
                 radius = "1000",
                 R.string.TypePlace.toString(),
-                R.string.API_KEYS.toString()
+                Constant.API_keys
             )
+
 
         mNearByApiResponse.enqueue(object: Callback<Myplaces>{
 
@@ -253,11 +274,6 @@ class MapsFragment : Fragment() {
 
             override fun onFailure(call: Call<Myplaces>, t: Throwable) {
                 Log.d("Error", "${t.message}")
-                Toast.makeText(
-                    requireContext(),
-                    "${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
 
         })
