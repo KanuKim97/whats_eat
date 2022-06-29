@@ -31,8 +31,8 @@ class MapsFragment : Fragment() {
 
     private var myLatitude: Double = 0.0
     private var myLongitude: Double = 0.0
-
-    private lateinit var myLatLng: String
+    private var mapsFragment: SupportMapFragment? = null
+    // private lateinit var myLatLng: String
 
     private lateinit var myMap: GoogleMap
 
@@ -55,7 +55,6 @@ class MapsFragment : Fragment() {
 
         }
 
-    private var mapsFragment: SupportMapFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +71,23 @@ class MapsFragment : Fragment() {
                 this.fastestInterval = 1000
                 this.smallestDisplacement = 10f
             }
+
+        locationCallback = object: LocationCallback() {
+
+            override fun onLocationResult(myPoint: LocationResult) {
+
+                myLastLocation = myPoint.locations[myPoint.locations.size-1]
+
+                myLatitude = myLastLocation.latitude
+                myLongitude = myLastLocation.longitude
+
+                myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
+                myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
+
+            }
+
+        }
+
 
     }
 
@@ -97,10 +113,7 @@ class MapsFragment : Fragment() {
         super.onResume()
 
         checkUserPermission()
-        locationCallBack()
-
-        //Test
-        //getNearbyPlace()
+        getNearbyPlace()
 
         myFusedLocationClient.requestLocationUpdates(
             myLocationRequest,
@@ -129,7 +142,6 @@ class MapsFragment : Fragment() {
         super.onDestroy()
         mapsFragment?.onDestroy()
     }
-
 
     private fun enableMyLocation() {
 
@@ -220,36 +232,12 @@ class MapsFragment : Fragment() {
 
     }
 
-    private fun locationCallBack() {
-
-        locationCallback = object: LocationCallback() {
-
-            override fun onLocationResult(myPoint: LocationResult) {
-
-                myLastLocation = myPoint.locations[myPoint.locations.size-1]
-
-                myLatitude = myLastLocation.latitude
-                myLongitude = myLastLocation.longitude
-
-                myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
-                myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
-
-            }
-
-        }
-
-    }
-
-    private fun getLatLng(
-        myLatitude: Double,
-        myLongitude: Double
-    ): String { return "$myLatitude, $myLongitude" }
 
     private fun getNearbyPlace() {
 
         val mNearByApiResponse =
             RetrofitRepo.getNearbySingleton(
-                myLatLng,
+                "37.0, 125.0",
                 radius = "1000",
                 R.string.TypePlace.toString(),
                 Constant.API_keys

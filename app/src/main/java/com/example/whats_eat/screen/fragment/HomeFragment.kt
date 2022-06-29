@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         loadHomeInfo()
     }
 

@@ -14,7 +14,6 @@ interface IGoogleAPIService {
     @GET
     fun getDetailPlace(@Url url : String) : Call<PlaceDetail>
 
-
     @GET("/json")
     fun getNearPlaces(
         @Query("location")

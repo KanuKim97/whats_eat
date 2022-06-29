@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(navigationView, navController)
 
-
     }
 
     fun signOut(item: MenuItem){
