@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.whats_eat.R
-import com.example.whats_eat.data.common.Common
+import com.example.whats_eat.data.model.commonModel.Results
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
 import com.example.whats_eat.data.remote.IGoogleAPIService
-
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
 import com.example.whats_eat.data.model.detailPlace.PlaceDetail
+import com.example.whats_eat.data.remote.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -23,13 +23,16 @@ import retrofit2.Response
 import java.lang.StringBuilder
 
 class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
+
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
     private lateinit var mService : IGoogleAPIService
+
     private lateinit var database : FirebaseDatabase
     private lateinit var databaseReference : DatabaseReference
     private lateinit var auth : FirebaseAuth
 
-    var mPlace : PlaceDetail? = null
+    var mDetailedPlace: PlaceDetail? = null
+    var mSelectedPlace: Results? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +40,10 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         viewPlaceBinding = ActivityViewPlaceBinding.inflate(layoutInflater)
         setContentView(viewPlaceBinding.root)
 
-        mService = Common.googleApiService
+        mService = RetrofitClient.gMapsApiService
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-
         databaseReference = database.reference.child("userInfo")
                 .child("${auth.currentUser?.uid}")
                 .child("Collection")
@@ -69,17 +71,17 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(mPlace!!.result!!.url)
+                        Uri.parse(mDetailedPlace!!.result!!.url)
                     )
                 )
 
             R.id.addCollection -> {
-                val restaurantName : String = mPlace!!.result!!.name.toString()
-                val restaurantAddress : String = mPlace!!.result!!.formatted_address.toString()
-                val restaurantRating : Float = Common.currentPlace!!.rating.toFloat()
-                val restaurantPhotos : String
+                val restaurantName: String = mDetailedPlace?.result?.name ?: "null"
+                val restaurantAddress: String = mDetailedPlace?.result?.formatted_address ?: "null"
+                val restaurantRating: Float = mSelectedPlace!!.rating.toFloat()
+                val restaurantPhotos: String
 
-                if(Common.currentPlace!!.photos == null) {
+                if(mSelectedPlace?.photos == null) {
                     restaurantPhotos = null.toString()
 
                     val placeDetailArray = ViewPlaceModel(
@@ -93,16 +95,20 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                         .setValue(placeDetailArray)
 
                 } else {
+
                     restaurantPhotos =
                         getPhotoPlace(
-                            Common.currentPlace!!.photos!![0].photo_reference!!
-                            ,viewPlaceBinding.placeImg.width)
+                            mSelectedPlace?.photos!![0].photo_reference!!,
+                            viewPlaceBinding.placeImg.width
+                        )
 
-                    val placeDetailArray = ViewPlaceModel(
-                        restaurantName,
-                        restaurantAddress,
-                        restaurantRating,
-                        restaurantPhotos)
+                    val placeDetailArray =
+                        ViewPlaceModel(
+                            restaurantName,
+                            restaurantAddress,
+                            restaurantRating,
+                            restaurantPhotos
+                    )
 
                     databaseReference
                         .push()
@@ -118,55 +124,78 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun viewControl() {
+
         if(
-            Common.currentPlace!!.photos != null
-            && Common.currentPlace!!.photos!!.isNotEmpty()
+            mSelectedPlace!!.photos != null
+            &&
+            mSelectedPlace!!.photos!!.isNotEmpty()
         ) {
-            Glide.with(this)
+
+            Glide
+                .with(this)
                 .load(
                     getPhotoPlace(
-                    Common.currentPlace!!.photos!![0].photo_reference!!
-                    , 1000)
+                        mSelectedPlace!!.photos!![0].photo_reference!!,
+                        maxWidth = 1000
+                    )
                 )
                 .into(viewPlaceBinding.placeImg)
-        } else {
-            viewPlaceBinding.placeImg.visibility = View.GONE
-        }
 
-        viewPlaceBinding.rating.rating = Common.currentPlace!!.rating.toFloat()
+        } else { viewPlaceBinding.placeImg.visibility = View.GONE }
 
-        if(Common.currentPlace!!.opening_hours != null) {
-            val openTime : Boolean = Common.currentPlace!!.opening_hours!!.open_now
+        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
 
-            if(!openTime){
-                viewPlaceBinding.openTime.text = "영업 종료"
-            } else {
-                viewPlaceBinding.openTime.text = "영업 중"
-            }
+        if(mSelectedPlace!!.opening_hours != null) {
 
-        } else {
-            viewPlaceBinding.openTime.visibility = View.GONE
-        }
+            val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
+
+            if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
+            else { viewPlaceBinding.openTime.text = "영업 중" }
+
+        } else { viewPlaceBinding.openTime.visibility = View.GONE }
+
     }
 
     private fun serviceCall(){
 
-        mService.getDetailPlace(getPlaceDetailUrl(Common.currentPlace!!.place_id))
+        mService.getDetailPlace(getPlaceDetailUrl(mSelectedPlace!!.place_id))
             .enqueue(object : Callback<PlaceDetail> {
                 override fun onResponse(call: Call<PlaceDetail>, response: Response<PlaceDetail>) {
-                    mPlace = response.body()
 
-                    viewPlaceBinding.placeName.text = mPlace!!.result!!.name
-                    viewPlaceBinding.placeAddress.text = mPlace!!.result!!.formatted_address
+                    if(response.isSuccessful){
+
+                        mDetailedPlace = response.body()
+
+                        viewPlaceBinding.placeName.text = mDetailedPlace!!.result!!.name
+                        viewPlaceBinding.placeAddress.text = mDetailedPlace!!.result!!.formatted_address
+
+                    } else {
+
+                        Toast.makeText(
+                            applicationContext,
+                            "response loaded Failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
                 }
 
                 override fun onFailure(call: Call<PlaceDetail>, t: Throwable) {
-                    Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(
+                        applicationContext,
+                        t.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
             })
+
     }
 
     private fun getPlaceDetailUrl(placeId: String?): String {
+
         val placeDetailUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/details/json")
         placeDetailUrl.append("?place_id=$placeId")
         placeDetailUrl.append("&key=${R.string.API_KEYS}")

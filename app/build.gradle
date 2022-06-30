@@ -6,11 +6,10 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
+//Declare Properties 'local.properties'
 Properties properties = new Properties()
-properties.load(
-        project.rootProject
-                .file('local.properties')
-                .newDataInputStream())
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 
 android {
     compileSdkVersion 31
@@ -26,8 +25,8 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        //Build Config Field
         buildConfigField "String", "GOOGLE_API_KEY", properties['google_api_key']
-
     }
 
     buildTypes {

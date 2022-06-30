@@ -1,8 +1,39 @@
 <resources>
 
+    <!-- android manifest.xml -->
     <string name="app_name">what\'s_eat</string>
-
     <string name="API_KEYS">AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM</string>
-    <string name="TypePlace"> restaurant </string>
+    <string name="TypePlace">restaurant</string>
+
+    <!--  Fragment Home.xml -->
+    <string name="welcomeTxt_Home">Welcome!</string>
+    <string name="nickNameTxt_Home">Example!</string>
+
+    <string name="welcomeTxt2_Home">Have a nice day!</string>
+    
+    <string name="mainCardViewTitle_Home">Today\'s Restaurant!</string>
+    <string name="mainCardViewName_Home">restaurant_Name</string>
+    <string name="mainCardViewContent_Home">restaurant_Address</string>
+
+    <string name="subCardViewTitle_Home">Collections</string>
+    <string name="subCardViewsContent_Home">Example</string>
+
+    <!-- Fragment Profile.xml -->
+    <string name="desc_Profile">profileImage</string>
+    <string name="txtName_Profile">Example</string>
+    <string name="txtEmail_Profile">User@Example.com</string>
+
+    <string name="ratingNum_Profile">5 Star</string>
+    <string name="txtCollection_Profile">collection</string>
+
+    <string name="desc_imgLayout_Profile">Image Card View</string>
+
+    <string name="txtCommentNum_Profile">10 Comment</string>
+    <string name="txtComment_Profile">Comment</string>
+
+    <string name="updateBtn_Profile">Update User Account</string>
+    <string name="deleteBtn_Profile">Delete User Account</string>
+
+    <!--Activity ViewPlace.xml-->
 
 </resources>

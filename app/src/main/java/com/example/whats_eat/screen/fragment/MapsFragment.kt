@@ -16,6 +16,7 @@ import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.IGoogleAPIService
+import com.example.whats_eat.data.remote.RetrofitClient
 import com.example.whats_eat.data.remote.RetrofitRepo
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -59,7 +60,7 @@ class MapsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mGoogleApiService = Common.googleApiService
+        mGoogleApiService = RetrofitClient.gMapsApiService
 
         myFusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
@@ -237,10 +238,10 @@ class MapsFragment : Fragment() {
 
         val mNearByApiResponse =
             RetrofitRepo.getNearbySingleton(
-                "37.0, 125.0",
+                "37.0, 128.0",
                 radius = "1000",
-                R.string.TypePlace.toString(),
-                Constant.API_keys
+                type = "${R.string.TypePlace}",
+                Api_key = "${R.string.API_KEYS}"
             )
 
 

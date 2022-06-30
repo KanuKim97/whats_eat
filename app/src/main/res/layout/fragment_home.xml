@@ -23,7 +23,7 @@
                     android:id="@+id/Welcome_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome!"
+                    android:text="@string/welcomeTxt_Home"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="26sp"/>
@@ -33,8 +33,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/Welcome_txt"
-                    android:layout_marginLeft="10dp"
-                    android:text="Example!"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/nickNameTxt_Home"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="26sp"/>
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:text="have a nice day!"
+            android:text="@string/welcomeTxt2_Home"
             android:textSize="22sp"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -69,14 +69,14 @@
 
                     <TextView
                         android:id="@+id/desc_comment"
-                        android:text="Today's Restaurant!"
+                        android:text="@string/mainCardViewTitle_Home"
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/restName"
-                        android:text="restaurant_Name"
+                        android:text="@string/mainCardViewName_Home"
                         android:paddingTop="5dp"
                         android:layout_below = "@id/desc_comment"
                         android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
 
                     <TextView
                         android:id="@+id/restAddress"
-                        android:text="restaurant_Address"
+                        android:text="@string/mainCardViewContent_Home"
                         android:paddingTop="5dp"
                         android:layout_below="@id/restName"
                         android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Collections"
+                android:text="@string/subCardViewTitle_Home"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -136,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:includeFontPadding="false" />
@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/placeName1"
                         android:layout_centerHorizontal="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:includeFontPadding="false" />
@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:includeFontPadding="false" />
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/placeName2"
                         android:layout_centerHorizontal="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:includeFontPadding="false" />
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:includeFontPadding="false" />
@@ -233,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/placeName3"
                         android:layout_centerHorizontal="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:includeFontPadding="false" />
@@ -262,7 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:includeFontPadding="false" />
@@ -273,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/placeName4"
                         android:layout_centerHorizontal="true"
-                        android:text="Example"
+                        android:text="@string/subCardViewsContent_Home"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:includeFontPadding="false" />

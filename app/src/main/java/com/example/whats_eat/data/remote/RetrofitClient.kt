@@ -6,7 +6,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
+
+    private const val gMapsApiUrl: String = "https://maps.googleapis.com/"
     private var retrofit : Retrofit? = null
+
+    val gMapsApiService: IGoogleAPIService
+        get() = getClient(gMapsApiUrl)
+            .create(IGoogleAPIService::class.java)
+
 
     fun getClient(baseUrl: String) : Retrofit{
         if(retrofit ==null){
