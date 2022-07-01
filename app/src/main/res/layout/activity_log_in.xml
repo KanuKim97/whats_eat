@@ -13,12 +13,13 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logoImg_Common" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello! \nWelcome!"
+        android:text="@string/logInTitle_LogIn"
         android:textSize="40sp"
         android:textColor="@color/black"
         android:fontFamily="@font/bungee_inline" />
@@ -27,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="Sign In to Continue"
+        android:text="@string/logInContent_LogIn"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:fontFamily="sans-serif-light" />
@@ -42,7 +43,7 @@
             android:id="@+id/emailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/eMailInput_LogIn"
             android:theme="@style/Theme.MaterialComponents.Light"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -57,7 +58,7 @@
             android:id="@+id/passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/pwInput_LogIn"
             app:passwordToggleEnabled="true"
             android:theme="@style/Theme.MaterialComponents.Light"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -77,7 +78,7 @@
             android:layout_gravity="right"
             android:background="#fff"
             android:layout_margin="5dp"
-            android:text="Forget Password?"
+            android:text="@string/forgotPwBtn_LogIn"
             android:textColor="@color/black"
             android:elevation="0dp" />
 
@@ -88,7 +89,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="#000"
-            android:text="LOGIN"
+            android:text="@string/logInBtn_LogIn"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#fff" />
@@ -100,7 +101,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="#000"
-            android:text="New User? Sign Up!"
+            android:text="@string/signUpBtn_LogIn"
             android:textColor="#fff"
             android:textStyle="bold" />
 

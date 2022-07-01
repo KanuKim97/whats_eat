@@ -1,6 +1,7 @@
 package com.example.whats_eat.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class CollectionFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+
         collectionBinding = FragmentCollectionBinding.inflate(layoutInflater)
 
         recyclerView = collectionBinding.collectionView
@@ -56,6 +58,7 @@ class CollectionFragment : Fragment() {
         collectionAdapter = CollectionAdapter(placeArray)
 
         return collectionBinding.root
+
     }
 
     override fun onResume() {
@@ -63,6 +66,7 @@ class CollectionFragment : Fragment() {
 
         collectionEventListener()
     }
+
     //TODO: Collection DataBase Exception Handling
     private fun collectionEventListener() {
 
@@ -70,6 +74,25 @@ class CollectionFragment : Fragment() {
 
                     override fun onDataChange(snapshot: DataSnapshot) {
 
+                        try{
+
+                            if(snapshot.exists()) {
+
+                                Log.d("snapshot: ","$snapshot")
+                                Log.d("snapshot: ", "${snapshot.children}")
+                                Log.d("snapshot: ","${snapshot.value}")
+
+                                for(placeSnapshot in snapshot.children) {
+                                    val place = placeSnapshot.getValue(PlaceData::class.java)
+                                    Log.d("Place Value","$place")
+                                }
+
+                            }
+
+
+                        } catch (e: DatabaseException) { e.printStackTrace() }
+
+                    /*
                         if(snapshot.exists()) {
 
                             for(placeSnapshot in snapshot.children) {
@@ -78,7 +101,11 @@ class CollectionFragment : Fragment() {
                             }
 
                             recyclerView.adapter = CollectionAdapter(placeArray)
+
                         }
+
+                    */
+
                     }
 
                     override fun onCancelled(error: DatabaseError) {

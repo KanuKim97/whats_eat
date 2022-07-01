@@ -12,13 +12,14 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logoImg_Common" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="Did tou forgot Password?"
+        android:text="@string/findPwTitle_FindPw"
         android:textColor="#000"
         android:textSize="40sp"
         android:fontFamily="@font/bungee_inline" />
@@ -27,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="Plz input Your Email!"
+        android:text="@string/findPwContent_FindPw"
         android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -43,7 +44,7 @@
             android:id="@+id/passwordEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/eMailInput_FindPw"
             android:theme="@style/Theme.MaterialComponents.Light"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -63,7 +64,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#000"
-        android:text="Send Reset Email"
+        android:text="@string/sendResetEmailBtn_FindPw"
         android:textSize="20sp"
         android:textColor="#fff"
         android:textStyle="bold" />
@@ -75,7 +76,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#000"
-        android:text="To Login Page"
+        android:text="@string/goLogInBtn_FindPw"
         android:textSize="20sp"
         android:textColor="#fff"
         android:textStyle="bold" />
@@ -87,7 +88,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#000"
-        android:text="To Sign UP Page"
+        android:text="@string/goSignUpPage"
         android:textSize="20sp"
         android:textColor="#fff"
         android:textStyle="bold" />

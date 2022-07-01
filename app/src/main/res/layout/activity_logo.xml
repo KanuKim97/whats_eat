@@ -13,14 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:src="@drawable/logo"
-        android:layout_weight="0.75" />
+        android:layout_weight="0.75"
+        android:contentDescription="@string/logoImg_Common" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/bungee_inline"
-        android:text="What's Eat?"
+        android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="65sp"

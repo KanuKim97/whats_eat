@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.whats_eat.R
-import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.IGoogleAPIService
@@ -24,6 +23,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -235,13 +236,17 @@ class MapsFragment : Fragment() {
 
 
     private fun getNearbyPlace() {
+        val latLng: String = "-33.8670522,151.1957362"
+        val radius: String = "1000"
+        val type: String = "food"
+        val apiKey: String = "AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM"
 
         val mNearByApiResponse =
             RetrofitRepo.getNearbySingleton(
-                "37.0, 128.0",
-                radius = "1000",
-                type = "${R.string.TypePlace}",
-                Api_key = "${R.string.API_KEYS}"
+                latLng,
+                radius,
+                type,
+                apiKey
             )
 
 

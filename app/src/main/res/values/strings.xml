@@ -1,9 +1,12 @@
 <resources>
 
     <!-- android manifest.xml -->
-    <string name="app_name">what\'s_eat</string>
+    <string name="app_name">what\'s eat</string>
     <string name="API_KEYS">AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM</string>
     <string name="TypePlace">restaurant</string>
+
+    <!-- Common All.xml -->
+    <string name="logoImg_Common">Logo Image</string>
 
     <!--  Fragment Home.xml -->
     <string name="welcomeTxt_Home">Welcome!</string>
@@ -35,5 +38,43 @@
     <string name="deleteBtn_Profile">Delete User Account</string>
 
     <!--Activity ViewPlace.xml-->
+    <string name="placeName_ViewPlace">Place Name</string>
+    <string name="placeAddress_ViewPlace">Place Address</string>
+    <string name="OpenTime_ViewPlace">Opening Time : </string>
+    <string name="showMapsBtn_ViewPlace">Show Maps</string>
+    <string name="addCollectionBtn_ViewPlace">Add Collection</string>
+    <string name="goBackBtn_ViewPlace">Go Back To Maps</string>
+
+    <!--Activity SignIn.xml-->
+    <string name="welcomeTxt_SignIn">Welcome!</string>
+    <string name="introTxt_SignIn">SignUp and Find Your Food</string>
+
+    <string name="fullNameInput_SignIn">Full Name</string>
+    <string name="userNameInput_SignIn">User Name</string>
+    <string name="eMailInput_SignIn">Email</string>
+    <string name="pwInput_SignIn">Password</string>
+    <string name="confPWInput_SignIn">Confirm Your Password</string>
+
+    <string name="signInBtn_SignIn">Let\'s Go!</string>
+    <string name="logInBtn_SignIn">Already have an Account? LogIn</string>
+
+    <!--Activity FindPw.xml-->
+    <string name="findPwTitle_FindPw">Did you Forgot Password?</string>
+    <string name="findPwContent_FindPw">Plz input Your Email!</string>
+    <string name="eMailInput_FindPw">Email</string>
+    <string name="sendResetEmailBtn_FindPw">Send Reset Email</string>
+    <string name="goLogInBtn_FindPw">To Login Page</string>
+    <string name="goSignUpPage">To Sign up Page</string>
+
+    <!--Activity LogIn.xml-->
+    <string name="logInTitle_LogIn">Hello! \nWelcome!</string>
+    <string name="logInContent_LogIn">Log In to Continue</string>
+
+    <string name="eMailInput_LogIn">Email</string>
+    <string name="pwInput_LogIn">Password</string>
+    <string name="forgotPwBtn_LogIn">Forgot Password?</string>
+
+    <string name="logInBtn_LogIn">LOGIN</string>
+    <string name="signUpBtn_LogIn">New User? Sign Up!</string>
 
 </resources>

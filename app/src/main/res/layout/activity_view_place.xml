@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Place Name"
+                android:text="@string/placeName_ViewPlace"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="#000" />
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Place Address"
+                android:text="@string/placeAddress_ViewPlace"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="#000" />
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Opening Time : "
+                android:text="@string/OpenTime_ViewPlace"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="#000" />
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="#000"
-                android:text="Show Maps"
+                android:text="@string/showMapsBtn_ViewPlace"
                 android:textSize="20sp"
                 android:textColor="#fff"
                 android:textStyle="bold" />
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="#000"
-                android:text="Add Collection"
+                android:text="@string/addCollectionBtn_ViewPlace"
                 android:textSize="20sp"
                 android:textColor="#fff"
                 android:textStyle="bold" />
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="#000"
-                android:text="Go Back To maps"
+                android:text="@string/goBackBtn_ViewPlace"
                 android:textSize="20sp"
                 android:textColor="#fff"
                 android:textStyle="bold" />
