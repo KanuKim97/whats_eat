@@ -1,4 +1,7 @@
 # Refactoring -ing
+ 1. check android Activity & Fragment Lifecycle 
+ 2. remove Boilerplate Code
+ 3. Realtime DataBase Error handling 
 
 # What's Eat? Application
  Android Studio Version : ArcticFox 2020.3.1 Patch 4
