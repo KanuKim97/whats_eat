@@ -1,5 +1,6 @@
 package com.example.whats_eat.screen.fragment
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -8,21 +9,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
+import com.example.whats_eat.data.model.commonModel.Results
+import com.example.whats_eat.data.model.errorModel.ErrorResponse
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.data.remote.RetrofitClient
 import com.example.whats_eat.data.remote.RetrofitRepo
+import com.example.whats_eat.screen.activity.ViewPlaceActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -34,8 +42,8 @@ class MapsFragment : Fragment() {
     private var myLatitude: Double = 0.0
     private var myLongitude: Double = 0.0
     private var mapsFragment: SupportMapFragment? = null
-    // private lateinit var myLatLng: String
 
+    private lateinit var myLatLng: String
     private lateinit var myMap: GoogleMap
 
     private lateinit var myLastLocation: Location
@@ -43,6 +51,7 @@ class MapsFragment : Fragment() {
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
     private lateinit var myLocationRequest: LocationRequest
     private lateinit var mGoogleApiService: IGoogleAPIService
+    private lateinit var resultPlaces: Results
 
     lateinit var currentPlace: Myplaces
 
@@ -55,13 +64,19 @@ class MapsFragment : Fragment() {
             myMap.isBuildingsEnabled = false
             myMap.uiSettings.isZoomControlsEnabled = true
 
+            myMap.setOnMarkerClickListener{
+                resultPlaces = currentPlace.results!![Integer.parseInt(it.snippet.toString())]
+                startActivity(Intent(requireContext(), ViewPlaceActivity::class.java))
+                true
+            }
+
         }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mGoogleApiService = RetrofitClient.gMapsApiService
+        mGoogleApiService = RetrofitClient.nearPlaceApiService
 
         myFusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
@@ -73,23 +88,6 @@ class MapsFragment : Fragment() {
                 this.fastestInterval = 1000
                 this.smallestDisplacement = 10f
             }
-
-        locationCallback = object: LocationCallback() {
-
-            override fun onLocationResult(myPoint: LocationResult) {
-
-                myLastLocation = myPoint.locations[myPoint.locations.size-1]
-
-                myLatitude = myLastLocation.latitude
-                myLongitude = myLastLocation.longitude
-
-                myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
-                myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
-
-            }
-
-        }
-
 
     }
 
@@ -115,14 +113,30 @@ class MapsFragment : Fragment() {
         super.onResume()
 
         checkUserPermission()
-        getNearbyPlace()
+
+        locationCallback = object: LocationCallback() {
+
+            override fun onLocationResult(myPoint: LocationResult) {
+
+                myLastLocation = myPoint.locations[myPoint.locations.size-1]
+
+                myLatitude = myLastLocation.latitude
+                myLongitude = myLastLocation.longitude
+                myLatLng = "$myLatitude,$myLongitude"
+
+                myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
+                myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
+
+                getNearbyPlace(myLatLng)
+            }
+
+        }
 
         myFusedLocationClient.requestLocationUpdates(
             myLocationRequest,
             locationCallback,
             Looper.getMainLooper()
         )
-
 
     }
 
@@ -235,39 +249,82 @@ class MapsFragment : Fragment() {
     }
 
 
-    private fun getNearbyPlace() {
-        val latLng: String = "-33.8670522,151.1957362"
-        val radius: String = "1000"
-        val type: String = "food"
-        val apiKey: String = "AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM"
+    private fun getNearbyPlace(
+        currentMyLatLng: String
+    ) {
+        val mNearByApiResponse = RetrofitRepo
+            .getNearbySingleton(
+                latLng= currentMyLatLng,
+                radius= "1000",
+                type = "restaurant",
+                Api_key = BuildConfig.GOOGLE_API_KEY )
 
-        val mNearByApiResponse =
-            RetrofitRepo.getNearbySingleton(
-                latLng,
-                radius,
-                type,
-                apiKey
-            )
-
-
-        mNearByApiResponse.enqueue(object: Callback<Myplaces>{
+        mNearByApiResponse.enqueue(object: Callback<Myplaces> {
 
             override fun onResponse(
                 call: Call<Myplaces>,
                 response: Response<Myplaces>
             ) {
+                Log.d("response Code:", "${response.code()}")
 
-                if(response.isSuccessful) {
+                when(response.code()) {
 
-                    currentPlace = response.body()!!
-                    Log.d("Success", "response is successful")
+                    200 -> {
+                        currentPlace = response.body()!!
 
-                } else { Log.d("Error", "response is failed") }
+                        println(response.body().toString())
+
+                        for (i in currentPlace.results?.indices!!) {
+                            val markerOption = MarkerOptions()
+
+                            val googlePlace = currentPlace.results?.get(i)
+                            val placeLat = googlePlace?.geometry!!.location!!.lat
+                            val placeLng = googlePlace.geometry!!.location!!.lng
+                            val placeName = googlePlace.name
+                            val placeLatLng = LatLng(placeLat, placeLng)
+
+                            markerOption.position(placeLatLng)
+                            markerOption.title(placeName)
+
+                            markerOption.icon(
+                                BitmapDescriptorFactory
+                                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
+                            )
+
+                            markerOption.snippet(i.toString())
+                            myMap.addMarker(markerOption)
+
+                        }
+
+                    }
+
+                    400 -> {
+                        //TODO : Error Handling
+                        val errorJsonObject: JSONObject
+                        val requestErrorBody: ErrorResponse
+
+                        try {
+
+                            errorJsonObject = JSONObject(response.errorBody()!!.string())
+
+                            val responseCode = errorJsonObject.getString("status")
+                            val responseMsg = errorJsonObject.getString("error_message")
+
+                            requestErrorBody = ErrorResponse(responseCode, responseMsg)
+
+                            Log.d("error", requestErrorBody.error_message)
+
+                        } catch (e: JSONException) { e.printStackTrace() }
+
+
+                    }
+
+                }
 
             }
 
             override fun onFailure(call: Call<Myplaces>, t: Throwable) {
-                Log.d("Error", "${t.message}")
+                Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
             }
 
         })

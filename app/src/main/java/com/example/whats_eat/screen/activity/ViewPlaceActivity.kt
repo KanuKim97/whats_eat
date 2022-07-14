@@ -3,24 +3,28 @@ package com.example.whats_eat.screen.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.R
 import com.example.whats_eat.data.model.commonModel.Results
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
 import com.example.whats_eat.data.model.detailPlace.PlaceDetail
+import com.example.whats_eat.data.model.errorModel.ErrorResponse
 import com.example.whats_eat.data.remote.RetrofitClient
+import com.example.whats_eat.data.remote.RetrofitRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.StringBuilder
 
 class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -40,7 +44,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         viewPlaceBinding = ActivityViewPlaceBinding.inflate(layoutInflater)
         setContentView(viewPlaceBinding.root)
 
-        mService = RetrofitClient.gMapsApiService
+        mService = RetrofitClient.DetailPlaceApiService
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -53,8 +57,10 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
 
+        /*
         viewControl()
         serviceCall()
+        */
 
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
@@ -96,6 +102,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
                 } else {
 
+                   /*
                     restaurantPhotos =
                         getPhotoPlace(
                             mSelectedPlace?.photos!![0].photo_reference!!,
@@ -113,6 +120,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     databaseReference
                         .push()
                         .setValue(placeDetailArray)
+                    */
 
                     onBackPressed()
                 }
@@ -123,7 +131,65 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun getDetailPlace(
+        photoMaxWidth: String,
+        photoRef: String
+    ) {
+        val mDetailedApiResponse = RetrofitRepo.getPlaceDetailSingleton(
+            maxWidth = photoMaxWidth,
+            photoRef = photoRef,
+            Api_key = BuildConfig.GOOGLE_API_KEY )
+
+        mDetailedApiResponse.enqueue(object: Callback<PlaceDetail> {
+            override fun onResponse(
+                call: Call<PlaceDetail>,
+                response: Response<PlaceDetail>
+            ) {
+
+                if(response.isSuccessful) {
+
+                    mDetailedPlace = response.body()
+
+                    viewPlaceBinding.placeName.text =
+                        mDetailedPlace!!.result!!.name
+                    viewPlaceBinding.placeAddress.text =
+                        mDetailedPlace!!.result!!.formatted_address
+
+                } else {
+
+                    val errorJsonObject: JSONObject
+                    val requestErrorBody: ErrorResponse
+
+                    try {
+
+                        errorJsonObject = JSONObject(response.errorBody()!!.string())
+
+                        val responseCode = errorJsonObject.getString("status")
+                        val responseMsg = errorJsonObject.getString("error_message")
+
+                        requestErrorBody = ErrorResponse(responseCode, responseMsg)
+
+                        Log.d("error", requestErrorBody.error_message)
+
+                    } catch (e: JSONException) { e.printStackTrace() }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<PlaceDetail>, t: Throwable) {
+                Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
+    }
+
+/*
     private fun viewControl() {
+
+        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
 
         if(
             mSelectedPlace!!.photos != null
@@ -138,15 +204,12 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                         mSelectedPlace!!.photos!![0].photo_reference!!,
                         maxWidth = 1000
                     )
-                )
-                .into(viewPlaceBinding.placeImg)
+                ).into(viewPlaceBinding.placeImg)
 
         } else { viewPlaceBinding.placeImg.visibility = View.GONE }
 
-        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
 
         if(mSelectedPlace!!.opening_hours != null) {
-
             val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
 
             if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
@@ -212,4 +275,5 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
         return placePhotoUrl.toString()
     }
+    */
 }

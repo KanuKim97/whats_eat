@@ -1,5 +1,6 @@
 package com.example.whats_eat.data.remote
 
+import com.example.whats_eat.data.common.Constant
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -7,13 +8,15 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    private const val gMapsApiUrl: String = "https://maps.googleapis.com/"
     private var retrofit : Retrofit? = null
 
-    val gMapsApiService: IGoogleAPIService
-        get() = getClient(gMapsApiUrl)
+    val nearPlaceApiService: IGoogleAPIService
+        get() = getClient(Constant.INearPlaceAPIUri)
             .create(IGoogleAPIService::class.java)
 
+    val DetailPlaceApiService: IGoogleAPIService
+        get() = getClient(Constant.IPlaceDetailAPIUri)
+            .create(IGoogleAPIService::class.java)
 
     fun getClient(baseUrl: String) : Retrofit{
         if(retrofit ==null){
