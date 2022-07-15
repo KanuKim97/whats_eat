@@ -22,15 +22,14 @@ object RetrofitRepo {
     }
 
     fun getPlaceDetailSingleton(
-        maxWidth: String,
-        photoRef: String,
+        Place_ID: String,
         Api_key: String
     ): Call<PlaceDetail> {
 
         return RetrofitClient
             .getClient(Constant.IPlaceDetailAPIUri)
             .create(IGoogleAPIService::class.java)
-            .getPlaceDetail(maxWidth, photoRef, Api_key)
+            .getPlaceDetail(Place_ID, Api_key)
 
     }
 

@@ -64,9 +64,16 @@ class MapsFragment : Fragment() {
             myMap.isBuildingsEnabled = false
             myMap.uiSettings.isZoomControlsEnabled = true
 
-            myMap.setOnMarkerClickListener{
-                resultPlaces = currentPlace.results!![Integer.parseInt(it.snippet.toString())]
-                startActivity(Intent(requireContext(), ViewPlaceActivity::class.java))
+            myMap.setOnMarkerClickListener{ marker ->
+                resultPlaces = currentPlace.results!![Integer.parseInt(marker.snippet.toString())]
+
+
+                Intent(requireContext(), ViewPlaceActivity::class.java).also {
+                    it.putExtra("place_id",  resultPlaces.place_id)
+                    it.putExtra("photos", resultPlaces.photos)
+                    startActivity(it)
+                }
+
                 true
             }
 

@@ -21,12 +21,10 @@ interface IGoogleAPIService {
         Api_Key: String
     ): Call<Myplaces>
 
-    @GET("/json")
+    @GET("json")
     fun getPlaceDetail(
-        @Query("maxwidth")
-        maxWidth: String,
-        @Query("photoRef")
-        photoRef: String,
+        @Query("place_id")
+        Place_ID: String,
         @Query("key")
         Api_key: String
     ): Call<PlaceDetail>

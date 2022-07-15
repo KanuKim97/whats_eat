@@ -7,9 +7,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.R
+import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.commonModel.Results
+import com.example.whats_eat.data.model.commonModel.modelContent.photo.Photos
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
@@ -25,6 +28,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.StringBuilder
 
 class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -34,6 +38,9 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var database : FirebaseDatabase
     private lateinit var databaseReference : DatabaseReference
     private lateinit var auth : FirebaseAuth
+
+    lateinit var paramPlaceID: String
+    lateinit var paramPhotos: Array<Photos>
 
     var mDetailedPlace: PlaceDetail? = null
     var mSelectedPlace: Results? = null
@@ -52,15 +59,19 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 .child("${auth.currentUser?.uid}")
                 .child("Collection")
 
+        /*
+         -- Test Code --
+        paramPlaceID = intent.getStringExtra("place_id").toString()
+        paramPhotos = intent.getSerializableExtra("photos") as Array<Photos>
+        */
+
     }
 
     override fun onResume() {
         super.onResume()
 
-        /*
-        viewControl()
-        serviceCall()
-        */
+        controlView()
+        //getDetailPlace()
 
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
@@ -100,30 +111,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                         .push()
                         .setValue(placeDetailArray)
 
-                } else {
-
-                   /*
-                    restaurantPhotos =
-                        getPhotoPlace(
-                            mSelectedPlace?.photos!![0].photo_reference!!,
-                            viewPlaceBinding.placeImg.width
-                        )
-
-                    val placeDetailArray =
-                        ViewPlaceModel(
-                            restaurantName,
-                            restaurantAddress,
-                            restaurantRating,
-                            restaurantPhotos
-                    )
-
-                    databaseReference
-                        .push()
-                        .setValue(placeDetailArray)
-                    */
-
-                    onBackPressed()
-                }
+                } else { onBackPressed() }
 
             }
 
@@ -131,13 +119,36 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun controlView() {
+        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
+
+        if(mSelectedPlace?.photos.isNullOrEmpty()) {
+            viewPlaceBinding.placeImg.visibility = View.GONE
+        } else {
+
+            Glide
+                .with(this)
+                .load(getPhotoUrl(mSelectedPlace!!.photos!![0].photo_reference!!))
+                .into(viewPlaceBinding.placeImg)
+
+        }
+
+        if(mSelectedPlace!!.opening_hours == null) {
+            viewPlaceBinding.openTime.visibility = View.GONE
+        } else {
+            val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
+
+            if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
+            else { viewPlaceBinding.openTime.text = "영업 중" }
+        }
+
+    }
+
     private fun getDetailPlace(
-        photoMaxWidth: String,
-        photoRef: String
+        place_ID: String,
     ) {
         val mDetailedApiResponse = RetrofitRepo.getPlaceDetailSingleton(
-            maxWidth = photoMaxWidth,
-            photoRef = photoRef,
+            Place_ID = place_ID,
             Api_key = BuildConfig.GOOGLE_API_KEY )
 
         mDetailedApiResponse.enqueue(object: Callback<PlaceDetail> {
@@ -183,97 +194,19 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
         })
 
-
     }
 
-/*
-    private fun viewControl() {
+    private fun getPhotoUrl(
+        photoReference: String
+    ): String {
 
-        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
+        val photoRefUrl = StringBuilder(Constant.IPlacePhotoAPIUri)
+        photoRefUrl
+            .append("?maxwidth=${Constant.photoMaxWidth}")
+            .append("&photo_reference=$photoReference")
+            .append("&key=${BuildConfig.GOOGLE_API_KEY}")
 
-        if(
-            mSelectedPlace!!.photos != null
-            &&
-            mSelectedPlace!!.photos!!.isNotEmpty()
-        ) {
-
-            Glide
-                .with(this)
-                .load(
-                    getPhotoPlace(
-                        mSelectedPlace!!.photos!![0].photo_reference!!,
-                        maxWidth = 1000
-                    )
-                ).into(viewPlaceBinding.placeImg)
-
-        } else { viewPlaceBinding.placeImg.visibility = View.GONE }
-
-
-        if(mSelectedPlace!!.opening_hours != null) {
-            val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
-
-            if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
-            else { viewPlaceBinding.openTime.text = "영업 중" }
-
-        } else { viewPlaceBinding.openTime.visibility = View.GONE }
-
+        return photoRefUrl.toString()
     }
 
-    private fun serviceCall(){
-
-        mService.getDetailPlace(getPlaceDetailUrl(mSelectedPlace!!.place_id))
-            .enqueue(object : Callback<PlaceDetail> {
-                override fun onResponse(call: Call<PlaceDetail>, response: Response<PlaceDetail>) {
-
-                    if(response.isSuccessful){
-
-                        mDetailedPlace = response.body()
-
-                        viewPlaceBinding.placeName.text = mDetailedPlace!!.result!!.name
-                        viewPlaceBinding.placeAddress.text = mDetailedPlace!!.result!!.formatted_address
-
-                    } else {
-
-                        Toast.makeText(
-                            applicationContext,
-                            "response loaded Failed",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-
-                }
-
-                override fun onFailure(call: Call<PlaceDetail>, t: Throwable) {
-
-                    Toast.makeText(
-                        applicationContext,
-                        t.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                }
-            })
-
-    }
-
-    private fun getPlaceDetailUrl(placeId: String?): String {
-
-        val placeDetailUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/details/json")
-        placeDetailUrl.append("?place_id=$placeId")
-        placeDetailUrl.append("&key=${R.string.API_KEYS}")
-
-        return placeDetailUrl.toString()
-    }
-
-    private fun getPhotoPlace(photoReference: String, maxWidth: Int): String {
-
-        val placePhotoUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/photo")
-        placePhotoUrl.append("?maxwidth=$maxWidth")
-        placePhotoUrl.append("&photo_reference=$photoReference")
-        placePhotoUrl.append("&key=${R.string.API_KEYS}")
-
-        return placePhotoUrl.toString()
-    }
-    */
 }
