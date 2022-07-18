@@ -71,7 +71,10 @@ class MapsFragment : Fragment() {
                 Intent(requireContext(), ViewPlaceActivity::class.java).also {
                     it.putExtra("place_id",  resultPlaces.place_id)
                     it.putExtra("photos", resultPlaces.photos)
+//                    it.putExtra("result_Object", )
+
                     startActivity(it)
+
                 }
 
                 true
@@ -272,7 +275,6 @@ class MapsFragment : Fragment() {
                 call: Call<Myplaces>,
                 response: Response<Myplaces>
             ) {
-                Log.d("response Code:", "${response.code()}")
 
                 when(response.code()) {
 
