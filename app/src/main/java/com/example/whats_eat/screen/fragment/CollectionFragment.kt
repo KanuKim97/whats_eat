@@ -1,7 +1,6 @@
 package com.example.whats_eat.screen.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.whats_eat.collectionController.CollectionAdapter
+import com.example.whats_eat.data.collectionController.CollectionAdapter
 import com.example.whats_eat.data.model.nearByPlace.PlaceData
 import com.example.whats_eat.databinding.FragmentCollectionBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -64,11 +63,9 @@ class CollectionFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         collectionEventListener()
     }
 
-    //TODO: Collection DataBase Exception Handling
     private fun collectionEventListener() {
 
         databaseReference.addValueEventListener(object : ValueEventListener{
@@ -79,33 +76,17 @@ class CollectionFragment : Fragment() {
 
                             if(snapshot.exists()) {
 
-                                Log.d("snapshot: ","$snapshot")
-                                Log.d("snapshot: ", "${snapshot.children}")
-                                Log.d("snapshot: ","${snapshot.value}")
-
                                 for(placeSnapshot in snapshot.children) {
                                     val place = placeSnapshot.getValue(PlaceData::class.java)
-                                    Log.d("Place Value","$place")
+                                    placeArray.add(place!!)
                                 }
+
+                                recyclerView.adapter = CollectionAdapter(placeArray)
 
                             }
 
 
                         } catch (e: DatabaseException) { e.printStackTrace() }
-
-                    /*
-                        if(snapshot.exists()) {
-
-                            for(placeSnapshot in snapshot.children) {
-                                val place = placeSnapshot.getValue(PlaceData::class.java)
-                                placeArray.add(place!!)
-                            }
-
-                            recyclerView.adapter = CollectionAdapter(placeArray)
-
-                        }
-
-                    */
 
                     }
 

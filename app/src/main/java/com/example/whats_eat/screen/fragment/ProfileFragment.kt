@@ -122,11 +122,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     it.result.childrenCount.toString()
 
             }
-            .addOnFailureListener {
+            .addOnFailureListener { DBRefError ->
 
                 Toast.makeText(
                     requireContext(),
-                    it.toString(),
+                    DBRefError.toString(),
                     Toast.LENGTH_SHORT
                 ).show()
 

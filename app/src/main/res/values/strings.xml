@@ -2,8 +2,12 @@
 
     <!-- android manifest.xml -->
     <string name="app_name">what\'s eat</string>
-    <string name="API_KEYS">AIzaSyBqA8YJbptuRz5dwzWVMP7kTKEEyg1dYaM</string>
     <string name="TypePlace">restaurant</string>
+
+    <!--DB Ref -->
+    <string name="databaseRef">userInfo</string>
+    <string name="databaseCollection">Collection</string>
+    <string name="valueNull">null</string>
 
     <!-- Common All.xml -->
     <string name="logoImg_Common">Logo Image</string>
@@ -36,6 +40,10 @@
 
     <string name="updateBtn_Profile">Update User Account</string>
     <string name="deleteBtn_Profile">Delete User Account</string>
+    
+    <string name="Box_delAccount">Do you want delete your account?</string>
+    <string name="btn_delBox_Yes">Yes</string>
+    <string name="btn_delBox_No">No</string>
 
     <!--Activity ViewPlace.xml-->
     <string name="placeName_ViewPlace">Place Name</string>

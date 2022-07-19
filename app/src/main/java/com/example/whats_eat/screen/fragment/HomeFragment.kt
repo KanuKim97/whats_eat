@@ -33,7 +33,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         homeBinding = FragmentHomeBinding.inflate(layoutInflater)
-
         return homeBinding.root
     }
 
@@ -46,30 +45,24 @@ class HomeFragment : Fragment() {
 
         databaseReference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                homeBinding.UserTxt.text =
-                    snapshot.child("userName").value.toString()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    requireContext(),
-                    error.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-
-        databaseReference.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
-                    Log.d("record", "$snapshot")
+
+                    Log.d("Snap shots Data", "$snapshot")
+
+                    homeBinding.UserTxt.text =
+                        snapshot.child("userName").value.toString()
+
                 } else {
+
                     Toast.makeText(
                         requireContext(),
                         "collection is not exist",
                         Toast.LENGTH_SHORT
                     ).show()
+
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.R
+import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.model.commonModel.Results
 import com.example.whats_eat.data.model.errorModel.ErrorResponse
 import com.example.whats_eat.data.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.IGoogleAPIService
@@ -51,7 +50,6 @@ class MapsFragment : Fragment() {
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
     private lateinit var myLocationRequest: LocationRequest
     private lateinit var mGoogleApiService: IGoogleAPIService
-    private lateinit var resultPlaces: Results
 
     lateinit var currentPlace: Myplaces
 
@@ -65,17 +63,10 @@ class MapsFragment : Fragment() {
             myMap.uiSettings.isZoomControlsEnabled = true
 
             myMap.setOnMarkerClickListener{ marker ->
-                resultPlaces = currentPlace.results!![Integer.parseInt(marker.snippet.toString())]
+                Common.placeResultData =
+                    currentPlace.results!![Integer.parseInt(marker.snippet.toString())]
 
-
-                Intent(requireContext(), ViewPlaceActivity::class.java).also {
-                    it.putExtra("place_id",  resultPlaces.place_id)
-                    it.putExtra("photos", resultPlaces.photos)
-//                    it.putExtra("result_Object", )
-
-                    startActivity(it)
-
-                }
+                startActivity(Intent(requireContext(), ViewPlaceActivity::class.java))
 
                 true
             }
@@ -135,7 +126,7 @@ class MapsFragment : Fragment() {
                 myLatLng = "$myLatitude,$myLongitude"
 
                 myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
-                myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
+                myMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
 
                 getNearbyPlace(myLatLng)
             }
@@ -308,7 +299,7 @@ class MapsFragment : Fragment() {
                     }
 
                     400 -> {
-                        //TODO : Error Handling
+
                         val errorJsonObject: JSONObject
                         val requestErrorBody: ErrorResponse
 
@@ -321,10 +312,14 @@ class MapsFragment : Fragment() {
 
                             requestErrorBody = ErrorResponse(responseCode, responseMsg)
 
-                            Log.d("error", requestErrorBody.error_message)
+                            Toast.makeText(
+                                requireContext(),
+                                requestErrorBody.error_message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+
 
                         } catch (e: JSONException) { e.printStackTrace() }
-
 
                     }
 

@@ -1,4 +1,4 @@
-package com.example.whats_eat.collectionController
+package com.example.whats_eat.data.collectionController
 
 import android.net.Uri
 import android.util.Log
@@ -17,7 +17,9 @@ class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
     : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.collection_item, parent, false)
+        val itemView = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.collection_item, parent,false)
 
         return CollectionViewHolder(itemView)
     }
@@ -30,12 +32,13 @@ class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
         holder.placeAddress.text = place.placeAddress
         holder.placeRating.text = place.ratingNum.toString()
 
-        if (place.placePhotoUrl.isNullOrEmpty()) {
-
+        if (place.placePhotoUrl.isEmpty()) {
             holder.placePhoto.visibility = View.GONE
         } else {
-
-            Glide.with(holder.placePhoto).load(Uri.parse(place.placePhotoUrl)).into(holder.placePhoto)
+            Glide
+                .with(holder.placePhoto)
+                .load(Uri.parse(place.placePhotoUrl))
+                .into(holder.placePhoto)
         }
 
         holder.delPlaceBtn.setOnClickListener {
@@ -53,7 +56,7 @@ class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
         val placeAddress : TextView = itemView.findViewById(R.id.addressName)
         val placeRating : TextView = itemView.findViewById(R.id.ratingNum)
         val placePhoto : ImageView = itemView.findViewById(R.id.placeImage)
-
         val delPlaceBtn : Button = itemView.findViewById(R.id.collectionDelBtn)
     }
+
 }

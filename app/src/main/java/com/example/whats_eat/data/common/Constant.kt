@@ -7,6 +7,6 @@ object Constant {
 
     const val INearPlaceAPIUri: String = "https://maps.googleapis.com/maps/api/place/nearbysearch/"
     const val IPlaceDetailAPIUri: String = "https://maps.googleapis.com/maps/api/place/details/"
-    const val IPlacePhotoAPIUri: String = "https://maps.googleapis.com/maps/api/place/"
+    const val IPlacePhotoAPIUri: String = "https://maps.googleapis.com/maps/api/place/photo"
 
 }

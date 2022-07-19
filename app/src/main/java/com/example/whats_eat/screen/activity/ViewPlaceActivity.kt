@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.R
+import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.model.commonModel.Results
-import com.example.whats_eat.data.model.commonModel.modelContent.photo.Photos
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
@@ -39,11 +39,8 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var databaseReference : DatabaseReference
     private lateinit var auth : FirebaseAuth
 
-    lateinit var paramPlaceID: String
-    lateinit var paramPhotos: Array<Photos>
-
-    var mDetailedPlace: PlaceDetail? = null
-    var mSelectedPlace: Results? = null
+    private var mSelectedPlace: Results? = null
+    private var mDetailedPlace: PlaceDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,18 +49,14 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(viewPlaceBinding.root)
 
         mService = RetrofitClient.DetailPlaceApiService
+        mSelectedPlace = Common.placeResultData
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-        databaseReference = database.reference.child("userInfo")
-                .child("${auth.currentUser?.uid}")
-                .child("Collection")
-
-        /*
-         -- Test Code --
-        paramPlaceID = intent.getStringExtra("place_id").toString()
-        paramPhotos = intent.getSerializableExtra("photos") as Array<Photos>
-        */
+        databaseReference = database.reference
+            .child("userInfo")
+            .child("${auth.currentUser?.uid}")
+            .child("Collection")
 
     }
 
@@ -71,7 +64,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         super.onResume()
 
         controlView()
-        //getDetailPlace()
+        getDetailPlace(mSelectedPlace!!.place_id.toString())
 
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
@@ -147,24 +140,30 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private fun getDetailPlace(
         place_ID: String,
     ) {
-        val mDetailedApiResponse = RetrofitRepo.getPlaceDetailSingleton(
-            Place_ID = place_ID,
-            Api_key = BuildConfig.GOOGLE_API_KEY )
+        val mDetailedApiResponse = RetrofitRepo
+            .getPlaceDetailSingleton(
+                Place_ID = place_ID,
+                Api_key = BuildConfig.GOOGLE_API_KEY )
 
         mDetailedApiResponse.enqueue(object: Callback<PlaceDetail> {
+
             override fun onResponse(
                 call: Call<PlaceDetail>,
                 response: Response<PlaceDetail>
             ) {
 
+
+                /*
+                    TODO: Need to Fix response Error
+                    Response Code : 200
+                    Response Status : INVALID_REQUEST
+                 */
                 if(response.isSuccessful) {
 
-                    mDetailedPlace = response.body()
+                    Log.d("response Code", response.code().toString())
+                    Log.d("response Body", response.body()?.status.toString())
+                    Log.d("response Msg", response.body()?.result.toString())
 
-                    viewPlaceBinding.placeName.text =
-                        mDetailedPlace!!.result!!.name
-                    viewPlaceBinding.placeAddress.text =
-                        mDetailedPlace!!.result!!.formatted_address
 
                 } else {
 
@@ -180,7 +179,11 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
                         requestErrorBody = ErrorResponse(responseCode, responseMsg)
 
-                        Log.d("error", requestErrorBody.error_message)
+                        Toast.makeText(
+                            baseContext,
+                            requestErrorBody.error_message,
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                     } catch (e: JSONException) { e.printStackTrace() }
 
@@ -200,13 +203,11 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         photoReference: String
     ): String {
 
-        val photoRefUrl = StringBuilder(Constant.IPlacePhotoAPIUri)
-        photoRefUrl
+        return StringBuilder(Constant.IPlacePhotoAPIUri)
             .append("?maxwidth=${Constant.photoMaxWidth}")
             .append("&photo_reference=$photoReference")
-            .append("&key=${BuildConfig.GOOGLE_API_KEY}")
+            .append("&key=${BuildConfig.GOOGLE_API_KEY}").toString()
 
-        return photoRefUrl.toString()
     }
 
 }
