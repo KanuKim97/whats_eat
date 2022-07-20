@@ -97,6 +97,7 @@ class CollectionFragment : Fragment() {
                             Toast.LENGTH_SHORT).show()
                     }
                 })
+
     }
 
 }
