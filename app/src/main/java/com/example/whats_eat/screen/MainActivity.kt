@@ -2,7 +2,6 @@ package com.example.whats_eat.screen
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -22,20 +21,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
-        val navigationView = mainActivityBinding.navigationView
-        val headerView = navigationView.getHeaderView(0)
-
-        auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-
         setContentView(mainActivityBinding.root)
 
+        auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("userInfo")
+
+
+        /*
+
+        val currentUser = auth!!.currentUser
+        val navigationView = mainActivityBinding.navigationView
+        val headerView = navigationView.getHeaderView(0)
 
         val userRef = databaseReference.child(currentUser?.uid!!)
         val nameHeader : TextView = headerView.findViewById(R.id.userNameProfile)
@@ -53,15 +55,71 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
 
         mainActivityBinding.imgMenu.setOnClickListener {
             mainActivityBinding.drawerLayout.openDrawer(GravityCompat.START)
         }
+
+
         navigationView.itemIconTintList = null
 
         NavigationUI.setupWithNavController(navigationView, navController)
+        */
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val currentUser = auth.currentUser
+
+        val userRef = databaseReference.child(currentUser!!.uid)
+        val navigationView = mainActivityBinding.navigationView
+        val headerView = navigationView.getHeaderView(0)
+
+        val nameHeader: TextView = headerView.findViewById(R.id.userNameProfile)
+        val emailHeader: TextView = headerView.findViewById(R.id.emailProfile)
+
+        val navController = Navigation.findNavController(
+            this,
+            R.id.nav_host_fragment_container )
+
+        mainActivityBinding.imgMenu.setOnClickListener{
+            mainActivityBinding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navigationView.itemIconTintList = null
+        NavigationUI.setupWithNavController(navigationView, navController)
+
+        userRef.addValueEventListener(object: ValueEventListener{
+
+            override fun onDataChange(
+                snapshot: DataSnapshot
+            ) {
+
+                if(snapshot.exists()) {
+                    nameHeader.text = snapshot.child("fullName").value.toString()
+                    emailHeader.text = snapshot.child("eMail").value.toString()
+                }
+
+            }
+
+            override fun onCancelled(
+                error: DatabaseError
+            ) {
+
+                Toast.makeText(
+                    this@MainActivity,
+                    error.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+
 
     }
 
@@ -70,4 +128,5 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
+
 }

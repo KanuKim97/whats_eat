@@ -48,7 +48,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         viewPlaceBinding = ActivityViewPlaceBinding.inflate(layoutInflater)
         setContentView(viewPlaceBinding.root)
 
-        mService = RetrofitClient.DetailPlaceApiService
+        mService = RetrofitClient.PlaceApiService
         mSelectedPlace = Common.placeResultData
 
         auth = FirebaseAuth.getInstance()
@@ -63,8 +63,8 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
 
+        getDetailPlace()
         controlView()
-        getDetailPlace(mSelectedPlace!!.place_id.toString())
 
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
@@ -113,7 +113,6 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun controlView() {
-        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
 
         if(mSelectedPlace?.photos.isNullOrEmpty()) {
             viewPlaceBinding.placeImg.visibility = View.GONE
@@ -135,14 +134,17 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
             else { viewPlaceBinding.openTime.text = "영업 중" }
         }
 
+        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
+
+        viewPlaceBinding.placeName.text = mDetailedPlace?.result?.name
+        viewPlaceBinding.placeAddress.text = mDetailedPlace?.result?.formatted_address
+
     }
 
-    private fun getDetailPlace(
-        place_ID: String,
-    ) {
+    private fun getDetailPlace() {
         val mDetailedApiResponse = RetrofitRepo
             .getPlaceDetailSingleton(
-                Place_ID = place_ID,
+                Place_ID = mSelectedPlace?.place_id!!,
                 Api_key = BuildConfig.GOOGLE_API_KEY )
 
         mDetailedApiResponse.enqueue(object: Callback<PlaceDetail> {
@@ -152,18 +154,22 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 response: Response<PlaceDetail>
             ) {
 
-
-                /*
-                    TODO: Need to Fix response Error
-                    Response Code : 200
-                    Response Status : INVALID_REQUEST
-                 */
                 if(response.isSuccessful) {
 
                     Log.d("response Code", response.code().toString())
                     Log.d("response Body", response.body()?.status.toString())
                     Log.d("response Msg", response.body()?.result.toString())
 
+                    if(response.body()?.status == "OK") { mDetailedPlace = response.body() }
+                    else {
+
+                        Toast.makeText(
+                            baseContext,
+                            response.body()?.status,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
 
                 } else {
 

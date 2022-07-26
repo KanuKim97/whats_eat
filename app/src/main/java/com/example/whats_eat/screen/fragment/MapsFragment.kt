@@ -77,7 +77,7 @@ class MapsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mGoogleApiService = RetrofitClient.nearPlaceApiService
+        mGoogleApiService = RetrofitClient.PlaceApiService
 
         myFusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
@@ -126,7 +126,7 @@ class MapsFragment : Fragment() {
                 myLatLng = "$myLatitude,$myLongitude"
 
                 myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
-                myMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
+                myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
 
                 getNearbyPlace(myLatLng)
             }

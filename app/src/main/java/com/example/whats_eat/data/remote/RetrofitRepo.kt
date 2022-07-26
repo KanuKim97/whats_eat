@@ -15,7 +15,7 @@ object RetrofitRepo {
     ): Call<Myplaces> {
 
         return RetrofitClient
-            .getClient(Constant.INearPlaceAPIUri)
+            .getClient(Constant.IPlaceAPIUri)
             .create(IGoogleAPIService::class.java)
             .getNearPlaces(latLng, radius, type, Api_key)
 
@@ -27,7 +27,7 @@ object RetrofitRepo {
     ): Call<PlaceDetail> {
 
         return RetrofitClient
-            .getClient(Constant.IPlaceDetailAPIUri)
+            .getClient(Constant.IPlaceAPIUri)
             .create(IGoogleAPIService::class.java)
             .getPlaceDetail(Place_ID, Api_key)
 

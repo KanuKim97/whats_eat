@@ -10,13 +10,10 @@ object RetrofitClient {
 
     private var retrofit : Retrofit? = null
 
-    val nearPlaceApiService: IGoogleAPIService
-        get() = getClient(Constant.INearPlaceAPIUri)
+    val PlaceApiService: IGoogleAPIService
+        get() = getClient(Constant.IPlaceAPIUri)
             .create(IGoogleAPIService::class.java)
 
-    val DetailPlaceApiService: IGoogleAPIService
-        get() = getClient(Constant.IPlaceDetailAPIUri)
-            .create(IGoogleAPIService::class.java)
 
     fun getClient(baseUrl: String) : Retrofit{
         if(retrofit ==null){

@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
 
                         homeBinding.UserTxt.text =
                             snapshot.child("userName").value.toString()
-
+/*
                        for(placeSnapshot in snapshot.child("Collection").children) {
 
                            val placeValue = placeSnapshot.getValue(PlaceData::class.java)
@@ -65,27 +65,11 @@ class HomeFragment : Fragment() {
                            homeBinding.placeName3.text = placeValue?.placeName
                            homeBinding.placeName4.text = placeValue?.placeName
                        }
+*/
 
                     }
 
                 } catch (e:DatabaseException) { e.printStackTrace() }
-
-            /*
-                if(snapshot.exists()) {
-
-                    homeBinding.UserTxt.text =
-                        snapshot.child("userName").value.toString()
-
-                } else {
-
-                    Toast.makeText(
-                        requireContext(),
-                        "collection is not exist",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                }
-            */
 
             }
 

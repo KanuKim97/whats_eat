@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface IGoogleAPIService {
 
-    @GET("json")
+    @GET("nearbysearch/json")
     fun getNearPlaces(
         @Query("location")
         latLng: String,
@@ -21,7 +21,7 @@ interface IGoogleAPIService {
         Api_Key: String
     ): Call<Myplaces>
 
-    @GET("json")
+    @GET("details/json")
     fun getPlaceDetail(
         @Query("place_id")
         Place_ID: String,
