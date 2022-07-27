@@ -3,7 +3,6 @@ package com.example.whats_eat.screen.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -112,35 +111,6 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun controlView() {
-
-        if(mSelectedPlace?.photos.isNullOrEmpty()) {
-            viewPlaceBinding.placeImg.visibility = View.GONE
-        } else {
-
-            Glide
-                .with(this)
-                .load(getPhotoUrl(mSelectedPlace!!.photos!![0].photo_reference!!))
-                .into(viewPlaceBinding.placeImg)
-
-        }
-
-        if(mSelectedPlace!!.opening_hours == null) {
-            viewPlaceBinding.openTime.visibility = View.GONE
-        } else {
-            val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
-
-            if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
-            else { viewPlaceBinding.openTime.text = "영업 중" }
-        }
-
-        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
-
-        viewPlaceBinding.placeName.text = mDetailedPlace?.result?.name
-        viewPlaceBinding.placeAddress.text = mDetailedPlace?.result?.formatted_address
-
-    }
-
     private fun getDetailPlace() {
         val mDetailedApiResponse = RetrofitRepo
             .getPlaceDetailSingleton(
@@ -155,10 +125,6 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
             ) {
 
                 if(response.isSuccessful) {
-
-                    Log.d("response Code", response.code().toString())
-                    Log.d("response Body", response.body()?.status.toString())
-                    Log.d("response Msg", response.body()?.result.toString())
 
                     if(response.body()?.status == "OK") { mDetailedPlace = response.body() }
                     else {
@@ -202,6 +168,35 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         })
+
+    }
+
+    private fun controlView() {
+
+        if(mSelectedPlace?.photos.isNullOrEmpty()) {
+            viewPlaceBinding.placeImg.visibility = View.GONE
+        } else {
+
+            Glide
+                .with(this)
+                .load(getPhotoUrl(mSelectedPlace!!.photos!![0].photo_reference!!))
+                .into(viewPlaceBinding.placeImg)
+
+        }
+
+        if(mSelectedPlace!!.opening_hours == null) {
+            viewPlaceBinding.openTime.visibility = View.GONE
+        } else {
+            val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
+
+            if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
+            else { viewPlaceBinding.openTime.text = "영업 중" }
+        }
+
+        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
+
+        viewPlaceBinding.placeName.text = mDetailedPlace?.result?.name
+        viewPlaceBinding.placeAddress.text = mDetailedPlace?.result?.formatted_address
 
     }
 

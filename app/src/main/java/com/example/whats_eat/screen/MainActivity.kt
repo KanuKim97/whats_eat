@@ -32,41 +32,6 @@ class MainActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("userInfo")
 
-
-        /*
-
-        val currentUser = auth!!.currentUser
-        val navigationView = mainActivityBinding.navigationView
-        val headerView = navigationView.getHeaderView(0)
-
-        val userRef = databaseReference.child(currentUser?.uid!!)
-        val nameHeader : TextView = headerView.findViewById(R.id.userNameProfile)
-        val emailHeader : TextView = headerView.findViewById(R.id.emailProfile)
-
-        userRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                nameHeader.text = snapshot.child("fullName").value.toString()
-                emailHeader.text = snapshot.child("eMail").value.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@MainActivity, "LoadFailed", Toast.LENGTH_SHORT).show()
-                Log.d("DBError", error.message)
-            }
-        })
-
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
-
-        mainActivityBinding.imgMenu.setOnClickListener {
-            mainActivityBinding.drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-
-        navigationView.itemIconTintList = null
-
-        NavigationUI.setupWithNavController(navigationView, navController)
-        */
-
     }
 
     override fun onResume() {
