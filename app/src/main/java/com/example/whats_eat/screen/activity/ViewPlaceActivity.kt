@@ -63,7 +63,6 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         super.onResume()
 
         getDetailPlace()
-        controlView()
 
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
@@ -85,25 +84,30 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 )
 
             R.id.addCollection -> {
-                val restaurantName: String = mDetailedPlace?.result?.name ?: "null"
-                val restaurantAddress: String = mDetailedPlace?.result?.formatted_address ?: "null"
+                val restaurantName: String = viewPlaceBinding.placeName.text.toString()
+                val restaurantAddress: String = viewPlaceBinding.placeAddress.text.toString()
                 val restaurantRating: Float = mSelectedPlace!!.rating.toFloat()
-                val restaurantPhotos: String
+                val restaurantPhotos: String =
+                    if(mSelectedPlace?.photos == null) { null.toString() }
+                    else { getPhotoUrl(mSelectedPlace?.photos!![0].photo_reference!!) }
 
-                if(mSelectedPlace?.photos == null) {
-                    restaurantPhotos = null.toString()
+                val placeDetailArray = ViewPlaceModel(
+                    restaurantName,
+                    restaurantAddress,
+                    restaurantRating,
+                    restaurantPhotos)
 
-                    val placeDetailArray = ViewPlaceModel(
-                        restaurantName,
-                        restaurantAddress,
-                        restaurantRating,
-                        restaurantPhotos)
+                databaseReference
+                    .push()
+                    .setValue(placeDetailArray)
 
-                    databaseReference
-                        .push()
-                        .setValue(placeDetailArray)
+                Toast.makeText(
+                    baseContext,
+                    "Add Collection Complete",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                } else { onBackPressed() }
+                onBackPressed()
 
             }
 
@@ -126,7 +130,11 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
                 if(response.isSuccessful) {
 
-                    if(response.body()?.status == "OK") { mDetailedPlace = response.body() }
+                    if(response.body()?.status == "OK") {
+                        mDetailedPlace = response.body()
+
+                        controlView(mDetailedPlace)
+                    }
                     else {
 
                         Toast.makeText(
@@ -164,14 +172,20 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<PlaceDetail>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    baseContext,
+                    t.message,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         })
 
     }
 
-    private fun controlView() {
+    private fun controlView(
+        mPlaceDetailData: PlaceDetail?
+    ) {
 
         if(mSelectedPlace?.photos.isNullOrEmpty()) {
             viewPlaceBinding.placeImg.visibility = View.GONE
@@ -195,8 +209,8 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
         viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
 
-        viewPlaceBinding.placeName.text = mDetailedPlace?.result?.name
-        viewPlaceBinding.placeAddress.text = mDetailedPlace?.result?.formatted_address
+        viewPlaceBinding.placeName.text = mPlaceDetailData?.result?.name
+        viewPlaceBinding.placeAddress.text = mPlaceDetailData?.result?.formatted_address
 
     }
 

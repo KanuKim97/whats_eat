@@ -54,8 +54,9 @@ class HomeFragment : Fragment() {
 
                         homeBinding.UserTxt.text =
                             snapshot.child("userName").value.toString()
-/*
-                       for(placeSnapshot in snapshot.child("Collection").children) {
+
+                    /*
+                        for(placeSnapshot in snapshot.child("Collection").children) {
 
                            val placeValue = placeSnapshot.getValue(PlaceData::class.java)
                            Log.d("PlaceData", "$placeValue")
@@ -65,7 +66,9 @@ class HomeFragment : Fragment() {
                            homeBinding.placeName3.text = placeValue?.placeName
                            homeBinding.placeName4.text = placeValue?.placeName
                        }
-*/
+                    */
+
+
 
                     }
 
