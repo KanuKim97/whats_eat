@@ -3,20 +3,20 @@ buildscript {
     ext.kotlin_version = "1.4.31"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
-        classpath 'com.google.gms:google-services:4.3.10'
-
+        classpath 'com.google.gms:google-services:4.3.13'
+        classpath 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 

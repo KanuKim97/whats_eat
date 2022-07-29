@@ -95,7 +95,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     restaurantName,
                     restaurantAddress,
                     restaurantRating,
-                    restaurantPhotos)
+                    restaurantPhotos )
 
                 databaseReference
                     .push()
@@ -132,7 +132,6 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
                     if(response.body()?.status == "OK") {
                         mDetailedPlace = response.body()
-
                         controlView(mDetailedPlace)
                     }
                     else {
