@@ -79,7 +79,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         logInBinding.passwordInput.text?.clear()
     }
 
-    //Read Login User Data in TextInputBox
     private fun readUserData(userEmail: String, userPassword: String) {
         auth.signInWithEmailAndPassword(userEmail, userPassword)
             .addOnCompleteListener {
@@ -95,7 +94,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
     }
 
-    // Validate User Login Data When TextBox is Empty
     private fun validateUserData(userEmail: String, userPassword: String){
         if(userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
             readUserData(userEmail, userPassword)

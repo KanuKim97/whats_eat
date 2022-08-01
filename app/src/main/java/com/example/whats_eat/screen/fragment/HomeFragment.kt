@@ -1,13 +1,11 @@
 package com.example.whats_eat.screen.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.whats_eat.data.model.nearByPlace.PlaceData
 import com.example.whats_eat.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -51,25 +49,8 @@ class HomeFragment : Fragment() {
                 try {
 
                     if(snapshot.exists()) {
-
                         homeBinding.UserTxt.text =
                             snapshot.child("userName").value.toString()
-
-                    /*
-                        for(placeSnapshot in snapshot.child("Collection").children) {
-
-                           val placeValue = placeSnapshot.getValue(PlaceData::class.java)
-                           Log.d("PlaceData", "$placeValue")
-
-                           homeBinding.placeName1.text = placeValue?.placeName
-                           homeBinding.placeName2.text = placeValue?.placeName
-                           homeBinding.placeName3.text = placeValue?.placeName
-                           homeBinding.placeName4.text = placeValue?.placeName
-                       }
-                    */
-
-
-
                     }
 
                 } catch (e:DatabaseException) { e.printStackTrace() }

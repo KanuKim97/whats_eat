@@ -25,7 +25,6 @@ class CollectionFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var collectionBinding: FragmentCollectionBinding
-
     private lateinit var placeArray: ArrayList<PlaceData>
 
     override fun onCreate(savedInstanceState: Bundle?) {

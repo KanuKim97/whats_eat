@@ -28,7 +28,6 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         databaseReference = database.reference.child("userInfo")
 
         setContentView(signInBinding.root)
-
     }
 
     override fun onResume() {
@@ -44,24 +43,23 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.compBtn -> {
 
-                val fullName: String = signInBinding.localNameInput.text.toString()
+                val userFullName: String = signInBinding.localNameInput.text.toString()
                 val userName: String = signInBinding.localUserNameInput.text.toString()
-                val eMail: String = signInBinding.localEmailInput.text.toString()
-                val passWord: String = signInBinding.localPasswordInput.text.toString()
-                val confPassword: String = signInBinding.localConfPasswordInput.text.toString()
+                val userEmail: String = signInBinding.localEmailInput.text.toString()
+                val userPassword: String = signInBinding.localPasswordInput.text.toString()
+                val userConfPassword: String = signInBinding.localConfPasswordInput.text.toString()
 
                 when {
-
-                    validateEmailAddress(eMail) && validateUserName(userName) -> {
+                    (validateEmailAddress(userEmail)) && (validateUserName(userName)) -> {
                         onSignUpComplete(
-                            fullName,
+                            userFullName,
                             userName,
-                            eMail,
-                            passWord,
-                            confPassword)
+                            userEmail,
+                            userPassword,
+                            userConfPassword)
                     }
-
                 }
+
             }
 
             R.id.toLoginBtn -> {
@@ -78,7 +76,12 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
         return if (Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) { true }
         else {
-            Toast.makeText(this, "Invalid Email Address! Plz Type again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Invalid Email Address! Plz Type again",
+                Toast.LENGTH_SHORT
+            ).show()
+
             signInBinding.localEmailInput.text?.clear()
             false
         }
@@ -88,7 +91,12 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     private fun validateUserName(userName: String): Boolean {
 
         return if(userName.length > 15) {
-            Toast.makeText(this, "UserName is so long!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "UserName is so long!",
+                Toast.LENGTH_SHORT
+            ).show()
+
             signInBinding.localUserNameInput.text?.clear()
             false
         } else { true }
@@ -124,32 +132,56 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                 signInBinding.localConfPasswordInput.error = "Plz enter your User Name"
             }
             else -> {
-                auth.createUserWithEmailAndPassword(eMail, passWord)
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                val currentUser = auth.currentUser
-                                val currentUserDb = databaseReference.child((currentUser?.uid!!))
+                auth
+                    .createUserWithEmailAndPassword(eMail, passWord)
+                    .addOnCompleteListener {
 
-                                currentUserDb.child("fullName").setValue(fullName)
-                                currentUserDb.child("userName").setValue(userName)
-                                currentUserDb.child("eMail").setValue(eMail)
+                        if (it.isSuccessful) {
 
-                                Toast.makeText(this, "Registration Success", Toast.LENGTH_SHORT).show()
+                            val currentUser = auth.currentUser
+                            val currentUserDb = databaseReference.child((currentUser?.uid!!))
 
-                                startActivity(Intent(this, LoginActivity::class.java))
-                                finish()
+                            currentUserDb.child("fullName").setValue(fullName)
+                            currentUserDb.child("userName").setValue(userName)
+                            currentUserDb.child("eMail").setValue(eMail)
 
-                            } else {
-                                Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Registration is Complete",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                                signInBinding.localNameInput.text?.clear()
-                                signInBinding.localUserNameInput.text?.clear()
-                                signInBinding.localEmailInput.text?.clear()
-                                signInBinding.localPasswordInput.text?.clear()
-                                signInBinding.localConfPasswordInput.text?.clear()
-                            }
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
+
+                        } else {
+
+                            Toast.makeText(
+                                this,
+                                it.exception?.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            signInBinding.localNameInput.text?.clear()
+                            signInBinding.localUserNameInput.text?.clear()
+                            signInBinding.localEmailInput.text?.clear()
+                            signInBinding.localPasswordInput.text?.clear()
+                            signInBinding.localConfPasswordInput.text?.clear()
                         }
+
+                    }
+                    .addOnFailureListener {
+
+                        Toast.makeText(
+                            this,
+                            it.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
             }
+
         }
 
     }

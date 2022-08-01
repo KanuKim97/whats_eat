@@ -33,7 +33,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         proFileBinding = FragmentProFileBinding.inflate(layoutInflater)
-
         return proFileBinding.root
     }
 
@@ -73,6 +72,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                                     .getReference("userInfo")
                                     .child(currentUser.uid)
                                     .removeValue()
+
                                 startActivity(Intent(requireContext(), LoginActivity::class.java))
                             }
 
@@ -88,48 +88,38 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showUserProfile() {
-        val currentUser = auth.currentUser
-        val userRef = databaseReference.child(currentUser?.uid!!)
-        val userColRef = userRef.child("Collection")
+        val userDBRef = databaseReference.child(auth.currentUser?.uid!!)
 
-        userRef.addValueEventListener(object: ValueEventListener{
+        userDBRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 proFileBinding.nameTxt.text =
                     snapshot.child("userName").value.toString()
-
                 proFileBinding.emailTxt.text =
                     snapshot.child("eMail").value.toString()
-
             }
 
             override fun onCancelled(error: DatabaseError) {
-
                 Toast.makeText(
                     requireContext(),
-                    error.toString(),
+                    error.message,
                     Toast.LENGTH_SHORT
                 ).show()
-
             }
         })
 
-        userColRef
+        userDBRef
+            .child("Collection")
             .get()
             .addOnCompleteListener {
-
                 proFileBinding.profileRateNum.text =
                     it.result.childrenCount.toString()
-
             }
-            .addOnFailureListener { DBRefError ->
-
+            .addOnFailureListener {
                 Toast.makeText(
                     requireContext(),
-                    DBRefError.toString(),
+                    it.message,
                     Toast.LENGTH_SHORT
                 ).show()
-
             }
 
     }
