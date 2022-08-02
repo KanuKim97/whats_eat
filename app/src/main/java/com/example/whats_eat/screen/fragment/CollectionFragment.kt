@@ -57,7 +57,6 @@ class CollectionFragment : Fragment() {
         collectionAdapter = CollectionAdapter(placeArray)
 
         return collectionBinding.root
-
     }
 
     override fun onResume() {

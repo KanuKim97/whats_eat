@@ -216,12 +216,10 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private fun getPhotoUrl(
         photoReference: String
     ): String {
-
         return StringBuilder(Constant.IPlacePhotoAPIUri)
             .append("?maxwidth=${Constant.photoMaxWidth}")
             .append("&photo_reference=$photoReference")
             .append("&key=${BuildConfig.GOOGLE_API_KEY}").toString()
-
     }
 
 }

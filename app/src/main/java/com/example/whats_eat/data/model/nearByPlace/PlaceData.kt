@@ -15,4 +15,5 @@ data class PlaceData(
 
     @SerializedName("placePhotoUrl")
     var placePhotoUrl: String = ""
+
     )

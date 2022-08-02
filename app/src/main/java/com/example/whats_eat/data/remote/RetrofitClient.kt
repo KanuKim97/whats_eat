@@ -14,7 +14,6 @@ object RetrofitClient {
         get() = getClient(Constant.IPlaceAPIUri)
             .create(IGoogleAPIService::class.java)
 
-
     fun getClient(baseUrl: String) : Retrofit{
         if(retrofit ==null){
 

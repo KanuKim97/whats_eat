@@ -15,4 +15,5 @@ data class ViewPlaceModel(
 
     @SerializedName("placePhotoUrl")
     var placePhotoUrl: String
+
     )
