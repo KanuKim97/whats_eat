@@ -3,6 +3,7 @@ package com.example.whats_eat.screen.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.whats_eat.R
@@ -48,28 +49,54 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
                 val findPwEmail: String = findPwBinding.passwordEmailInput.text.toString()
 
                 if(findPwEmail.isEmpty()) {
-
-                    findPwBinding.passwordEmailInput.error = "Required Email"
+                    findPwBinding.passwordEmailInput.error = "Email Required"
                     findPwBinding.passwordEmailInput.text?.clear()
-
+                } else if(!(Patterns.EMAIL_ADDRESS.matcher(findPwEmail).matches())){
+                    findPwBinding.passwordEmailInput.error = "Not expression of email patterns"
+                    findPwBinding.passwordEmailInput.text?.clear()
                 } else {
 
-                    auth.sendPasswordResetEmail(findPwEmail).addOnCompleteListener {
-                        if(it.isSuccessful) {
-                            Toast.makeText(this, "Check your Email and reset Password!", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, LoginActivity::class.java))
-                            finish()
-                        } else {
-                            Toast.makeText(this, "Try again! Something wrong happened!", Toast.LENGTH_SHORT).show()
+                    auth.sendPasswordResetEmail(findPwEmail)
+                        .addOnCompleteListener {
+
+                            if (it.isSuccessful) {
+
+                                Toast.makeText(
+                                    this,
+                                    "Plz Check your Email",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                startActivity(Intent(this, LoginActivity::class.java))
+                                finish()
+                            } else {
+
+                                Toast.makeText(
+                                    this,
+                                    it.exception?.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                findPwBinding.passwordEmailInput.text?.clear()
+                            }
+
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                this,
+                                it.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+
                             findPwBinding.passwordEmailInput.text?.clear()
                         }
-                    }
 
                 }
 
             }
 
         }
+
     }
 
 

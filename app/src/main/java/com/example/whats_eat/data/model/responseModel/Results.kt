@@ -1,8 +1,8 @@
-package com.example.whats_eat.data.model.commonModel
+package com.example.whats_eat.data.model.responseModel
 
-import com.example.whats_eat.data.model.commonModel.modelContent.loaction.Geometry
-import com.example.whats_eat.data.model.commonModel.modelContent.period.OpeningHours
-import com.example.whats_eat.data.model.commonModel.modelContent.photo.Photos
+import com.example.whats_eat.data.model.responseModel.modelContent.loaction.Geometry
+import com.example.whats_eat.data.model.responseModel.modelContent.period.OpeningHours
+import com.example.whats_eat.data.model.responseModel.modelContent.photo.Photos
 
 class Results {
     var name : String? = null

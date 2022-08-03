@@ -49,15 +49,15 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                 val userPassword: String = signInBinding.localPasswordInput.text.toString()
                 val userConfPassword: String = signInBinding.localConfPasswordInput.text.toString()
 
-                when {
-                    (validateEmailAddress(userEmail)) && (validateUserName(userName)) -> {
-                        onSignUpComplete(
-                            userFullName,
-                            userName,
-                            userEmail,
-                            userPassword,
-                            userConfPassword)
-                    }
+                if (
+                    validateUserInput(
+                        userFullName,
+                        userName,
+                        userEmail,
+                        userPassword,
+                        userConfPassword )
+                ) {
+                    signInUser(userEmail, userPassword, userFullName, userName)
                 }
 
             }
@@ -71,120 +71,135 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun validateUserInput(
+        fullName : String,
+        userName : String,
+        eMail : String,
+        passWord : String,
+        confPassword : String
+    ): Boolean {
 
-    private fun validateEmailAddress(eMail : String): Boolean {
-
-        return if (Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) { true }
-        else {
-            Toast.makeText(
-                this,
-                "Invalid Email Address! Plz Type again",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            signInBinding.localEmailInput.text?.clear()
-            false
-        }
-
-    }
-
-    private fun validateUserName(userName: String): Boolean {
-
-        return if(userName.length > 15) {
-            Toast.makeText(
-                this,
-                "UserName is so long!",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            signInBinding.localUserNameInput.text?.clear()
-            false
-        } else { true }
-
-    }
-
-    private fun onSignUpComplete(
-            fullName : String,
-            userName : String,
-            eMail : String,
-            passWord : String,
-            confPassword : String
-    ){
-
-        when {
+        when{
             passWord != confPassword -> {
-                Toast.makeText(this, "Password is not correct", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Password is not correct",
+                    Toast.LENGTH_SHORT
+                ).show()
+
                 signInBinding.localConfPasswordInput.text?.clear()
+                return false
             }
+
+            !(Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) -> {
+                Toast.makeText(
+                    this,
+                    "Invalid Email Address! Plz Type again",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                signInBinding.localEmailInput.text?.clear()
+                return false
+            }
+
+            (userName.length > 15) -> {
+                Toast.makeText(
+                    this,
+                    "UserName is so long!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                signInBinding.localUserNameInput.text?.clear()
+                return false
+            }
+
             fullName.isEmpty() -> {
                 signInBinding.localNameInput.error = "Plz enter your Name"
+                return false
             }
+
             userName.isEmpty() -> {
                 signInBinding.localUserNameInput.error = "Plz enter your User Name"
+                return false
             }
+
             eMail.isEmpty() -> {
-                signInBinding.localEmailInput.error = "Plz enter your User Name"
+                signInBinding.localEmailInput.error = "Plz enter your eMail"
+                return false
             }
+
             passWord.isEmpty() -> {
-                signInBinding.localPasswordInput.error = "Plz enter your User Name"
+                signInBinding.localPasswordInput.error = "Plz enter your password"
+                return false
             }
+
             confPassword.isEmpty() -> {
-                signInBinding.localConfPasswordInput.error = "Plz enter your User Name"
+                signInBinding.localConfPasswordInput.error = "Plz enter conform passWord"
+                return false
             }
+
             else -> {
-                auth
-                    .createUserWithEmailAndPassword(eMail, passWord)
-                    .addOnCompleteListener {
-
-                        if (it.isSuccessful) {
-
-                            val currentUser = auth.currentUser
-                            val currentUserDb = databaseReference.child((currentUser?.uid!!))
-
-                            currentUserDb.child("fullName").setValue(fullName)
-                            currentUserDb.child("userName").setValue(userName)
-                            currentUserDb.child("eMail").setValue(eMail)
-
-                            Toast.makeText(
-                                this,
-                                "Registration is Complete",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            startActivity(Intent(this, LoginActivity::class.java))
-                            finish()
-
-                        } else {
-
-                            Toast.makeText(
-                                this,
-                                it.exception?.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            signInBinding.localNameInput.text?.clear()
-                            signInBinding.localUserNameInput.text?.clear()
-                            signInBinding.localEmailInput.text?.clear()
-                            signInBinding.localPasswordInput.text?.clear()
-                            signInBinding.localConfPasswordInput.text?.clear()
-                        }
-
-                    }
-                    .addOnFailureListener {
-
-                        Toast.makeText(
-                            this,
-                            it.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-
+                return true
             }
 
         }
-
     }
 
+    private fun signInUser(
+        userEmail: String,
+        UserPassword: String,
+        userNickName: String,
+        userFullName: String
+    ) {
+
+        auth.createUserWithEmailAndPassword(userEmail, UserPassword)
+            .addOnCompleteListener {
+
+                if(it.isSuccessful) {
+                    val currentUser = auth.currentUser
+                    val currentUserDB = databaseReference.child((currentUser?.uid!!))
+
+                    currentUserDB.child("eMail").setValue(userEmail)
+                    currentUserDB.child("userName").setValue(userNickName)
+                    currentUserDB.child("fullName").setValue(userFullName)
+
+                    Toast.makeText(
+                        this,
+                        "Registration is Complete!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+
+                } else {
+
+                    Toast.makeText(
+                        this,
+                        it.exception?.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    signInBinding.localNameInput.text?.clear()
+                    signInBinding.localUserNameInput.text?.clear()
+                    signInBinding.localEmailInput.text?.clear()
+                    signInBinding.localPasswordInput.text?.clear()
+                    signInBinding.localConfPasswordInput.text?.clear()
+
+                }
+
+
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(
+                    this,
+                    it.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+    }
 
 }

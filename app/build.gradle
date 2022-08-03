@@ -74,23 +74,38 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+
+    //fireBase
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-analytics-ktx:21.1.0'
     implementation 'com.google.firebase:firebase-core:21.1.0'
     implementation 'com.google.firebase:firebase-auth:21.0.6'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
 
-    implementation 'com.github.bumptech.glide:glide:4.13.2'
-
+    //multiDex
     implementation 'com.android.support:multidex:1.0.3'
 
-    implementation 'com.google.android.material:material:1.6.1'
 
-    implementation 'androidx.preference:preference-ktx:1.2.0'
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+
+    //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    //easy Permission
     implementation 'com.vmadalin:easypermissions-ktx:1.0.0'
+
+    //Android Jetpack ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha06"
+
+    //Android Jetpack LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha06"
+
+    // Kotlin Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
 }

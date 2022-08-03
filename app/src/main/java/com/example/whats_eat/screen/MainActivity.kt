@@ -2,7 +2,6 @@ package com.example.whats_eat.screen
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun signOut(item: MenuItem){
+    fun signOut() {
         auth.signOut()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()

@@ -1,6 +1,6 @@
 package com.example.whats_eat.data.model.nearByPlace
 
-import com.example.whats_eat.data.model.commonModel.Results
+import com.example.whats_eat.data.model.responseModel.Results
 
 class Myplaces {
     var status: String? = null

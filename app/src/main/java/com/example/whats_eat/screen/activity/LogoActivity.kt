@@ -16,8 +16,8 @@ class LogoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logoBinding = ActivityLogoBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
+        logoBinding = ActivityLogoBinding.inflate(layoutInflater)
 
         setContentView(logoBinding.root)
     }
@@ -25,13 +25,11 @@ class LogoActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val user = auth.currentUser
-
         Handler(
             Looper.getMainLooper()
         ).postDelayed({
 
-            if(user != null){
+            if(auth.currentUser != null){
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {

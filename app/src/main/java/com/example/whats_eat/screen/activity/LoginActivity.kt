@@ -45,7 +45,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         logInBinding.logInBtn.setOnClickListener(this)
         logInBinding.findPwBtn.setOnClickListener(this)
         logInBinding.signUpBtn.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View?){
@@ -82,13 +81,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun readUserData(userEmail: String, userPassword: String) {
         auth.signInWithEmailAndPassword(userEmail, userPassword)
             .addOnCompleteListener {
+
                 if(it.isSuccessful){
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
+
             }
             .addOnFailureListener {
-                Toast.makeText(this, it.message.toString(), Toast.LENGTH_LONG).show()
+
+                Toast.makeText(
+                    this,
+                    it.message,
+                    Toast.LENGTH_LONG
+                ).show()
+
                 logInBinding.emailInput.text?.clear()
                 logInBinding.passwordInput.text?.clear()
             }
@@ -100,13 +107,25 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             when {
                 userEmail.isEmpty() -> {
-                    Toast.makeText(this, "Plz Enter Email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Plz Enter Email",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 userPassword.isEmpty() -> {
-                    Toast.makeText(this, "Plz Enter Password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Plz Enter Password",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 else -> {
-                    Toast.makeText(this, "Plz Enter Email & Password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Plz Enter Email & Password",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

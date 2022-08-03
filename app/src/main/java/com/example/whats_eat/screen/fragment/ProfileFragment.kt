@@ -62,7 +62,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
                 profileDeleteDialog
                     .setTitle("Notice!")
-                    .setMessage("Do you Want Delete Your Account?")
+                    .setMessage("Really? want to delete your account??")
                     .setPositiveButton("Yes") { _, _ ->
 
                         currentUser?.delete()?.addOnCompleteListener {
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         }
 
                     }
-                    .setNegativeButton("No") { _, _ ->}
+                    .setNegativeButton("Nope") { _, _ ->}
                     .show()
 
             }

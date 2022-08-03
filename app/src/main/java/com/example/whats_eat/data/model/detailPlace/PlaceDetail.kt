@@ -1,6 +1,6 @@
 package com.example.whats_eat.data.model.detailPlace
 
-import com.example.whats_eat.data.model.commonModel.Results
+import com.example.whats_eat.data.model.responseModel.Results
 
 class PlaceDetail {
     var status : String? = null

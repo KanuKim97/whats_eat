@@ -11,7 +11,7 @@ import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Common
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.model.commonModel.Results
+import com.example.whats_eat.data.model.responseModel.Results
 import com.example.whats_eat.data.model.detailPlace.ViewPlaceModel
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
