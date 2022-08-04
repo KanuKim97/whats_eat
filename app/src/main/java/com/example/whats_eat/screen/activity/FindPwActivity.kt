@@ -47,55 +47,74 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.send_code -> {
                 val findPwEmail: String = findPwBinding.passwordEmailInput.text.toString()
-
-                if(findPwEmail.isEmpty()) {
-                    findPwBinding.passwordEmailInput.error = "Email Required"
-                    findPwBinding.passwordEmailInput.text?.clear()
-                } else if(!(Patterns.EMAIL_ADDRESS.matcher(findPwEmail).matches())){
-                    findPwBinding.passwordEmailInput.error = "Not expression of email patterns"
-                    findPwBinding.passwordEmailInput.text?.clear()
-                } else {
-
-                    auth.sendPasswordResetEmail(findPwEmail)
-                        .addOnCompleteListener {
-
-                            if (it.isSuccessful) {
-
-                                Toast.makeText(
-                                    this,
-                                    "Plz Check your Email",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                                startActivity(Intent(this, LoginActivity::class.java))
-                                finish()
-                            } else {
-
-                                Toast.makeText(
-                                    this,
-                                    it.exception?.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                                findPwBinding.passwordEmailInput.text?.clear()
-                            }
-
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(
-                                this,
-                                it.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            findPwBinding.passwordEmailInput.text?.clear()
-                        }
-
-                }
-
+                if (validateFindPwEmail(findPwEmail)) { sendFindPwCode(findPwEmail) }
             }
 
         }
+
+    }
+
+    private fun validateFindPwEmail(findPWEmail: String): Boolean {
+
+        when {
+
+            findPWEmail.isEmpty() -> {
+                findPwBinding.passwordEmailInput.error = "Email Required"
+                findPwBinding.passwordEmailInput.text?.clear()
+                return false
+            }
+
+            !(Patterns.EMAIL_ADDRESS.matcher(findPWEmail).matches()) -> {
+                findPwBinding.passwordEmailInput.error = "Not expression of email patterns"
+                findPwBinding.passwordEmailInput.text?.clear()
+                return false
+            }
+
+            else -> {
+                return true
+            }
+
+        }
+
+    }
+
+    private fun sendFindPwCode(findPWEmail: String) {
+
+        auth.sendPasswordResetEmail(findPWEmail)
+            .addOnCompleteListener {
+
+                if(it.isSuccessful) {
+
+                    Toast.makeText(
+                        this,
+                        "Plz Check your Email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                } else {
+
+                    Toast.makeText(
+                        this,
+                        it.exception?.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    findPwBinding.passwordEmailInput.text?.clear()
+                }
+
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(
+                    this,
+                    it.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                findPwBinding.passwordEmailInput.text?.clear()
+            }
 
     }
 
