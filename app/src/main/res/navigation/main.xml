@@ -7,26 +7,26 @@
     app:startDestination="@id/menuHome">
     <fragment
         android:id="@+id/menuHome"
-        android:name="com.example.whats_eat.screen.fragment.HomeFragment"
+        android:name="com.example.whats_eat.view.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/menuProfile"
-        android:name="com.example.whats_eat.screen.fragment.ProfileFragment"
+        android:name="com.example.whats_eat.view.fragment.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_pro_file" />
 
     <fragment
         android:id="@+id/menuCollection"
-        android:name="com.example.whats_eat.screen.fragment.CollectionFragment"
+        android:name="com.example.whats_eat.view.fragment.CollectionFragment"
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection"
         />
 
     <fragment
         android:id="@+id/menuMaps"
-        android:name="com.example.whats_eat.screen.fragment.MapsFragment"
+        android:name="com.example.whats_eat.view.fragment.MapsFragment"
         android:label="fragment_Maps"
         android:layout="@layout/fragment_maps"
         />

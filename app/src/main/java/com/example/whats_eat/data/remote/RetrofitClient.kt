@@ -11,10 +11,10 @@ object RetrofitClient {
     private var retrofit : Retrofit? = null
 
     val PlaceApiService: IGoogleAPIService
-        get() = getClient(Constant.IPlaceAPIUri)
+        get() = getClient()
             .create(IGoogleAPIService::class.java)
 
-    fun getClient(baseUrl: String) : Retrofit{
+    fun getClient() : Retrofit{
         if(retrofit ==null){
 
             val httpClient = OkHttpClient.Builder()
@@ -24,7 +24,7 @@ object RetrofitClient {
                 .build()
 
             retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constant.IPlaceAPIUri)
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

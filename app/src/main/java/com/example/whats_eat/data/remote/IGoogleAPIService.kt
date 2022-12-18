@@ -1,7 +1,7 @@
 package com.example.whats_eat.data.remote
 
-import com.example.whats_eat.data.model.nearByPlace.Myplaces
-import com.example.whats_eat.data.model.detailPlace.PlaceDetail
+import com.example.whats_eat.data.remote.model.nearByPlace.Myplaces
+import com.example.whats_eat.data.remote.model.detailPlace.PlaceDetail
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.whats_eat">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -11,7 +12,6 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Design.NoActionBar"
         android:allowBackup="false" >
 
         <meta-data
@@ -22,9 +22,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".screen.activity.ViewPlaceActivity" />
+        <activity android:name=".view.activity.ViewPlaceActivity" />
         <activity
-            android:name=".screen.activity.LogoActivity"
+            android:name=".view.activity.LogoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,16 +32,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.activity.LoginActivity" />
-        <activity android:name=".screen.activity.SignInActivity" />
-        <activity android:name=".screen.activity.FindPwActivity" />
-        <activity android:name=".screen.MainActivity" />
+        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.SignInActivity" />
+        <activity android:name=".view.activity.FindPwActivity" />
+        <activity android:name=".view.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
     </application>
 
 </manifest>
