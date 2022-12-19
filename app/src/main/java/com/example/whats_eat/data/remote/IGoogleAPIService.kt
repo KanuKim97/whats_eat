@@ -3,6 +3,7 @@ package com.example.whats_eat.data.remote
 import com.example.whats_eat.data.remote.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.model.detailPlace.PlaceDetail
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -19,7 +20,7 @@ interface IGoogleAPIService {
         type: String,
         @Query("key")
         Api_Key: String
-    ): Call<Myplaces>
+    ): Response<Myplaces>
 
     @GET("details/json")
     fun getPlaceDetail(

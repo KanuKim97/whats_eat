@@ -249,7 +249,7 @@ class MapsFragment : Fragment() {
 
     }
 
-
+/*
     private fun getNearbyPlace(
         currentMyLatLng: String
     ) {
@@ -333,7 +333,7 @@ class MapsFragment : Fragment() {
 
         })
 
-    }
+    }*/
 
 
 }
