@@ -1,10 +1,5 @@
-# Refactoring -ing
- 1. check android Activity & Fragment Lifecycle 
- 2. remove Boilerplate Code
- 3. Realtime DataBase Error handling 
-
 # What's Eat? Application
- Android Studio Version : ArcticFox 2020.3.1 Patch 4
+ Android Studio Version : Dolphin 2021.3.1
  
  Language : Kotlin
  
@@ -64,13 +59,13 @@
 ```
  //firebase
  com.google.firebase:firebase-bom:28.4.0
- com.google.firebase:firebase-analytics-ktx
- com.google.firebase:firebase-core:17.2.1
- com.google.firebase:firebase-auth:19.1.0
- com.firebaseui:firebase-ui-auth:4.2.1
+ com.google.firebase:firebase-analytics-ktx:21.1.0
+ com.google.firebase:firebase-core:21.1.0
+ com.google.firebase:firebase-auth:21.0.6
+ com.firebaseui:firebase-ui-auth:8.0.1
  
  //glide
- com.github.bumptech.glide:glide:4.11.0
+ com.github.bumptech.glide:glide:4.13.2
  
  //multidex
  com.android.support:multidex:1.0.3
@@ -85,11 +80,21 @@
  com.google.android.gms:play-services-location:18.0.0 
  
  //retrofit2
- com.squareup.retrofit2:retrofit:2.3.0
- com.squareup.retrofit2:converter-gson:2.3.0
+ com.squareup.retrofit2:retrofit:2.9.0
+ com.squareup.retrofit2:converter-gson:2.9.0
  
- //Easy Permission 
- pub.devrel:easypermissions:1.3.+
+ //easy Permission
+ com.vmadalin:easypermissions-ktx:1.0.0
+
+ //Android Jetpack ViewModel
+ androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha06
+
+ //Android Jetpack LiveData
+ androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha06
+
+ //Kotlin Coroutine
+ org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0" 
+ 
 ```
 
 ## Preference
