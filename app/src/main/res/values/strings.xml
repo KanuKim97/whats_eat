@@ -77,12 +77,11 @@
     <!--Activity LogIn.xml-->
     <string name="logInTitle_LogIn">Hello! \nWelcome!</string>
     <string name="logInContent_LogIn">Log In to Continue</string>
-
     <string name="eMailInput_LogIn">Email</string>
     <string name="pwInput_LogIn">Password</string>
     <string name="forgotPwBtn_LogIn">Forgot Password?</string>
-
     <string name="logInBtn_LogIn">LOGIN</string>
     <string name="signUpBtn_LogIn">New User? Sign Up!</string>
+    <string name="logIn_Failed">Wrong ID and Password \nRetry it again!</string>
 
 </resources>

@@ -20,7 +20,7 @@ import com.example.whats_eat.data.remote.model.errorModel.ErrorResponse
 import com.example.whats_eat.data.remote.model.nearByPlace.Myplaces
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.data.remote.RetrofitClient
-import com.example.whats_eat.data.remote.RetrofitRepo
+
 import com.example.whats_eat.view.activity.ViewPlaceActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -57,7 +57,7 @@ class MapsFragment : Fragment() {
         OnMapReadyCallback { myGoogleMap ->
             myMap = myGoogleMap
 
-            enableMyLocation()
+ //           enableMyLocation()
 
             myMap.isBuildingsEnabled = false
             myMap.uiSettings.isZoomControlsEnabled = true
@@ -113,7 +113,7 @@ class MapsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        checkUserPermission()
+ //       checkUserPermission()
 
         locationCallback = object: LocationCallback() {
 
@@ -128,16 +128,16 @@ class MapsFragment : Fragment() {
                 myMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(myLatitude, myLongitude)))
                 myMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
 
-                getNearbyPlace(myLatLng)
+//                getNearbyPlace(myLatLng)
             }
 
         }
 
-        myFusedLocationClient.requestLocationUpdates(
+/*        myFusedLocationClient.requestLocationUpdates(
             myLocationRequest,
             locationCallback,
             Looper.getMainLooper()
-        )
+        )*/
 
     }
 
@@ -160,6 +160,7 @@ class MapsFragment : Fragment() {
         mapsFragment?.onDestroy()
     }
 
+/*
     private fun enableMyLocation() {
 
         if(
@@ -248,6 +249,7 @@ class MapsFragment : Fragment() {
         }
 
     }
+*/
 
 /*
     private fun getNearbyPlace(

@@ -18,7 +18,6 @@ import com.example.whats_eat.databinding.ActivityViewPlaceBinding
 import com.example.whats_eat.data.remote.model.detailPlace.PlaceDetail
 import com.example.whats_eat.data.remote.model.errorModel.ErrorResponse
 import com.example.whats_eat.data.remote.RetrofitClient
-import com.example.whats_eat.data.remote.RetrofitRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -116,7 +115,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getDetailPlace() {
-        val mDetailedApiResponse = RetrofitRepo
+        /*val mDetailedApiResponse = RetrofitRepo
             .getPlaceDetailSingleton(
                 Place_ID = mSelectedPlace?.place_id!!,
                 Api_key = BuildConfig.GOOGLE_API_KEY )
@@ -179,7 +178,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         })
-
+*/
     }
 
     private fun controlView(

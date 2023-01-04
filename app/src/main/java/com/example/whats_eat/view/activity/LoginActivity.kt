@@ -5,70 +5,71 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-
+import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.R
-import com.example.whats_eat.view.MainActivity
+import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.databinding.ActivityLogInBinding
-
+import com.example.whats_eat.view.MainActivity
+import com.example.whats_eat.viewModel.ViewModelFactory
+import com.example.whats_eat.viewModel.activity.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
-import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var logInBinding: ActivityLogInBinding
+    private lateinit var vmFactory: ViewModelFactory
+    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vmFactory = ViewModelFactory(appRepo = AppRepository())
+        loginViewModel = ViewModelProvider(this, vmFactory)[LoginViewModel::class.java]
         logInBinding = ActivityLogInBinding.inflate(layoutInflater)
 
         setContentView(logInBinding.root)
 
+        val googleSignInOption =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
     }
 
     override fun onResume() {
         super.onResume()
 
-        val googleSignOption =
-            GoogleSignInOptions.Builder(
-                GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignOption)
-        auth = FirebaseAuth.getInstance()
-
         logInBinding.logInBtn.setOnClickListener(this)
         logInBinding.findPwBtn.setOnClickListener(this)
         logInBinding.signUpBtn.setOnClickListener(this)
+
+        loginViewModel.loginData.observe(this) {
+            when (it) {
+                "Success" -> { startActivity(Intent(this, MainActivity::class.java)) }
+                "Failed" -> {
+                    Toast.makeText(this, getString(R.string.logIn_Failed), Toast.LENGTH_SHORT).show()
+                    logInBinding.emailInput.text?.clear()
+                    logInBinding.passwordInput.text?.clear()
+                }
+                else -> { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
+            }
+        }
+
     }
 
     override fun onClick(v: View?){
-
         when (v?.id) {
-
-            R.id.logInBtn ->
-                validateUserData(
-                    logInBinding.emailInput.text.toString(),
-                    logInBinding.passwordInput.text.toString()
-                )
-
-            R.id.findPwBtn -> {
-                startActivity(Intent(this, FindPwActivity::class.java))
-                finish()
-            }
-
-            R.id.signUpBtn -> {
-                startActivity(Intent(this, SignInActivity::class.java))
-                finish()
-            }
-
+            R.id.logInBtn -> validateUserData(
+                logInBinding.emailInput.text.toString(),
+                logInBinding.passwordInput.text.toString()
+            )
+            R.id.findPwBtn -> startActivity(Intent(this, FindPwActivity::class.java))
+            R.id.signUpBtn -> startActivity(Intent(this, SignInActivity::class.java))
         }
-
     }
 
     override fun onDestroy() {
@@ -78,55 +79,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         logInBinding.passwordInput.text?.clear()
     }
 
-    private fun readUserData(userEmail: String, userPassword: String) {
-        auth.signInWithEmailAndPassword(userEmail, userPassword)
-            .addOnCompleteListener {
-
-                if(it.isSuccessful){
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }
-
-            }
-            .addOnFailureListener {
-
-                Toast.makeText(
-                    this,
-                    it.message,
-                    Toast.LENGTH_LONG
-                ).show()
-
-                logInBinding.emailInput.text?.clear()
-                logInBinding.passwordInput.text?.clear()
-            }
-    }
-
     private fun validateUserData(userEmail: String, userPassword: String){
-        if(userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
-            readUserData(userEmail, userPassword)
-        } else {
-            when {
-                userEmail.isEmpty() -> {
-                    Toast.makeText(
-                        this,
-                        "Plz Enter Email",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                userPassword.isEmpty() -> {
-                    Toast.makeText(
-                        this,
-                        "Plz Enter Password",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else -> {
-                    Toast.makeText(
-                        this,
-                        "Plz Enter Email & Password",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        when {
+            (userEmail.isNotEmpty() && userPassword.isNotEmpty()) -> {
+                loginViewModel.getUserLogin(userEmail, userPassword)
+            }
+            userEmail.isEmpty() -> {
+                Toast.makeText(this, "Plz Enter Your E-mail", Toast.LENGTH_SHORT).show()
+            }
+            userPassword.isEmpty() -> {
+                Toast.makeText(this, "Plz Enter Your Password", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, "Plz Enter Your E-mail & Password", Toast.LENGTH_SHORT).show()
             }
         }
     }

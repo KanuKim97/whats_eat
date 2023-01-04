@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.whats_eat">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -22,20 +21,30 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".view.activity.ViewPlaceActivity" />
         <activity
             android:name=".view.activity.LogoActivity"
+            android:theme="@style/Theme.AppCompat"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.LoginActivity" />
-        <activity android:name=".view.activity.SignInActivity" />
-        <activity android:name=".view.activity.FindPwActivity" />
-        <activity android:name=".view.MainActivity" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".view.activity.SignInActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".view.activity.FindPwActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".view.MainActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".view.activity.ViewPlaceActivity"
+            android:theme="@style/Theme.AppCompat" />
 
         <meta-data
             android:name="preloaded_fonts"

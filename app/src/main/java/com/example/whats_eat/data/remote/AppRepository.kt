@@ -1,5 +1,8 @@
 package com.example.whats_eat.data.remote
 
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -13,6 +16,12 @@ class AppRepository {
 
     private val firebaseDB = FirebaseDatabase.getInstance()
     private val firebaseDBRef = firebaseDB.reference.child("userInfo")
+    private val fireAuth = FirebaseAuth.getInstance()
+
+    fun getUserSession(): Boolean = fireAuth.currentUser != null
+
+    fun getUser(userEmail: String, userPassword: String): Task<AuthResult> =
+        fireAuth.signInWithEmailAndPassword(userEmail, userPassword)
 
     suspend fun getNearby(
         latLng: String,
