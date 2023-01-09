@@ -6,26 +6,24 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.R
+import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.databinding.ActivitySignInBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.whats_eat.view.MainActivity
+import com.example.whats_eat.viewModel.ViewModelFactory
+import com.example.whats_eat.viewModel.activity.SignInViewModel
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
-
-    private lateinit var auth: FirebaseAuth
     private lateinit var signInBinding: ActivitySignInBinding
-    private lateinit var database: FirebaseDatabase
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var vmFactory: ViewModelFactory
+    private lateinit var signInViewModel: SignInViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        vmFactory = ViewModelFactory(appRepo = AppRepository())
+        signInViewModel = ViewModelProvider(this, vmFactory)[SignInViewModel::class.java]
         signInBinding = ActivitySignInBinding.inflate(layoutInflater)
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
-        databaseReference = database.reference.child("userInfo")
 
         setContentView(signInBinding.root)
     }
@@ -33,173 +31,58 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
 
+        signInViewModel.signInResult.observe(this) {
+            if(it) { startActivity(Intent(this, MainActivity::class.java)) }
+            else {
+                signInBinding.localNameInput.text?.clear()
+                signInBinding.localUserNameInput.text?.clear()
+                signInBinding.localEmailInput.text?.clear()
+                signInBinding.localPasswordInput.text?.clear()
+                signInBinding.localConfPasswordInput.text?.clear()
+            }
+        }
+
         signInBinding.compBtn.setOnClickListener(this)
         signInBinding.toLoginBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-
         when(v?.id) {
-
-            R.id.compBtn -> {
-
-                val userFullName: String = signInBinding.localNameInput.text.toString()
-                val userName: String = signInBinding.localUserNameInput.text.toString()
-                val userEmail: String = signInBinding.localEmailInput.text.toString()
-                val userPassword: String = signInBinding.localPasswordInput.text.toString()
-                val userConfPassword: String = signInBinding.localConfPasswordInput.text.toString()
-
-                if (
-                    validateUserInput(
-                        userFullName,
-                        userName,
-                        userEmail,
-                        userPassword,
-                        userConfPassword )
-                ) {
-                    signInUser(userEmail, userPassword, userFullName, userName)
-                }
-
-            }
-
-            R.id.toLoginBtn -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-
+            R.id.compBtn -> validateUserInput()
+            R.id.toLoginBtn -> startActivity(Intent(this, LoginActivity::class.java))
         }
-
     }
 
-    private fun validateUserInput(
-        fullName : String,
-        userName : String,
-        eMail : String,
-        passWord : String,
-        confPassword : String
-    ): Boolean {
+    private fun validateUserInput() {
+        val fullName: String = signInBinding.localNameInput.text.toString()
+        val userName: String = signInBinding.localUserNameInput.text.toString()
+        val eMail: String = signInBinding.localEmailInput.text.toString()
+        val passWord: String = signInBinding.localPasswordInput.text.toString()
+        val confPassword: String = signInBinding.localConfPasswordInput.text.toString()
 
-        when{
+        when {
             passWord != confPassword -> {
-                Toast.makeText(
-                    this,
-                    "Password is not correct",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, "Password is not correct", Toast.LENGTH_SHORT).show()
                 signInBinding.localConfPasswordInput.text?.clear()
-                return false
             }
-
             !(Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) -> {
-                Toast.makeText(
-                    this,
-                    "Invalid Email Address! Plz Type again",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, "Invalid Email Address! Plz Type again", Toast.LENGTH_SHORT).show()
                 signInBinding.localEmailInput.text?.clear()
-                return false
             }
 
             (userName.length > 15) -> {
-                Toast.makeText(
-                    this,
-                    "UserName is so long!",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, "UserName is so long!", Toast.LENGTH_SHORT).show()
                 signInBinding.localUserNameInput.text?.clear()
-                return false
             }
 
-            fullName.isEmpty() -> {
-                signInBinding.localNameInput.error = "Plz enter your Name"
-                return false
-            }
+            fullName.isEmpty() -> signInBinding.localNameInput.error = "Plz enter your Name"
+            userName.isEmpty() -> signInBinding.localUserNameInput.error = "Plz enter your User Name"
+            eMail.isEmpty() -> signInBinding.localEmailInput.error = "Plz enter your eMail"
+            passWord.isEmpty() -> signInBinding.localPasswordInput.error = "Plz enter your password"
+            confPassword.isEmpty() -> signInBinding.localConfPasswordInput.error = "Plz enter conform password"
 
-            userName.isEmpty() -> {
-                signInBinding.localUserNameInput.error = "Plz enter your User Name"
-                return false
-            }
-
-            eMail.isEmpty() -> {
-                signInBinding.localEmailInput.error = "Plz enter your eMail"
-                return false
-            }
-
-            passWord.isEmpty() -> {
-                signInBinding.localPasswordInput.error = "Plz enter your password"
-                return false
-            }
-
-            confPassword.isEmpty() -> {
-                signInBinding.localConfPasswordInput.error = "Plz enter conform passWord"
-                return false
-            }
-
-            else -> {
-                return true
-            }
-
+            else -> signInViewModel.createUserAccount(eMail, passWord, fullName, userName)
         }
-    }
-
-    private fun signInUser(
-        userEmail: String,
-        UserPassword: String,
-        userNickName: String,
-        userFullName: String
-    ) {
-
-        auth.createUserWithEmailAndPassword(userEmail, UserPassword)
-            .addOnCompleteListener {
-
-                if(it.isSuccessful) {
-                    val currentUser = auth.currentUser
-                    val currentUserDB = databaseReference.child((currentUser?.uid!!))
-
-                    currentUserDB.child("eMail").setValue(userEmail)
-                    currentUserDB.child("userName").setValue(userNickName)
-                    currentUserDB.child("fullName").setValue(userFullName)
-
-                    Toast.makeText(
-                        this,
-                        "Registration is Complete!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-
-                } else {
-
-                    Toast.makeText(
-                        this,
-                        it.exception?.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    signInBinding.localNameInput.text?.clear()
-                    signInBinding.localUserNameInput.text?.clear()
-                    signInBinding.localEmailInput.text?.clear()
-                    signInBinding.localPasswordInput.text?.clear()
-                    signInBinding.localConfPasswordInput.text?.clear()
-
-                }
-
-
-            }
-            .addOnFailureListener {
-
-                Toast.makeText(
-                    this,
-                    it.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            }
-
     }
 
 }

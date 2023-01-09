@@ -7,7 +7,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-
     private var retrofit : Retrofit? = null
 
     val PlaceApiService: IGoogleAPIService
@@ -16,7 +15,6 @@ object RetrofitClient {
 
     fun getClient() : Retrofit{
         if(retrofit ==null){
-
             val httpClient = OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -30,6 +28,5 @@ object RetrofitClient {
                 .build()
         }
         return retrofit!!
-
     }
 }

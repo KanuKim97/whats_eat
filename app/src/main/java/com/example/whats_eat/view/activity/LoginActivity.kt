@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         logInBinding.passwordInput.text?.clear()
     }
 
-    private fun validateUserData(userEmail: String, userPassword: String){
+    private fun validateUserData(userEmail: String, userPassword: String) {
         when {
             (userEmail.isNotEmpty() && userPassword.isNotEmpty()) -> {
                 loginViewModel.getUserLogin(userEmail, userPassword)

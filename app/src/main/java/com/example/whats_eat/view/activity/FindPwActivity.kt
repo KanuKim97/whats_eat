@@ -6,19 +6,23 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.R
+import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.databinding.ActivityFindPwBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.example.whats_eat.viewModel.ViewModelFactory
+import com.example.whats_eat.viewModel.activity.FindPwViewModel
 
 class FindPwActivity : AppCompatActivity(), View.OnClickListener {
-
     private lateinit var findPwBinding: ActivityFindPwBinding
-    private lateinit var auth: FirebaseAuth
+    private lateinit var vmFactory: ViewModelFactory
+    private lateinit var findPwViewModel: FindPwViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         findPwBinding = ActivityFindPwBinding.inflate(layoutInflater)
-        auth = FirebaseAuth.getInstance()
+        vmFactory = ViewModelFactory(appRepo = AppRepository())
+        findPwViewModel = ViewModelProvider(this, vmFactory)[FindPwViewModel::class.java]
 
         setContentView(findPwBinding.root)
     }
@@ -26,97 +30,43 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
 
+        findPwViewModel.emailResetValue.observe(this) {
+            if(it) {
+                Toast.makeText(this, "Check your Email", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+            } else {
+                Toast.makeText(this, "Error: Email doesn't exist", Toast.LENGTH_SHORT).show()
+                findPwBinding.passwordEmailInput.text?.clear()
+            }
+        }
+
         findPwBinding.sendCode.setOnClickListener(this)
         findPwBinding.toLoginBtn.setOnClickListener(this)
         findPwBinding.toSignInBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
+        val userEmail: String = findPwBinding.passwordEmailInput.text.toString()
 
         when(v?.id){
-
-            R.id.toLoginBtn -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-
-            R.id.toSignInBtn -> {
-                startActivity(Intent(this, SignInActivity::class.java))
-                finish()
-            }
-
-            R.id.send_code -> {
-                val findPwEmail: String = findPwBinding.passwordEmailInput.text.toString()
-                if (validateFindPwEmail(findPwEmail)) { sendFindPwCode(findPwEmail) }
-            }
-
+            R.id.toLoginBtn -> startActivity(Intent(this, LoginActivity::class.java))
+            R.id.toSignInBtn -> startActivity(Intent(this, SignInActivity::class.java))
+            R.id.send_code -> validateUserEmail(userEmail)
         }
-
     }
 
-    private fun validateFindPwEmail(findPWEmail: String): Boolean {
-
+    private fun validateUserEmail(userEmail: String) {
         when {
-
-            findPWEmail.isEmpty() -> {
+            userEmail.isEmpty() -> {
                 findPwBinding.passwordEmailInput.error = "Email Required"
                 findPwBinding.passwordEmailInput.text?.clear()
-                return false
             }
-
-            !(Patterns.EMAIL_ADDRESS.matcher(findPWEmail).matches()) -> {
+            !(Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) -> {
                 findPwBinding.passwordEmailInput.error = "Not expression of email patterns"
                 findPwBinding.passwordEmailInput.text?.clear()
-                return false
             }
-
-            else -> {
-                return true
-            }
-
+            else -> findPwViewModel.sendPasswordResetMail(userEmail)
         }
-
     }
-
-    private fun sendFindPwCode(findPWEmail: String) {
-
-        auth.sendPasswordResetEmail(findPWEmail)
-            .addOnCompleteListener {
-
-                if(it.isSuccessful) {
-
-                    Toast.makeText(
-                        this,
-                        "Plz Check your Email",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                } else {
-
-                    Toast.makeText(
-                        this,
-                        it.exception?.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    findPwBinding.passwordEmailInput.text?.clear()
-                }
-
-            }
-            .addOnFailureListener {
-
-                Toast.makeText(
-                    this,
-                    it.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                findPwBinding.passwordEmailInput.text?.clear()
-            }
-
-    }
-
 
 }

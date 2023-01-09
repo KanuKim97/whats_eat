@@ -37,7 +37,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MapsFragment : Fragment() {
-
     private var myLatitude: Double = 0.0
     private var myLongitude: Double = 0.0
     private var mapsFragment: SupportMapFragment? = null

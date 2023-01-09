@@ -17,7 +17,6 @@ import com.google.firebase.database.*
 import kotlin.collections.ArrayList
 
 class CollectionFragment : Fragment() {
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var collectionAdapter: CollectionAdapter
 
@@ -38,7 +37,6 @@ class CollectionFragment : Fragment() {
             .child("userInfo")
             .child(auth.currentUser!!.uid)
             .child("Collection")
-
     }
 
 
@@ -47,7 +45,6 @@ class CollectionFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-
         collectionBinding = FragmentCollectionBinding.inflate(layoutInflater)
 
         recyclerView = collectionBinding.collectionView
@@ -59,7 +56,6 @@ class CollectionFragment : Fragment() {
         collectionAdapter = CollectionAdapter(placeArray)
 
         return collectionBinding.root
-
     }
 
     override fun onResume() {
