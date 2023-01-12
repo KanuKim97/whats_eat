@@ -23,6 +23,8 @@ class AppRepository {
     fun createUser(userEmail: String, userPassword: String) =
         fireAuth.createUserWithEmailAndPassword(userEmail, userPassword)
 
+    fun deleteUserAccount() = fireAuth.currentUser?.delete()
+
     fun findPassword(userEmail: String) = fireAuth.sendPasswordResetEmail(userEmail)
 
     fun userSignOut() = fireAuth.signOut()

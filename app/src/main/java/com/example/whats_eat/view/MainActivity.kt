@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     fun signOut(item: MenuItem) {
         mainViewModel.authSignOut()
         startActivity(Intent(this, LoginActivity::class.java))
-        finish()
     }
 
 }

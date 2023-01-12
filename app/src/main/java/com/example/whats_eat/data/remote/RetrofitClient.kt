@@ -9,10 +9,6 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     private var retrofit : Retrofit? = null
 
-    val PlaceApiService: IGoogleAPIService
-        get() = getClient()
-            .create(IGoogleAPIService::class.java)
-
     fun getClient() : Retrofit{
         if(retrofit ==null){
             val httpClient = OkHttpClient.Builder()

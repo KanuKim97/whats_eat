@@ -6,25 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.databinding.FragmentHomeBinding
+import com.example.whats_eat.viewModel.ViewModelFactory
+import com.example.whats_eat.viewModel.fragment.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 
 class HomeFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var vmFactory: ViewModelFactory
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeBinding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        database = FirebaseDatabase.getInstance()
-        auth = FirebaseAuth.getInstance()
-        databaseReference = database.reference
-            .child("userInfo")
-            .child(auth.currentUser!!.uid)
+        vmFactory = ViewModelFactory(AppRepository())
+        homeViewModel = ViewModelProvider(this, vmFactory)[HomeViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -37,33 +36,8 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        loadHomeInfo()
-    }
-
-    private fun loadHomeInfo() {
-
-        databaseReference.addValueEventListener(object: ValueEventListener {
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                try {
-                    if(snapshot.exists()) {
-                        homeBinding.UserTxt.text =
-                            snapshot.child("userName").value.toString()
-                    }
-                } catch (e:DatabaseException) { e.printStackTrace() }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    requireContext(),
-                    error.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-
+        homeViewModel.loadHomeInformation()
+        homeViewModel.userData.observe(this) { homeBinding.UserTxt.text = it }
     }
 
 }

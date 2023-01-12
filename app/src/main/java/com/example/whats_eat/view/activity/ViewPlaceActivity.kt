@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.whats_eat.R
 import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
-import com.example.whats_eat.data.remote.model.detailPlace.PlaceDetail
 import com.example.whats_eat.viewModel.ViewModelFactory
 
 class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
@@ -17,16 +17,36 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var placeViewModel: DetailPlaceViewModel
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
 
+    private var placeName: String? = null
+    private var placeAddress: String? = null
+    private var photoRef: String? = null
+    private var rating: String? = null
+    private var openTime: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vmFactory = ViewModelFactory(AppRepository())
         placeViewModel = ViewModelProvider(this, vmFactory)[DetailPlaceViewModel::class.java]
         viewPlaceBinding = ActivityViewPlaceBinding.inflate(layoutInflater)
         setContentView(viewPlaceBinding.root)
+
+        placeName = intent.getStringExtra("placeName")
+        placeAddress = intent.getStringExtra("placeAddress")
+        photoRef = intent.getStringExtra("photoRef")
+        rating = intent.getStringExtra("rating")
+        openTime = intent.getStringExtra("openTime")
     }
 
     override fun onResume() {
         super.onResume()
+
+        controlView(
+            placeName.toString(),
+            placeAddress.toString(),
+            photoRef.toString(),
+            rating!!.toFloat(),
+            openTime.toBoolean()
+        )
 
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
@@ -37,37 +57,39 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
         when(v?.id) {
             R.id.backToMap -> {}
             R.id.showMap -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("")))
-            R.id.addCollection -> {
-                val placeName: String = viewPlaceBinding.placeName.text.toString()
-                val placeAddress: String = viewPlaceBinding.placeAddress.text.toString()
-                val placeRating: Float = 4.9F //TODO: RateData
-                val placePhoto: String = ""
-                placeViewModel.storeCollection(placeName, placeAddress, placeRating, placePhoto)
-            }
+            R.id.addCollection ->
+                placeViewModel.storeCollection(
+                    placeName.toString(),
+                    placeAddress.toString(),
+                    rating!!.toFloat(),
+                    photoRef.toString()
+                )
         }
     }
 
-    private fun controlView(mPlaceDetailData: PlaceDetail?) {
-       /* if(mSelectedPlace?.photos.isNullOrEmpty()) {
+    private fun controlView(
+        placeName: String,
+        placeAddress: String,
+        photoRef: String,
+        rating: Float,
+        openTime: Boolean
+    ) {
+       if(photoRef.isEmpty()) {
             viewPlaceBinding.placeImg.visibility = View.GONE
         } else {
-            Glide
-                .with(this)
-                .load(getPhotoUrl(mSelectedPlace!!.photos!![0].photo_reference!!))
+            Glide.with(this)
+                .load(placeViewModel.getPhotoUrl(photoRef))
                 .into(viewPlaceBinding.placeImg)
         }
 
-        if(mSelectedPlace!!.opening_hours == null) {
-            viewPlaceBinding.openTime.visibility = View.GONE
-        } else {
-            val openTime: Boolean = mSelectedPlace!!.opening_hours!!.open_now
-
-            if(!openTime){ viewPlaceBinding.openTime.text = "영업 종료" }
-            else { viewPlaceBinding.openTime.text = "영업 중" }
+        when {
+            openTime -> viewPlaceBinding.openTime.text = "영업 중"
+            !openTime -> viewPlaceBinding.openTime.text = "영업 종료"
+            null == true -> viewPlaceBinding.openTime.visibility = View.GONE
         }
 
-        viewPlaceBinding.rating.rating = mSelectedPlace!!.rating.toFloat()
-        viewPlaceBinding.placeName.text = mPlaceDetailData?.result?.name
-        viewPlaceBinding.placeAddress.text = mPlaceDetailData?.result?.formatted_address*/
+        viewPlaceBinding.rating.rating = rating
+        viewPlaceBinding.placeName.text = placeName
+        viewPlaceBinding.placeAddress.text = placeAddress
     }
 }

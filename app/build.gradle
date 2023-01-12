@@ -67,7 +67,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.6'
 
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    implementation 'com.google.android.gms:play-services-location:20.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -94,7 +94,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //easy Permission
-    implementation 'com.vmadalin:easypermissions-ktx:1.0.0'
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
     //Android Jetpack ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha03"

@@ -23,7 +23,6 @@ class MainViewModel(private val appRepo: AppRepository): ViewModel() {
                 if(snapshot.exists()) {
                     val fullName = snapshot.child("fullName").value.toString()
                     val eMail = snapshot.child("eMail").value.toString()
-
                     _userData.value = MainData(true, fullName, eMail, "")
                 }
             }

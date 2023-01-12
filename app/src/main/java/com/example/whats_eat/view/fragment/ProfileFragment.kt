@@ -8,24 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.whats_eat.R
+import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.view.activity.LoginActivity
 import com.example.whats_eat.databinding.FragmentProFileBinding
+import com.example.whats_eat.viewModel.ViewModelFactory
+import com.example.whats_eat.viewModel.fragment.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class ProfileFragment : Fragment(), View.OnClickListener {
+    private lateinit var vmFactory: ViewModelFactory
+    private lateinit var profileViewModel: ProfileViewModel
     private lateinit var proFileBinding: FragmentProFileBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vmFactory = ViewModelFactory(AppRepository())
+        profileViewModel = ViewModelProvider(this, vmFactory)[ProfileViewModel::class.java]
 
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
-        databaseReference = database.reference.child("userInfo")
     }
 
     override fun onCreateView(
@@ -39,90 +42,22 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
 
-        showUserProfile()
         proFileBinding.updateBtn.setOnClickListener(this)
         proFileBinding.deleteBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-
         when(v?.id) {
-
             R.id.updateBtn ->
-                Toast.makeText(
-                    requireContext(),
-                    "not updated yet",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            R.id.deleteBtn -> {
-
-                val profileDeleteDialog = AlertDialog.Builder(activity)
-                val currentUser = auth.currentUser
-
-                profileDeleteDialog
-                    .setTitle("Notice!")
-                    .setMessage("Really? want to delete your account??")
-                    .setPositiveButton("Yes") { _, _ ->
-
-                        currentUser?.delete()?.addOnCompleteListener {
-
-                            if (it.isSuccessful) {
-                                database
-                                    .getReference("userInfo")
-                                    .child(currentUser.uid)
-                                    .removeValue()
-
-                                startActivity(Intent(requireContext(), LoginActivity::class.java))
-                            }
-
-                        }
-
-                    }
-                    .setNegativeButton("Nope") { _, _ ->}
-                    .show()
-
-            }
-
+                Toast.makeText(requireContext(), "not updated yet", Toast.LENGTH_SHORT).show()
+            R.id.deleteBtn -> showDelAccountDialog()
         }
     }
 
-    private fun showUserProfile() {
-        val userDBRef = databaseReference.child(auth.currentUser?.uid!!)
-
-        userDBRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                proFileBinding.nameTxt.text =
-                    snapshot.child("userName").value.toString()
-                proFileBinding.emailTxt.text =
-                    snapshot.child("eMail").value.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    requireContext(),
-                    error.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-
-        userDBRef
-            .child("Collection")
-            .get()
-            .addOnCompleteListener {
-                proFileBinding.profileRateNum.text =
-                    it.result.childrenCount.toString()
-            }
-            .addOnFailureListener {
-                Toast.makeText(
-                    requireContext(),
-                    it.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-    }
-
-
+    private fun showDelAccountDialog() = AlertDialog.Builder(activity)
+        .setTitle("계정을 삭제하시겠습니까?")
+        .setMessage("계정을 삭제 하시겠습니까? \n다시 복구할 수 없습니다.")
+        .setPositiveButton("네") {_, _ -> profileViewModel.deleteAccount() }
+        .setNegativeButton("아니요") {_, _ ->}
+        .show()
 }
