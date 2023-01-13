@@ -28,7 +28,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         vmFactory = ViewModelFactory(AppRepository())
         profileViewModel = ViewModelProvider(this, vmFactory)[ProfileViewModel::class.java]
-
     }
 
     override fun onCreateView(
@@ -41,6 +40,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
+        profileViewModel.loadUserProfile()
+
+        profileViewModel.profileNickName.observe(this) { proFileBinding.nameTxt.text = it }
+        profileViewModel.profileEmail.observe(this) { proFileBinding.emailTxt.text = it }
+        profileViewModel.collectionCnt.observe(this) { proFileBinding.profileRateNum.text = it }
 
         proFileBinding.updateBtn.setOnClickListener(this)
         proFileBinding.deleteBtn.setOnClickListener(this)
