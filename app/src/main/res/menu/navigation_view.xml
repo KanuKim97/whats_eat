@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Home">
         <menu>
@@ -41,10 +40,8 @@
         <menu>
             <item
                 android:id="@+id/menuSignOut"
-                android:icon="@drawable/ic_signout"
-                android:title="Sign Out"
-                android:onClick="signOut"/>
-
+                android:icon="@drawable/ic_sign_out"
+                android:title="Sign Out"/>
         </menu>
     </item>
 
