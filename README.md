@@ -1,5 +1,5 @@
 # What's Eat? Application
- Android Studio Version : Dolphin 2021.3.1
+ Android Studio Version : Electric Eel 2022.1.1
  
  Language : Kotlin
  
