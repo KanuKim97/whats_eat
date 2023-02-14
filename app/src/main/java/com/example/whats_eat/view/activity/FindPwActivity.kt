@@ -6,44 +6,28 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.R
-import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.databinding.ActivityFindPwBinding
-import com.example.whats_eat.viewModel.ViewModelFactory
 import com.example.whats_eat.viewModel.activity.FindPwViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindPwActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var findPwBinding: ActivityFindPwBinding
-    private lateinit var vmFactory: ViewModelFactory
-    private lateinit var findPwViewModel: FindPwViewModel
+    private val findPwViewModel: FindPwViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         findPwBinding = ActivityFindPwBinding.inflate(layoutInflater)
-        vmFactory = ViewModelFactory(appRepo = AppRepository())
-        findPwViewModel = ViewModelProvider(this, vmFactory)[FindPwViewModel::class.java]
+        findPwBinding.sendCode.setOnClickListener(this)
+        findPwBinding.toLoginBtn.setOnClickListener(this)
+        findPwBinding.toSignInBtn.setOnClickListener(this)
 
         setContentView(findPwBinding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        findPwViewModel.emailResetValue.observe(this) {
-            if(it) {
-                Toast.makeText(this, "Check your Email", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, LoginActivity::class.java))
-            } else {
-                Toast.makeText(this, "Error: Email doesn't exist", Toast.LENGTH_SHORT).show()
-                findPwBinding.passwordEmailInput.text?.clear()
-            }
-        }
-
-        findPwBinding.sendCode.setOnClickListener(this)
-        findPwBinding.toLoginBtn.setOnClickListener(this)
-        findPwBinding.toSignInBtn.setOnClickListener(this)
-    }
 
     override fun onClick(v: View?) {
         val userEmail: String = findPwBinding.passwordEmailInput.text.toString()
@@ -65,7 +49,7 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
                 findPwBinding.passwordEmailInput.error = "Not expression of email patterns"
                 findPwBinding.passwordEmailInput.text?.clear()
             }
-            else -> findPwViewModel.sendPasswordResetMail(userEmail)
+            else -> startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 

@@ -37,6 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/Theme.AppCompat" />
@@ -47,7 +48,7 @@
             android:name=".view.activity.FindPwActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".view.activity.ViewPlaceActivity"

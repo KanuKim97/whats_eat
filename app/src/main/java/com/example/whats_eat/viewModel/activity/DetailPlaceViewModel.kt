@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.activity
+package com.example.whats_eat.viewModel.activity
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.data.remote.model.detailPlace.ViewPlaceModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch

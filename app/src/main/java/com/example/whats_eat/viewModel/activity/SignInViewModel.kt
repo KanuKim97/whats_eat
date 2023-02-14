@@ -3,35 +3,43 @@ package com.example.whats_eat.viewModel.activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.remote.AppRepository
-
-class SignInViewModel(private val appRepo: AppRepository): ViewModel() {
-    private val _signInResult = MutableLiveData<Boolean>()
-
-    val signInResult: LiveData<Boolean>
-        get() = _signInResult
+import com.example.whats_eat.data.di.repository.FirebaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository): ViewModel() {
+    private val _isNewUserResult = MutableLiveData<Boolean>()
+    val isNewUserResult: LiveData<Boolean> get() = _isNewUserResult
 
     fun createUserAccount(
         userEmail: String,
         userPassword: String,
-        fullName: String,
-        userName: String
+        userFullName: String,
+        userNickName: String
     ) {
-        appRepo.createUser(userEmail, userPassword)
-            .addOnCompleteListener {
-                if(it.isSuccessful) {
-                    setUserDBValue(userEmail, userName, fullName)
-                    _signInResult.value = true
-                } else { _signInResult.value = false }
+        firebaseRepo.createUserAccount(userEmail, userPassword)
+            .addOnCompleteListener{
+                val isNewUser: Boolean = it.result.additionalUserInfo?.isNewUser!!
+
+                when {
+                    isNewUser && it.isSuccessful -> {
+                        setUserInfoInDB(userEmail, userNickName, userFullName)
+                        it.result
+                    }
+                    (!it.isSuccessful) ->
+                        it.exception?.printStackTrace()
+                    (!isNewUser) ->
+                        _isNewUserResult.value = false
+                }
             }
-            .addOnFailureListener { _signInResult.value = false }
+            .addOnFailureListener { it.printStackTrace() }
     }
 
-    private fun setUserDBValue(eMail: String, nickName: String, fullName: String) {
-        val currentUserRef = appRepo.getUserData()
+    private fun setUserInfoInDB(userEmail: String, userNickName: String, userFullName: String) {
+        val currentUserDBRef = firebaseRepo.getUserDBCollectionPath()
 
-        currentUserRef.child("eMail").setValue(eMail)
-        currentUserRef.child("NickName").setValue(nickName)
-        currentUserRef.child("fullName").setValue(fullName)
+        currentUserDBRef.child("userEmail").setValue(userEmail)
+        currentUserDBRef.child("userNickName").setValue(userNickName)
+        currentUserDBRef.child("userFullName").setValue(userFullName)
     }
 }

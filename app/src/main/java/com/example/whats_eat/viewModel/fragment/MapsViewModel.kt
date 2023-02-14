@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.whats_eat.BuildConfig
-import com.example.whats_eat.data.remote.AppRepository
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.remote.model.nearByPlace.Myplaces
-import com.example.whats_eat.data.remote.model.responseModel.Results
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
