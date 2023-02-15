@@ -22,7 +22,7 @@ class FirebaseRepository {
 
     fun deleteUserAccount() = fireAuth.currentUser?.delete()
 
-    fun signOutUserAccount(userEmail: String) = fireAuth.signOut()
+    fun signOutUserAccount() = fireAuth.signOut()
 
     fun getUserDBCollectionPath() =
         fireRealDBRef.child("userInfo")

@@ -4,22 +4,36 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.whats_eat.data.di.repository.FirebaseRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel(private val appRepo: AppRepository): ViewModel() {
-    private val _profileNickName = MutableLiveData<String>()
-    private val _profileEmail = MutableLiveData<String>()
-    private val _collectionCnt = MutableLiveData<String>()
+@HiltViewModel
+class ProfileViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository) : ViewModel() {
+    private val _userProfileNickName = MutableLiveData<String>()
+    private val _userProfileEmail = MutableLiveData<String>()
+    private val _userCollectionCnt = MutableLiveData<String>()
 
-    val profileNickName: LiveData<String>
-        get() = _profileNickName
-    val profileEmail: LiveData<String>
-        get() = _profileEmail
-    val collectionCnt: LiveData<String>
-        get() = _collectionCnt
+    val userProfileNickName: LiveData<String> get() = _userProfileNickName
+    val userProfileEmail: LiveData<String> get() = _userProfileEmail
+    val userCollectionCnt: LiveData<String> get() = _userCollectionCnt
+    fun loadUserProfile() {
+        val userProfileRef = firebaseRepo.getUserDBCollectionPath()
 
+    }
+
+    fun deleteUserAccount() =
+        firebaseRepo.deleteUserAccount()
+            ?.addOnCompleteListener {
+                if (it.isSuccessful) { firebaseRepo.getUserDBCollectionPath().removeValue() }
+                else { it.exception?.printStackTrace() }
+            }
+            ?.addOnFailureListener { it.printStackTrace() }
+
+    /*
     fun loadUserProfile() {
         val userProfileRef = appRepo.getUserData()
         val userCollectionCnt = appRepo.getCollectionPath()
@@ -40,10 +54,6 @@ class ProfileViewModel(private val appRepo: AppRepository): ViewModel() {
             }
             .addOnFailureListener {  }
     }
-
-    fun deleteAccount() =
-        appRepo.deleteUserAccount()?.addOnCompleteListener {
-            if (it.isSuccessful) { appRepo.getUserData().removeValue() }
-        }
+*/
 
 }

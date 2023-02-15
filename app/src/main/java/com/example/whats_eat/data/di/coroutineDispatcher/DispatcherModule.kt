@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DispatcherModule {
+class DispatcherModule {
     @IoDispatcher
     @Provides
     fun providesIoDispatcher() = Dispatchers.IO

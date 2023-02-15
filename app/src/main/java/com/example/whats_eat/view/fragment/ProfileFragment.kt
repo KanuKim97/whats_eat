@@ -13,7 +13,9 @@ import com.example.whats_eat.R
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.example.whats_eat.viewModel.fragment.ProfileViewModel
 import com.google.firebase.database.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment: Fragment(), View.OnClickListener {
     private var _proFileBinding: FragmentProFileBinding? = null
     private val proFileBinding get() = _proFileBinding!!

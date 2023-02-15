@@ -21,8 +21,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.EasyPermissions
 
+@AndroidEntryPoint
 class MapsFragment: Fragment() {
     private var _mapsFragmentBinding: FragmentMapsBinding?= null
     private val mapsFragmentBinding get() = _mapsFragmentBinding!!

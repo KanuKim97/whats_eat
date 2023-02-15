@@ -24,7 +24,7 @@ class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepo
                 when {
                     isNewUser && it.isSuccessful -> {
                         setUserInfoInDB(userEmail, userNickName, userFullName)
-                        it.result
+                        _isNewUserResult.value = true
                     }
                     (!it.isSuccessful) ->
                         it.exception?.printStackTrace()

@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.databinding.FragmentHomeBinding
 import com.example.whats_eat.viewModel.fragment.HomeViewModel
-import com.google.firebase.database.*
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment: Fragment() {
     private var _homeBinding: FragmentHomeBinding? = null
     private val homeBinding get() = _homeBinding!!

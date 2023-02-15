@@ -8,7 +8,6 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository): ViewModel() {
 
-
     fun logInUserAccount(userEmail: String, userPassword: String) =
         firebaseRepo.signInUserAccount(userEmail, userPassword)
             .addOnCompleteListener {  }
