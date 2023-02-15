@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+
 @HiltViewModel
 class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository): ViewModel() {
     private val _isNewUserResult = MutableLiveData<Boolean>()
@@ -23,13 +24,11 @@ class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepo
 
                 when {
                     isNewUser && it.isSuccessful -> {
-                        setUserInfoInDB(userEmail, userNickName, userFullName)
                         _isNewUserResult.value = true
+                        setUserInfoInDB(userEmail, userNickName, userFullName)
                     }
-                    (!it.isSuccessful) ->
-                        it.exception?.printStackTrace()
-                    (!isNewUser) ->
-                        _isNewUserResult.value = false
+                    (!it.isSuccessful) -> it.exception?.printStackTrace()
+                    (!isNewUser) -> _isNewUserResult.value = false
                 }
             }
             .addOnFailureListener { it.printStackTrace() }
