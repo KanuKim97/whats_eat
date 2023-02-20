@@ -36,7 +36,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.updateBtn ->
-                Toast.makeText(requireContext(), "not updated yet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "아직 업데이트된 기능이 아닙니다.", Toast.LENGTH_SHORT).show()
             R.id.deleteBtn -> showDelAccountDialog()
         }
     }

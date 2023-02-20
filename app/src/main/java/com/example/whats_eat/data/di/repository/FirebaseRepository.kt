@@ -1,6 +1,5 @@
 package com.example.whats_eat.data.di.repository
 
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -24,6 +23,8 @@ class FirebaseRepository {
 
     fun signOutUserAccount() = fireAuth.signOut()
 
+    fun getUserProfileDBPath() = fireRealDBRef
+
     fun getUserDBCollectionPath() =
-        fireRealDBRef.child("userInfo")
+        fireRealDBRef.child("Collection")
 }

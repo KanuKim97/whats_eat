@@ -20,7 +20,6 @@
         android:supportsRtl="true"
         android:allowBackup="false" >
 
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

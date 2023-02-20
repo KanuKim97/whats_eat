@@ -35,7 +35,7 @@ class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepo
     }
 
     private fun setUserInfoInDB(userEmail: String, userNickName: String, userFullName: String) {
-        val currentUserDBRef = firebaseRepo.getUserDBCollectionPath()
+        val currentUserDBRef = firebaseRepo.getUserProfileDBPath()
 
         currentUserDBRef.child("userEmail").setValue(userEmail)
         currentUserDBRef.child("userNickName").setValue(userNickName)

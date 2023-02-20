@@ -1,6 +1,5 @@
 package com.example.whats_eat.viewModel.fragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,8 +20,26 @@ class ProfileViewModel @Inject constructor(private val firebaseRepo: FirebaseRep
     val userProfileEmail: LiveData<String> get() = _userProfileEmail
     val userCollectionCnt: LiveData<String> get() = _userCollectionCnt
     fun loadUserProfile() {
-        val userProfileRef = firebaseRepo.getUserDBCollectionPath()
+        val userProfileRef = firebaseRepo.getUserProfileDBPath()
+        val userCollection = firebaseRepo.getUserDBCollectionPath()
 
+        userProfileRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    _userProfileEmail.value = snapshot.child("userEmail").value.toString()
+                    _userProfileNickName.value = snapshot.child("userNickName").value.toString()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) { error.toException().printStackTrace() }
+        })
+
+        userCollection.get()
+            .addOnCompleteListener {
+                if(it.isSuccessful) { _userCollectionCnt.value = it.result.childrenCount.toString() }
+                else { it.exception?.printStackTrace() }
+            }
+            .addOnFailureListener { it.printStackTrace() }
     }
 
     fun deleteUserAccount() =
@@ -32,28 +49,5 @@ class ProfileViewModel @Inject constructor(private val firebaseRepo: FirebaseRep
                 else { it.exception?.printStackTrace() }
             }
             ?.addOnFailureListener { it.printStackTrace() }
-
-    /*
-    fun loadUserProfile() {
-        val userProfileRef = appRepo.getUserData()
-        val userCollectionCnt = appRepo.getCollectionPath()
-
-        userProfileRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()) {
-                    _profileNickName.value = snapshot.child("NickName").value.toString()
-                    _profileEmail.value = snapshot.child("eMail").value.toString()
-                }
-            }
-            override fun onCancelled(error: DatabaseError) { Log.e("Error",  error.message) }
-        })
-
-        userCollectionCnt.get()
-            .addOnCompleteListener {
-                if(it.isSuccessful) { _collectionCnt.value = it.result.childrenCount.toString() }
-            }
-            .addOnFailureListener {  }
-    }
-*/
 
 }

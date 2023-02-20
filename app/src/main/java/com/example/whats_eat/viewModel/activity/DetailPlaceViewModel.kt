@@ -6,44 +6,55 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
+import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
+import com.example.whats_eat.data.di.repository.FirebaseRepository
+import com.example.whats_eat.data.di.repository.PlaceApiRepository
 import com.example.whats_eat.data.remote.model.detailPlace.ViewPlaceModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailPlaceViewModel(private val appRepo: AppRepository): ViewModel() {
-    private val _detailResult = MutableLiveData<String>()
+class DetailPlaceViewModel @Inject constructor(
+    private val firebaseRepo: FirebaseRepository,
+    private val placeApiRepo: PlaceApiRepository,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    ): ViewModel() {
+    private val _detailedResult = MutableLiveData<String>()
+    private val _pushDBResult = MutableLiveData<String>()
+    val detailedResult: LiveData<String> get() = _detailedResult
+    val pushDBResult: LiveData<String> get() = _pushDBResult
 
-    val detailResult: LiveData<String>
-        get() = _detailResult
+    fun getDetailedPlaceResult(place_ID: String) = viewModelScope.launch(ioDispatcher) {
+        val response = placeApiRepo.detailedPlace(place_ID, "")
 
-    fun getDetailPlace(placeID: String) =
-        viewModelScope.launch {
-            val response = appRepo.getDetailPlace(placeID, BuildConfig.GOOGLE_API_KEY)
-
-            when(response.code()) {
-                200 -> { if(response.body()?.status == "OK") { response.body() } }
-                else -> {}
-            }
+        when(response.code()) {
+            200 -> { /* TODO: Success Handling */ }
+            else -> { /* TODO: Error Handling */ }
         }
+    }
 
-    fun storeCollection(
+    fun storeResultData(
+        place_ID: String,
         placeName: String,
         placeAddress: String,
         placeRating: Float,
         placePhotoRef: String
-    ) {
-        val detailData = ViewPlaceModel(placeName, placeAddress, placeRating, placePhotoRef)
-        appRepo.getCollectionPath().push()
-            .setValue(detailData)
-            .addOnCompleteListener {  }
-            .addOnFailureListener {  }
+    ) = viewModelScope.launch(ioDispatcher) {
+        val detailedData = ViewPlaceModel(placeName, placeAddress, placeRating, placePhotoRef)
+
+        firebaseRepo.getUserDBCollectionPath().child(place_ID).push().setValue(detailedData)
+            .addOnCompleteListener {
+                if (it.isSuccessful) { _pushDBResult.value = "Success" }
+                else { it.exception?.printStackTrace() }
+            }.addOnFailureListener { it.printStackTrace() }
     }
 
     fun getPhotoUrl(photoRef: String) =
         StringBuilder(Constant.IPlacePhotoAPIUri)
             .append("?maxwidth=${Constant.photoMaxWidth}")
             .append("&photo_reference=$photoRef")
-            .append("&key=${BuildConfig.GOOGLE_API_KEY}")
+            .append("&key=")
             .toString()
 
     override fun onCleared() {
