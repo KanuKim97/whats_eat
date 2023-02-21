@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/* Google Place API Service Module */
 @Module
 @InstallIn(SingletonComponent::class)
 object PlaceApiModule {
@@ -39,6 +40,11 @@ object PlaceApiModule {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): IGoogleAPIService =
+        retrofit.create(IGoogleAPIService::class.java)
 
     @Provides
     @Singleton

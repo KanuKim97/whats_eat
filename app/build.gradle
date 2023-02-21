@@ -7,11 +7,7 @@ plugins {
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
-
-//Declare Properties 'local.properties'
-//Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
+apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     compileSdkVersion 33
@@ -26,9 +22,6 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        //Build Config Field
-        //buildConfigField "String", "GOOGLE_API_KEY", properties['google_api_key']
     }
 
     buildTypes {
@@ -51,8 +44,6 @@ android {
     }
     namespace 'com.example.whats_eat'
 }
-
-kapt { correctErrorTypes = true }
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -108,3 +99,5 @@ dependencies {
     // Easy Permission
     implementation 'pub.devrel:easypermissions:3.0.0'
 }
+
+kapt { correctErrorTypes = true }

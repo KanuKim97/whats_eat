@@ -15,9 +15,8 @@ class FindPwViewModel @Inject constructor(private val firebaseRepo: FirebaseRepo
     fun sendUserPasswordResetEmail(userEmail: String) {
         firebaseRepo.findUserAccountPassword(userEmail)
             .addOnCompleteListener {
-                if(it.isSuccessful) {
-                    _eMailReset.value = true
-                } else {
+                if(it.isSuccessful) { _eMailReset.value = true }
+                else {
                     it.exception?.printStackTrace()
                     _eMailReset.value = false
                 }
