@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/* Google Api Service Interface (Retrofit) */
 interface IGoogleAPIService {
     @GET("nearbysearch/json")
     suspend fun getNearPlaces(

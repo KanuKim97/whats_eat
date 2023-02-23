@@ -7,7 +7,6 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.example.whats_eat.viewModel.activity.FindPwViewModel
@@ -42,14 +41,17 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
     private fun validateUserEmail(userEmail: String) {
         when {
             userEmail.isEmpty() -> {
-                findPwBinding.passwordEmailInput.error = "Email Required"
+                findPwBinding.passwordEmailInput.error = "이메일을 입력하세요."
                 findPwBinding.passwordEmailInput.text?.clear()
             }
             !(Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) -> {
-                findPwBinding.passwordEmailInput.error = "Not expression of email patterns"
+                findPwBinding.passwordEmailInput.error = "유효하지 않은 이메일 방식입니다."
                 findPwBinding.passwordEmailInput.text?.clear()
             }
-            else -> startActivity(Intent(this, LoginActivity::class.java))
+            findPwViewModel.eMailReset.value == true -> {
+                Toast.makeText(this, "고객님의 이메일로 비밀번호 초기화 메일을 보냈습니다.", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
         }
     }
 

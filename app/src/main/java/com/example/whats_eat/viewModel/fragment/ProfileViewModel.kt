@@ -3,7 +3,8 @@ package com.example.whats_eat.viewModel.fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FirebaseRepository
+import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
+import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -11,7 +12,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository) : ViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val authRepo: FirebaseAuthRepository,
+    private val rtDBRepo: FireBaseRTDBRepository
+) : ViewModel() {
     private val _userProfileNickName = MutableLiveData<String>()
     private val _userProfileEmail = MutableLiveData<String>()
     private val _userCollectionCnt = MutableLiveData<String>()
@@ -20,8 +24,8 @@ class ProfileViewModel @Inject constructor(private val firebaseRepo: FirebaseRep
     val userProfileEmail: LiveData<String> get() = _userProfileEmail
     val userCollectionCnt: LiveData<String> get() = _userCollectionCnt
     fun loadUserProfile() {
-        val userProfileRef = firebaseRepo.getUserProfileDBPath()
-        val userCollection = firebaseRepo.getUserDBCollectionPath()
+        val userProfileRef = rtDBRepo.getUserDBRef()
+        val userCollection = rtDBRepo.getUserCollectionDBRef()
 
         userProfileRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -43,9 +47,9 @@ class ProfileViewModel @Inject constructor(private val firebaseRepo: FirebaseRep
     }
 
     fun deleteUserAccount() =
-        firebaseRepo.deleteUserAccount()
+        authRepo.deleteUserAccount()
             ?.addOnCompleteListener {
-                if (it.isSuccessful) { firebaseRepo.getUserDBCollectionPath().removeValue() }
+                if (it.isSuccessful) { rtDBRepo.getUserDBRef().removeValue() }
                 else { it.exception?.printStackTrace() }
             }
             ?.addOnFailureListener { it.printStackTrace() }

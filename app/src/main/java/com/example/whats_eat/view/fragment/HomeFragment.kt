@@ -16,13 +16,17 @@ class HomeFragment: Fragment() {
     private val homeBinding get() = _homeBinding!!
     private val homeViewModel: HomeViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.loadUserAccountInfo()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
-
-
+        homeViewModel.userNickName.observe(viewLifecycleOwner) { homeBinding.UserTxt.text = it }
         return homeBinding.root
     }
 

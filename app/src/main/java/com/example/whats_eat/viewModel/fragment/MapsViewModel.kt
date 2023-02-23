@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MapsViewModel @Inject constructor(
     private val placeApiRepo: PlaceApiRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-    ): ViewModel() {
+): ViewModel() {
     private val _nearByResponse = MutableLiveData<Myplaces>()
     val nearByResponse: LiveData<Myplaces?> get() = _nearByResponse
 

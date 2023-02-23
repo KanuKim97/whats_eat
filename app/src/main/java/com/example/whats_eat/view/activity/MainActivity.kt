@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityMainBinding
 import com.example.whats_eat.view.fragment.CollectionFragment
@@ -27,11 +28,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
         mainActivityBinding.navigationView.setNavigationItemSelectedListener(this)
-
-        val headerView = mainActivityBinding.navigationView.getHeaderView(0)
-        val nameHeader: TextView = headerView.findViewById(R.id.userNameProfile)
-        val emailHeader: TextView = headerView.findViewById(R.id.emailProfile)
-
         mainActivityBinding.imgMenu.setOnClickListener {
             mainActivityBinding.drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -44,21 +40,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(mainActivityBinding.root)
     }
 
-/*
+    override fun onResume() {
+        super.onResume()
+        val headerView = mainActivityBinding.navigationView.getHeaderView(0)
+        val nameHeader: TextView = headerView.findViewById(R.id.userNameProfile)
+        val emailHeader: TextView = headerView.findViewById(R.id.emailProfile)
 
-        mainViewModel.getUserData()
-        mainViewModel.userData.observe(this) { userData ->
-            if(userData.flag) {
-                nameHeader.text = userData.fullName
-                emailHeader.text = userData.eMail
-            }
-        }
-
-        mainActivityBinding.imgMenu.setOnClickListener {
-            if(!mainActivityBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mainActivityBinding.drawerLayout.openDrawer(GravityCompat.START)
-            } else { mainActivityBinding.drawerLayout.closeDrawer(GravityCompat.START) }
-*/
+        mainViewModel.getUserAccountData()
+        mainViewModel.userEmail.observe(this) { emailHeader.text = it }
+        mainViewModel.userFullName.observe(this) { nameHeader.text = it }
+    }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -88,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
 
             R.id.menuSignOut -> {
-                // mainViewModel.authSignOut()
+                mainViewModel.signOutUserAccount()
                 startActivity(Intent(this, LoginActivity::class.java))
             }
         }

@@ -3,12 +3,16 @@ package com.example.whats_eat.viewModel.activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FirebaseRepository
+import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
+import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository): ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val authRepo: FirebaseAuthRepository,
+    private val rtDBRepo: FireBaseRTDBRepository
+): ViewModel() {
     private val _isNewUserResult = MutableLiveData<Boolean>()
     val isNewUserResult: LiveData<Boolean> get() = _isNewUserResult
 
@@ -18,7 +22,7 @@ class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepo
         userFullName: String,
         userNickName: String
     ) {
-        firebaseRepo.createUserAccount(userEmail, userPassword)
+        authRepo.createUserAccount(userEmail, userPassword)
             .addOnCompleteListener{
                 val isNewUser: Boolean = it.result.additionalUserInfo?.isNewUser!!
 
@@ -27,15 +31,15 @@ class SignInViewModel @Inject constructor(private val firebaseRepo: FirebaseRepo
                         _isNewUserResult.value = true
                         setUserInfoInDB(userEmail, userNickName, userFullName)
                     }
-                    (!it.isSuccessful) -> it.exception?.printStackTrace()
-                    (!isNewUser) -> _isNewUserResult.value = false
+                    !it.isSuccessful -> it.exception?.printStackTrace()
+                    !isNewUser -> _isNewUserResult.value = false
                 }
             }
             .addOnFailureListener { it.printStackTrace() }
     }
 
     private fun setUserInfoInDB(userEmail: String, userNickName: String, userFullName: String) {
-        val currentUserDBRef = firebaseRepo.getUserProfileDBPath()
+        val currentUserDBRef = rtDBRepo.getUserDBRef()
 
         currentUserDBRef.child("userEmail").setValue(userEmail)
         currentUserDBRef.child("userNickName").setValue(userNickName)

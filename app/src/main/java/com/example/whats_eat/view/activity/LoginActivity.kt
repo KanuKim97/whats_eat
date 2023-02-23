@@ -40,12 +40,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun loginUserAccount(userEmail: String, userPassword: String) {
         loginViewModel.logInUserAccount(userEmail, userPassword)
-
-        if(loginViewModel.userLogInResult.value!!.isSuccessful) {
-            startActivity(Intent(this, MainActivity::class.java))
-        } else {
-            Toast.makeText(this, "이메일과 패스워드를 다시 확인해 주세요", Toast.LENGTH_SHORT)
-                .show()
+        loginViewModel.userLogInResult.observe(this) {
+            if(it.isSuccessful) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                Toast.makeText(
+                    this,
+                    "이메일과 패스워드를 다시 확인해 주세요",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

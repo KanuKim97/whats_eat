@@ -3,17 +3,19 @@ package com.example.whats_eat.viewModel.activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FirebaseRepository
+import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FindPwViewModel @Inject constructor(private val firebaseRepo: FirebaseRepository): ViewModel() {
+class FindPwViewModel @Inject constructor(
+    private val authRepo: FirebaseAuthRepository
+): ViewModel() {
     private val _eMailReset = MutableLiveData<Boolean>()
     val eMailReset: LiveData<Boolean> get() = _eMailReset
 
     fun sendUserPasswordResetEmail(userEmail: String) {
-        firebaseRepo.findUserAccountPassword(userEmail)
+        authRepo.findUserAccountPassword(userEmail)
             .addOnCompleteListener {
                 if(it.isSuccessful) { _eMailReset.value = true }
                 else {
