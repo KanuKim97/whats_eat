@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
 import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
-import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.example.whats_eat.data.di.repository.PlaceApiRepository
 import com.example.whats_eat.data.remote.model.detailPlace.ViewPlaceModel
 import kotlinx.coroutines.CoroutineDispatcher

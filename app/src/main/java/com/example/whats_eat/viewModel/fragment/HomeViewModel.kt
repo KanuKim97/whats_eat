@@ -1,11 +1,9 @@
 package com.example.whats_eat.viewModel.fragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
-import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

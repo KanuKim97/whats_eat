@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.example.whats_eat.viewModel.fragment.ProfileViewModel
-import com.google.firebase.database.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +18,11 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     private var _proFileBinding: FragmentProFileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
     private val profileViewModel: ProfileViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profileViewModel.loadUserProfile()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,18 @@ class ProfileFragment: Fragment(), View.OnClickListener {
 
         proFileBinding.updateBtn.setOnClickListener(this)
         proFileBinding.deleteBtn.setOnClickListener(this)
+
+        profileViewModel.userProfileNickName.observe(viewLifecycleOwner) {
+            proFileBinding.nameTxt.text = it
+        }
+
+        profileViewModel.userProfileEmail.observe(viewLifecycleOwner) {
+            proFileBinding.emailTxt.text = it
+        }
+
+        profileViewModel.userCollectionCnt.observe(viewLifecycleOwner) {
+            proFileBinding.profileRateNum.text = it
+        }
 
         return proFileBinding.root
     }
@@ -44,7 +59,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     private fun showDelAccountDialog() = AlertDialog.Builder(activity)
         .setTitle("계정을 삭제하시겠습니까?")
         .setMessage("계정을 삭제하시겠습니까? \n다시 복구할 수 없습니다.")
-        .setPositiveButton("네") {_, _ -> }
+        .setPositiveButton("네") {_, _ -> profileViewModel.deleteUserAccount() }
         .setNegativeButton("아니요") {_, _ -> }
         .show()
 }
