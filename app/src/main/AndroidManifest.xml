@@ -6,12 +6,16 @@
 
     <application
         android:name=".view.AndroidApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="What&apos;s Eat?"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:allowBackup="false" >
+        android:supportsRtl="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -19,14 +23,14 @@
 
         <activity
             android:name=".view.activity.LogoActivity"
-            android:theme="@style/Theme.AppCompat"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/Theme.AppCompat" />
