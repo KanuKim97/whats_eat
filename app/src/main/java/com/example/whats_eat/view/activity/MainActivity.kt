@@ -7,8 +7,6 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityMainBinding
 import com.example.whats_eat.view.fragment.CollectionFragment
