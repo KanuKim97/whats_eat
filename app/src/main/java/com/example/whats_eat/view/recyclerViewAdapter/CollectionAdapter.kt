@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.recyclerViewAdapter
+package com.example.whats_eat.view.recyclerViewAdapter
 
 import android.view.LayoutInflater
 import android.view.View

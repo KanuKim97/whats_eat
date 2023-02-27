@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".view.AndroidApp"
         android:icon="@mipmap/ic_launcher"
         android:label="What&apos;s Eat?"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:allowBackup="false" >
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${google_api_key}" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -37,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/Theme.AppCompat" />
@@ -47,7 +37,7 @@
             android:name=".view.activity.FindPwActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".view.activity.ViewPlaceActivity"

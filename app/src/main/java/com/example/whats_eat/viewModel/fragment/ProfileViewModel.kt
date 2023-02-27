@@ -1,50 +1,57 @@
 package com.example.whats_eat.viewModel.fragment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.remote.AppRepository
+import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
+import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel(private val appRepo: AppRepository): ViewModel() {
-    private val _profileNickName = MutableLiveData<String>()
-    private val _profileEmail = MutableLiveData<String>()
-    private val _collectionCnt = MutableLiveData<String>()
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val authRepo: FirebaseAuthRepository,
+    private val rtDBRepo: FireBaseRTDBRepository
+) : ViewModel() {
+    private val _userProfileNickName = MutableLiveData<String>()
+    private val _userProfileEmail = MutableLiveData<String>()
+    private val _userCollectionCnt = MutableLiveData<String>()
 
-    val profileNickName: LiveData<String>
-        get() = _profileNickName
-    val profileEmail: LiveData<String>
-        get() = _profileEmail
-    val collectionCnt: LiveData<String>
-        get() = _collectionCnt
-
+    val userProfileNickName: LiveData<String> get() = _userProfileNickName
+    val userProfileEmail: LiveData<String> get() = _userProfileEmail
+    val userCollectionCnt: LiveData<String> get() = _userCollectionCnt
     fun loadUserProfile() {
-        val userProfileRef = appRepo.getUserData()
-        val userCollectionCnt = appRepo.getCollectionPath()
+        val userProfileRef = rtDBRepo.getUserDBRef()
+        val userCollection = rtDBRepo.getUserCollectionDBRef()
 
-        userProfileRef.addValueEventListener(object: ValueEventListener {
+        userProfileRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()) {
-                    _profileNickName.value = snapshot.child("NickName").value.toString()
-                    _profileEmail.value = snapshot.child("eMail").value.toString()
+                if (snapshot.exists()) {
+                    _userProfileEmail.value = snapshot.child("userEmail").value.toString()
+                    _userProfileNickName.value = snapshot.child("userNickName").value.toString()
                 }
             }
-            override fun onCancelled(error: DatabaseError) { Log.e("Error",  error.message) }
+
+            override fun onCancelled(error: DatabaseError) { error.toException().printStackTrace() }
         })
 
-        userCollectionCnt.get()
+        userCollection.get()
             .addOnCompleteListener {
-                if(it.isSuccessful) { _collectionCnt.value = it.result.childrenCount.toString() }
+                if(it.isSuccessful) { _userCollectionCnt.value = it.result.childrenCount.toString() }
+                else { it.exception?.printStackTrace() }
             }
-            .addOnFailureListener {  }
+            .addOnFailureListener { it.printStackTrace() }
     }
 
-    fun deleteAccount() =
-        appRepo.deleteUserAccount()?.addOnCompleteListener {
-            if (it.isSuccessful) { appRepo.getUserData().removeValue() }
-        }
+    fun deleteUserAccount() =
+        authRepo.deleteUserAccount()
+            ?.addOnCompleteListener {
+                if (it.isSuccessful) { rtDBRepo.getUserDBRef().removeValue() }
+                else { it.exception?.printStackTrace() }
+            }
+            ?.addOnFailureListener { it.printStackTrace() }
 
 }

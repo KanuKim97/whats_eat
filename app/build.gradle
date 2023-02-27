@@ -2,15 +2,12 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'org.jetbrains.kotlin.android'
 }
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
-
-//Declare Properties 'local.properties'
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
+apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     compileSdkVersion 33
@@ -25,9 +22,6 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        //Build Config Field
-        buildConfigField "String", "GOOGLE_API_KEY", properties['google_api_key']
     }
 
     buildTypes {
@@ -53,56 +47,57 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
 
-    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    // Kotlin Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
+    // AndroidX
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 
-    implementation 'com.google.firebase:firebase-database:20.1.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+    // Android Jetpack ViewModel, LiveData
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-beta01"
 
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    // Dagger-Hilt DI(Dependency Injection) Tool
+    implementation "com.google.dagger:hilt-android:2.44.2"
+    kapt "com.google.dagger:hilt-android-compiler:2.44.2"
 
+    // Android MultiDex
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // Android Test Unit
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    // Google Android GMS Service Maps SDK, Location
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
-    //fireBase
+    // FireBase Auth, RealTime DataBase
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
 
-    //multiDex
-    implementation 'com.android.support:multidex:1.0.3'
-
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.13.2'
-
-    //Retrofit2
+    // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    //easy Permission
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+
+    // Easy Permission
     implementation 'pub.devrel:easypermissions:3.0.0'
-
-    //Android Jetpack ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha03"
-
-    //Android Jetpack LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha03"
-
-    // Kotlin Coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
-
 }
+
+kapt { correctErrorTypes = true }

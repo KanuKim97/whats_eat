@@ -3,17 +3,29 @@ package com.example.whats_eat.viewModel.activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.remote.AppRepository
+import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class FindPwViewModel(private val appRepo: AppRepository): ViewModel() {
-    private val _emailResetValue = MutableLiveData<Boolean>()
+@HiltViewModel
+class FindPwViewModel @Inject constructor(
+    private val authRepo: FirebaseAuthRepository
+): ViewModel() {
+    private val _eMailReset = MutableLiveData<Boolean>()
+    val eMailReset: LiveData<Boolean> get() = _eMailReset
 
-    val emailResetValue: LiveData<Boolean>
-        get() = _emailResetValue
-
-    fun sendPasswordResetMail(userEmail: String) {
-        appRepo.findPassword(userEmail = userEmail)
-            .addOnCompleteListener { if (it.isSuccessful) { _emailResetValue.value = true } }
-            .addOnFailureListener { _emailResetValue.value = false }
+    fun sendUserPasswordResetEmail(userEmail: String) {
+        authRepo.findUserAccountPassword(userEmail)
+            .addOnCompleteListener {
+                if(it.isSuccessful) { _eMailReset.value = true }
+                else {
+                    it.exception?.printStackTrace()
+                    _eMailReset.value = false
+                }
+            }
+            .addOnFailureListener {
+                _eMailReset.value = false
+                it.printStackTrace()
+            }
     }
 }

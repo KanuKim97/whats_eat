@@ -1,25 +1,29 @@
 package com.example.whats_eat.viewModel.activity
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.remote.AppRepository
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.FirebaseAuth
+import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel(private val appRepo: AppRepository): ViewModel() {
-    private val _loginData = MutableLiveData<String>()
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val authRepo: FirebaseAuthRepository
+): ViewModel() {
+    private val _userLogInResult = MutableLiveData<Task<AuthResult>>()
+    val userLogInResult: LiveData<Task<AuthResult>> get() = _userLogInResult
 
-    val loginData: LiveData<String>
-        get() = _loginData
-
-    fun getUserLogin(userEmail: String, userPassword: String) =
-        appRepo.getUser(userEmail, userPassword)
-            .addOnCompleteListener{
-                if (it.isSuccessful) { _loginData.value = "Success"
-                } else { _loginData.value = "Failed" }
+    fun logInUserAccount(userEmail: String, userPassword: String) =
+        authRepo.signInUserAccount(userEmail, userPassword)
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    _userLogInResult.value = task
+                } else {
+                    task.exception?.printStackTrace()
+                }
             }
-            .addOnFailureListener { _loginData.value = it.toString() }
+            .addOnFailureListener { it.printStackTrace() }
 }
