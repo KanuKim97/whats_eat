@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
 import com.example.whats_eat.viewModel.activity.DetailPlaceViewModel
