@@ -14,15 +14,15 @@ class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
     inner class CollectionViewHolder(private val binding: CollectionItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
             fun bind(placeList: PlaceData) {
-                binding.placeName.text = placeList.placeName
-                binding.placeAddressView.text = placeList.placeAddress
-                binding.ratingNum.text = placeList.ratingNum.toString()
+                binding.placeNameTxt.text = placeList.placeName
+                binding.placeAddressTxt.text = placeList.placeAddress
+                binding.ratingNumTxt.text = placeList.ratingNum.toString()
 
-                if (placeList.placePhotoUrl.isBlank()) { binding.placeImage.visibility = View.GONE }
+                if (placeList.placePhotoUrl.isBlank()) { binding.placeImg.visibility = View.GONE }
                 else {
-                    Glide.with(binding.placeImage)
+                    Glide.with(binding.placeImg)
                         .load(placeList.placePhotoUrl)
-                        .into(binding.placeImage)
+                        .into(binding.placeImg)
                 }
             }
     }

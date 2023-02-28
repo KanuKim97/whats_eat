@@ -83,5 +83,14 @@
     <string name="logInBtn_LogIn">LOGIN</string>
     <string name="signUpBtn_LogIn">New User? Sign Up!</string>
     <string name="logIn_Failed">Wrong ID and Password \nRetry it again!</string>
+    <string name="placeImageView">PlaceImageView</string>
+
+    <string name="placeNameView_txt">이름: </string>
+    <string name="placeAddressView_Txt">주소: </string>
+    <string name="placeRatingNumView_Txt">(평점): </string>
+    <string name="placeNameTxt_Example">name Example</string>
+    <string name="placeAddressTxt_Example">Address Example</string>
+    <string name="Rating_Number_view">ratingNumber_View</string>
+    <string name="RatingNumberTxt_Example">4.7</string>
 
 </resources>

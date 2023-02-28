@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
 import com.example.whats_eat.data.di.repository.PlaceApiRepository
@@ -22,15 +23,14 @@ class MapsViewModel @Inject constructor(
 
     fun searchNearByPlace() = viewModelScope.launch(ioDispatcher) {
         val response = placeApiRepo.nearByPlace(
-            "",
+            "37.514655, 126.97974",
             Constant.Location_Radius,
             Constant.Location_Type,
-            ""
+            BuildConfig.MAPS_API_KEY
         )
 
-        when(response.code()) {
-            200 -> { /* TODO: Success Handling */ }
-            else -> { /* TODO: Error Handling */ }
+        if(response.isSuccessful && response.body() != null) {
+            _nearByResponse.postValue(response.body())
         }
     }
 
