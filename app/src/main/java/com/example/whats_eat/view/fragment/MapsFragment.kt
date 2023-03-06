@@ -1,5 +1,6 @@
 package com.example.whats_eat.view.fragment
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.databinding.FragmentMapsBinding
 import com.example.whats_eat.viewModel.fragment.MapsViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -23,8 +25,15 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
     private lateinit var gMapView: MapView
+    private lateinit var myFusedLocationClient: FusedLocationProviderClient
+
+    private var lastKnownLocation: Location? = null
+
+    // Fragment ViewBinding
     private var _mapsFragmentBinding: FragmentMapsBinding? = null
     private val mapsFragmentBinding get() = _mapsFragmentBinding!!
+
+    // MapsFragment ViewModel - ktx
     private val mapsViewModel: MapsViewModel by viewModels()
 
     override fun onCreateView(
@@ -81,6 +90,30 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         super.onDestroyView()
         _mapsFragmentBinding = null
     }
+
+    /* getDeviceLocation display on Google Maps */
+    private fun getDeviceLocation(gMap: GoogleMap) {
+        try {
+            if (checkLocationPermission()) {
+                val locationResult = myFusedLocationClient.lastLocation
+
+                locationResult.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        lastKnownLocation = task.result
+
+                        if (lastKnownLocation != null) {
+                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                LatLng(lastKnownLocation!!.latitude,
+                                    lastKnownLocation!!.longitude), 15f))
+                        }
+                    } else {
+                        task.exception?.printStackTrace()
+                    }
+                }
+            }
+        } catch (e: SecurityException) { e.printStackTrace() }
+    }
+
 
     /* Google Maps UI Setting */
     private fun updateGMapsUI(gMap: GoogleMap) {
