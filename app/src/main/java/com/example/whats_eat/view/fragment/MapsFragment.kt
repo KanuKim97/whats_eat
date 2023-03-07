@@ -1,6 +1,7 @@
 package com.example.whats_eat.view.fragment
 
 import android.location.Location
+import android.location.LocationRequest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.databinding.FragmentMapsBinding
 import com.example.whats_eat.viewModel.fragment.MapsViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -26,6 +28,7 @@ import pub.devrel.easypermissions.EasyPermissions
 class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
     private lateinit var gMapView: MapView
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
+    private lateinit var myLocationRequest: LocationRequest
 
     private var lastKnownLocation: Location? = null
 
@@ -35,6 +38,11 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     // MapsFragment ViewModel - ktx
     private val mapsViewModel: MapsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -145,13 +153,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        Toast.makeText(
-            requireContext(),
-            "권한이 허가되었습니다!",
-            Toast.LENGTH_SHORT
-        ).show()
-    }
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {  }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
