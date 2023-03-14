@@ -23,7 +23,7 @@ class MapsViewModel @Inject constructor(
 
     fun searchNearByPlace() = viewModelScope.launch(ioDispatcher) {
         val response = placeApiRepo.nearByPlace(
-            "37.514655, 126.97974",
+            Constant.defaultLatLng,
             Constant.Location_Radius,
             Constant.Location_Type,
             BuildConfig.MAPS_API_KEY
