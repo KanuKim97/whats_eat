@@ -1,7 +1,7 @@
 package com.example.whats_eat.data.remote.model.responseModel.modelContent.photo
 
-class Photos {
-    var height: Int = 0
-    var width: Int = 0
-    var photo_reference: String? = null
-}
+data class Photos(
+    val height: Int,
+    val width: Int,
+    val photo_reference: String?
+)

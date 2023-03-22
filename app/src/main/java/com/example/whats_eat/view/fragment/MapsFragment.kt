@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.databinding.FragmentMapsBinding
 import com.example.whats_eat.view.activity.ViewPlaceActivity
@@ -32,8 +31,8 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     GoogleMap.OnMarkerClickListener {
     private lateinit var gMapView: MapView
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
-
     private var lastKnownLocation: Location? = null
+
     private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
 
     private var _mapsFragmentBinding: FragmentMapsBinding? = null
@@ -44,7 +43,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         myFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
         searchNearByPlace()
     }
 
@@ -68,6 +66,9 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     override fun onMapReady(gMap: GoogleMap) {
         updateGMapsUI(gMap)
         getDeviceLocation(gMap)
+        markPlaceOnGMaps(gMap)
+
+        gMap.setOnMarkerClickListener(this)
     }
 
     /* MapView LifeCycle */
@@ -91,14 +92,14 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         gMapView.onLowMemory()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        gMapView.onDestroy()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _mapsFragmentBinding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        gMapView.onDestroy()
     }
 
     private fun searchNearByPlace() = mapsViewModel.searchNearByPlace()
@@ -128,17 +129,33 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     /* Google Maps Marker */
     private fun setMarkerOption(): MarkerOptions =
-        MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo))
+        MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
 
     private fun markPlaceOnGMaps(gMap: GoogleMap) {
-        mapsViewModel.nearByResponse.observe(viewLifecycleOwner) {  }
-        gMap.setOnMarkerClickListener(this)
+        mapsViewModel.nearByResponse.observe(viewLifecycleOwner) {
+            for (i in it?.results?.indices!!) {
+                val placeResultLat: Double = it.results[i].geometry.location.lat
+                val placeResultLng: Double = it.results[i].geometry.location.lng
+                val placeLatLng = LatLng(placeResultLat, placeResultLng)
+                val placeName: String = it.results[i].name
+
+                placeMarkerOptions.position(placeLatLng)
+                placeMarkerOptions.title(placeName)
+                placeMarkerOptions.snippet(i.toString())
+                gMap.addMarker(placeMarkerOptions)
+            }
+        }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
         Intent(requireContext(), ViewPlaceActivity::class.java)
-            .also { it.putExtra("place_id", "") }
-            .run { startActivity(this) }
+            .also {
+                it.putExtra("PlaceName", "")
+                it.putExtra("PlaceAddress", "")
+                it.putExtra("RatingNumber", "")
+                it.putExtra("PlacePhotoRef", "")
+                it.putExtra("OpenTime", "")
+            }.run { startActivity(this) }
 
         return true
     }

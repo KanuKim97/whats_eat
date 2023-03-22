@@ -4,16 +4,14 @@ import com.example.whats_eat.data.remote.model.responseModel.modelContent.loacti
 import com.example.whats_eat.data.remote.model.responseModel.modelContent.period.OpeningHours
 import com.example.whats_eat.data.remote.model.responseModel.modelContent.photo.Photos
 
-class Results {
-    var name : String? = null
-    var geometry : Geometry? = null
-
-    var photos : Array<Photos>? = null
-    var id : String? = null
-    var place_id : String? = null
-    var rating : Double = 0.0
-    var opening_hours : OpeningHours? = null
-
-    var url : String? = null
-    var formatted_address : String? = null
-}
+data class Results(
+    val name: String,
+    val geometry: Geometry,
+    val photos: Array<Photos>,
+    val id: String,
+    val place_id: String,
+    val rating: Double,
+    val opening_hours: OpeningHours,
+    val url: String,
+    val formatted_address: String
+)

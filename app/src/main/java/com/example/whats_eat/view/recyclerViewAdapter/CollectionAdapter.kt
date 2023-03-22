@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.whats_eat.data.remote.model.nearByPlace.PlaceData
+import com.example.whats_eat.data.remote.model.dataClassView.PlaceData
 import com.example.whats_eat.databinding.CollectionItemBinding
 
 class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
@@ -16,12 +16,12 @@ class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
             fun bind(placeList: PlaceData) {
                 binding.placeNameTxt.text = placeList.placeName
                 binding.placeAddressTxt.text = placeList.placeAddress
-                binding.ratingNumTxt.text = placeList.ratingNum.toString()
+                binding.ratingNumTxt.text = placeList.ratingNumber.toString()
 
-                if (placeList.placePhotoUrl.isBlank()) { binding.placeImg.visibility = View.GONE }
+                if (placeList.placePhotoRef.isBlank()) { binding.placeImg.visibility = View.GONE }
                 else {
                     Glide.with(binding.placeImg)
-                        .load(placeList.placePhotoUrl)
+                        .load(placeList.placePhotoRef)
                         .into(binding.placeImg)
                 }
             }
@@ -40,9 +40,7 @@ class CollectionAdapter(private val placeList : ArrayList<PlaceData>)
     override fun onBindViewHolder(
         holder: CollectionViewHolder,
         position: Int
-    ) {
-        holder.bind(placeList[position])
-    }
+    ) = holder.bind(placeList[position])
 
     override fun getItemCount(): Int = placeList.size
 }

@@ -1,5 +1,7 @@
 package com.example.whats_eat.viewModel.fragment
 
+import android.nfc.Tag
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,6 +32,8 @@ class MapsViewModel @Inject constructor(
         )
 
         if(response.isSuccessful && response.body() != null) {
+            Log.d(Constant.TAG, response.body()!!.status)
+            Log.d(Constant.TAG, "${response.body()!!.results?.size}")
             _nearByResponse.postValue(response.body())
         }
     }

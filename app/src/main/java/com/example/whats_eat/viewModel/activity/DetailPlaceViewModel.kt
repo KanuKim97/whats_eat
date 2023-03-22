@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
 import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
 import com.example.whats_eat.data.di.repository.PlaceApiRepository
-import com.example.whats_eat.data.remote.model.detailPlace.ViewPlaceModel
+import com.example.whats_eat.data.remote.model.dataClassView.ViewPlaceModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -21,15 +22,16 @@ class DetailPlaceViewModel @Inject constructor(
 ): ViewModel() {
     private val _detailedResult = MutableLiveData<String>()
     private val _pushDBResult = MutableLiveData<String>()
+
     val detailedResult: LiveData<String> get() = _detailedResult
     val pushDBResult: LiveData<String> get() = _pushDBResult
 
+    /* TODO : Is it necessary? */
     fun getDetailedPlaceResult(place_ID: String) = viewModelScope.launch(ioDispatcher) {
-        val response = placeApiRepo.detailedPlace(place_ID, "")
+        val response = placeApiRepo.detailedPlace(place_ID, BuildConfig.PLACE_API_KEY)
 
-        when(response.code()) {
-            200 -> { /* TODO: Success Handling */ }
-            else -> { /* TODO: Error Handling */ }
+        if (response.isSuccessful && response.body()?.result != null) {
+            /* TODO : Is it necessary? */
         }
     }
 
@@ -49,11 +51,12 @@ class DetailPlaceViewModel @Inject constructor(
             }.addOnFailureListener { it.printStackTrace() }
     }
 
+    /* TODO : Is it necessary? */
     fun getPhotoUrl(photoRef: String) =
         StringBuilder(Constant.IPlacePhotoAPIUri)
             .append("?maxwidth=${Constant.photoMaxWidth}")
             .append("&photo_reference=$photoRef")
-            .append("&key=")
+            .append("&key=${BuildConfig.PLACE_API_KEY}")
             .toString()
 
     override fun onCleared() {

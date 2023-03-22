@@ -6,90 +6,63 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.RequestManager
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityViewPlaceBinding
 import com.example.whats_eat.viewModel.activity.DetailPlaceViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
+class ViewPlaceActivity() : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
-    private val placeViewModel: DetailPlaceViewModel by viewModels()
+    @Inject lateinit var glideModule: RequestManager
 
-    private var placeName: String? = null
-    private var placeAddress: String? = null
-    private var photoRef: String? = null
-    private var rating: String? = null
-    private var openTime: String? = null
+    private val placeViewModel: DetailPlaceViewModel by viewModels()
+    private val placeName: String? by lazy { getPlaceName() }
+    private val placeAddress: String? by lazy { getPlaceAddress() }
+    private val placePhotoRef: String? by lazy { getPlacePhotoRef() }
+    private val placeOpenTime: String? by lazy { getOpenTime() }
+    private val placeRatingNumber: String? by lazy { getRatingNumber() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewPlaceBinding = ActivityViewPlaceBinding.inflate(layoutInflater)
+
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
         viewPlaceBinding.backToMap.setOnClickListener(this)
 
         setContentView(viewPlaceBinding.root)
-
-        placeName = intent.getStringExtra("placeName")
-        placeAddress = intent.getStringExtra("placeAddress")
-        photoRef = intent.getStringExtra("photoRef")
-        rating = intent.getStringExtra("rating")
-        openTime = intent.getStringExtra("openTime")
     }
-
-/*
-    override fun onResume() {
-        super.onResume()
-
-        controlView(
-            placeName.toString(),
-            placeAddress.toString(),
-            photoRef.toString(),
-            rating!!.toFloat(),
-            openTime.toBoolean()
-        )
-
-
-    }*/
 
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.backToMap -> {}
             R.id.showMap -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("")))
-            /*R.id.addCollection ->
-                placeViewModel.storeCollection(
-                    placeName.toString(),
-                    placeAddress.toString(),
-                    rating!!.toFloat(),
-                    photoRef.toString()
-                )*/
         }
     }
 
-/*    private fun controlView(
-        placeName: String,
-        placeAddress: String,
-        photoRef: String,
-        rating: Float,
-        openTime: Boolean
-    ) {
-       if(photoRef.isEmpty()) {
-            viewPlaceBinding.placeImg.visibility = View.GONE
-        } else {
-            Glide.with(this)
-                .load(placeViewModel.getPhotoUrl(photoRef))
-                .into(viewPlaceBinding.placeImg)
-        }
-
-        when {
-            openTime -> viewPlaceBinding.openTime.text = "영업 중"
-            !openTime -> viewPlaceBinding.openTime.text = "영업 종료"
-            null == true -> viewPlaceBinding.openTime.visibility = View.GONE
-        }
-
-        viewPlaceBinding.rating.rating = rating
+    private fun displayContent() {
         viewPlaceBinding.placeName.text = placeName
         viewPlaceBinding.placeAddress.text = placeAddress
-    }*/
+        viewPlaceBinding.rating.rating = placeRatingNumber?.toFloat()!!
+
+        when(placeOpenTime.toBoolean()) {
+            true -> viewPlaceBinding.openTime.text = "영업 중"
+            false -> viewPlaceBinding.openTime.text = "영업 종료"
+        }
+
+        if (placePhotoRef.isNullOrEmpty()) {
+            viewPlaceBinding.placeImg.visibility = View.GONE
+        } else {
+            glideModule.load(placePhotoRef).into(viewPlaceBinding.placeImg)
+        }
+    }
+
+    private fun getPlaceName(): String? = intent.getStringExtra("PlaceName")
+    private fun getPlaceAddress(): String? = intent.getStringExtra("PlaceAddress")
+    private fun getRatingNumber(): String? = intent.getStringExtra("RatingNumber")
+    private fun getPlacePhotoRef(): String? = intent.getStringExtra("PlacePhotoRef")
+    private fun getOpenTime(): String? = intent.getStringExtra("OpenTime")
 }

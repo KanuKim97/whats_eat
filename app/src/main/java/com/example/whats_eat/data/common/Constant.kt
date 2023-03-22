@@ -8,4 +8,5 @@ object Constant {
     const val IPlaceAPIUri: String = "https://maps.googleapis.com/maps/api/place/"
     const val IPlacePhotoAPIUri: String = "https://maps.googleapis.com/maps/api/place/photo"
     const val defaultLatLng: String = "37.5665, 126.9780"
+    const val TAG: String = "로그"
 }
