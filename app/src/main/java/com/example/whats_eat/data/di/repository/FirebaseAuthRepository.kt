@@ -1,5 +1,7 @@
 package com.example.whats_eat.data.di.repository
 
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
@@ -7,17 +9,17 @@ import javax.inject.Inject
 class FirebaseAuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
-    fun getCurrentUserSession() = firebaseAuth.currentUser != null
-    fun createUserAccount(userEmail: String, userPassword: String) =
+    fun getCurrentUserSession(): Boolean = firebaseAuth.currentUser != null
+    fun createUserAccount(userEmail: String, userPassword: String): Task<AuthResult> =
         firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
 
-    fun signInUserAccount(userEmail: String, userPassword: String) =
+    fun signInUserAccount(userEmail: String, userPassword: String): Task<AuthResult> =
         firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
 
-    fun findUserAccountPassword(userEmail: String) =
+    fun findUserAccountPassword(userEmail: String): Task<Void> =
         firebaseAuth.sendPasswordResetEmail(userEmail)
 
-    fun deleteUserAccount() = firebaseAuth.currentUser?.delete()
+    fun deleteUserAccount(): Task<Void>? = firebaseAuth.currentUser?.delete()
 
-    fun signOutUserAccount() = firebaseAuth.signOut()
+    fun signOutUserAccount(): Unit = firebaseAuth.signOut()
 }

@@ -24,12 +24,7 @@ class MapsViewModel @Inject constructor(
     val nearByResponse: LiveData<Myplaces?> get() = _nearByResponse
 
     fun searchNearByPlace() = viewModelScope.launch(ioDispatcher) {
-        val response = placeApiRepo.nearByPlace(
-            Constant.defaultLatLng,
-            Constant.Location_Radius,
-            Constant.Location_Type,
-            BuildConfig.MAPS_API_KEY
-        )
+        val response = placeApiRepo.nearByPlace(Constant.DEFAULT_LAT_LNG)
 
         if(response.isSuccessful && response.body() != null) {
             Log.d(Constant.TAG, response.body()!!.status)

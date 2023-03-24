@@ -12,6 +12,7 @@ import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.databinding.FragmentMapsBinding
 import com.example.whats_eat.view.activity.ViewPlaceActivity
 import com.example.whats_eat.viewModel.fragment.MapsViewModel
+import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,9 +23,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.CancellationToken
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks,
@@ -33,12 +36,11 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
     private var lastKnownLocation: Location? = null
 
-    private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
-
     private var _mapsFragmentBinding: FragmentMapsBinding? = null
     private val mapsFragmentBinding get() = _mapsFragmentBinding!!
 
     private val mapsViewModel: MapsViewModel by viewModels()
+    private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +106,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     private fun searchNearByPlace() = mapsViewModel.searchNearByPlace()
 
-    /* getDeviceLocation display on Google Maps */
+    /* Get Location and display on Google Maps */
     private fun getDeviceLocation(gMap: GoogleMap) {
         try {
             if (checkLocationPermission()) {
@@ -124,6 +126,12 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
                     }
                 }
             }
+        } catch (e: SecurityException) { e.printStackTrace() }
+    }
+
+    private fun getCurrentLocation() {
+        try {
+            TODO("Not Implicated")
         } catch (e: SecurityException) { e.printStackTrace() }
     }
 
@@ -149,12 +157,12 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     override fun onMarkerClick(marker: Marker): Boolean {
         Intent(requireContext(), ViewPlaceActivity::class.java)
-            .also {
-                it.putExtra("PlaceName", "")
-                it.putExtra("PlaceAddress", "")
-                it.putExtra("RatingNumber", "")
-                it.putExtra("PlacePhotoRef", "")
-                it.putExtra("OpenTime", "")
+            .apply {
+                putExtra("PlaceName", "")
+                putExtra("PlaceAddress", "")
+                putExtra("RatingNumber", "")
+                putExtra("PlacePhotoRef", "")
+                putExtra("OpenTime", "")
             }.run { startActivity(this) }
 
         return true
@@ -186,7 +194,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private fun requestLocationPermission() = EasyPermissions.requestPermissions(
         this,
         "이 애플리케이션은 위치정보 사용 허가가 필요합니다.",
-        Constant.Location_PERMISSION_CODE,
+        Constant.LOCATION_PERMISSION_CODE,
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
 

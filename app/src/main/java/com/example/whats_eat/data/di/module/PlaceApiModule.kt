@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 object PlaceApiModule {
     @Provides
-    fun providesBaseURL() = Constant.IPlaceAPIUri
+    fun providesBaseURL(): String = Constant.PLACE_API_URL
 
     @Provides
     @Singleton

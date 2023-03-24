@@ -28,7 +28,7 @@ class DetailPlaceViewModel @Inject constructor(
 
     /* TODO : Is it necessary? */
     fun getDetailedPlaceResult(place_ID: String) = viewModelScope.launch(ioDispatcher) {
-        val response = placeApiRepo.detailedPlace(place_ID, BuildConfig.PLACE_API_KEY)
+        val response = placeApiRepo.detailedPlace(place_ID)
 
         if (response.isSuccessful && response.body()?.result != null) {
             /* TODO : Is it necessary? */
@@ -53,8 +53,8 @@ class DetailPlaceViewModel @Inject constructor(
 
     /* TODO : Is it necessary? */
     fun getPhotoUrl(photoRef: String) =
-        StringBuilder(Constant.IPlacePhotoAPIUri)
-            .append("?maxwidth=${Constant.photoMaxWidth}")
+        StringBuilder(Constant.PLACE_PHOTO_API_URL)
+            .append("?maxwidth=${Constant.PHOTO_MAX_WIDTH}")
             .append("&photo_reference=$photoRef")
             .append("&key=${BuildConfig.PLACE_API_KEY}")
             .toString()
