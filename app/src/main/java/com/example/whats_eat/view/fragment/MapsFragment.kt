@@ -1,12 +1,16 @@
 package com.example.whats_eat.view.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.whats_eat.data.common.Constant
@@ -39,6 +43,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private lateinit var gMapView: MapView
     @Inject lateinit var currentLocation: CurrentLocationRequest
     private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
+    private val myLocationManager: LocationManager by lazy { setLocationManager() }
     private val myFusedLocationClient: FusedLocationProviderClient by lazy { setFusedLocationClient() }
 
     private var _mapsFragmentBinding: FragmentMapsBinding? = null
@@ -59,13 +64,21 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     ): View {
         _mapsFragmentBinding = FragmentMapsBinding.inflate(inflater, container, false)
 
+        return mapsFragmentBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requestLocationPermission()
         gMapView = mapsFragmentBinding.gMap
         gMapView.onCreate(savedInstanceState)
-        gMapView.getMapAsync(this)
 
-        requestLocationPermission()
-
-        return mapsFragmentBinding.root
+        if (checkGPSOnOff()) {
+            gMapView.getMapAsync(this)
+        } else {
+            Toast.makeText(requireContext(), "GPS 기능이 꺼져있습니다.", Toast.LENGTH_SHORT).show()
+            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).run { startActivity(this) }
+        }
     }
 
     override fun onMapReady(gMap: GoogleMap) {
@@ -109,6 +122,9 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private fun setFusedLocationClient(): FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(requireContext())
 
+    private fun setLocationManager(): LocationManager =
+        requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
     private fun setMarkerOption(): MarkerOptions =
         MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
 
@@ -121,12 +137,14 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
                 locationResult.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val lastKnownLocation: Location = task.result
+                        val lastKnownLocation: Location? = task.result
 
-                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            LatLng(
-                                lastKnownLocation.latitude,
-                                lastKnownLocation.longitude), 15f))
+                        if (lastKnownLocation != null) {
+                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                LatLng(
+                                    lastKnownLocation.latitude,
+                                    lastKnownLocation.longitude), 15f))
+                        }
                     } else { task.exception?.printStackTrace() }
                 }
             }
@@ -141,8 +159,8 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
                 override fun isCancellationRequested(): Boolean = false
             }).addOnSuccessListener { location ->
-                Log.d(Constant.TAG, "${location.latitude}")
-                Log.d(Constant.TAG, "${location.longitude}")
+                Log.d(Constant.TAG, "${location?.latitude}")
+                Log.d(Constant.TAG, "${location?.longitude}")
             }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
@@ -191,6 +209,8 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
         return true
     }
+
+    private fun checkGPSOnOff() = myLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
     private fun checkLocationPermission() = EasyPermissions.hasPermissions(
         requireContext(),
