@@ -15,25 +15,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 class DetailPlaceViewModel @Inject constructor(
     private val rtDBRepo: FireBaseRTDBRepository,
-    private val placeApiRepo: PlaceApiRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    private val _detailedResult = MutableLiveData<String>()
+    /* TODO : Need to Refactor this ViewModel */
     private val _pushDBResult = MutableLiveData<String>()
-
-    val detailedResult: LiveData<String> get() = _detailedResult
     val pushDBResult: LiveData<String> get() = _pushDBResult
-
-    /* TODO : Is it necessary? */
-    fun getDetailedPlaceResult(place_ID: String) = viewModelScope.launch(ioDispatcher) {
-        val response = placeApiRepo.detailedPlace(place_ID)
-
-        if (response.isSuccessful && response.body()?.result != null) {
-            /* TODO : Is it necessary? */
-        }
-    }
 
     fun storeResultData(
         place_ID: String,
@@ -51,7 +40,6 @@ class DetailPlaceViewModel @Inject constructor(
             }.addOnFailureListener { it.printStackTrace() }
     }
 
-    /* TODO : Is it necessary? */
     fun getPhotoUrl(photoRef: String) =
         StringBuilder(Constant.PLACE_PHOTO_API_URL)
             .append("?maxwidth=${Constant.PHOTO_MAX_WIDTH}")

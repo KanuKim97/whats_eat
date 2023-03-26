@@ -27,11 +27,10 @@ class MapsViewModel @Inject constructor(
         val response = placeApiRepo.nearByPlace(Constant.DEFAULT_LAT_LNG)
 
         if(response.isSuccessful && response.body() != null) {
-            Log.d(Constant.TAG, response.body()!!.status)
-            Log.d(Constant.TAG, "${response.body()!!.results?.size}")
             _nearByResponse.postValue(response.body())
         }
     }
+
 
     override fun onCleared() {
         super.onCleared()

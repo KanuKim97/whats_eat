@@ -3,6 +3,7 @@ package com.example.whats_eat.view.fragment
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
@@ -33,19 +37,19 @@ import javax.inject.Inject
 class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks,
     GoogleMap.OnMarkerClickListener {
     private lateinit var gMapView: MapView
-    private lateinit var myFusedLocationClient: FusedLocationProviderClient
-    private var lastKnownLocation: Location? = null
+    @Inject lateinit var currentLocation: CurrentLocationRequest
+    private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
+    private val myFusedLocationClient: FusedLocationProviderClient by lazy { setFusedLocationClient() }
 
     private var _mapsFragmentBinding: FragmentMapsBinding? = null
     private val mapsFragmentBinding get() = _mapsFragmentBinding!!
 
     private val mapsViewModel: MapsViewModel by viewModels()
-    private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         searchNearByPlace()
+        getCurrentLocation()
     }
 
     override fun onCreateView(
@@ -55,7 +59,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     ): View {
         _mapsFragmentBinding = FragmentMapsBinding.inflate(inflater, container, false)
 
-        /* Create MapView */
         gMapView = mapsFragmentBinding.gMap
         gMapView.onCreate(savedInstanceState)
         gMapView.getMapAsync(this)
@@ -73,7 +76,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         gMap.setOnMarkerClickListener(this)
     }
 
-    /* MapView LifeCycle */
     override fun onStart() {
         super.onStart()
         gMapView.onStart()
@@ -104,9 +106,14 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         gMapView.onDestroy()
     }
 
-    private fun searchNearByPlace() = mapsViewModel.searchNearByPlace()
+    private fun setFusedLocationClient(): FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(requireContext())
 
-    /* Get Location and display on Google Maps */
+    private fun setMarkerOption(): MarkerOptions =
+        MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+
+    private fun searchNearByPlace(): Job = mapsViewModel.searchNearByPlace()
+
     private fun getDeviceLocation(gMap: GoogleMap) {
         try {
             if (checkLocationPermission()) {
@@ -114,16 +121,13 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
                 locationResult.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        lastKnownLocation = task.result
+                        val lastKnownLocation: Location = task.result
 
-                        if (lastKnownLocation != null) {
-                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                LatLng(lastKnownLocation!!.latitude,
-                                    lastKnownLocation!!.longitude), 15f))
-                        }
-                    } else {
-                        task.exception?.printStackTrace()
-                    }
+                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                lastKnownLocation.latitude,
+                                lastKnownLocation.longitude), 15f))
+                    } else { task.exception?.printStackTrace() }
                 }
             }
         } catch (e: SecurityException) { e.printStackTrace() }
@@ -131,13 +135,33 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     private fun getCurrentLocation() {
         try {
-            TODO("Not Implicated")
+            myFusedLocationClient.getCurrentLocation(currentLocation, object: CancellationToken() {
+                override fun onCanceledRequested(p0: OnTokenCanceledListener) =
+                    CancellationTokenSource().token
+
+                override fun isCancellationRequested(): Boolean = false
+            }).addOnSuccessListener { location ->
+                Log.d(Constant.TAG, "${location.latitude}")
+                Log.d(Constant.TAG, "${location.longitude}")
+            }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
 
-    /* Google Maps Marker */
-    private fun setMarkerOption(): MarkerOptions =
-        MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+    private fun updateGMapsUI(gMap: GoogleMap) {
+        try {
+            if(checkLocationPermission()) {
+                gMap.isBuildingsEnabled = false
+                gMap.isMyLocationEnabled = true
+                gMap.uiSettings.isMyLocationButtonEnabled = true
+                gMap.uiSettings.isZoomControlsEnabled = true
+            } else {
+                gMap.isMyLocationEnabled = false
+                gMap.uiSettings.isMyLocationButtonEnabled = false
+                gMap.uiSettings.isZoomControlsEnabled = false
+                requestLocationPermission()
+            }
+        } catch (e: SecurityException) { e.printStackTrace() }
+    }
 
     private fun markPlaceOnGMaps(gMap: GoogleMap) {
         mapsViewModel.nearByResponse.observe(viewLifecycleOwner) {
@@ -168,24 +192,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         return true
     }
 
-    /* Google Maps UI Setting */
-    private fun updateGMapsUI(gMap: GoogleMap) {
-        try {
-            if(checkLocationPermission()) {
-                gMap.isBuildingsEnabled = false
-                gMap.isMyLocationEnabled = true
-                gMap.uiSettings.isMyLocationButtonEnabled = true
-                gMap.uiSettings.isZoomControlsEnabled = true
-            } else {
-                gMap.isMyLocationEnabled = false
-                gMap.uiSettings.isMyLocationButtonEnabled = false
-                gMap.uiSettings.isZoomControlsEnabled = false
-                requestLocationPermission()
-            }
-        } catch (e: SecurityException) { e.printStackTrace() }
-    }
-
-    /* check Location Permission */
     private fun checkLocationPermission() = EasyPermissions.hasPermissions(
         requireContext(),
         android.Manifest.permission.ACCESS_FINE_LOCATION
