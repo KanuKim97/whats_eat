@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,13 +15,14 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val rtDBRepo: FireBaseRTDBRepository
 ): ViewModel() {
+    private val userProfile: DatabaseReference by lazy { setUserDBRef() }
     private val _userNickName = MutableLiveData<String>()
     val userNickName: LiveData<String> get() = _userNickName
 
-    fun loadUserAccountInfo() {
-        val userInfoRef = rtDBRepo.getUserDBRef()
+    private fun setUserDBRef(): DatabaseReference = rtDBRepo.getUserDBRef()
 
-        userInfoRef.addValueEventListener(object: ValueEventListener{
+    fun loadUserAccountInfo(): ValueEventListener = userProfile
+        .addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
                     _userNickName.value = snapshot.child("userNickName").value.toString()
@@ -29,5 +31,4 @@ class HomeViewModel @Inject constructor(
 
             override fun onCancelled(error: DatabaseError) { error.toException().printStackTrace() }
         })
-    }
 }

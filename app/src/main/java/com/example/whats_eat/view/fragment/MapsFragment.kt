@@ -2,7 +2,6 @@ package com.example.whats_eat.view.fragment
 
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.databinding.FragmentMapsBinding
-import com.example.whats_eat.view.activity.ViewPlaceActivity
 import com.example.whats_eat.viewModel.fragment.MapsViewModel
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,20 +24,16 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
+import com.google.android.gms.tasks.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks,
-    GoogleMap.OnMarkerClickListener {
+class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
     private lateinit var gMapView: MapView
     @Inject lateinit var currentLocation: CurrentLocationRequest
     private val placeMarkerOptions: MarkerOptions by lazy { setMarkerOption() }
@@ -50,12 +44,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private val mapsFragmentBinding get() = _mapsFragmentBinding!!
 
     private val mapsViewModel: MapsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        searchNearByPlace()
-        getCurrentLocation()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,8 +61,10 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         gMapView = mapsFragmentBinding.gMap
         gMapView.onCreate(savedInstanceState)
 
-        if (checkGPSOnOff()) {
+        if (checkGPSOn()) {
             gMapView.getMapAsync(this)
+            searchNearByPlace()
+            getCurrentLocation()
         } else {
             Toast.makeText(requireContext(), "GPS 기능이 꺼져있습니다.", Toast.LENGTH_SHORT).show()
             Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).run { startActivity(this) }
@@ -85,8 +75,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         updateGMapsUI(gMap)
         getDeviceLocation(gMap)
         markPlaceOnGMaps(gMap)
-
-        gMap.setOnMarkerClickListener(this)
     }
 
     override fun onStart() {
@@ -130,31 +118,26 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     private fun searchNearByPlace(): Job = mapsViewModel.searchNearByPlace()
 
-    private fun getDeviceLocation(gMap: GoogleMap) {
+    private fun getDeviceLocation(gMap: GoogleMap): Job = CoroutineScope(Dispatchers.Main).launch {
         try {
-            if (checkLocationPermission()) {
-                val locationResult = myFusedLocationClient.lastLocation
-
-                locationResult.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val lastKnownLocation: Location? = task.result
-
-                        if (lastKnownLocation != null) {
-                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                LatLng(
-                                    lastKnownLocation.latitude,
-                                    lastKnownLocation.longitude), 15f))
-                        }
-                    } else { task.exception?.printStackTrace() }
-                }
+            val locationResult = withContext(Dispatchers.IO) { myFusedLocationClient.lastLocation }
+            locationResult.addOnCompleteListener {
+                if (it.isSuccessful && it.result != null) {
+                    gMap.moveCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(it.result.latitude, it.result.longitude), 15f
+                        )
+                    )
+                } else { it.exception?.printStackTrace() }
             }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
 
-    private fun getCurrentLocation() {
+
+    private fun getCurrentLocation(): Job = CoroutineScope(Dispatchers.IO).launch {
         try {
             myFusedLocationClient.getCurrentLocation(currentLocation, object: CancellationToken() {
-                override fun onCanceledRequested(p0: OnTokenCanceledListener) =
+                override fun onCanceledRequested(p0: OnTokenCanceledListener): CancellationToken =
                     CancellationTokenSource().token
 
                 override fun isCancellationRequested(): Boolean = false
@@ -181,7 +164,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         } catch (e: SecurityException) { e.printStackTrace() }
     }
 
-    private fun markPlaceOnGMaps(gMap: GoogleMap) {
+    private fun markPlaceOnGMaps(gMap: GoogleMap) =
         mapsViewModel.nearByResponse.observe(viewLifecycleOwner) {
             for (i in it?.results?.indices!!) {
                 val placeResultLat: Double = it.results[i].geometry.location.lat
@@ -195,22 +178,8 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
                 gMap.addMarker(placeMarkerOptions)
             }
         }
-    }
 
-    override fun onMarkerClick(marker: Marker): Boolean {
-        Intent(requireContext(), ViewPlaceActivity::class.java)
-            .apply {
-                putExtra("PlaceName", "")
-                putExtra("PlaceAddress", "")
-                putExtra("RatingNumber", "")
-                putExtra("PlacePhotoRef", "")
-                putExtra("OpenTime", "")
-            }.run { startActivity(this) }
-
-        return true
-    }
-
-    private fun checkGPSOnOff() = myLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    private fun checkGPSOn() = myLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
     private fun checkLocationPermission() = EasyPermissions.hasPermissions(
         requireContext(),

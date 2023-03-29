@@ -22,6 +22,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileViewModel.loadUserProfile()
+        profileViewModel.loadUserCollection()
     }
 
     override fun onCreateView(
@@ -46,6 +47,11 @@ class ProfileFragment: Fragment(), View.OnClickListener {
         }
 
         return proFileBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _proFileBinding = null
     }
 
     override fun onClick(v: View?) {

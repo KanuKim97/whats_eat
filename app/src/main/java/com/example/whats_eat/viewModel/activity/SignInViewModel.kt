@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
+import com.google.firebase.database.DatabaseReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,8 +14,12 @@ class SignInViewModel @Inject constructor(
     private val authRepo: FirebaseAuthRepository,
     private val rtDBRepo: FireBaseRTDBRepository
 ): ViewModel() {
+    private val userProfile: DatabaseReference by lazy { setUserDBRef() }
+
     private val _isNewUserResult = MutableLiveData<Boolean>()
     val isNewUserResult: LiveData<Boolean> get() = _isNewUserResult
+
+    private fun setUserDBRef(): DatabaseReference = rtDBRepo.getUserDBRef()
 
     fun createUserAccount(
         userEmail: String,
@@ -29,7 +34,7 @@ class SignInViewModel @Inject constructor(
                 when {
                     isNewUser && it.isSuccessful -> {
                         _isNewUserResult.value = true
-                        setUserInfoInDB(userEmail, userNickName, userFullName)
+                        setUserProfileInDB(userEmail, userNickName, userFullName)
                     }
                     !it.isSuccessful -> it.exception?.printStackTrace()
                     !isNewUser -> _isNewUserResult.value = false
@@ -38,11 +43,9 @@ class SignInViewModel @Inject constructor(
             .addOnFailureListener { it.printStackTrace() }
     }
 
-    private fun setUserInfoInDB(userEmail: String, userNickName: String, userFullName: String) {
-        val currentUserDBRef = rtDBRepo.getUserDBRef()
-
-        currentUserDBRef.child("userEmail").setValue(userEmail)
-        currentUserDBRef.child("userNickName").setValue(userNickName)
-        currentUserDBRef.child("userFullName").setValue(userFullName)
+    private fun setUserProfileInDB(userEmail: String, userNickName: String, userFullName: String) {
+        userProfile.child("userEmail").setValue(userEmail)
+        userProfile.child("userNickName").setValue(userNickName)
+        userProfile.child("userFullName").setValue(userFullName)
     }
 }
