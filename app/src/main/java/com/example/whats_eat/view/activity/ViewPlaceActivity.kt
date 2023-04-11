@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var viewPlaceBinding : ActivityViewPlaceBinding
+    private val viewPlaceBinding by lazy { ActivityViewPlaceBinding.inflate(layoutInflater) }
     private val placeViewModel: DetailPlaceViewModel by viewModels()
 
     private var placeName: String? = null
@@ -24,7 +24,7 @@ class ViewPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewPlaceBinding = ActivityViewPlaceBinding.inflate(layoutInflater)
+
         viewPlaceBinding.showMap.setOnClickListener(this)
         viewPlaceBinding.addCollection.setOnClickListener(this)
         viewPlaceBinding.backToMap.setOnClickListener(this)

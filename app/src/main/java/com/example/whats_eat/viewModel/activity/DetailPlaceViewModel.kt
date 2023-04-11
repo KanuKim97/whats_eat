@@ -25,7 +25,7 @@ class DetailPlaceViewModel @Inject constructor(
     val pushDBResult: LiveData<String> get() = _pushDBResult
 
     fun getDetailedPlaceResult(place_ID: String) = viewModelScope.launch(ioDispatcher) {
-        val response = placeApiRepo.detailedPlace(place_ID, "")
+        val response = placeApiRepo.detailedPlace(place_ID)
 
         when(response.code()) {
             200 -> { /* TODO: Success Handling */ }
@@ -50,8 +50,8 @@ class DetailPlaceViewModel @Inject constructor(
     }
 
     fun getPhotoUrl(photoRef: String) =
-        StringBuilder(Constant.IPlacePhotoAPIUri)
-            .append("?maxwidth=${Constant.photoMaxWidth}")
+        StringBuilder(Constant.PLACE_PHOTO_API_URI)
+            .append("?maxwidth=${Constant.PHOTO_MAX_WIDTH}")
             .append("&photo_reference=$photoRef")
             .append("&key=")
             .toString()

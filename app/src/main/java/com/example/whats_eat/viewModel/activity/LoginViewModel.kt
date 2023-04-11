@@ -16,7 +16,7 @@ class LoginViewModel @Inject constructor(
     private val _userLogInResult = MutableLiveData<Task<AuthResult>>()
     val userLogInResult: LiveData<Task<AuthResult>> get() = _userLogInResult
 
-    fun logInUserAccount(userEmail: String, userPassword: String) =
+    fun logInUserAccount(userEmail: String, userPassword: String): Task<AuthResult> =
         authRepo.signInUserAccount(userEmail, userPassword)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {

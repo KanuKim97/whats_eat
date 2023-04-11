@@ -3,6 +3,7 @@ package com.example.whats_eat.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,12 +20,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var mainActivityBinding: ActivityMainBinding
+    private val mainActivityBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
+
+        updateDrawerLayout()
+
         mainActivityBinding.navigationView.setNavigationItemSelectedListener(this)
         mainActivityBinding.imgMenu.setOnClickListener {
             mainActivityBinding.drawerLayout.openDrawer(GravityCompat.START)
@@ -38,17 +41,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(mainActivityBinding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-        val headerView = mainActivityBinding.navigationView.getHeaderView(0)
+    private fun updateDrawerLayout() {
+        val headerView: View = mainActivityBinding.navigationView.getHeaderView(0)
         val nameHeader: TextView = headerView.findViewById(R.id.userNameProfile)
         val emailHeader: TextView = headerView.findViewById(R.id.emailProfile)
 
-        mainViewModel.getUserAccountData()
         mainViewModel.userEmail.observe(this) { emailHeader.text = it }
         mainViewModel.userFullName.observe(this) { nameHeader.text = it }
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

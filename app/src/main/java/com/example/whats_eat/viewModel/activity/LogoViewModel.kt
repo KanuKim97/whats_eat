@@ -14,5 +14,7 @@ class LogoViewModel @Inject constructor(
     private val _readFireAuth = MutableLiveData<Boolean>()
     val readFireAuth: LiveData<Boolean> get() = _readFireAuth
 
-    fun checkUserSession() = _readFireAuth.postValue(authRepo.getCurrentUserSession())
+    init { checkUserSession() }
+
+    private fun checkUserSession(): Unit = _readFireAuth.postValue(authRepo.getCurrentUserSession())
 }

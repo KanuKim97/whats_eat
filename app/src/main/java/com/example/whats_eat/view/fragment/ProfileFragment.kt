@@ -1,6 +1,5 @@
 package com.example.whats_eat.view.fragment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,25 +10,26 @@ import androidx.fragment.app.viewModels
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.example.whats_eat.viewModel.fragment.ProfileViewModel
+import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment: Fragment(), View.OnClickListener {
+    @Inject lateinit var toastMessage: Toast
     private var _proFileBinding: FragmentProFileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
     private val profileViewModel: ProfileViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        profileViewModel.loadUserProfile()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _proFileBinding = FragmentProFileBinding.inflate(layoutInflater)
+        return proFileBinding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         proFileBinding.updateBtn.setOnClickListener(this)
         proFileBinding.deleteBtn.setOnClickListener(this)
 
@@ -44,22 +44,19 @@ class ProfileFragment: Fragment(), View.OnClickListener {
         profileViewModel.userCollectionCnt.observe(viewLifecycleOwner) {
             proFileBinding.profileRateNum.text = it
         }
+    }
 
-        return proFileBinding.root
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _proFileBinding = null
     }
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.updateBtn ->
-                Toast.makeText(requireContext(), "아직 업데이트된 기능이 아닙니다.", Toast.LENGTH_SHORT).show()
-            R.id.deleteBtn -> showDelAccountDialog()
+            R.id.updateBtn -> Toast.makeText(requireContext(), "아직 업데이트된 기능이 아닙니다.", Toast.LENGTH_SHORT).show()
+            R.id.deleteBtn -> {}
         }
     }
 
-    private fun showDelAccountDialog() = AlertDialog.Builder(activity)
-        .setTitle("계정을 삭제하시겠습니까?")
-        .setMessage("계정을 삭제하시겠습니까? \n다시 복구할 수 없습니다.")
-        .setPositiveButton("네") {_, _ -> profileViewModel.deleteUserAccount() }
-        .setNegativeButton("아니요") {_, _ -> }
-        .show()
+    private fun deleteUserAccount(): Task<Void>? = profileViewModel.deleteUserAccount()
 }

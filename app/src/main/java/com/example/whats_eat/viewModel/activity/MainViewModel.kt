@@ -7,6 +7,7 @@ import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,14 +17,15 @@ class MainViewModel @Inject constructor(
     private val authRepo: FirebaseAuthRepository,
     private val rtDBRepo: FireBaseRTDBRepository
 ): ViewModel() {
+    private val userInfoRef: DatabaseReference = rtDBRepo.getUserDBRef()
     private val _userEmail = MutableLiveData<String>()
     private val _userFullName = MutableLiveData<String>()
     val userEmail: LiveData<String> get() = _userEmail
     val userFullName: LiveData<String> get() = _userFullName
 
-    fun getUserAccountData() {
-        val userInfoRef = rtDBRepo.getUserDBRef()
+    init { getUserAccountData() }
 
+    private fun getUserAccountData(): ValueEventListener =
         userInfoRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
@@ -33,6 +35,7 @@ class MainViewModel @Inject constructor(
             }
             override fun onCancelled(error: DatabaseError) { error.toException().printStackTrace() }
         })
-    }
-    fun signOutUserAccount() = authRepo.signOutUserAccount()
+
+    fun signOutUserAccount(): Unit = authRepo.signOutUserAccount()
+
 }

@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
 
@@ -62,8 +62,8 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // Android Jetpack ViewModel, LiveData
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-beta01"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
     // Dagger-Hilt DI(Dependency Injection) Tool
     implementation "com.google.dagger:hilt-android:2.44.2"
@@ -83,12 +83,12 @@ dependencies {
 
     // FireBase Auth, RealTime DataBase
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.1'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.firebase:firebase-auth:21.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
     implementation 'com.google.firebase:firebase-database:20.1.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.2.0'
 
     // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

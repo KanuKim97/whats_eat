@@ -35,7 +35,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     // Fragment ViewBinding
     private var _mapsFragmentBinding: FragmentMapsBinding? = null
     private val mapsFragmentBinding get() = _mapsFragmentBinding!!
-
+    
     // MapsFragment ViewModel - ktx
     private val mapsViewModel: MapsViewModel by viewModels()
 
@@ -149,7 +149,7 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private fun requestLocationPermission() = EasyPermissions.requestPermissions(
         this,
         "이 애플리케이션은 위치정보 사용 허가가 필요합니다.",
-        Constant.Location_PERMISSION_CODE,
+        Constant.LOCATION_PERMISSION_CODE,
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
 

@@ -82,7 +82,7 @@
     <string name="forgotPwBtn_LogIn">Forgot Password?</string>
     <string name="logInBtn_LogIn">LOGIN</string>
     <string name="signUpBtn_LogIn">New User? Sign Up!</string>
-    <string name="logIn_Failed">Wrong ID and Password \nRetry it again!</string>
+    <string name="LogIn_Failed">이메일과 패스워드를 다시 확인해 주세요</string>
     <string name="placeImageView">PlaceImageView</string>
 
     <string name="placeNameView_txt">이름: </string>

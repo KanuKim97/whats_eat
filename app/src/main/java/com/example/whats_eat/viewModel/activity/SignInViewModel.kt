@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,22 +23,19 @@ class SignInViewModel @Inject constructor(
         userPassword: String,
         userFullName: String,
         userNickName: String
-    ) {
-        authRepo.createUserAccount(userEmail, userPassword)
-            .addOnCompleteListener{
-                val isNewUser: Boolean = it.result.additionalUserInfo?.isNewUser!!
+    ): Task<AuthResult>  = authRepo.createUserAccount(userEmail, userPassword)
+        .addOnCompleteListener {
+            val isNewUser: Boolean = it.result.additionalUserInfo?.isNewUser!!
 
-                when {
-                    isNewUser && it.isSuccessful -> {
-                        _isNewUserResult.value = true
-                        setUserInfoInDB(userEmail, userNickName, userFullName)
-                    }
-                    !it.isSuccessful -> it.exception?.printStackTrace()
-                    !isNewUser -> _isNewUserResult.value = false
+            when {
+                isNewUser && it.isSuccessful -> {
+                    _isNewUserResult.value = true
+                    setUserInfoInDB(userEmail, userNickName, userFullName)
                 }
+                !it.isSuccessful -> it.exception?.printStackTrace()
+                !isNewUser -> _isNewUserResult.value = false
             }
-            .addOnFailureListener { it.printStackTrace() }
-    }
+        }.addOnFailureListener { it.printStackTrace() }
 
     private fun setUserInfoInDB(userEmail: String, userNickName: String, userFullName: String) {
         val currentUserDBRef = rtDBRepo.getUserDBRef()

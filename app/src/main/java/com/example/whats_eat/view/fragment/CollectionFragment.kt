@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class CollectionFragment: Fragment() {
     private lateinit var collectionRecyclerView: RecyclerView
     private lateinit var collectionAdapter: CollectionAdapter
-
     private var _collectionBinding: FragmentCollectionBinding? = null
     private val collectionBinding get() = _collectionBinding!!
 
@@ -25,11 +24,18 @@ class CollectionFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _collectionBinding = FragmentCollectionBinding.inflate(layoutInflater)
+        return collectionBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         collectionRecyclerView = collectionBinding.collectionView
         collectionRecyclerView.layoutManager = LinearLayoutManager(context)
         collectionRecyclerView.setHasFixedSize(true)
+    }
 
-        return collectionBinding.root
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _collectionBinding = null
     }
 
 }
