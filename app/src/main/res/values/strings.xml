@@ -2,89 +2,75 @@
 
     <!-- android manifest.xml -->
     <string name="app_name">what\'s eat</string>
-    <string name="TypePlace">restaurant</string>
-
-    <!--DB Ref -->
-    <string name="databaseRef">userInfo</string>
-    <string name="databaseCollection">Collection</string>
-    <string name="valueNull">null</string>
 
     <!-- Common All.xml -->
-    <string name="logoImg_Common">Logo Image</string>
+    <string name="logoImg_Common">로고 이미지</string>
 
     <!--  Fragment Home.xml -->
     <string name="welcomeTxt_Home">Welcome!</string>
     <string name="nickNameTxt_Home">Example!</string>
 
-    <string name="welcomeTxt2_Home">Have a nice day!</string>
-    
-    <string name="mainCardViewTitle_Home">Today\'s Restaurant!</string>
-    <string name="mainCardViewName_Home">restaurant_Name</string>
-    <string name="mainCardViewContent_Home">restaurant_Address</string>
+    <string name="MainCardTitle">오늘의 추천</string>
+    <string name="MainCardName">Restaurant Name</string>
+    <string name="MainCardContent">Restaurant Address</string>
 
-    <string name="subCardViewTitle_Home">Collections</string>
-    <string name="subCardViewsContent_Home">Example</string>
+    <string name="SubCardTitle">Collections</string>
+    <string name="SubCardContent">Example</string>
 
     <!-- Fragment Profile.xml -->
-    <string name="desc_Profile">profileImage</string>
-    <string name="txtName_Profile">Example</string>
-    <string name="txtEmail_Profile">User@Example.com</string>
+    <string name="Profile_ImageView_Desc">ProfileImage</string>
+    <string name="Profile_UserName_Txt">Example</string>
+    <string name="Profile_Email_Txt">User@Example.com</string>
 
-    <string name="ratingNum_Profile">5 Star</string>
-    <string name="txtCollection_Profile">collection</string>
+    <string name="ImgLayout_Profile_Desc">Image Card View</string>
+    <string name="Profile_Collection_Number">5 Star</string>
+    <string name="Profile_Collection_Txt">컬렉션</string>
 
-    <string name="desc_imgLayout_Profile">Image Card View</string>
-
-    <string name="txtCommentNum_Profile">10 Comment</string>
-    <string name="txtComment_Profile">Comment</string>
-
-    <string name="updateBtn_Profile">Update User Account</string>
-    <string name="deleteBtn_Profile">Delete User Account</string>
+    <string name="UpdateAccount_Btn">계정 정보 수정하기</string>
+    <string name="DeleteAccount_Btn">계정 삭제하기</string>
     
-    <string name="Box_delAccount">Do you want delete your account?</string>
-    <string name="btn_delBox_Yes">Yes</string>
-    <string name="btn_delBox_No">No</string>
+    <string name="Box_delAccount">계정을 삭제하시겠습니까?</string>
+    <string name="btn_delBox_Yes">네!</string>
+    <string name="btn_delBox_No">아니요</string>
 
     <!--Activity ViewPlace.xml-->
-    <string name="placeName_ViewPlace">Place Name</string>
-    <string name="placeAddress_ViewPlace">Place Address</string>
-    <string name="OpenTime_ViewPlace">Opening Time : </string>
-    <string name="showMapsBtn_ViewPlace">Show Maps</string>
-    <string name="addCollectionBtn_ViewPlace">Add Collection</string>
-    <string name="goBackBtn_ViewPlace">Go Back To Maps</string>
+    <string name="PlaceName">이름</string>
+    <string name="PlaceAddress">주소</string>
+    <string name="OpenTime">영업중?</string>
+    <string name="ShowMaps_Btn">지도로 상세한 위치 보기</string>
+    <string name="AddCollection_Btn">컬렉션에 추가하기</string>
+    <string name="GoBack_Btn">다시 지도로 돌아가기</string>
 
     <!--Activity SignIn.xml-->
-    <string name="welcomeTxt_SignIn">Welcome!</string>
-    <string name="introTxt_SignIn">SignUp and Find Your Food</string>
+    <string name="SignIn_Title">Welcome!</string>
+    <string name="SignIn_SubTitle">회원 가입을 환영합니다!</string>
 
-    <string name="fullNameInput_SignIn">Full Name</string>
-    <string name="userNameInput_SignIn">User Name</string>
-    <string name="eMailInput_SignIn">Email</string>
-    <string name="pwInput_SignIn">Password</string>
-    <string name="confPWInput_SignIn">Confirm Your Password</string>
-
-    <string name="signInBtn_SignIn">Let\'s Go!</string>
-    <string name="logInBtn_SignIn">Already have an Account? LogIn</string>
+    <string name="SignIn_FullName_Hint">Full Name</string>
+    <string name="SignIn_UserName_Hint">User Name</string>
+    <string name="SignIn_Email_Hint">Email</string>
+    <string name="SignIn_Password_Hint">Password</string>
+    <string name="SignIn_ConfirmPassword_Hint">Confirm Your Password</string>
 
     <!--Activity FindPw.xml-->
-    <string name="findPwTitle_FindPw">Did you Forgot Password?</string>
-    <string name="findPwContent_FindPw">Plz input Your Email!</string>
-    <string name="eMailInput_FindPw">Email</string>
-    <string name="sendResetEmailBtn_FindPw">Send Reset Email</string>
-    <string name="goLogInBtn_FindPw">To Login Page</string>
-    <string name="goSignUpPage">To Sign up Page</string>
+    <string name="FindPassword_Title">Did you Forgot Password?</string>
+    <string name="FindPassword_SubTitle">비밀번호를 잊어버리셨나요?</string>
+    <string name="FindPassword_Email_Hint">Email</string>
+    <string name="SendResetPassword_Btn">비밀번호 초기화 메일 보내기</string>
+    <string name="ToLogIn_Btn">로그인 화면으로 이동</string>
+    <string name="ToSignUp_Btn">회원가입 화면으로 이동</string>
 
     <!--Activity LogIn.xml-->
-    <string name="logInTitle_LogIn">Hello! \nWelcome!</string>
-    <string name="logInContent_LogIn">Log In to Continue</string>
-    <string name="eMailInput_LogIn">Email</string>
-    <string name="pwInput_LogIn">Password</string>
-    <string name="forgotPwBtn_LogIn">Forgot Password?</string>
-    <string name="logInBtn_LogIn">LOGIN</string>
-    <string name="signUpBtn_LogIn">New User? Sign Up!</string>
+    <string name="LogIn_Title">Welcome!</string>
+    <string name="LogIn_SubTitle">계속 하시려면 로그인 해주세요.</string>
+    <string name="LogIn_Email_Hint">Email</string>
+    <string name="LogIn_Password_Hint">Password</string>
+    <string name="FindPassword_Btn">비밀번호를 잊어버리셨나요?</string>
+    <string name="LogIn_Btn">로그인</string>
+    <string name="SignUp_Btn">회원가입</string>
     <string name="LogIn_Failed">이메일과 패스워드를 다시 확인해 주세요</string>
-    <string name="placeImageView">PlaceImageView</string>
 
+    <!-- Collection Item.xml -->
+    <string name="placeImageView">PlaceImageView</string>
     <string name="placeNameView_txt">이름: </string>
     <string name="placeAddressView_Txt">주소: </string>
     <string name="placeRatingNumView_Txt">(평점): </string>

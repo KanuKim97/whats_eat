@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@string/placeName_ViewPlace"
+                android:text="@string/PlaceName"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="#000" />
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@string/placeAddress_ViewPlace"
+                android:text="@string/PlaceAddress"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="#000" />
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@string/OpenTime_ViewPlace"
+                android:text="@string/OpenTime"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="#000" />
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="#000"
-                android:text="@string/showMapsBtn_ViewPlace"
+                android:text="@string/ShowMaps_Btn"
                 android:textSize="20sp"
                 android:textColor="#fff"
                 android:textStyle="bold" />
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="#000"
-                android:text="@string/addCollectionBtn_ViewPlace"
+                android:text="@string/AddCollection_Btn"
                 android:textSize="20sp"
                 android:textColor="#fff"
                 android:textStyle="bold" />
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="#000"
-                android:text="@string/goBackBtn_ViewPlace"
+                android:text="@string/GoBack_Btn"
                 android:textSize="20sp"
                 android:textColor="#fff"
                 android:textStyle="bold" />

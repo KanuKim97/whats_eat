@@ -37,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:scaleType="centerCrop"
-                    android:contentDescription="@string/desc_Profile"
+                    android:contentDescription="@string/Profile_ImageView_Desc"
                     app:srcCompat="@mipmap/ic_launcher" />
 
             </androidx.cardview.widget.CardView>
@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_toEndOf="@+id/CardView"
-                android:text="@string/txtName_Profile"
+                android:text="@string/Profile_UserName_Txt"
                 android:textSize="25sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -66,7 +66,7 @@
                 android:includeFontPadding="false"
                 android:layout_gravity="center_horizontal"
                 android:layout_below="@+id/nameTxt"
-                android:text="@string/txtEmail_Profile"
+                android:text="@string/Profile_Email_Txt"
                 android:textSize="15sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -98,14 +98,14 @@
                         android:layout_height="30dp"
                         android:src="@drawable/ic_rate"
                         android:layout_centerHorizontal="true"
-                        android:contentDescription="@string/desc_imgLayout_Profile" />
+                        android:contentDescription="@string/ImgLayout_Profile_Desc" />
 
                     <TextView
                         android:id="@+id/profile_rate_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/ratingNum_Profile"
+                        android:text="@string/Profile_Collection_Number"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:includeFontPadding="false" />
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/profile_rate_num"
                         android:layout_centerHorizontal="true"
-                        android:text="@string/txtCollection_Profile"
+                        android:text="@string/Profile_Collection_Txt"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:includeFontPadding="false" />
@@ -143,7 +143,7 @@
                 android:id="@+id/updateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/updateBtn_Profile"
+                android:text="@string/UpdateAccount_Btn"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:background="#000" />
@@ -153,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/deleteBtn_Profile"
+                android:text="@string/DeleteAccount_Btn"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:background="#000"/>

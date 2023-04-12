@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="@string/findPwTitle_FindPw"
+        android:text="@string/FindPassword_Title"
         android:textColor="#000"
         android:textSize="40sp"
         android:fontFamily="@font/bungee_inline" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="@string/findPwContent_FindPw"
+        android:text="@string/FindPassword_SubTitle"
         android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -44,7 +44,7 @@
             android:id="@+id/passwordEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/eMailInput_FindPw"
+            android:hint="@string/FindPassword_Email_Hint"
             android:theme="@style/Theme.MaterialComponents.Light"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -64,7 +64,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#000"
-        android:text="@string/sendResetEmailBtn_FindPw"
+        android:text="@string/SendResetPassword_Btn"
         android:textSize="20sp"
         android:textColor="#fff"
         android:textStyle="bold" />
@@ -76,7 +76,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#000"
-        android:text="@string/goLogInBtn_FindPw"
+        android:text="@string/ToLogIn_Btn"
         android:textSize="20sp"
         android:textColor="#fff"
         android:textStyle="bold" />
@@ -88,7 +88,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#000"
-        android:text="@string/goSignUpPage"
+        android:text="@string/ToSignUp_Btn"
         android:textSize="20sp"
         android:textColor="#fff"
         android:textStyle="bold" />

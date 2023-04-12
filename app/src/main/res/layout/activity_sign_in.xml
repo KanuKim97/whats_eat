@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-20dp"
-        android:text="@string/welcomeTxt_SignIn"
+        android:text="@string/SignIn_Title"
         android:textSize="40sp"
         android:textColor="@color/black"
         android:fontFamily="@font/bungee_inline" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="@string/introTxt_SignIn"
+        android:text="@string/SignIn_SubTitle"
         android:textSize="18sp"
         android:textColor="@color/black" />
 
@@ -44,7 +44,7 @@
             android:id="@+id/localName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fullNameInput_SignIn"
+            android:hint="@string/SignIn_FullName_Hint"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:theme="@style/Theme.MaterialComponents.Light">
 
@@ -60,7 +60,7 @@
             android:id="@+id/localUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/userNameInput_SignIn"
+            android:hint="@string/SignIn_UserName_Hint"
             app:counterEnabled="true"
             app:counterMaxLength="15"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -78,7 +78,7 @@
             android:id="@+id/localEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/eMailInput_SignIn"
+            android:hint="@string/SignIn_Email_Hint"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:theme="@style/Theme.MaterialComponents.Light">
 
@@ -94,7 +94,7 @@
             android:id="@+id/localPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/pwInput_SignIn"
+            android:hint="@string/SignIn_Password_Hint"
             app:passwordToggleEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:theme="@style/Theme.MaterialComponents.Light">
@@ -111,7 +111,7 @@
             android:id="@+id/localConfPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/confPWInput_SignIn"
+            android:hint="@string/SignIn_ConfirmPassword_Hint"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:theme="@style/Theme.MaterialComponents.Light">
 
@@ -130,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/signInBtn_SignIn"
+        android:text="@string/SignUp_Btn"
         android:textStyle="bold"
         android:background="@color/black" />
 
@@ -138,7 +138,7 @@
         android:id="@+id/toLoginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/logInBtn_SignIn"
+        android:text="@string/ToLogIn_Btn"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:background="#FFFFFF" />
