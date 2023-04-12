@@ -1,5 +1,6 @@
 package com.example.whats_eat.viewModel.fragment
 
+import android.location.LocationManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,20 +16,4 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val rtDBRepo: FireBaseRTDBRepository
 ): ViewModel() {
-    private val userInfoRef: DatabaseReference = rtDBRepo.getUserDBRef()
-    private val _userNickName = MutableLiveData<String>()
-    val userNickName: LiveData<String> get() = _userNickName
-
-    init { loadUserAccountInfo() }
-
-    private fun loadUserAccountInfo(): ValueEventListener =
-        userInfoRef.addValueEventListener( object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()) {
-                    _userNickName.value = snapshot.child("userNickName").value.toString()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) { error.toException().printStackTrace() }
-    })
 }

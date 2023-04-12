@@ -13,4 +13,6 @@ object Constant {
     const val MAPS_UPDATE_DISTANCE_METERS: Float = 1000f
     const val MAPS_INTERVAL_MILLIS: Long = 5000L
     const val DELAY_TIME_MILLIS: Long = 1000L
+
+    const val LOG_TAG: String = "로그"
 }

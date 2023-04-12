@@ -1,19 +1,18 @@
 package com.example.whats_eat.data.di.module
 
 import android.content.Context
-import android.widget.Toast
+import android.location.Geocoder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import java.util.*
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object ToastModule {
+@InstallIn(ApplicationContext::class)
+object GeoCoderModule {
     @Provides
     @Singleton
-    fun providesToast(@ApplicationContext context: Context): Toast =
-        Toast.makeText(context, "", Toast.LENGTH_SHORT)
+    fun provideGeocoder(context: Context): Geocoder = Geocoder(context, Locale.KOREA)
 }

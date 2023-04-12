@@ -28,7 +28,7 @@
 
     <string name="UpdateAccount_Btn">계정 정보 수정하기</string>
     <string name="DeleteAccount_Btn">계정 삭제하기</string>
-    
+
     <string name="Box_delAccount">계정을 삭제하시겠습니까?</string>
     <string name="btn_delBox_Yes">네!</string>
     <string name="btn_delBox_No">아니요</string>
@@ -78,5 +78,8 @@
     <string name="placeAddressTxt_Example">Address Example</string>
     <string name="Rating_Number_view">ratingNumber_View</string>
     <string name="RatingNumberTxt_Example">4.7</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_main_banner">Home Main Banner</string>
 
 </resources>

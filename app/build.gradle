@@ -99,6 +99,9 @@ dependencies {
 
     // Easy Permission
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    //ViewPager2
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }
 
 kapt { correctErrorTypes = true }
