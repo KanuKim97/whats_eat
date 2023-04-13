@@ -6,6 +6,9 @@
     <!-- Common All.xml -->
     <string name="logoImg_Common">로고 이미지</string>
 
+    <!-- Location Permission String -->
+    <string name="Location_Permission">이 애플리케이션은 위치정보 사용 허가가 필요합니다.</string>
+
     <!--  Fragment Home.xml -->
     <string name="welcomeTxt_Home">Welcome!</string>
     <string name="nickNameTxt_Home">Example!</string>
@@ -78,8 +81,6 @@
     <string name="placeAddressTxt_Example">Address Example</string>
     <string name="Rating_Number_view">ratingNumber_View</string>
     <string name="RatingNumberTxt_Example">4.7</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_main_banner">Home Main Banner</string>
 
 </resources>

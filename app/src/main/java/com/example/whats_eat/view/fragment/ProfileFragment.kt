@@ -12,11 +12,9 @@ import com.example.whats_eat.databinding.FragmentProFileBinding
 import com.example.whats_eat.viewModel.fragment.ProfileViewModel
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment: Fragment(), View.OnClickListener {
-    @Inject lateinit var toastMessage: Toast
     private var _proFileBinding: FragmentProFileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
     private val profileViewModel: ProfileViewModel by viewModels()

@@ -1,9 +1,11 @@
 package com.example.whats_eat.view.fragment
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -12,10 +14,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
+import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
 import com.example.whats_eat.databinding.FragmentHomeBinding
+import com.example.whats_eat.viewModel.fragment.HomeViewModel
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,17 +31,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment: Fragment(), EasyPermissions.PermissionCallbacks {
+class HomeFragment: Fragment() {
+    @Inject @MainDispatcher lateinit var mainDispatcher: CoroutineDispatcher
     @Inject @IoDispatcher lateinit var ioDispatcher: CoroutineDispatcher
     @Inject lateinit var locationRequest: CurrentLocationRequest
+
     private var _homeBinding: FragmentHomeBinding? = null
     private val homeBinding get() = _homeBinding!!
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private val myLocationManger: LocationManager by lazy { setLocationManager() }
     private val myFusedLocationClient: FusedLocationProviderClient by lazy { setFusedLocationClient() }
@@ -50,21 +57,21 @@ class HomeFragment: Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        alertGPSOnOff()
-        checkLocationPermission()
-        getCurrentLocation()
+        if (!checkGPSON()) {
+            Toast.makeText(requireContext(), "GPS를 활성화 해주세요", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+        } else {
+            getCurrentLocation()
+        }
+
+        homeViewModel.nearByPlace.observe(viewLifecycleOwner) {
+            Log.d(Constant.LOG_TAG, "${it[0]}")
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _homeBinding = null
-    }
-
-    private fun alertGPSOnOff() {
-        if (!checkGPSON()) {
-            Toast.makeText(requireContext(), "GPS를 활성화 해주세요", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-        }
     }
 
     private fun checkGPSON(): Boolean =
@@ -84,31 +91,36 @@ class HomeFragment: Fragment(), EasyPermissions.PermissionCallbacks {
 
                 override fun isCancellationRequested(): Boolean = false
             }).addOnCompleteListener { location ->
-                Log.d(Constant.LOG_TAG, "${location.result.latitude}")
-                Log.d(Constant.LOG_TAG, "${location.result.longitude}")
+                geoCoderService(location.result.latitude, location.result.longitude)
+                searchNearByRestaurant(location.result.latitude, location.result.longitude)
             }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
 
-    private fun checkLocationPermission(): Boolean =
-        EasyPermissions.hasPermissions(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+    private fun geoCoderService(
+        lat: Double,
+        lng: Double
+    ): Job = lifecycleScope.launch(mainDispatcher) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val subLocalList: List<Address>? = withContext(ioDispatcher) {
+                Geocoder(requireContext(), Locale.KOREA).getFromLocation(lat, lng, 5)
+            }
 
-    private fun requestLocationPermission(): Unit = EasyPermissions.requestPermissions(
-        requireActivity(),
-        "이 애플리케이션은 위치정보 사용 허가가 필요합니다.",
-        Constant.LOCATION_PERMISSION_CODE,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {  }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(requireActivity()).build().show()
-        } else {
-            requestLocationPermission()
+            for (element in 0..subLocalList!!.lastIndex) {
+                if (subLocalList[element].subLocality != null) {
+                    homeBinding.locationTxt.text = subLocalList[element].subLocality
+                    break
+                }
+            }
         }
     }
 
+    private fun searchNearByRestaurant(lat: Double, lng: Double) {
+        val latLng: String = latLngStringBuilder(lat, lng)
+        homeViewModel.searchNearByPlace(latLng)
+    }
+
+    private fun latLngStringBuilder(lat: Double, lng: Double): String =
+        StringBuilder("$lat, $lng").toString()
 
 }

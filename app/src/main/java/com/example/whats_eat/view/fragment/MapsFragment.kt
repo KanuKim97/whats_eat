@@ -25,7 +25,7 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 @AndroidEntryPoint
-class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
+class MapsFragment: Fragment(), OnMapReadyCallback {
     private lateinit var gMapView: MapView
     private lateinit var myFusedLocationClient: FusedLocationProviderClient
     private lateinit var myLocationRequest: LocationRequest
@@ -51,9 +51,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     ): View {
         _mapsFragmentBinding = FragmentMapsBinding.inflate(inflater, container, false)
 
-        setMapViewVisibility()
-        requestLocationPermission()
-        
         /* Create MapView */
         gMapView = mapsFragmentBinding.gMap
         gMapView.onCreate(savedInstanceState)
@@ -135,7 +132,6 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
                 gMap.isMyLocationEnabled = false
                 gMap.uiSettings.isMyLocationButtonEnabled = false
                 gMap.uiSettings.isZoomControlsEnabled = false
-                requestLocationPermission()
             }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
@@ -145,28 +141,4 @@ class MapsFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         requireContext(),
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
-
-    private fun requestLocationPermission() = EasyPermissions.requestPermissions(
-        this,
-        "이 애플리케이션은 위치정보 사용 허가가 필요합니다.",
-        Constant.LOCATION_PERMISSION_CODE,
-        android.Manifest.permission.ACCESS_FINE_LOCATION
-    )
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {  }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(requireActivity()).build().show()
-        } else { requestLocationPermission() }
-    }
-
-    /* According to Location Permission Application can display MapView or Not */
-    private fun setMapViewVisibility() {
-        if(checkLocationPermission()) {
-            mapsFragmentBinding.gMap.visibility = View.VISIBLE
-        } else {
-            mapsFragmentBinding.gMap.visibility = View.GONE
-        }
-    }
 }

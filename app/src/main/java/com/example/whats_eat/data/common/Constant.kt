@@ -9,6 +9,7 @@ object Constant {
     const val LOCATION_TYPE: String = "restaurant"
     const val PLACE_API_URI: String = "https://maps.googleapis.com/maps/api/place/"
     const val PLACE_PHOTO_API_URI: String = "https://maps.googleapis.com/maps/api/place/photo"
+    const val DEFAULT_LOCATION: String = "37.514655, 126.97974"
     const val MAPS_PRIORITY_HIGH: Int = Priority.PRIORITY_HIGH_ACCURACY
     const val MAPS_UPDATE_DISTANCE_METERS: Float = 1000f
     const val MAPS_INTERVAL_MILLIS: Long = 5000L
