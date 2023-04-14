@@ -92,5 +92,6 @@
     <string name="RatingNumberTxt_Example">4.7</string>
 
     <string name="home_main_banner">Home Main Banner</string>
+    <string name="PlaceName">Example</string>
 
 </resources>

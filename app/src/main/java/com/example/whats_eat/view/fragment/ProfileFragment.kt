@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.whats_eat.R
-import com.example.whats_eat.databinding.FragmentProFileBinding
+import com.example.whats_eat.databinding.FragmentProfileBinding
 import com.example.whats_eat.viewModel.fragment.ProfileViewModel
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment: Fragment(), View.OnClickListener {
-    private var _proFileBinding: FragmentProFileBinding? = null
+    private var _proFileBinding: FragmentProfileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
     private val profileViewModel: ProfileViewModel by viewModels()
 
@@ -23,7 +23,7 @@ class ProfileFragment: Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _proFileBinding = FragmentProFileBinding.inflate(layoutInflater)
+        _proFileBinding = FragmentProfileBinding.inflate(layoutInflater)
         return proFileBinding.root
     }
 
