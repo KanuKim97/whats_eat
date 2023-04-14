@@ -58,7 +58,11 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateUI(): Unit = signInViewModel.isNewUserResult.observe(this) {
         if(!it) {
-            Toast.makeText(this, "이미 가입된 사용자 입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.IsNotNewUser_Toast),
+                Toast.LENGTH_SHORT
+            ).show()
             startActivity(Intent(this, LoginActivity::class.java))
         } else { startActivity(Intent(this, MainActivity::class.java)) }
     }
@@ -66,21 +70,38 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     private fun validateUserInput() {
         when {
             !(Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) -> {
-                Toast.makeText(this, "유효하지 않은 이메일 주소입니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.IsNotValidateEmail_Toast),
+                    Toast.LENGTH_SHORT
+                ).show()
                 signInBinding.localEmailInput.text?.clear()
             }
             userNickName.length > 15 -> {
-                Toast.makeText(this, "사용자 닉네임이 너무 깁니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.NickNameIsLong_Toast),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             userPassword != confPassword -> {
-                Toast.makeText(this, "패스워드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.PasswordIsNotConfirm_Toast),
+                    Toast.LENGTH_SHORT
+                ).show()
                 signInBinding.localConfPasswordInput.text?.clear()
             }
-            userNickName.isEmpty() -> signInBinding.localUserNameInput.error = "사용자 닉네임을 입력해주세요."
-            userFullName.isEmpty() -> signInBinding.localNameInput.error = "사용자 이름을 입력해주세요."
-            userEmail.isEmpty() -> signInBinding.localEmailInput.error = "사용자 이메일을 입력해주세요."
-            userPassword.isEmpty() -> signInBinding.localPasswordInput.error = "사용자 패스워드를 입력해주세요."
-            confPassword.isEmpty() -> signInBinding.localConfPasswordInput.error = "패스워드 확인란에 입력해주세요"
+            userNickName.isEmpty() ->
+                signInBinding.localUserNameInput.error = getString(R.string.InputNickName_Error)
+            userFullName.isEmpty() ->
+                signInBinding.localNameInput.error = getString(R.string.InputFullName_Error)
+            userEmail.isEmpty() ->
+                signInBinding.localEmailInput.error = getString(R.string.InputEmail_Error)
+            userPassword.isEmpty() ->
+                signInBinding.localPasswordInput.error = getString(R.string.InputPassword_Error)
+            confPassword.isEmpty() ->
+                signInBinding.localConfPasswordInput.error = getString(R.string.InputConfirmPassword_Error)
             else -> {
                 createUserAccount(userEmail, userPassword, userFullName, userNickName)
                 updateUI()

@@ -1,24 +1,41 @@
 <resources>
-
     <!-- android manifest.xml -->
     <string name="app_name">what\'s eat</string>
 
-    <!-- Common All.xml -->
+    <!-- Logo Image Content Description -->
     <string name="logoImg_Common">로고 이미지</string>
 
-    <!-- Location Permission String -->
+    <!-- Location Permission Content String -->
     <string name="Location_Permission">이 애플리케이션은 위치정보 사용 허가가 필요합니다.</string>
 
+    <!-- Toast Message -->
+    <string name="IsNotNewUser_Toast">이미 가입된 사용자 입니다.</string>
+    <string name="IsNotValidateEmail_Toast">유효하지 않은 이메일입니다.</string>
+    <string name="NickNameIsLong_Toast">사용자 닉네임이 너무 깁니다.</string>
+    <string name="PasswordIsNotConfirm_Toast">패스워드가 일치하지 않습니다.</string>
+    <string name="SendResetEmail_Toast">고객님의 이메일로 비밀번호 초기화 메일을 보냈습니다.</string>
+    <string name="EmailNotExist_Toast">유효하지 않은 이메일 방식입니다.</string>
+
+    <!-- Input Error Message -->
+    <string name="InputNickName_Error">사용자 닉네임을 입력해주세요.</string>
+    <string name="InputFullName_Error">사용자 이름을 입력해주세요.</string>
+    <string name="InputEmail_Error">사용자 이메일을 입력해주세요.</string>
+    <string name="InputPassword_Error">사용자 패스워드를 입력해주세요.</string>
+    <string name="InputConfirmPassword_Error">패스워드 확인란에 입력해주세요</string>
+
+    <!-- navigation Title -->
+    <string name="Home">홈 화면</string>
+    <string name="Profile">프로필</string>
+    <string name="Collection">컬렉션</string>
+    <string name="Others">기타</string>
+    <string name="SignOut">로그아웃</string>
+
     <!--  Fragment Home.xml -->
-    <string name="welcomeTxt_Home">Welcome!</string>
-    <string name="nickNameTxt_Home">Example!</string>
-
-    <string name="MainCardTitle">오늘의 추천</string>
-    <string name="MainCardName">Restaurant Name</string>
-    <string name="MainCardContent">Restaurant Address</string>
-
-    <string name="SubCardTitle">Collections</string>
-    <string name="SubCardContent">Example</string>
+    <string name="MainBannerTitle">내 주변 음식점</string>
+    <string name="MainBannerContent">오늘의 식사 여기는 어떤가요?</string>
+    <string name="SubCardLocale">Example</string>
+    <string name="SubCardContent">근처 맛집</string>
+    <string name="ActiveGPS">GPS 기능을 활성화 해주세요.</string>
 
     <!-- Fragment Profile.xml -->
     <string name="Profile_ImageView_Desc">ProfileImage</string>
@@ -36,13 +53,15 @@
     <string name="btn_delBox_Yes">네!</string>
     <string name="btn_delBox_No">아니요</string>
 
-    <!--Activity ViewPlace.xml-->
-    <string name="PlaceName">이름</string>
-    <string name="PlaceAddress">주소</string>
-    <string name="OpenTime">영업중?</string>
-    <string name="ShowMaps_Btn">지도로 상세한 위치 보기</string>
-    <string name="AddCollection_Btn">컬렉션에 추가하기</string>
-    <string name="GoBack_Btn">다시 지도로 돌아가기</string>
+    <!--Activity LogIn.xml-->
+    <string name="LogIn_Title">Welcome!</string>
+    <string name="LogIn_SubTitle">계속 하시려면 로그인 해주세요.</string>
+    <string name="LogIn_Email_Hint">Email</string>
+    <string name="LogIn_Password_Hint">Password</string>
+    <string name="FindPassword_Btn">비밀번호를 잊어버리셨나요?</string>
+    <string name="LogIn_Btn">로그인</string>
+    <string name="SignUp_Btn">회원가입</string>
+    <string name="LogIn_Failed">이메일과 패스워드를 다시 확인해 주세요</string>
 
     <!--Activity SignIn.xml-->
     <string name="SignIn_Title">Welcome!</string>
@@ -54,23 +73,13 @@
     <string name="SignIn_Password_Hint">Password</string>
     <string name="SignIn_ConfirmPassword_Hint">Confirm Your Password</string>
 
-    <!--Activity FindPw.xml-->
+    <!--Activity FindPassword.xml-->
     <string name="FindPassword_Title">Did you Forgot Password?</string>
     <string name="FindPassword_SubTitle">비밀번호를 잊어버리셨나요?</string>
     <string name="FindPassword_Email_Hint">Email</string>
     <string name="SendResetPassword_Btn">비밀번호 초기화 메일 보내기</string>
     <string name="ToLogIn_Btn">로그인 화면으로 이동</string>
     <string name="ToSignUp_Btn">회원가입 화면으로 이동</string>
-
-    <!--Activity LogIn.xml-->
-    <string name="LogIn_Title">Welcome!</string>
-    <string name="LogIn_SubTitle">계속 하시려면 로그인 해주세요.</string>
-    <string name="LogIn_Email_Hint">Email</string>
-    <string name="LogIn_Password_Hint">Password</string>
-    <string name="FindPassword_Btn">비밀번호를 잊어버리셨나요?</string>
-    <string name="LogIn_Btn">로그인</string>
-    <string name="SignUp_Btn">회원가입</string>
-    <string name="LogIn_Failed">이메일과 패스워드를 다시 확인해 주세요</string>
 
     <!-- Collection Item.xml -->
     <string name="placeImageView">PlaceImageView</string>
@@ -81,6 +90,7 @@
     <string name="placeAddressTxt_Example">Address Example</string>
     <string name="Rating_Number_view">ratingNumber_View</string>
     <string name="RatingNumberTxt_Example">4.7</string>
+
     <string name="home_main_banner">Home Main Banner</string>
 
 </resources>

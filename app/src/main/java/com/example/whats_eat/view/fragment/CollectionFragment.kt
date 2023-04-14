@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.whats_eat.view.recyclerViewAdapter.CollectionAdapter
+import com.example.whats_eat.view.adapter.CollectionAdapter
 import com.example.whats_eat.databinding.FragmentCollectionBinding
 import dagger.hilt.android.AndroidEntryPoint
 

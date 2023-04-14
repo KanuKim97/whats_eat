@@ -12,7 +12,6 @@ import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityMainBinding
 import com.example.whats_eat.view.fragment.CollectionFragment
 import com.example.whats_eat.view.fragment.HomeFragment
-import com.example.whats_eat.view.fragment.MapsFragment
 import com.example.whats_eat.view.fragment.ProfileFragment
 import com.example.whats_eat.viewModel.activity.MainViewModel
 import com.google.android.material.navigation.NavigationView
@@ -68,12 +67,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.nav_host_fragment_container, CollectionFragment())
-                    .commit()
-
-            R.id.menuMaps ->
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment_container, MapsFragment())
                     .commit()
 
             R.id.menuSignOut -> {

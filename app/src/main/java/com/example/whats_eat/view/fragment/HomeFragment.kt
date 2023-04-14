@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
 import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
@@ -58,14 +59,18 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!checkGPSON()) {
-            Toast.makeText(requireContext(), "GPS를 활성화 해주세요", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.ActiveGPS),
+                Toast.LENGTH_SHORT
+            ).show()
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         } else {
             getCurrentLocation()
         }
 
         homeViewModel.nearByPlace.observe(viewLifecycleOwner) {
-            Log.d(Constant.LOG_TAG, "${it[0]}")
+            Log.d(Constant.LOG_TAG, "${it[0].name}")
         }
     }
 

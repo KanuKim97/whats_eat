@@ -1,47 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home">
+    <item android:title="@string/Home">
         <menu>
             <item
                 android:id="@+id/menuHome"
                 android:icon="@drawable/ic_home"
-                android:title="Home"/>
+                android:title="@string/Home"/>
         </menu>
     </item>
 
-    <item android:title="Profile">
+    <item android:title="@string/Profile">
         <menu>
             <item
                 android:id="@+id/menuProfile"
                 android:icon="@drawable/ic_profile"
-                android:title="Profile"/>
+                android:title="@string/Profile"/>
 
             <item
                 android:id="@+id/menuCollection"
                 android:icon="@drawable/ic_collection"
-                android:title="Collection"/>
+                android:title="@string/Collection"/>
 
         </menu>
     </item>
 
 
-    <item android:title="Maps">
-        <menu>
-            <item
-                android:id="@+id/menuMaps"
-                android:icon="@drawable/ic_map"
-                android:title="Maps"/>
-        </menu>
-    </item>
-
-
-    <item android:title="Others">
+    <item android:title="@string/Others">
         <menu>
             <item
                 android:id="@+id/menuSignOut"
                 android:icon="@drawable/ic_sign_out"
-                android:title="Sign Out"/>
+                android:title="@string/SignOut"/>
         </menu>
     </item>
 

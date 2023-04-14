@@ -29,6 +29,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        updateLogInUI()
+
         logInBinding.logInBtn.setOnClickListener(this)
         logInBinding.findPwBtn.setOnClickListener(this)
         logInBinding.signUpBtn.setOnClickListener(this)
@@ -59,7 +61,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             } else {
                 Toast.makeText(
                     this@LoginActivity,
-                    "이메일과 패스워드를 다시 확인해 주세요",
+                    getString(R.string.LogIn_Failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
