@@ -12,7 +12,7 @@ import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
 import com.example.whats_eat.databinding.ActivityFindPwBinding
-import com.example.whats_eat.viewModel.activity.FindPwViewModel
+import com.example.whats_eat.viewModel.FindPwViewModel
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher

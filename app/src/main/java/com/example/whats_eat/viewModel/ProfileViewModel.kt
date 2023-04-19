@@ -1,9 +1,9 @@
-package com.example.whats_eat.viewModel.fragment
+package com.example.whats_eat.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
+import com.example.whats_eat.data.di.repository.FireBaseDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val authRepo: FirebaseAuthRepository,
-    private val rtDBRepo: FireBaseRTDBRepository
+    private val rtDBRepo: FireBaseDBRepository
 ) : ViewModel() {
     private val userProfileRef: DatabaseReference = rtDBRepo.getUserDBRef()
     private val userCollectionRef: DatabaseReference = rtDBRepo.getUserCollectionDBRef()

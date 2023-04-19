@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivitySignInBinding
-import com.example.whats_eat.viewModel.activity.SignInViewModel
+import com.example.whats_eat.viewModel.SignInViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.AndroidEntryPoint

@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
 /* FireBase RealTime Database Service Repository */
-class FireBaseRTDBRepository @Inject constructor(
+class FireBaseDBRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firebaseDB: FirebaseDatabase
 ) {

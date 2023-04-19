@@ -10,7 +10,7 @@ import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogoBinding
-import com.example.whats_eat.viewModel.activity.LogoViewModel
+import com.example.whats_eat.viewModel.LogoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay

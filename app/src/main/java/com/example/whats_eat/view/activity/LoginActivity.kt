@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.R
 import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogInBinding
-import com.example.whats_eat.viewModel.activity.LoginViewModel
+import com.example.whats_eat.viewModel.LoginViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.AndroidEntryPoint

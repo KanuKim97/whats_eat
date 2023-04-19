@@ -1,9 +1,9 @@
-package com.example.whats_eat.viewModel.activity
+package com.example.whats_eat.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FireBaseRTDBRepository
+import com.example.whats_eat.data.di.repository.FireBaseDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val authRepo: FirebaseAuthRepository,
-    private val rtDBRepo: FireBaseRTDBRepository
+    private val rtDBRepo: FireBaseDBRepository
 ): ViewModel() {
     private val _isNewUserResult = MutableLiveData<Boolean>()
     val isNewUserResult: LiveData<Boolean> get() = _isNewUserResult

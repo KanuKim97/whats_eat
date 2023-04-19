@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.FragmentProfileBinding
-import com.example.whats_eat.viewModel.fragment.ProfileViewModel
+import com.example.whats_eat.viewModel.ProfileViewModel
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 

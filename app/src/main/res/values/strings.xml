@@ -93,5 +93,6 @@
 
     <string name="home_main_banner">Home Main Banner</string>
     <string name="PlaceName">Example</string>
+    <string name="place_image">Place Image</string>
 
 </resources>

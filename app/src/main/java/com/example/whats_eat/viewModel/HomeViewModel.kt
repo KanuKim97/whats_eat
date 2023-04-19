@@ -1,4 +1,4 @@
-package com.example.whats_eat.viewModel.fragment
+package com.example.whats_eat.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

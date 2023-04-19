@@ -8,7 +8,6 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +15,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.whats_eat.R
-import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
 import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
 import com.example.whats_eat.databinding.FragmentHomeBinding
-import com.example.whats_eat.viewModel.fragment.HomeViewModel
+import com.example.whats_eat.view.adapter.SubFoodGridAdapter
+import com.example.whats_eat.viewModel.HomeViewModel
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -49,6 +50,8 @@ class HomeFragment: Fragment() {
     private val myLocationManger: LocationManager by lazy { setLocationManager() }
     private val myFusedLocationClient: FusedLocationProviderClient by lazy { setFusedLocationClient() }
 
+    private lateinit var subFoodGridView: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,9 +72,13 @@ class HomeFragment: Fragment() {
             getCurrentLocation()
         }
 
-        homeViewModel.nearByPlace.observe(viewLifecycleOwner) {
-            Log.d(Constant.LOG_TAG, "${it[0].name}")
+        lifecycleScope.launch(mainDispatcher) {
+            subFoodGridView = homeBinding.FoodGridView
+            subFoodGridView.layoutManager = GridLayoutManager(requireContext(), 2)
+            subFoodGridView.setHasFixedSize(true)
         }
+
+        homeViewModel.nearByPlace.observe(viewLifecycleOwner) { SubFoodGridAdapter(it) }
     }
 
     override fun onDestroyView() {
