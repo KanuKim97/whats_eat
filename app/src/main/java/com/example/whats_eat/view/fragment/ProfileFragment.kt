@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.FragmentProfileBinding
@@ -31,12 +30,9 @@ class ProfileFragment: Fragment(), View.OnClickListener {
         proFileBinding.updateBtn.setOnClickListener(this)
         proFileBinding.deleteBtn.setOnClickListener(this)
 
-        profileViewModel.userProfileNickName.observe(viewLifecycleOwner) {
-            proFileBinding.nameTxt.text = it
-        }
-
-        profileViewModel.userProfileEmail.observe(viewLifecycleOwner) {
-            proFileBinding.emailTxt.text = it
+        profileViewModel.userProfile.observe(viewLifecycleOwner) {
+            proFileBinding.nameTxt.text = it.userName
+            proFileBinding.emailTxt.text = it.userEmail
         }
 
         profileViewModel.userCollectionCnt.observe(viewLifecycleOwner) {
@@ -51,10 +47,12 @@ class ProfileFragment: Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.updateBtn -> Toast.makeText(requireContext(), "아직 업데이트된 기능이 아닙니다.", Toast.LENGTH_SHORT).show()
-            R.id.deleteBtn -> {}
+            R.id.updateBtn -> {  }
+            R.id.deleteBtn -> {  }
         }
     }
 
     private fun deleteUserAccount(): Task<Void>? = profileViewModel.deleteUserAccount()
+
+
 }

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.R
-import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogInBinding
 import com.example.whats_eat.viewModel.LoginViewModel
 import com.google.android.gms.tasks.Task

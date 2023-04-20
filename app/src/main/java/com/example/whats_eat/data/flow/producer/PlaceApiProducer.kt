@@ -1,11 +1,11 @@
-package com.example.whats_eat.data.di.producer
+package com.example.whats_eat.data.flow.producer
 
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import com.example.whats_eat.data.remote.model.detailPlace.PlaceDetail
 import com.example.whats_eat.data.remote.model.nearByPlace.Myplaces
-import com.example.whats_eat.data.remote.model.responseModel.Results
+import com.example.whats_eat.data.remote.model.response.Results
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class PlaceApiProducer @Inject constructor(
     private val placeAPIService: IGoogleAPIService
 ) {
-    fun nearByPlace(latLng: String): Flow<Array<Results>> = flow {
+    fun nearByPlace(latLng: String): Flow<ArrayList<Results>> = flow {
         val response: Response<Myplaces> = placeAPIService.getNearPlaces(
             latLng,
             Constant.LOCATION_RADIUS,
@@ -28,7 +28,7 @@ class PlaceApiProducer @Inject constructor(
         )
 
         if (response.isSuccessful && response.body()?.results != null) {
-           emit(response.body()!!.results!!)
+           emit(response.body()!!.results)
         } else {
             if (!response.isSuccessful) {
                 throw (HttpException(response))
@@ -39,7 +39,7 @@ class PlaceApiProducer @Inject constructor(
         }
     }.catch { exception ->
         if (exception is IOException) {
-            emit(arrayOf())
+            emit(arrayListOf())
         } else {
             throw exception
         }
@@ -69,7 +69,19 @@ class PlaceApiProducer @Inject constructor(
         }
     }.catch { exception ->
         if (exception is IOException) {
-            emit(Results())
+            emit(
+                Results(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                )
+            )
         } else {
             throw exception
         }

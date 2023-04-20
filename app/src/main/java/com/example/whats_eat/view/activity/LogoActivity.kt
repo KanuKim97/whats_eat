@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import android.Manifest
 import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogoBinding
 import com.example.whats_eat.viewModel.LogoViewModel
 import dagger.hilt.android.AndroidEntryPoint

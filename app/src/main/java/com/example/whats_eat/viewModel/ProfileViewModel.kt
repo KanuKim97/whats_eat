@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FireBaseDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
+import com.example.whats_eat.data.remote.model.dataViewClass.ProfileClass
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,12 +21,11 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
     private val userProfileRef: DatabaseReference = rtDBRepo.getUserDBRef()
     private val userCollectionRef: DatabaseReference = rtDBRepo.getUserCollectionDBRef()
-    private val _userProfileNickName = MutableLiveData<String>()
-    private val _userProfileEmail = MutableLiveData<String>()
+
+    private val _userProfile = MutableLiveData<ProfileClass>()
     private val _userCollectionCnt = MutableLiveData<String>()
 
-    val userProfileNickName: LiveData<String> get() = _userProfileNickName
-    val userProfileEmail: LiveData<String> get() = _userProfileEmail
+    val userProfile: LiveData<ProfileClass> get() = _userProfile
     val userCollectionCnt: LiveData<String> get() = _userCollectionCnt
 
     init {
@@ -34,11 +34,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadUserProfile(): ValueEventListener =
-        userProfileRef.addValueEventListener( object: ValueEventListener {
+        userProfileRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    _userProfileEmail.value = snapshot.child("userEmail").value.toString()
-                    _userProfileNickName.value = snapshot.child("userNickName").value.toString()
+                    val userEmail = snapshot.child("userEmail").value.toString()
+                    val userName = snapshot.child("userNickName").value.toString()
+
+                    _userProfile.value = ProfileClass(userName, userEmail)
                 }
             }
             override fun onCancelled(error: DatabaseError) { error.toException().printStackTrace() }
@@ -54,8 +56,11 @@ class ProfileViewModel @Inject constructor(
         }.addOnFailureListener { it.printStackTrace() }
 
     fun deleteUserAccount(): Task<Void>? = authRepo.deleteUserAccount()?.addOnCompleteListener {
-        if (it.isSuccessful) { rtDBRepo.getUserDBRef().removeValue() }
-        else { it.exception?.printStackTrace() }
+        if (it.isSuccessful) {
+            rtDBRepo.getUserDBRef().removeValue()
+        } else {
+            it.exception?.printStackTrace()
+        }
     }?.addOnFailureListener { it.printStackTrace() }
 
 }

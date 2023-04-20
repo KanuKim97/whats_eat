@@ -8,6 +8,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +17,11 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.whats_eat.R
-import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
-import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.FragmentHomeBinding
+import com.example.whats_eat.view.adapter.MainBannerAdapter
 import com.example.whats_eat.view.adapter.SubFoodGridAdapter
 import com.example.whats_eat.viewModel.HomeViewModel
 import com.google.android.gms.location.CurrentLocationRequest
@@ -50,7 +51,6 @@ class HomeFragment: Fragment() {
     private val myLocationManger: LocationManager by lazy { setLocationManager() }
     private val myFusedLocationClient: FusedLocationProviderClient by lazy { setFusedLocationClient() }
 
-    private lateinit var subFoodGridView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,19 +72,36 @@ class HomeFragment: Fragment() {
             getCurrentLocation()
         }
 
-        lifecycleScope.launch(mainDispatcher) {
-            subFoodGridView = homeBinding.FoodGridView
-            subFoodGridView.layoutManager = GridLayoutManager(requireContext(), 2)
-            subFoodGridView.setHasFixedSize(true)
-        }
-
-        homeViewModel.nearByPlace.observe(viewLifecycleOwner) { SubFoodGridAdapter(it) }
+        initSubItemGridView()
+        setSubItemGridAdapter()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _homeBinding = null
     }
+
+    private fun initMainBannerViewPager(): Job = lifecycleScope.launch(mainDispatcher) {
+        homeBinding.MainBanner.offscreenPageLimit = 5
+
+    }
+
+    private fun setMainBannerAdapter(): Unit =
+        homeViewModel.mainBannerItems.observe(viewLifecycleOwner) {
+            Log.d("로그", "$it")
+        }
+
+    private fun initSubItemGridView(): Job = lifecycleScope.launch(mainDispatcher) {
+        homeBinding.FoodGridView.layoutManager = GridLayoutManager(requireContext(), 2)
+        homeBinding.FoodGridView.setHasFixedSize(true)
+    }
+
+    private fun setSubItemGridAdapter(): Unit =
+        homeViewModel.subFoodItems.observe(viewLifecycleOwner) {
+            lifecycleScope.launch(mainDispatcher) {
+                homeBinding.FoodGridView.adapter = SubFoodGridAdapter(it)
+            }
+        }
 
     private fun checkGPSON(): Boolean =
         myLocationManger.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -103,8 +120,11 @@ class HomeFragment: Fragment() {
 
                 override fun isCancellationRequested(): Boolean = false
             }).addOnCompleteListener { location ->
-                geoCoderService(location.result.latitude, location.result.longitude)
-                searchNearByRestaurant(location.result.latitude, location.result.longitude)
+                val lat: Double = location.result.latitude
+                val lng: Double = location.result.longitude
+                geoCoderService(lat, lng)
+                getMainBannerItems(StringBuilder("$lat, $lng").toString())
+                getSubFoodItems(StringBuilder("$lat, $lng").toString())
             }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
@@ -127,12 +147,8 @@ class HomeFragment: Fragment() {
         }
     }
 
-    private fun searchNearByRestaurant(lat: Double, lng: Double) {
-        val latLng: String = latLngStringBuilder(lat, lng)
-        homeViewModel.searchNearByPlace(latLng)
-    }
+    private fun getMainBannerItems(latLng: String): Job = homeViewModel.getMainBannerItems(latLng)
 
-    private fun latLngStringBuilder(lat: Double, lng: Double): String =
-        StringBuilder("$lat, $lng").toString()
+    private fun getSubFoodItems(latLng: String): Job = homeViewModel.getSubFoodItems(latLng)
 
 }

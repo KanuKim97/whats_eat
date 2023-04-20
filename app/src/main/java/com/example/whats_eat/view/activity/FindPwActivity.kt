@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.example.whats_eat.viewModel.FindPwViewModel
 import com.google.android.gms.tasks.Task

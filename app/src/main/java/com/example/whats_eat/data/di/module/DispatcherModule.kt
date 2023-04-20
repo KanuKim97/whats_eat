@@ -1,8 +1,8 @@
 package com.example.whats_eat.data.di.module
 
-import com.example.whats_eat.data.di.coroutineDispatcher.DefaultDispatcher
-import com.example.whats_eat.data.di.coroutineDispatcher.IoDispatcher
-import com.example.whats_eat.data.di.coroutineDispatcher.MainDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.DefaultDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
