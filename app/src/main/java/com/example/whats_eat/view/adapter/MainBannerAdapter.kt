@@ -16,6 +16,7 @@ class MainBannerAdapter(private val placeList: ArrayList<MainBannerItems>)
 
                 Glide.with(binding.MainBannerImg)
                     .load(placeList.photoRef)
+                    .fitCenter()
                     .into(binding.MainBannerImg)
             }
     }

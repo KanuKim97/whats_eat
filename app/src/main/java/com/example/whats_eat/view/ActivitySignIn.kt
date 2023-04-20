@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.activity
+package com.example.whats_eat.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +15,7 @@ import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInActivity : AppCompatActivity(), View.OnClickListener {
+class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
     private val signInBinding by lazy { ActivitySignInBinding.inflate(layoutInflater) }
     private val signInViewModel: SignInViewModel by viewModels()
 
@@ -35,7 +35,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.compBtn -> validateUserInput()
-            R.id.toLoginBtn -> startActivity(Intent(this, LoginActivity::class.java))
+            R.id.toLoginBtn -> startActivity(Intent(this, ActivityLogIn::class.java))
         }
     }
 
@@ -63,8 +63,8 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                 getString(R.string.IsNotNewUser_Toast),
                 Toast.LENGTH_SHORT
             ).show()
-            startActivity(Intent(this, LoginActivity::class.java))
-        } else { startActivity(Intent(this, MainActivity::class.java)) }
+            startActivity(Intent(this, ActivityLogIn::class.java))
+        } else { startActivity(Intent(this, ActivityMain::class.java)) }
     }
 
     private fun validateUserInput() {

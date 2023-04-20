@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.fragment
+package com.example.whats_eat.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,7 +13,7 @@ import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment: Fragment(), View.OnClickListener {
+class FragmentProfile: Fragment(), View.OnClickListener {
     private var _proFileBinding: FragmentProfileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
     private val profileViewModel: ProfileViewModel by viewModels()

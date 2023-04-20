@@ -1,14 +1,12 @@
-package com.example.whats_eat.view.fragment
+package com.example.whats_eat.view
 
 import android.content.Context
 import android.content.Intent
-import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.whats_eat.R
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
@@ -39,7 +38,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment: Fragment() {
+class FragmentHome: Fragment() {
     @Inject @MainDispatcher lateinit var mainDispatcher: CoroutineDispatcher
     @Inject @IoDispatcher lateinit var ioDispatcher: CoroutineDispatcher
     @Inject lateinit var locationRequest: CurrentLocationRequest
@@ -72,7 +71,9 @@ class HomeFragment: Fragment() {
             getCurrentLocation()
         }
 
+        initMainBannerViewPager()
         initSubItemGridView()
+        setMainBannerAdapter()
         setSubItemGridAdapter()
     }
 
@@ -82,13 +83,15 @@ class HomeFragment: Fragment() {
     }
 
     private fun initMainBannerViewPager(): Job = lifecycleScope.launch(mainDispatcher) {
-        homeBinding.MainBanner.offscreenPageLimit = 5
-
+        homeBinding.MainBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        homeBinding.MainBanner.scrollIndicators = ViewPager2.SCROLL_INDICATOR_END
     }
 
     private fun setMainBannerAdapter(): Unit =
         homeViewModel.mainBannerItems.observe(viewLifecycleOwner) {
-            Log.d("로그", "$it")
+            lifecycleScope.launch(mainDispatcher) {
+                homeBinding.MainBanner.adapter = MainBannerAdapter(it)
+            }
         }
 
     private fun initSubItemGridView(): Job = lifecycleScope.launch(mainDispatcher) {
@@ -134,7 +137,7 @@ class HomeFragment: Fragment() {
         lng: Double
     ): Job = lifecycleScope.launch(mainDispatcher) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val subLocalList: List<Address>? = withContext(ioDispatcher) {
+            val subLocalList = withContext(ioDispatcher) {
                 Geocoder(requireContext(), Locale.KOREA).getFromLocation(lat, lng, 5)
             }
 

@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.activity
+package com.example.whats_eat.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     private val logInBinding by lazy { ActivityLogInBinding.inflate(layoutInflater) }
     private val loginViewModel: LoginViewModel by viewModels()
@@ -40,8 +40,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?){
         when (v?.id) {
-            R.id.findPwBtn -> startActivity(Intent(this, FindPwActivity::class.java))
-            R.id.signUpBtn -> startActivity(Intent(this, SignInActivity::class.java))
+            R.id.findPwBtn -> startActivity(Intent(this, ActivityFindPassword::class.java))
+            R.id.signUpBtn -> startActivity(Intent(this, ActivitySignIn::class.java))
             R.id.logInBtn -> loginEmailWithPassword(userEmail, userPassword)
         }
     }
@@ -56,11 +56,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun updateLogInUI(): Unit = loginViewModel.userLogInResult.observe(this) {
         lifecycleScope.launch(mainDispatcher) {
             if (it.isSuccessful) {
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                startActivity(Intent(this@ActivityLogIn, ActivityMain::class.java))
                 finish()
             } else {
                 Toast.makeText(
-                    this@LoginActivity,
+                    this@ActivityLogIn,
                     getString(R.string.LogIn_Failed),
                     Toast.LENGTH_SHORT
                 ).show()

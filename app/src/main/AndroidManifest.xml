@@ -23,7 +23,7 @@
             android:required="false" />
 
         <activity
-            android:name=".view.activity.LogoActivity"
+            android:name=".view.ActivityLogo"
             android:exported="true"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
@@ -33,16 +33,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".view.ActivityLogIn"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".view.activity.SignInActivity"
+            android:name=".view.ActivitySignIn"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".view.activity.FindPwActivity"
+            android:name=".view.ActivityFindPassword"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.ActivityMain"
             android:theme="@style/Theme.AppCompat" />
 
         <meta-data

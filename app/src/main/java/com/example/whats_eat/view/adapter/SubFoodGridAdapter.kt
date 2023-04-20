@@ -13,7 +13,10 @@ class SubFoodGridAdapter(private val placeList: ArrayList<SubFoodItems>)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(results: SubFoodItems) {
             binding.subFoodName.text = results.name
-            Glide.with(binding.subFoodView).load(results.photoRef).into(binding.subFoodView)
+            Glide.with(binding.subFoodView)
+                .load(results.photoRef)
+                .fitCenter()
+                .into(binding.subFoodView)
         }
     }
 

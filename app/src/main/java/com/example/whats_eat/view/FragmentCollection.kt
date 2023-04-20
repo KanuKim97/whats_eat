@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.fragment
+package com.example.whats_eat.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,7 @@ import com.example.whats_eat.databinding.FragmentCollectionBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CollectionFragment: Fragment() {
+class FragmentCollection: Fragment() {
     private lateinit var collectionRecyclerView: RecyclerView
     private lateinit var collectionAdapter: CollectionAdapter
     private var _collectionBinding: FragmentCollectionBinding? = null

@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.activity
+package com.example.whats_eat.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FindPwActivity : AppCompatActivity(), View.OnClickListener {
+class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     private val findPwBinding by lazy { ActivityFindPwBinding.inflate(layoutInflater) }
     private val findPwViewModel: FindPwViewModel by viewModels()
@@ -39,8 +39,8 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.toLoginBtn -> startActivity(Intent(this, LoginActivity::class.java))
-            R.id.toSignInBtn -> startActivity(Intent(this, SignInActivity::class.java))
+            R.id.toLoginBtn -> startActivity(Intent(this, ActivityLogIn::class.java))
+            R.id.toSignInBtn -> startActivity(Intent(this, ActivitySignIn::class.java))
             R.id.send_code -> validateUserEmail(userEmail)
         }
     }
@@ -55,15 +55,15 @@ class FindPwActivity : AppCompatActivity(), View.OnClickListener {
         lifecycleScope.launch(mainDispatcher) {
             if (it) {
                 Toast.makeText(
-                    this@FindPwActivity,
+                    this@ActivityFindPassword,
                     getString(R.string.SendResetEmail_Toast),
                     Toast.LENGTH_SHORT
                 ).show()
                 delay(Constant.DELAY_TIME_MILLIS)
-                startActivity(Intent(this@FindPwActivity, LoginActivity::class.java))
+                startActivity(Intent(this@ActivityFindPassword, ActivityLogIn::class.java))
             } else {
                 Toast.makeText(
-                    this@FindPwActivity,
+                    this@ActivityFindPassword,
                     getString(R.string.EmailNotExist_Toast),
                     Toast.LENGTH_SHORT
                 ).show()

@@ -1,4 +1,4 @@
-package com.example.whats_eat.view.activity
+package com.example.whats_eat.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +20,7 @@ import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LogoActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+class ActivityLogo : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     private val logoBinding by lazy { ActivityLogoBinding.inflate(layoutInflater) }
     private val logoViewModel: LogoViewModel by viewModels()
@@ -36,11 +36,11 @@ class LogoActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             if (hasLocationPermission()) {
                 if(it) {
                     delay(Constant.DELAY_TIME_MILLIS)
-                    startActivity(Intent(this@LogoActivity, MainActivity::class.java))
+                    startActivity(Intent(this@ActivityLogo, ActivityMain::class.java))
                     finish()
                 } else {
                     delay(Constant.DELAY_TIME_MILLIS)
-                    startActivity(Intent(this@LogoActivity, LoginActivity::class.java))
+                    startActivity(Intent(this@ActivityLogo, ActivityLogIn::class.java))
                     finish()
                 }
             } else {

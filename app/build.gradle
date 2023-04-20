@@ -3,11 +3,11 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'kotlin-kapt'
 }
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.dagger.hilt.android'
-apply plugin: 'kotlin-kapt'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -83,12 +83,12 @@ dependencies {
 
     // FireBase Auth, RealTime DataBase
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.1'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:21.2.0'
+    implementation 'com.google.firebase:firebase-auth:21.3.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
-    implementation 'com.google.firebase:firebase-database:20.1.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.2.0'
+    implementation 'com.google.firebase:firebase-database:20.2.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.3.0'
 
     // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
