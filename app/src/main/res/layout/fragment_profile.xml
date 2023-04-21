@@ -96,8 +96,9 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_rate"
+                        android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_collection"
                         android:contentDescription="@string/ImgLayout_Profile_Desc" />
 
                     <TextView
@@ -146,7 +147,7 @@
                 android:text="@string/UpdateAccount_Btn"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:background="#000" />
+                android:background="#fff" />
 
             <Button
                 android:id="@+id/deleteBtn"
@@ -156,7 +157,7 @@
                 android:text="@string/DeleteAccount_Btn"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:background="#000"/>
+                android:background="#fff"/>
 
         </LinearLayout>
 

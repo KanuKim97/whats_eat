@@ -65,7 +65,7 @@
 
     <!--Activity SignIn.xml-->
     <string name="SignIn_Title">Welcome!</string>
-    <string name="SignIn_SubTitle">회원 가입을 환영합니다!</string>
+    <string name="SignIn_SubTitle">회원가입을 환영합니다!</string>
 
     <string name="SignIn_FullName_Hint">Full Name</string>
     <string name="SignIn_UserName_Hint">User Name</string>

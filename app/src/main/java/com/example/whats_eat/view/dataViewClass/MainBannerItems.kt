@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.remote.model.dataViewClass
+package com.example.whats_eat.view.dataViewClass
 
 data class MainBannerItems(
     val placeID: String,

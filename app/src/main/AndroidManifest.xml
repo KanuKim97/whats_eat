@@ -2,6 +2,7 @@
 <manifest xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="false"
         android:largeHeap="true"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Whats_eat">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,8 +26,7 @@
 
         <activity
             android:name=".view.ActivityLogo"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,17 +34,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.ActivityLogIn"
-            android:theme="@style/Theme.AppCompat" />
+            android:name=".view.ActivityLogIn" />
         <activity
-            android:name=".view.ActivitySignIn"
-            android:theme="@style/Theme.AppCompat" />
+            android:name=".view.ActivitySignIn" />
         <activity
-            android:name=".view.ActivityFindPassword"
-            android:theme="@style/Theme.AppCompat" />
+            android:name=".view.ActivityFindPassword" />
         <activity
-            android:name=".view.ActivityMain"
-            android:theme="@style/Theme.AppCompat" />
+            android:name=".view.ActivityMain" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.whats_eat.data.di.repository.FireBaseDBRepository
 import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
-import com.example.whats_eat.data.remote.model.dataViewClass.ProfileClass
+import com.example.whats_eat.view.dataViewClass.ProfileClass
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

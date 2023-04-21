@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.whats_eat.R
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
@@ -47,12 +48,14 @@ class FragmentHome: Fragment() {
     private val homeBinding get() = _homeBinding!!
     private val homeViewModel: HomeViewModel by viewModels()
 
+    private val mainBanner: ViewPager2 by lazy { homeBinding.MainBanner }
+    private val subGridView: RecyclerView by lazy { homeBinding.FoodGridView }
     private val myLocationManger: LocationManager by lazy { setLocationManager() }
     private val myFusedLocationClient: FusedLocationProviderClient by lazy { setFusedLocationClient() }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -83,26 +86,26 @@ class FragmentHome: Fragment() {
     }
 
     private fun initMainBannerViewPager(): Job = lifecycleScope.launch(mainDispatcher) {
-        homeBinding.MainBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        homeBinding.MainBanner.scrollIndicators = ViewPager2.SCROLL_INDICATOR_END
+        mainBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        mainBanner.scrollIndicators = ViewPager2.SCROLL_INDICATOR_END
     }
 
     private fun setMainBannerAdapter(): Unit =
         homeViewModel.mainBannerItems.observe(viewLifecycleOwner) {
             lifecycleScope.launch(mainDispatcher) {
-                homeBinding.MainBanner.adapter = MainBannerAdapter(it)
+                mainBanner.adapter = MainBannerAdapter(requireContext(), it)
             }
         }
 
     private fun initSubItemGridView(): Job = lifecycleScope.launch(mainDispatcher) {
-        homeBinding.FoodGridView.layoutManager = GridLayoutManager(requireContext(), 2)
-        homeBinding.FoodGridView.setHasFixedSize(true)
+        subGridView.layoutManager = GridLayoutManager(requireContext(), 2)
+        subGridView.setHasFixedSize(true)
     }
 
     private fun setSubItemGridAdapter(): Unit =
         homeViewModel.subFoodItems.observe(viewLifecycleOwner) {
             lifecycleScope.launch(mainDispatcher) {
-                homeBinding.FoodGridView.adapter = SubFoodGridAdapter(it)
+                subGridView.adapter = SubFoodGridAdapter(it)
             }
         }
 

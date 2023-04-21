@@ -16,7 +16,8 @@
             android:id="@+id/Title_View"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_margin="15dp"
+            android:paddingBottom="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/MainBannerContent"
-                android:textColor="@color/black"
                 android:textSize="13sp" />
 
         </LinearLayout>
@@ -45,13 +45,14 @@
             android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Title_View" />
+            app:layout_constraintTop_toBottomOf="@+id/Title_View" />
 
         <LinearLayout
             android:id="@+id/SubTitle_View"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_margin="15dp"
+            android:paddingBottom="15dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

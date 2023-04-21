@@ -1,14 +1,18 @@
 package com.example.whats_eat.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.whats_eat.data.remote.model.dataViewClass.MainBannerItems
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.whats_eat.view.dataViewClass.MainBannerItems
 import com.example.whats_eat.databinding.MainbannerItemBinding
 
-class MainBannerAdapter(private val placeList: ArrayList<MainBannerItems>)
-    : RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {
+class MainBannerAdapter(
+    private val context: Context,
+    private val placeList: ArrayList<MainBannerItems>
+) : RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {
     inner class MainBannerViewHolder(private val binding: MainbannerItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
             fun bind(placeList: MainBannerItems) {
@@ -16,6 +20,7 @@ class MainBannerAdapter(private val placeList: ArrayList<MainBannerItems>)
 
                 Glide.with(binding.MainBannerImg)
                     .load(placeList.photoRef)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter()
                     .into(binding.MainBannerImg)
             }
