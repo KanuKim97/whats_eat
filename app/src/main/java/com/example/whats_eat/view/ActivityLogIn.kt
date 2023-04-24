@@ -3,6 +3,7 @@ package com.example.whats_eat.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -11,10 +12,9 @@ import com.example.whats_eat.R
 import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogInBinding
 import com.example.whats_eat.viewModel.LoginViewModel
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -50,12 +50,12 @@ class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
 
     private fun setUserPassword(): String = logInBinding.passwordInput.text.toString()
 
-    private fun loginEmailWithPassword(userEmail: String, userPassword: String): Task<AuthResult> =
-        loginViewModel.logInUserAccount(userEmail, userPassword)
+    private fun loginEmailWithPassword(userEmail: String, userPassword: String): Job =
+        loginViewModel.userLogIn(userEmail, userPassword)
 
-    private fun updateLogInUI(): Unit = loginViewModel.userLogInResult.observe(this) {
+    private fun updateLogInUI(): Unit = loginViewModel.logInResult.observe(this) {
         lifecycleScope.launch(mainDispatcher) {
-            if (it.isSuccessful) {
+            if (it.isSuccess) {
                 startActivity(Intent(this@ActivityLogIn, ActivityMain::class.java))
                 finish()
             } else {
@@ -67,7 +67,6 @@ class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

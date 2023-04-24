@@ -3,18 +3,29 @@ package com.example.whats_eat.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
+import androidx.lifecycle.viewModelScope
+import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LogoViewModel @Inject constructor(
-    private val authRepo: FirebaseAuthRepository
+    private val authProducer: FirebaseAuthProducer,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _readFireAuth = MutableLiveData<Boolean>()
     val readFireAuth: LiveData<Boolean> get() = _readFireAuth
 
-    init { checkUserSession() }
+    init { checkUserCurrentSession() }
 
-    private fun checkUserSession(): Unit = _readFireAuth.postValue(authRepo.getCurrentUserSession())
+    private fun checkUserCurrentSession(): Job = viewModelScope.launch(ioDispatcher) {
+        authProducer.getCurrentUser().collect { userSession ->
+            _readFireAuth.postValue(userSession != null)
+        }
+    }
+
 }

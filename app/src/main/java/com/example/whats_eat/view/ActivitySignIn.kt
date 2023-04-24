@@ -10,9 +10,8 @@ import androidx.activity.viewModels
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivitySignInBinding
 import com.example.whats_eat.viewModel.SignInViewModel
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 
 @AndroidEntryPoint
 class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
@@ -50,22 +49,19 @@ class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
     private fun setConfirmPassword(): String = signInBinding.localConfPasswordInput.text.toString()
 
     private fun createUserAccount(
-        eMail: String,
-        password: String,
-        fullName: String,
-        nickName: String
-    ): Task<AuthResult> = signInViewModel.createUserAccount(eMail, password, fullName, nickName)
+        Email: String,
+        Password: String,
+        FullName: String,
+        NickName: String
+    ): Job = signInViewModel.createAccount(Email, Password, FullName, NickName)
 
-    private fun updateUI(): Unit = signInViewModel.isNewUserResult.observe(this) {
-        if(!it) {
-            Toast.makeText(
-                this,
-                getString(R.string.IsNotNewUser_Toast),
-                Toast.LENGTH_SHORT
-            ).show()
-            startActivity(Intent(this, ActivityLogIn::class.java))
-        } else { startActivity(Intent(this, ActivityMain::class.java)) }
-    }
+    private fun updateUI(): Unit =
+        signInViewModel.isCreateSuccess.observe(this) { isLoginSuccess ->
+            if (isLoginSuccess) {
+                startActivity(Intent(this, ActivityMain::class.java))
+                finish()
+            }
+        }
 
     private fun validateUserInput() {
         when {

@@ -12,6 +12,7 @@ import com.example.whats_eat.databinding.FragmentProfileBinding
 import com.example.whats_eat.viewModel.ProfileViewModel
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 
 @AndroidEntryPoint
 class FragmentProfile: Fragment(), View.OnClickListener {
@@ -53,7 +54,7 @@ class FragmentProfile: Fragment(), View.OnClickListener {
         }
     }
 
-    private fun deleteUserAccount(): Task<Void>? = profileViewModel.deleteUserAccount()
+    private fun deleteUserAccount(): Job = profileViewModel.deleteUserAccount()
 
     private fun showDeleteUserAlertDialog() =
         AlertDialog.Builder(requireContext())

@@ -3,30 +3,25 @@ package com.example.whats_eat.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
-import com.google.android.gms.tasks.Task
+import androidx.lifecycle.viewModelScope
+import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FindPwViewModel @Inject constructor(
-    private val authRepo: FirebaseAuthRepository
+    private val authProducer: FirebaseAuthProducer,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    private val _eMailReset = MutableLiveData<Boolean>()
-    val eMailReset: LiveData<Boolean> get() = _eMailReset
+    private val _sendResetEmail = MutableLiveData<Result<Unit>>()
+    val sendResetEmail: LiveData<Result<Unit>> get() = _sendResetEmail
 
-    fun sendUserPasswordResetEmail(userEmail: String): Task<Void> = authRepo.findUserAccountPassword(userEmail)
-        .addOnCompleteListener {
-            if(it.isSuccessful) {
-                _eMailReset.value = true
-            } else {
-                it.exception?.printStackTrace()
-                _eMailReset.value = false
-            }
+    fun sendPasswordResetEmail(userEmail: String) = viewModelScope.launch(ioDispatcher) {
+        authProducer.sendPasswordResetEmail(userEmail).collect {
+            _sendResetEmail.postValue(it)
         }
-        .addOnFailureListener {
-            _eMailReset.value = false
-            it.printStackTrace()
-        }
-
+    }
 }

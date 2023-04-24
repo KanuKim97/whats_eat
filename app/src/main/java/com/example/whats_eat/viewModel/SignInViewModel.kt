@@ -3,39 +3,44 @@ package com.example.whats_eat.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.data.di.repository.FireBaseDBRepository
-import com.example.whats_eat.data.di.repository.FirebaseAuthRepository
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
+import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val authRepo: FirebaseAuthRepository,
-    private val rtDBRepo: FireBaseDBRepository
+    private val rtDBRepo: FireBaseDBRepository,
+    private val authProvider: FirebaseAuthProducer,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    private val _isNewUserResult = MutableLiveData<Boolean>()
-    val isNewUserResult: LiveData<Boolean> get() = _isNewUserResult
+    private val _isCreateSuccess = MutableLiveData<Boolean>()
+    val isCreateSuccess: LiveData<Boolean> get() = _isCreateSuccess
 
-    fun createUserAccount(
+    fun createAccount(
         userEmail: String,
         userPassword: String,
         userFullName: String,
         userNickName: String
-    ): Task<AuthResult>  = authRepo.createUserAccount(userEmail, userPassword)
-        .addOnCompleteListener {
-            val isNewUser: Boolean = it.result.additionalUserInfo?.isNewUser!!
-
+    ): Job = viewModelScope.launch(ioDispatcher) {
+        authProvider.createUserAccount(userEmail, userPassword).collect {
             when {
-                isNewUser && it.isSuccessful -> {
-                    _isNewUserResult.value = true
+                it.isSuccess -> {
+                    _isCreateSuccess.postValue(true)
                     setUserInfoInDB(userEmail, userNickName, userFullName)
                 }
-                !it.isSuccessful -> it.exception?.printStackTrace()
-                !isNewUser -> _isNewUserResult.value = false
+                it.isFailure -> {
+                    _isCreateSuccess.postValue(false)
+                }
             }
-        }.addOnFailureListener { it.printStackTrace() }
+        }
+    }
+
 
     private fun setUserInfoInDB(userEmail: String, userNickName: String, userFullName: String) {
         val currentUserDBRef = rtDBRepo.getUserDBRef()

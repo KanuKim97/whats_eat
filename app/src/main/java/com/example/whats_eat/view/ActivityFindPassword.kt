@@ -13,7 +13,6 @@ import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.example.whats_eat.viewModel.FindPwViewModel
-import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
@@ -47,13 +46,12 @@ class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
 
     private fun setUserEmail(): String = findPwBinding.passwordEmailInput.text.toString()
 
-    private fun sendPasswordResetEmail(userEmail: String): Task<Void> =
-        findPwViewModel.sendUserPasswordResetEmail(userEmail)
+    private fun sendPasswordResetEmail(userEmail: String) =
+        findPwViewModel.sendPasswordResetEmail(userEmail)
 
-
-    private fun updateUI(): Unit = findPwViewModel.eMailReset.observe(this) {
+    private fun updateUI(): Unit = findPwViewModel.sendResetEmail.observe(this) {
         lifecycleScope.launch(mainDispatcher) {
-            if (it) {
+            if (it.isSuccess) {
                 Toast.makeText(
                     this@ActivityFindPassword,
                     getString(R.string.SendResetEmail_Toast),
@@ -72,6 +70,7 @@ class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
 
     private fun validateUserEmail(userEmail: String) {
         when {
