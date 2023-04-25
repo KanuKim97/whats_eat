@@ -8,6 +8,7 @@ import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,5 +24,10 @@ class FindPwViewModel @Inject constructor(
         authProducer.sendPasswordResetEmail(userEmail).collect {
             _sendResetEmail.postValue(it)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }

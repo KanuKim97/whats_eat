@@ -19,18 +19,18 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val authProducer: FirebaseAuthProducer,
-    private val firebaseDBProducer: FirebaseDBProducer,
+    private val dataBaseProducer: FirebaseDBProducer,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _isAccountDeleteSuccess = MutableLiveData<Boolean>()
     val isAccountDeleteSuccess: LiveData<Boolean> get() = _isAccountDeleteSuccess
-    val userFlow: Flow<ProfileClass> get() = firebaseDBProducer.userProfile
-    val collectionFlow: Flow<String> get() = firebaseDBProducer.userCollectionCount
+    val userFlow: Flow<ProfileClass> get() = dataBaseProducer.userProfile
+    val collectionFlow: Flow<String> get() = dataBaseProducer.userCollectionCount
 
     init {
         viewModelScope.launch(ioDispatcher) {
-            firebaseDBProducer.loadUserProfile()
-            firebaseDBProducer.loadUserCollectionCount()
+            dataBaseProducer.loadUserProfile()
+            dataBaseProducer.loadUserCollectionCount()
         }
     }
 
@@ -46,6 +46,6 @@ class ProfileViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
-        firebaseDBProducer.stopEventListening()
+        dataBaseProducer.stopEventListening()
     }
 }
