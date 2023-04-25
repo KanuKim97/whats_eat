@@ -3,6 +3,7 @@ package com.example.whats_eat.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -56,8 +57,9 @@ class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
     ): Job = signInViewModel.createAccount(Email, Password, FullName, NickName)
 
     private fun updateUI(): Unit =
-        signInViewModel.isCreateSuccess.observe(this) { isLoginSuccess ->
-            if (isLoginSuccess) {
+        signInViewModel.isCreateSuccess.observe(this) { isCreateSuccess ->
+            Log.d("로그", isCreateSuccess.toString())
+            if (isCreateSuccess) {
                 startActivity(Intent(this, ActivityMain::class.java))
                 finish()
             }
