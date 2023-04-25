@@ -3,7 +3,6 @@ package com.example.whats_eat.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,6 +19,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
+    @Inject lateinit var toastMessage: Toast
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     private val logInBinding by lazy { ActivityLogInBinding.inflate(layoutInflater) }
     private val loginViewModel: LoginViewModel by viewModels()
@@ -59,11 +59,10 @@ class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this@ActivityLogIn, ActivityMain::class.java))
                 finish()
             } else {
-                Toast.makeText(
-                    this@ActivityLogIn,
-                    getString(R.string.LogIn_Failed),
-                    Toast.LENGTH_SHORT
-                ).show()
+                toastMessage.apply {
+                    setText(getString(R.string.LogIn_Failed))
+                    duration = Toast.LENGTH_SHORT
+                }.show()
             }
         }
     }

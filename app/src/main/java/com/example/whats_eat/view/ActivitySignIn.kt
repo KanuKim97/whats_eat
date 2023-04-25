@@ -3,7 +3,6 @@ package com.example.whats_eat.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -13,9 +12,11 @@ import com.example.whats_eat.databinding.ActivitySignInBinding
 import com.example.whats_eat.viewModel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
+    @Inject lateinit var toastMessage: Toast
     private val signInBinding by lazy { ActivitySignInBinding.inflate(layoutInflater) }
     private val signInViewModel: SignInViewModel by viewModels()
 
@@ -58,7 +59,6 @@ class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
 
     private fun updateUI(): Unit =
         signInViewModel.isCreateSuccess.observe(this) { isCreateSuccess ->
-            Log.d("로그", isCreateSuccess.toString())
             if (isCreateSuccess) {
                 startActivity(Intent(this, ActivityMain::class.java))
                 finish()
@@ -68,26 +68,23 @@ class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
     private fun validateUserInput() {
         when {
             !(Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) -> {
-                Toast.makeText(
-                    this,
-                    getString(R.string.IsNotValidateEmail_Toast),
-                    Toast.LENGTH_SHORT
-                ).show()
+                toastMessage.apply {
+                    setText(R.string.IsNotValidateEmail_Toast)
+                    duration = Toast.LENGTH_SHORT
+                }.show()
                 signInBinding.localEmailInput.text?.clear()
             }
             userNickName.length > 15 -> {
-                Toast.makeText(
-                    this,
-                    getString(R.string.NickNameIsLong_Toast),
-                    Toast.LENGTH_SHORT
-                ).show()
+                toastMessage.apply {
+                    setText(R.string.NickNameIsLong_Toast)
+                    duration = Toast.LENGTH_SHORT
+                }.show()
             }
             userPassword != confPassword -> {
-                Toast.makeText(
-                    this,
-                    getString(R.string.PasswordIsNotConfirm_Toast),
-                    Toast.LENGTH_SHORT
-                ).show()
+                toastMessage.apply {
+                    setText(R.string.PasswordIsNotConfirm_Toast)
+                    duration = Toast.LENGTH_SHORT
+                }.show()
                 signInBinding.localConfPasswordInput.text?.clear()
             }
             userNickName.isEmpty() ->

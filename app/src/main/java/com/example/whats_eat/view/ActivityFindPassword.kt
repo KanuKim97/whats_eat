@@ -21,6 +21,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
+    @Inject lateinit var toastMessage: Toast
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     private val findPwBinding by lazy { ActivityFindPwBinding.inflate(layoutInflater) }
     private val findPwViewModel: FindPwViewModel by viewModels()
@@ -52,20 +53,16 @@ class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
     private fun updateUI(): Unit = findPwViewModel.sendResetEmail.observe(this) {
         lifecycleScope.launch(mainDispatcher) {
             if (it.isSuccess) {
-                Toast.makeText(
-                    this@ActivityFindPassword,
-                    getString(R.string.SendResetEmail_Toast),
-                    Toast.LENGTH_SHORT
-                ).show()
-                delay(Constant.DELAY_TIME_MILLIS)
+                toastMessage.apply {
+                    setText(R.string.SendResetEmail_Toast)
+                    duration = Toast.LENGTH_SHORT
+                }.show()
                 startActivity(Intent(this@ActivityFindPassword, ActivityLogIn::class.java))
             } else {
-                Toast.makeText(
-                    this@ActivityFindPassword,
-                    getString(R.string.EmailNotExist_Toast),
-                    Toast.LENGTH_SHORT
-                ).show()
-                delay(Constant.DELAY_TIME_MILLIS)
+                toastMessage.apply {
+                    setText(R.string.EmailNotExist_Toast)
+                    duration = Toast.LENGTH_SHORT
+                }.show()
                 findPwBinding.passwordEmailInput.text?.clear()
             }
         }

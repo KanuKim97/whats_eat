@@ -30,7 +30,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        lifecycleScope.launch(mainDispatcher) {
             when (item.itemId) {
                 R.id.menuHome -> {
                     supportFragmentManager.beginTransaction()
@@ -48,7 +47,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .commit()
                 }
             }
-        }
         return true
     }
 
