@@ -23,7 +23,9 @@ class ProfileViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _isAccountDeleteSuccess = MutableLiveData<Boolean>()
+    private val _isSignOutSuccess = MutableLiveData<Boolean>()
     val isAccountDeleteSuccess: LiveData<Boolean> get() = _isAccountDeleteSuccess
+    val isSignOutSuccess: LiveData<Boolean> get() = _isSignOutSuccess
     val userFlow: Flow<ProfileClass> get() = dataBaseProducer.userProfile
     val collectionFlow: Flow<String> get() = dataBaseProducer.userCollectionCount
 
@@ -31,6 +33,15 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             dataBaseProducer.loadUserProfile()
             dataBaseProducer.loadUserCollectionCount()
+        }
+    }
+
+    fun signOutUserAccount(): Job = viewModelScope.launch(ioDispatcher) {
+        authProducer.signOutUserAccount().collect { result ->
+            when(result) {
+                true -> _isSignOutSuccess.postValue(true)
+                false -> _isSignOutSuccess.postValue(false)
+            }
         }
     }
 

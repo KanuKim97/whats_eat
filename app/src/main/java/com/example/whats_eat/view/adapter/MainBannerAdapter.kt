@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.whats_eat.view.dataViewClass.MainBannerItems
+import com.example.whats_eat.view.adapter.adapterItems.MainBannerItems
 import com.example.whats_eat.databinding.MainbannerItemBinding
 
 class MainBannerAdapter(

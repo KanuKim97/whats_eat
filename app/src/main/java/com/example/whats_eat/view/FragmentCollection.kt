@@ -26,9 +26,9 @@ class FragmentCollection: Fragment() {
     private val collectionRecyclerView: RecyclerView by lazy { collectionBinding.collectionView }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _collectionBinding = FragmentCollectionBinding.inflate(layoutInflater)
         return collectionBinding.root

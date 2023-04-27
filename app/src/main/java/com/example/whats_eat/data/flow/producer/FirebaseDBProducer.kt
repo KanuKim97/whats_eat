@@ -1,6 +1,7 @@
 package com.example.whats_eat.data.flow.producer
 
 import com.example.whats_eat.view.dataViewClass.ProfileClass
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.coroutines.flow.*
@@ -44,14 +45,14 @@ class FirebaseDBProducer @Inject constructor(
         })
     }
 
-    fun loadUserCollectionCount() = _userReference.child("collection").get()
+    fun loadUserCollectionCount(): Task<DataSnapshot> = _userReference.child("collection")
+        .get()
         .addOnCompleteListener {
             _userCollectionCount.value = it.result.childrenCount.toString()
         }
         .addOnFailureListener {
             _userCollectionCount.value = null
         }
-
 
     fun stopEventListening() {
         eventListener?.apply {

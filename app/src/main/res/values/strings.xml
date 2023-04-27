@@ -95,4 +95,6 @@
     <string name="PlaceName">Example</string>
     <string name="place_image">Place Image</string>
 
+    <string name="LogOut_Content">로그아웃 하시겠습니까?</string>
+
 </resources>

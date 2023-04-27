@@ -27,7 +27,8 @@ class FragmentProfile: Fragment(), View.OnClickListener {
     private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _proFileBinding = FragmentProfileBinding.inflate(layoutInflater)
@@ -35,13 +36,14 @@ class FragmentProfile: Fragment(), View.OnClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        proFileBinding.signOutBtn.setOnClickListener(this)
         proFileBinding.updateBtn.setOnClickListener(this)
         proFileBinding.deleteBtn.setOnClickListener(this)
 
         lifecycleScope.launch(mainDispatcher) {
             profileViewModel.userFlow.collect {
-                proFileBinding.nameTxt.text = it.userName
-                proFileBinding.emailTxt.text = it.userEmail
+                proFileBinding.nickNameTxt.text = it.userName
+                proFileBinding.userEmailTxt.text = it.userEmail
             }
         }
 
@@ -66,14 +68,26 @@ class FragmentProfile: Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
+            R.id.signOut_Btn -> showSignOutUserDialog()
+            R.id.deleteBtn ->  showDeleteUserDialog()
             R.id.updateBtn -> {  }
-            R.id.deleteBtn -> { showDeleteUserAlertDialog() }
         }
     }
 
+    private fun signOutUserAccount(): Job = profileViewModel.signOutUserAccount()
+
     private fun deleteUserAccount(): Job = profileViewModel.deleteUserAccount()
 
-    private fun showDeleteUserAlertDialog() =
+    private fun showSignOutUserDialog() =
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.LogOut_Content)
+            .setPositiveButton(R.string.btn_delBox_Yes) {_, _ -> signOutUserAccount()}
+            .setNegativeButton(R.string.btn_delBox_No) {_, _ -> }
+            .create()
+            .show()
+
+
+    private fun showDeleteUserDialog() =
         AlertDialog.Builder(requireContext())
             .setMessage(R.string.Box_delAccount)
             .setPositiveButton(R.string.btn_delBox_Yes) { _, _ -> deleteUserAccount() }

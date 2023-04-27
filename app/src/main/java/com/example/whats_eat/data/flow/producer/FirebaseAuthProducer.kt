@@ -2,7 +2,10 @@ package com.example.whats_eat.data.flow.producer
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -79,6 +82,23 @@ class FirebaseAuthProducer @Inject constructor(
             emit(Result.failure(exception))
         } else {
             throw exception
+        }
+    }
+
+    fun signOutUserAccount(): Flow<Boolean> = callbackFlow {
+        try {
+            firebaseAuth.signOut()
+            send(true)
+            awaitClose()
+        } catch (e: Exception) {
+            send(false)
+            awaitClose()
+        }
+    }.catch { exception ->
+        when (exception) {
+            is IOException -> emit(false)
+            is IllegalStateException -> emit(false)
+            else -> throw exception
         }
     }
 }

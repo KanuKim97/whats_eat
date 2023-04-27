@@ -8,8 +8,8 @@ import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.data.flow.intermediary.PlaceApiIntermediary
-import com.example.whats_eat.view.dataViewClass.MainBannerItems
-import com.example.whats_eat.view.dataViewClass.SubFoodItems
+import com.example.whats_eat.view.adapter.adapterItems.MainBannerItems
+import com.example.whats_eat.view.adapter.adapterItems.SubFoodItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
