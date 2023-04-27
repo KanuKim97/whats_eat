@@ -59,6 +59,13 @@ class FragmentProfile: Fragment(), View.OnClickListener {
                 activity?.finish()
             }
         }
+
+        profileViewModel.isSignOutSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                startActivity(Intent(requireContext(), ActivityLogIn::class.java))
+                activity?.finish()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -78,7 +85,7 @@ class FragmentProfile: Fragment(), View.OnClickListener {
 
     private fun deleteUserAccount(): Job = profileViewModel.deleteUserAccount()
 
-    private fun showSignOutUserDialog() =
+    private fun showSignOutUserDialog(): Unit =
         AlertDialog.Builder(requireContext())
             .setMessage(R.string.LogOut_Content)
             .setPositiveButton(R.string.btn_delBox_Yes) {_, _ -> signOutUserAccount()}
