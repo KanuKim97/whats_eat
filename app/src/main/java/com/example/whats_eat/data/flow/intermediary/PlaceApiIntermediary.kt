@@ -4,6 +4,7 @@ import com.example.whats_eat.data.flow.producer.PlaceApiProducer
 import com.example.whats_eat.data.remote.model.response.Results
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 class PlaceApiIntermediary @Inject constructor(
@@ -31,7 +32,4 @@ class PlaceApiIntermediary @Inject constructor(
                 }.toSet()
             )
         }
-
-    fun getPlaceDetail(place_id: String): Flow<Results> =
-        placeApiProducer.detailedPlace(place_id)
 }

@@ -90,17 +90,17 @@ class FragmentHome: Fragment() {
         mainBanner.scrollIndicators = ViewPager2.SCROLL_INDICATOR_END
     }
 
-    private fun setMainBannerAdapter(): Unit =
-        homeViewModel.mainBannerItems.observe(viewLifecycleOwner) {
-            lifecycleScope.launch(mainDispatcher) {
-                mainBanner.adapter = MainBannerAdapter(requireContext(), it)
-            }
-        }
-
     private fun initSubItemGridView(): Job = lifecycleScope.launch(mainDispatcher) {
         subGridView.layoutManager = GridLayoutManager(requireContext(), 2)
         subGridView.setHasFixedSize(true)
     }
+
+    private fun setMainBannerAdapter(): Unit =
+        homeViewModel.mainBannerItems.observe(viewLifecycleOwner) {
+            lifecycleScope.launch(mainDispatcher) {
+                mainBanner.adapter = MainBannerAdapter(requireActivity(), it)
+            }
+        }
 
     private fun setSubItemGridAdapter(): Unit =
         homeViewModel.subFoodItems.observe(viewLifecycleOwner) {

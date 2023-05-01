@@ -96,5 +96,9 @@
     <string name="place_image">Place Image</string>
 
     <string name="LogOut_Content">로그아웃 하시겠습니까?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="PlaceLocation">위치</string>
+    <string name="AddCollection_Btn">컬렉션에 추가하기</string>
 
 </resources>

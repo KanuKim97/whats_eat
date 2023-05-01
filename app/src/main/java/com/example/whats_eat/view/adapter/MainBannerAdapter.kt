@@ -1,29 +1,37 @@
 package com.example.whats_eat.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.whats_eat.R
 import com.example.whats_eat.view.adapter.adapterItems.MainBannerItems
 import com.example.whats_eat.databinding.MainbannerItemBinding
+import com.example.whats_eat.view.FragmentDetailPlace
 
 class MainBannerAdapter(
-    private val context: Context,
+    private val context: FragmentActivity,
     private val placeList: ArrayList<MainBannerItems>
 ) : RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {
     inner class MainBannerViewHolder(private val binding: MainbannerItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
-            fun bind(placeList: MainBannerItems) {
-                binding.MainBannerTxt.text = placeList.name
+        fun bind(placeList: MainBannerItems) {
+            binding.MainBannerTxt.text = placeList.name
 
-                Glide.with(binding.MainBannerImg)
-                    .load(placeList.photoRef)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fitCenter()
-                    .into(binding.MainBannerImg)
+            Glide.with(binding.MainBannerImg)
+                .load(placeList.photoRef)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter()
+                .into(binding.MainBannerImg)
+
+            itemView.setOnClickListener {
+                context.supportFragmentManager.beginTransaction()
+                    .replace(R.id.Fragment_container, FragmentDetailPlace())
+                    .commit()
             }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -39,9 +47,8 @@ class MainBannerAdapter(
     override fun onBindViewHolder(
         holder: MainBannerViewHolder,
         position: Int
-    ) {
-        holder.bind(placeList[position])
-    }
+    ) = holder.bind(placeList[position])
+
 
     override fun getItemCount(): Int = placeList.size
 

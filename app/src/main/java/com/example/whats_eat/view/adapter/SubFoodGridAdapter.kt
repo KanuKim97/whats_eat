@@ -7,8 +7,9 @@ import com.bumptech.glide.Glide
 import com.example.whats_eat.view.adapter.adapterItems.SubFoodItems
 import com.example.whats_eat.databinding.SubfoodItemBinding
 
-class SubFoodGridAdapter(private val placeList: ArrayList<SubFoodItems>)
-    : RecyclerView.Adapter<SubFoodGridAdapter.SubFoodGridViewHolder>() {
+class SubFoodGridAdapter(
+    private val placeList: ArrayList<SubFoodItems>
+): RecyclerView.Adapter<SubFoodGridAdapter.SubFoodGridViewHolder>() {
     inner class SubFoodGridViewHolder(private val binding: SubfoodItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(results: SubFoodItems) {
