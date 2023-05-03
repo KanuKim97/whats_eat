@@ -105,7 +105,7 @@ class FragmentHome: Fragment() {
     private fun setSubItemGridAdapter(): Unit =
         homeViewModel.subFoodItems.observe(viewLifecycleOwner) {
             lifecycleScope.launch(mainDispatcher) {
-                subGridView.adapter = SubFoodGridAdapter(it)
+                subGridView.adapter = SubFoodGridAdapter(requireActivity(), it)
             }
         }
 

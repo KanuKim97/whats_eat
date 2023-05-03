@@ -52,6 +52,7 @@ class HomeViewModel @Inject constructor(
             for (element in results) {
                 subItems.add(
                     SubFoodItems(
+                        element.place_id.toString(),
                         element.name.toString(),
                         getPhotoUrl(element.photos?.get(0)?.photo_reference.toString())
                     )

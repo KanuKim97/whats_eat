@@ -74,13 +74,16 @@
                 android:textColor="@color/black"/>
 
             <!-- TODO("implement Google MapView") -->
-            <View
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/PlaceMapView"
+                android:contentDescription="@string/mapView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/AddCollectionBtn"
             android:layout_width="320dp"
             android:layout_height="56dp"
             android:layout_margin="5dp"

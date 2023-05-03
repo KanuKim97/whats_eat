@@ -1,23 +1,41 @@
 package com.example.whats_eat.view.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.whats_eat.R
 import com.example.whats_eat.view.adapter.adapterItems.SubFoodItems
 import com.example.whats_eat.databinding.SubfoodItemBinding
+import com.example.whats_eat.view.FragmentDetailPlace
 
 class SubFoodGridAdapter(
+    private val context: FragmentActivity,
     private val placeList: ArrayList<SubFoodItems>
 ): RecyclerView.Adapter<SubFoodGridAdapter.SubFoodGridViewHolder>() {
     inner class SubFoodGridViewHolder(private val binding: SubfoodItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
+        private val fragmentBundle = Bundle()
+        private val detailPlaceFragment = FragmentDetailPlace()
+
         fun bind(results: SubFoodItems) {
             binding.subFoodName.text = results.name
+
             Glide.with(binding.subFoodView)
                 .load(results.photoRef)
                 .fitCenter()
                 .into(binding.subFoodView)
+
+            itemView.setOnClickListener {
+                fragmentBundle.putString("PlaceID", results.placeID)
+                detailPlaceFragment.arguments = fragmentBundle
+
+                context.supportFragmentManager.beginTransaction()
+                    .replace(R.id.Fragment_container, detailPlaceFragment)
+                    .commit()
+            }
         }
     }
 

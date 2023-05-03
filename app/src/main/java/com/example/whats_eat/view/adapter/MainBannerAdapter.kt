@@ -1,5 +1,6 @@
 package com.example.whats_eat.view.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
@@ -17,6 +18,9 @@ class MainBannerAdapter(
 ) : RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {
     inner class MainBannerViewHolder(private val binding: MainbannerItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
+        private val fragmentBundle = Bundle()
+        private val detailPlaceFragment = FragmentDetailPlace()
+
         fun bind(placeList: MainBannerItems) {
             binding.MainBannerTxt.text = placeList.name
 
@@ -27,8 +31,11 @@ class MainBannerAdapter(
                 .into(binding.MainBannerImg)
 
             itemView.setOnClickListener {
+                fragmentBundle.putString("PlaceID", placeList.placeID)
+                detailPlaceFragment.arguments = fragmentBundle
+
                 context.supportFragmentManager.beginTransaction()
-                    .replace(R.id.Fragment_container, FragmentDetailPlace())
+                    .replace(R.id.Fragment_container, detailPlaceFragment)
                     .commit()
             }
         }
