@@ -73,7 +73,6 @@
                 android:textSize="25sp"
                 android:textColor="@color/black"/>
 
-            <!-- TODO("implement Google MapView") -->
             <com.google.android.gms.maps.MapView
                 android:id="@+id/PlaceMapView"
                 android:contentDescription="@string/mapView"

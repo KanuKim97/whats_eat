@@ -49,6 +49,10 @@ class PlaceApiProducer @Inject constructor(
                 delay(Constant.DELAY_TIME_MILLIS)
                 true
             }
+            (cause is NullPointerException && attempt < 3) -> {
+                delay(Constant.DELAY_TIME_MILLIS)
+                true
+            }
             else -> false
         }
     }
@@ -88,6 +92,10 @@ class PlaceApiProducer @Inject constructor(
     }.retryWhen { cause, attempt ->
         when {
             (cause is HttpException && attempt < 3) -> {
+                delay(Constant.DELAY_TIME_MILLIS)
+                true
+            }
+            (cause is NullPointerException && attempt < 3) -> {
                 delay(Constant.DELAY_TIME_MILLIS)
                 true
             }

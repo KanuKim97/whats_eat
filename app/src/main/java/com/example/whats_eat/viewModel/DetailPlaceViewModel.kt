@@ -26,7 +26,6 @@ class DetailPlaceViewModel @Inject constructor(
     private val _detailPlaceResult = MutableLiveData<DetailPlace>()
     val detailPlaceResult: LiveData<DetailPlace> get() = _detailPlaceResult
 
-
     fun getPlaceDetailData(placeID: String): Job = viewModelScope.launch(ioDispatcher) {
         placeApiProducer.detailedPlace(placeID).collect { result ->
             _detailPlaceResult.postValue(
