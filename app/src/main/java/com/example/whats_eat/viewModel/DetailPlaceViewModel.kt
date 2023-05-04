@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.data.flow.producer.FirebaseDBProducer
 import com.example.whats_eat.data.flow.producer.PlaceApiProducer
 import com.example.whats_eat.view.dataViewClass.DetailPlace
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailPlaceViewModel @Inject constructor(
     private val placeApiProducer: PlaceApiProducer,
+    private val fireDBProducer: FirebaseDBProducer,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _detailPlaceResult = MutableLiveData<DetailPlace>()
@@ -39,6 +41,10 @@ class DetailPlaceViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    fun saveUserCollection(place: DetailPlace): Job = viewModelScope.launch(ioDispatcher) {
+        fireDBProducer.saveUserCollection(place)
     }
 
     private fun getPhotoUrl(photoReference: String): String =

@@ -11,8 +11,9 @@ import com.example.whats_eat.R
 import com.example.whats_eat.view.adapter.adapterItems.MainBannerItems
 import com.example.whats_eat.databinding.MainbannerItemBinding
 import com.example.whats_eat.view.FragmentDetailPlace
+import javax.inject.Inject
 
-class MainBannerAdapter(
+class MainBannerAdapter @Inject constructor(
     private val context: FragmentActivity,
     private val placeList: ArrayList<MainBannerItems>
 ) : RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {

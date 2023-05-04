@@ -10,8 +10,9 @@ import com.example.whats_eat.R
 import com.example.whats_eat.view.adapter.adapterItems.SubFoodItems
 import com.example.whats_eat.databinding.SubfoodItemBinding
 import com.example.whats_eat.view.FragmentDetailPlace
+import javax.inject.Inject
 
-class SubFoodGridAdapter(
+class SubFoodGridAdapter @Inject constructor(
     private val context: FragmentActivity,
     private val placeList: ArrayList<SubFoodItems>
 ): RecyclerView.Adapter<SubFoodGridAdapter.SubFoodGridViewHolder>() {

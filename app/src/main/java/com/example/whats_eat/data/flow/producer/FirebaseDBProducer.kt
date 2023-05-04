@@ -1,5 +1,6 @@
 package com.example.whats_eat.data.flow.producer
 
+import com.example.whats_eat.view.dataViewClass.DetailPlace
 import com.example.whats_eat.view.dataViewClass.ProfileClass
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -13,13 +14,15 @@ class FirebaseDBProducer @Inject constructor(
     private val firebaseDB: FirebaseDatabase
 ) {
     private val _userProfile = MutableStateFlow<ProfileClass?>(null)
+    private val _userCollection = MutableStateFlow<ArrayList<DetailPlace>?>(null)
     private val _userCollectionCount = MutableStateFlow<String?>(null)
     val userProfile: Flow<ProfileClass> get() = _userProfile.filterNotNull()
+    val userCollection: Flow<ArrayList<DetailPlace>> get() = _userCollection.filterNotNull()
     val userCollectionCount: Flow<String> get() = _userCollectionCount.filterNotNull()
 
     private val _currentUser: String by lazy { firebaseAuth.currentUser?.uid.toString() }
     private val _userReference: DatabaseReference by lazy { firebaseDB.reference.child(_currentUser) }
-
+    private var result = ArrayList<DetailPlace>()
     private var eventListener: ValueEventListener? = null
 
     suspend fun saveUserProfile(
@@ -30,6 +33,13 @@ class FirebaseDBProducer @Inject constructor(
         _userReference.child("userEmail").setValue(userEmail).await()
         _userReference.child("userNickName").setValue(userNickName).await()
         _userReference.child("userFullName").setValue(userFullName).await()
+    }
+
+    suspend fun saveUserCollection(chosenPlace: DetailPlace) {
+        _userReference.child("Collection")
+            .push()
+            .setValue(chosenPlace)
+            .await()
     }
 
     fun loadUserProfile() {
@@ -53,6 +63,20 @@ class FirebaseDBProducer @Inject constructor(
         .addOnFailureListener {
             _userCollectionCount.value = null
         }
+
+    fun loadUserCollection() {
+        eventListener = _userReference.child("Collection")
+            .addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        result.add(it.getValue(DetailPlace::class.java) as DetailPlace)
+                    }
+                    _userCollection.value = result
+                }
+
+                override fun onCancelled(error: DatabaseError) { _userCollection.value = null }
+            })
+    }
 
     fun stopEventListening() {
         eventListener?.apply {

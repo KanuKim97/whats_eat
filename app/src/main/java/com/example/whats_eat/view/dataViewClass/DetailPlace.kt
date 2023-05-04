@@ -1,11 +1,11 @@
 package com.example.whats_eat.view.dataViewClass
 
 data class DetailPlace(
-    val name: String?,
-    val formattedAddress: String?,
-    val isOpenNow: Boolean?,
-    val rating: Double?,
-    val lat: Double?,
-    val lng: Double?,
-    val photoRef: String
+    val name: String? = null,
+    val formattedAddress: String? = null,
+    val isOpenNow: Boolean? = null,
+    val rating: Double? = null,
+    val lat: Double? = null,
+    val lng: Double? = null,
+    val photoRef: String = ""
 )
