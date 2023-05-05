@@ -1,96 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
-    android:orientation="vertical"
     android:background="#ffffff"
-    tools:context=".view.activity.FindPwActivity">
+    tools:context=".view.ActivityFindPassword">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:contentDescription="@string/logoImg_Common"
         android:src="@drawable/logo"
-        android:contentDescription="@string/logoImg_Common" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/forgotPasswordTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="@string/findPwTitle_FindPw"
-        android:textColor="#000"
+        android:text="@string/FindPassword_Title"
         android:textSize="40sp"
-        android:fontFamily="@font/bungee_inline" />
+        android:textColor="#000"
+        android:fontFamily="@font/bungee_inline"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/forgotPasswordSubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-25dp"
-        android:text="@string/findPwContent_FindPw"
+        android:text="@string/FindPassword_SubTitle"
         android:textColor="#000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light" />
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintTop_toBottomOf="@id/forgotPasswordTitle"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/forgotPasswordSubTitle">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/eMailInput_FindPw"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="320dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="50dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/FindPassword_Email_Hint"
+            android:theme="@style/Theme.MaterialComponents.Light">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEmailInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="48dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/send_code"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#000"
+            android:text="@string/SendResetPassword_Btn"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/toLoginBtn"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#000"
+            android:text="@string/ToLogIn_Btn"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/toSignInBtn"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#000"
+            android:text="@string/ToSignUp_Btn"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/send_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="#000"
-        android:text="@string/sendResetEmailBtn_FindPw"
-        android:textSize="20sp"
-        android:textColor="#fff"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/toLoginBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="#000"
-        android:text="@string/goLogInBtn_FindPw"
-        android:textSize="20sp"
-        android:textColor="#fff"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/toSignInBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="#000"
-        android:text="@string/goSignUpPage"
-        android:textSize="20sp"
-        android:textColor="#fff"
-        android:textStyle="bold" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

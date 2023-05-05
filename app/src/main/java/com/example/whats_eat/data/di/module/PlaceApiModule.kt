@@ -1,7 +1,6 @@
 package com.example.whats_eat.data.di.module
 
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.repository.PlaceApiRepository
 import com.example.whats_eat.data.remote.IGoogleAPIService
 import dagger.Module
 import dagger.Provides
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 object PlaceApiModule {
     @Provides
-    fun providesBaseURL() = Constant.IPlaceAPIUri
+    fun providesBaseURL(): String = Constant.PLACE_API_URI
 
     @Provides
     @Singleton
@@ -46,8 +45,4 @@ object PlaceApiModule {
     fun provideApiService(retrofit: Retrofit): IGoogleAPIService =
         retrofit.create(IGoogleAPIService::class.java)
 
-    @Provides
-    @Singleton
-    fun providesApiRepository(googleAPIService: IGoogleAPIService): PlaceApiRepository =
-        PlaceApiRepository(googleAPIService)
 }

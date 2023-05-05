@@ -2,13 +2,11 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#000"
-    android:layout_margin="16dp"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="16dp" >
+    android:layout_margin="10dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,75 +14,82 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/placeImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/placeImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/placeImageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:srcCompat="@drawable/ic_baseline_cancel_presentation_24"
-            tools:ignore="VectorDrawableCompat" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/placeNameView"
+            android:id="@+id/placeName_View"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:text="Name : "
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/placeImage"/>
+            android:text="@string/placeNameView_txt"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/placeImg"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/placeName"
+            android:id="@+id/placeName_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Example"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/placeNameView"/>
+            android:layout_marginStart="5dp"
+            android:text="@string/placeNameTxt_Example"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/placeName_View"
+            app:layout_constraintStart_toEndOf="@id/placeName_View"
+            app:layout_constraintTop_toTopOf="@+id/placeName_View" />
 
         <TextView
-            android:id="@+id/placeAddressView"
+            android:id="@+id/placeAddress_View"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:text="Address : "
-            app:layout_constraintTop_toBottomOf="@id/placeNameView"
-            app:layout_constraintLeft_toRightOf="@id/placeImage"/>
+            android:text="@string/placeAddressView_Txt"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeName_View" />
 
         <TextView
-            android:id="@+id/addressName"
+            android:id="@+id/placeAddress_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Example"
-            app:layout_constraintTop_toBottomOf="@id/placeName"
-            app:layout_constraintLeft_toRightOf="@id/placeAddressView"/>
+            android:layout_marginStart="5dp"
+            android:text="@string/placeAddressTxt_Example"
+            app:layout_constraintBottom_toBottomOf="@+id/placeAddress_View"
+            app:layout_constraintStart_toEndOf="@id/placeAddress_View"
+            app:layout_constraintTop_toTopOf="@+id/placeAddress_View" />
 
+        <ImageView
+            android:id="@+id/ratingNum_View"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/Rating_Number_view"
+            android:src="@drawable/ic_star_gray"
+            app:layout_constraintTop_toBottomOf="@id/placeAddress_View"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/placeRatingView"
+            android:id="@+id/ratingNum_TxtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:text="Rating : "
-            app:layout_constraintTop_toBottomOf="@id/placeAddressView"
-            app:layout_constraintLeft_toRightOf="@id/placeImage"/>
+            android:layout_marginStart="3dp"
+            android:text="@string/placeRatingNumView_Txt"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingNum_View"
+            app:layout_constraintStart_toEndOf="@id/ratingNum_View"
+            app:layout_constraintTop_toTopOf="@+id/ratingNum_View" />
 
         <TextView
-            android:id="@+id/ratingNum"
+            android:id="@+id/ratingNum_Txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Example"
-            app:layout_constraintTop_toBottomOf="@id/addressName"
-            app:layout_constraintLeft_toRightOf="@id/placeRatingView"/>
-
-        <Button
-            android:id="@+id/collectionDelBtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/ic_delete"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            android:layout_marginStart="3dp"
+            android:text="@string/RatingNumberTxt_Example"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingNum_View"
+            app:layout_constraintStart_toEndOf="@id/ratingNum_TxtView"
+            app:layout_constraintTop_toTopOf="@+id/ratingNum_View" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

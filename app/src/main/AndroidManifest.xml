@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".view.AndroidApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="What&apos;s Eat?"
+        android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:allowBackup="false" >
+        android:theme="@style/Theme.Whats_eat">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
         <activity
-            android:name=".view.activity.LogoActivity"
-            android:theme="@style/Theme.AppCompat"
+            android:name=".view.ActivityLogo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".view.activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
-            android:name=".view.activity.SignInActivity"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
-            android:name=".view.activity.FindPwActivity"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
-            android:name=".view.activity.MainActivity"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
-            android:name=".view.activity.ViewPlaceActivity"
-            android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".view.ActivityLogIn" />
+        <activity android:name=".view.ActivitySignIn" />
+        <activity android:name=".view.ActivityFindPassword" />
+        <activity android:name=".view.ActivityMain" />
 
         <meta-data
             android:name="preloaded_fonts"

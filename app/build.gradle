@@ -1,13 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'kotlin-kapt'
 }
 
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.dagger.hilt.android'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     compileSdkVersion 33
@@ -21,6 +24,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
 
+        buildConfigField "String", "PLACE_API_KEY", properties["MAPS_API_KEY"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,18 +39,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+    kotlinOptions { jvmTarget = '1.8'}
 
-    buildFeatures {
-        viewBinding = true
-    }
+    buildFeatures { viewBinding = true }
+
     namespace 'com.example.whats_eat'
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
 
@@ -61,8 +62,8 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // Android Jetpack ViewModel, LiveData
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-beta01"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
     // Dagger-Hilt DI(Dependency Injection) Tool
     implementation "com.google.dagger:hilt-android:2.44.2"
@@ -82,12 +83,12 @@ dependencies {
 
     // FireBase Auth, RealTime DataBase
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.firebase:firebase-auth:22.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
-    implementation 'com.google.firebase:firebase-database:20.1.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+    implementation 'com.google.firebase:firebase-database:20.2.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
 
     // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -98,6 +99,9 @@ dependencies {
 
     // Easy Permission
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    //ViewPager2
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }
 
 kapt { correctErrorTypes = true }
