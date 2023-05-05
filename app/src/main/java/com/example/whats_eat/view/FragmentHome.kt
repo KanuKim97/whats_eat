@@ -43,6 +43,7 @@ class FragmentHome: Fragment() {
     @Inject @MainDispatcher lateinit var mainDispatcher: CoroutineDispatcher
     @Inject @IoDispatcher lateinit var ioDispatcher: CoroutineDispatcher
     @Inject lateinit var locationRequest: CurrentLocationRequest
+    @Inject lateinit var toastMessage: Toast
 
     private var _homeBinding: FragmentHomeBinding? = null
     private val homeBinding get() = _homeBinding!!
@@ -63,19 +64,11 @@ class FragmentHome: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (!checkGPSON()) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.ActiveGPS),
-                Toast.LENGTH_SHORT
-            ).show()
-            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-        } else {
-            getCurrentLocation()
-        }
+        checkGPSFunction()
 
         initMainBannerViewPager()
         initSubItemGridView()
+
         setMainBannerAdapter()
         setSubItemGridAdapter()
     }
@@ -83,6 +76,18 @@ class FragmentHome: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _homeBinding = null
+    }
+
+    private fun checkGPSFunction() {
+        if(!checkGPSON()) {
+            toastMessage.apply {
+                setText(R.string.ActiveGPS)
+                duration = Toast.LENGTH_SHORT
+            }.show()
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+        } else {
+            getCurrentLocation()
+        }
     }
 
     private fun initMainBannerViewPager(): Job = lifecycleScope.launch(mainDispatcher) {
@@ -148,6 +153,8 @@ class FragmentHome: Fragment() {
                 if (subLocalList[element].subLocality != null) {
                     homeBinding.locationTxt.text = subLocalList[element].subLocality
                     break
+                } else {
+                    homeBinding.locationTxt.visibility = View.GONE
                 }
             }
         }

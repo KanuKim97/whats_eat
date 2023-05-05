@@ -29,10 +29,13 @@ import javax.inject.Inject
 class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     @Inject lateinit var imageLoader: RequestManager
-    private lateinit var mapView: MapView
+
     private var _detailBinding: FragmentDetailPlaceBinding? = null
     private val detailBinding get() = _detailBinding!!
     private val detailPlaceViewModel: DetailPlaceViewModel by viewModels()
+
+    private lateinit var mapView: MapView
+
     private val placeID: String by lazy { setPlaceID() }
     private val markerOption: MarkerOptions by lazy { setMarkerOptions() }
 

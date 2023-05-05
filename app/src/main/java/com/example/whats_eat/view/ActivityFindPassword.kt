@@ -7,24 +7,20 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.R
-import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityFindPwBinding
 import com.example.whats_eat.viewModel.FindPwViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
     @Inject lateinit var toastMessage: Toast
-    @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
+
     private val findPwBinding by lazy { ActivityFindPwBinding.inflate(layoutInflater) }
     private val findPwViewModel: FindPwViewModel by viewModels()
+
     private val userEmail: String by lazy { setUserEmail() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,17 +43,17 @@ class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
 
     private fun setUserEmail(): String = findPwBinding.passwordEmailInput.text.toString()
 
-    private fun sendPasswordResetEmail(userEmail: String) =
+    private fun sendPasswordResetEmail(userEmail: String): Job =
         findPwViewModel.sendPasswordResetEmail(userEmail)
 
-    private fun updateUI(): Unit = findPwViewModel.sendResetEmail.observe(this) {
-        lifecycleScope.launch(mainDispatcher) {
-            if (it.isSuccess) {
+    private fun updateUI(): Unit =
+        findPwViewModel.sendResetEmail.observe(this) { isEmailSendSuccess ->
+            if (isEmailSendSuccess.isSuccess) {
                 toastMessage.apply {
                     setText(R.string.SendResetEmail_Toast)
                     duration = Toast.LENGTH_SHORT
                 }.show()
-                startActivity(Intent(this@ActivityFindPassword, ActivityLogIn::class.java))
+                startActivity(Intent(this, ActivityLogIn::class.java))
             } else {
                 toastMessage.apply {
                     setText(R.string.EmailNotExist_Toast)
@@ -66,7 +62,6 @@ class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
                 findPwBinding.passwordEmailInput.text?.clear()
             }
         }
-    }
 
 
     private fun validateUserEmail(userEmail: String) {

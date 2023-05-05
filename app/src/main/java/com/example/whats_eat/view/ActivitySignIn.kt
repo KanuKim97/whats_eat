@@ -17,6 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ActivitySignIn : AppCompatActivity(), View.OnClickListener {
     @Inject lateinit var toastMessage: Toast
+
     private val signInBinding by lazy { ActivitySignInBinding.inflate(layoutInflater) }
     private val signInViewModel: SignInViewModel by viewModels()
 

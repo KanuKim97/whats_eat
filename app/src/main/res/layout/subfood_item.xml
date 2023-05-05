@@ -19,7 +19,6 @@
         android:layout_alignStart="@id/subFood_View"
         android:layout_alignEnd="@id/subFood_View"
         android:layout_alignBottom="@id/subFood_View"
-        android:text="@string/PlaceName"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center" />

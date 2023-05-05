@@ -4,24 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import android.Manifest
 import com.example.whats_eat.R
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogoBinding
 import com.example.whats_eat.viewModel.LogoViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityLogo : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
-    @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
     private val logoBinding by lazy { ActivityLogoBinding.inflate(layoutInflater) }
     private val logoViewModel: LogoViewModel by viewModels()
 
@@ -31,15 +24,13 @@ class ActivityLogo : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         setContentView(logoBinding.root)
     }
 
-    private fun updateUI(): Unit = logoViewModel.readFireAuth.observe(this) {
-        lifecycleScope.launch(mainDispatcher) {
+    private fun updateUI(): Unit =
+        logoViewModel.readFireAuth.observe(this) { isSessionAlive ->
             if (hasLocationPermission()) {
-                if(it) {
-                    delay(Constant.DELAY_TIME_MILLIS)
+                if(isSessionAlive) {
                     startActivity(Intent(this@ActivityLogo, ActivityMain::class.java))
                     finish()
                 } else {
-                    delay(Constant.DELAY_TIME_MILLIS)
                     startActivity(Intent(this@ActivityLogo, ActivityLogIn::class.java))
                     finish()
                 }
@@ -47,7 +38,6 @@ class ActivityLogo : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 requestLocationPermission()
             }
         }
-    }
 
     private fun hasLocationPermission(): Boolean =
         EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -68,9 +58,7 @@ class ActivityLogo : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        updateUI()
-    }
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) = updateUI()
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if (EasyPermissions.somePermissionDenied(this, perms.first())) {
@@ -79,6 +67,5 @@ class ActivityLogo : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             requestLocationPermission()
         }
     }
-
 
 }

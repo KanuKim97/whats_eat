@@ -19,11 +19,7 @@ class CollectionViewModel @Inject constructor(
 ): ViewModel() {
     val collectionFlow: Flow<ArrayList<DetailPlace>> get() = dataBaseProducer.userCollection
 
-    init {
-        viewModelScope.launch(ioDispatcher) {
-            dataBaseProducer.loadUserCollection()
-        }
-    }
+    init { viewModelScope.launch(ioDispatcher) { dataBaseProducer.loadUserCollection() } }
 
     override fun onCleared() {
         super.onCleared()

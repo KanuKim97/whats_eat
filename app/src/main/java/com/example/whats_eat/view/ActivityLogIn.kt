@@ -6,23 +6,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.R
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.ActivityLogInBinding
 import com.example.whats_eat.viewModel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
     @Inject lateinit var toastMessage: Toast
-    @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
+
     private val logInBinding by lazy { ActivityLogInBinding.inflate(layoutInflater) }
     private val loginViewModel: LoginViewModel by viewModels()
+
     private val userEmail: String by lazy { setUserEmail() }
     private val userPassword: String by lazy { setUserPassword() }
 
@@ -53,10 +50,10 @@ class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
     private fun loginEmailWithPassword(userEmail: String, userPassword: String): Job =
         loginViewModel.userLogIn(userEmail, userPassword)
 
-    private fun updateLogInUI(): Unit = loginViewModel.logInResult.observe(this) {
-        lifecycleScope.launch(mainDispatcher) {
-            if (it.isSuccess) {
-                startActivity(Intent(this@ActivityLogIn, ActivityMain::class.java))
+    private fun updateLogInUI(): Unit =
+        loginViewModel.logInResult.observe(this) { isLogInSuccess ->
+            if (isLogInSuccess.isSuccess) {
+                startActivity(Intent(this, ActivityMain::class.java))
                 finish()
             } else {
                 toastMessage.apply {
@@ -65,7 +62,6 @@ class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
                 }.show()
             }
         }
-    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -22,6 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FragmentProfile: Fragment(), View.OnClickListener {
     @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
+
     private var _proFileBinding: FragmentProfileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
     private val profileViewModel: ProfileViewModel by viewModels()
@@ -36,32 +37,21 @@ class FragmentProfile: Fragment(), View.OnClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        proFileBinding.signOutBtn.setOnClickListener(this)
-        proFileBinding.updateBtn.setOnClickListener(this)
-        proFileBinding.deleteBtn.setOnClickListener(this)
+        proFileBinding.accountSignOutBtn.setOnClickListener(this)
+        proFileBinding.accountDeleteBtn.setOnClickListener(this)
 
-        lifecycleScope.launch(mainDispatcher) {
-            profileViewModel.userFlow.collect {
-                proFileBinding.nickNameTxt.text = it.userName
-                proFileBinding.userEmailTxt.text = it.userEmail
-            }
-        }
+        setUserProfile()
+        setUserCollectionCount()
 
-        lifecycleScope.launch(mainDispatcher) {
-            profileViewModel.collectionFlow.collect {
-                proFileBinding.profileRateNum.text = it
-            }
-        }
-
-        profileViewModel.isAccountDeleteSuccess.observe(viewLifecycleOwner) {
-            if (it) {
+        profileViewModel.isAccountDeleteSuccess.observe(viewLifecycleOwner) { isDeleteSuccess ->
+            if (isDeleteSuccess) {
                 startActivity(Intent(requireContext(), ActivityLogIn::class.java))
                 activity?.finish()
             }
         }
 
-        profileViewModel.isSignOutSuccess.observe(viewLifecycleOwner) {
-            if (it) {
+        profileViewModel.isSignOutSuccess.observe(viewLifecycleOwner) { isSignOutSuccess ->
+            if (isSignOutSuccess) {
                 startActivity(Intent(requireContext(), ActivityLogIn::class.java))
                 activity?.finish()
             }
@@ -73,11 +63,25 @@ class FragmentProfile: Fragment(), View.OnClickListener {
         _proFileBinding = null
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.signOut_Btn -> showSignOutUserDialog()
-            R.id.deleteBtn ->  showDeleteUserDialog()
-            R.id.updateBtn -> {  }
+    override fun onClick(view: View?) {
+        when(view?.id) {
+            R.id.accountSignOut_Btn -> showSignOutUserDialog()
+            R.id.accountDelete_Btn ->  showDeleteUserDialog()
+        }
+    }
+
+    private fun setUserProfile(): Job = lifecycleScope.launch(mainDispatcher) {
+        profileViewModel.userFlow.collect {
+            proFileBinding.userNickNameTxt.text = it.userName
+            proFileBinding.userEmailTxt.text = it.userEmail
+        }
+    }
+
+    private fun setUserCollectionCount(): Job = lifecycleScope.launch(mainDispatcher) {
+        lifecycleScope.launch(mainDispatcher) {
+            profileViewModel.collectionFlow.collect {
+                proFileBinding.userCollectionCount.text = it
+            }
         }
     }
 
@@ -94,7 +98,7 @@ class FragmentProfile: Fragment(), View.OnClickListener {
             .show()
 
 
-    private fun showDeleteUserDialog() =
+    private fun showDeleteUserDialog(): Unit =
         AlertDialog.Builder(requireContext())
             .setMessage(R.string.Box_delAccount)
             .setPositiveButton(R.string.btn_delBox_Yes) { _, _ -> deleteUserAccount() }
