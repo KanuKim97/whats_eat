@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.database.LoadAllCollectionUseCase
+import com.example.domain.usecase.database.SaveCollectionUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.flow.producer.FirebaseDBProducer
-import com.example.whats_eat.data.flow.producer.PlaceApiProducer
-import com.example.whats_eat.view.dataViewClass.DetailPlace
+import com.example.whats_eat.presenter.ViewModelItems.DetailPlace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -19,14 +19,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailPlaceViewModel @Inject constructor(
-    private val placeApiProducer: PlaceApiProducer,
-    private val fireDBProducer: FirebaseDBProducer,
+    private val saveCollectionUseCase: SaveCollectionUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _detailPlaceResult = MutableLiveData<DetailPlace>()
     val detailPlaceResult: LiveData<DetailPlace> get() = _detailPlaceResult
 
-    fun getPlaceDetailData(placeID: String): Job = viewModelScope.launch(ioDispatcher) {
+/*    fun getPlaceDetailData(placeID: String): Job = viewModelScope.launch(ioDispatcher) {
         placeApiProducer.detailedPlace(placeID).collect { result ->
             _detailPlaceResult.postValue(
                 DetailPlace(
@@ -43,8 +42,8 @@ class DetailPlaceViewModel @Inject constructor(
     }
 
     fun saveUserCollection(place: DetailPlace): Job = viewModelScope.launch(ioDispatcher) {
-        fireDBProducer.saveUserCollection(place)
-    }
+        saveCollectionUseCase.saveUserCollection(place)
+    }*/
 
     private fun getPhotoUrl(photoReference: String): String =
         StringBuilder(Constant.PLACE_PHOTO_API_URI)

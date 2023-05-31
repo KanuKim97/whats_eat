@@ -1,7 +1,7 @@
 package com.example.whats_eat.data.di.module
 
+import com.example.data.api.PlaceAPIService
 import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.remote.IGoogleAPIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +42,7 @@ object PlaceApiModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): IGoogleAPIService =
-        retrofit.create(IGoogleAPIService::class.java)
+    fun provideApiService(retrofit: Retrofit): PlaceAPIService =
+        retrofit.create(PlaceAPIService::class.java)
 
 }

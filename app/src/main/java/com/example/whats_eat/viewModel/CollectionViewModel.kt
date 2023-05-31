@@ -2,9 +2,10 @@ package com.example.whats_eat.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.database.LoadAllCollectionCountUseCase
+import com.example.domain.usecase.database.LoadAllCollectionUseCase
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.flow.producer.FirebaseDBProducer
-import com.example.whats_eat.view.dataViewClass.DetailPlace
+import com.example.whats_eat.presenter.ViewModelItems.DetailPlace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancel
@@ -14,12 +15,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    private val dataBaseProducer: FirebaseDBProducer
+    private val loadCollectionUseCase: LoadAllCollectionUseCase,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    val collectionFlow: Flow<ArrayList<DetailPlace>> get() = dataBaseProducer.userCollection
 
-    init { viewModelScope.launch(ioDispatcher) { dataBaseProducer.loadUserCollection() } }
+    //val collectionFlow: Flow<ArrayList<DetailPlace>> get() = dataBaseProducer.userCollection
+
+    init { viewModelScope.launch(ioDispatcher) { loadCollectionUseCase.loadAllUserCollection() } }
 
     override fun onCleared() {
         super.onCleared()

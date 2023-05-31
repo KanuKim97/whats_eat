@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.auth.CreateAccountUseCase
+import com.example.domain.usecase.database.SaveProfileUseCase
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
-import com.example.whats_eat.data.flow.producer.FirebaseDBProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val authProvider: FirebaseAuthProducer,
-    private val dataBaseProducer: FirebaseDBProducer,
+    private val createAccountUseCase: CreateAccountUseCase,
+    private val saveProfileUseCase: SaveProfileUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _isCreateSuccess = MutableLiveData<Boolean>()
@@ -29,10 +29,10 @@ class SignInViewModel @Inject constructor(
         userFullName: String,
         userNickName: String
     ): Job = viewModelScope.launch(ioDispatcher) {
-        authProvider.createUserAccount(userEmail, userPassword).collect {
+        createAccountUseCase(userEmail, userPassword).collect {
             when {
                 it.isSuccess -> {
-                    dataBaseProducer.saveUserProfile(userEmail, userNickName, userFullName)
+                    saveProfileUseCase.saveUserProfile(userEmail, userNickName, userFullName)
                     _isCreateSuccess.postValue(true)
                 }
                 it.isFailure -> {

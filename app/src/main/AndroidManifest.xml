@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".view.AndroidApp"
+        android:name=".presenter.AndroidApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,7 +28,7 @@
             android:required="false" />
 
         <activity
-            android:name=".view.ActivityLogo"
+            android:name=".presenter.ActivityLogo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,10 +36,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ActivityLogIn" />
-        <activity android:name=".view.ActivitySignIn" />
-        <activity android:name=".view.ActivityFindPassword" />
-        <activity android:name=".view.ActivityMain" />
+        <activity android:name=".presenter.ActivityLogIn" />
+        <activity android:name=".presenter.ActivitySignIn" />
+        <activity android:name=".presenter.ActivityFindPassword" />
+        <activity android:name=".presenter.ActivityMain" />
 
         <meta-data
             android:name="preloaded_fonts"

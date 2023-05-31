@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.auth.SendResetEmailUseCase
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancel
@@ -14,14 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindPwViewModel @Inject constructor(
-    private val authProducer: FirebaseAuthProducer,
+    private val sendResetEmailUseCase: SendResetEmailUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _sendResetEmail = MutableLiveData<Result<Unit>>()
     val sendResetEmail: LiveData<Result<Unit>> get() = _sendResetEmail
 
     fun sendPasswordResetEmail(userEmail: String) = viewModelScope.launch(ioDispatcher) {
-        authProducer.sendPasswordResetEmail(userEmail).collect {
+        sendResetEmailUseCase.sendPasswordResetEmail(userEmail).collect {
             _sendResetEmail.postValue(it)
         }
     }

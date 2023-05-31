@@ -7,9 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.flow.intermediary.PlaceApiIntermediary
-import com.example.whats_eat.view.adapter.adapterItems.MainBannerItems
-import com.example.whats_eat.view.adapter.adapterItems.SubFoodItems
+import com.example.whats_eat.presenter.adapter.adapterItems.MainBannerItems
+import com.example.whats_eat.presenter.adapter.adapterItems.SubFoodItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val placeApiIntermediary: PlaceApiIntermediary,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _mainBannerItems = MutableLiveData<ArrayList<MainBannerItems>>()
@@ -29,6 +27,7 @@ class HomeViewModel @Inject constructor(
 
     private val bannerItems: ArrayList<MainBannerItems> = arrayListOf()
     private val subItems: ArrayList<SubFoodItems> = arrayListOf()
+/*
 
     fun getMainBannerItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
         placeApiIntermediary.getMainBannerItem(latLng).collect { results ->
@@ -61,6 +60,7 @@ class HomeViewModel @Inject constructor(
             _subFoodItems.postValue(subItems)
         }
     }
+*/
 
     private fun getPhotoUrl(photoReference: String): String =
         StringBuilder(Constant.PLACE_PHOTO_API_URI)
