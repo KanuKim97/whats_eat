@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import com.example.data.model.ProfileItem
-import com.example.data.placeModel.detailedPlace.DetailedPlace
+import com.example.domain.model.placeItem.detailedPlace.DetailedPlace
 import com.example.domain.model.CollectionItem
 import com.example.domain.repository.DataBaseRepository
 import com.google.android.gms.tasks.Task

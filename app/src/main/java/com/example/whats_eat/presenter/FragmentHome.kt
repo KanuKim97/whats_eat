@@ -132,8 +132,8 @@ class FragmentHome: Fragment() {
                 val lat: Double = location.result.latitude
                 val lng: Double = location.result.longitude
                 geoCoderService(lat, lng)
-/*                getMainBannerItems(StringBuilder("$lat, $lng").toString())
-                getSubFoodItems(StringBuilder("$lat, $lng").toString())*/
+                getMainBannerItems(StringBuilder("$lat, $lng").toString())
+                getSubFoodItems(StringBuilder("$lat, $lng").toString())
             }
         } catch (e: SecurityException) { e.printStackTrace() }
     }
@@ -158,9 +158,9 @@ class FragmentHome: Fragment() {
         }
     }
 
-/*  private fun getMainBannerItems(latLng: String): Job = homeViewModel.getMainBannerItems(latLng)
+  private fun getMainBannerItems(latLng: String): Job = homeViewModel.getMainBannerItems(latLng)
 
-    private fun getSubFoodItems(latLng: String): Job = homeViewModel.getSubFoodItems(latLng)
-    */
+  private fun getSubFoodItems(latLng: String): Job = homeViewModel.getSubGridViewItems(latLng)
+
 
 }

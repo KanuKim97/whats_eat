@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.placeItem.response.Results
+import com.example.domain.usecase.place.GetMainBannerItemsUseCase
+import com.example.domain.usecase.place.GetSubGridViewItemsUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.data.common.Constant
 import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
@@ -18,6 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val mainBannerUseCase: GetMainBannerItemsUseCase,
+    private val subGridViewUseCase: GetSubGridViewItemsUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _mainBannerItems = MutableLiveData<ArrayList<MainBannerItems>>()
@@ -27,18 +32,18 @@ class HomeViewModel @Inject constructor(
 
     private val bannerItems: ArrayList<MainBannerItems> = arrayListOf()
     private val subItems: ArrayList<SubFoodItems> = arrayListOf()
-/*
 
     fun getMainBannerItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
-        placeApiIntermediary.getMainBannerItem(latLng).collect { results ->
-            val result = results.sortedBy { it.rating }.slice(0..(results.lastIndex/2))
+        mainBannerUseCase(latLng).collect { results ->
+            val resultsItems: List<Results> =
+                results.sortedBy { it.rating }.slice(0..(results.lastIndex/2))
 
-            for (element in result) {
+            resultsItems.forEach {
                 bannerItems.add(
                     MainBannerItems(
-                        element.place_id.toString(),
-                        element.name.toString(),
-                        getPhotoUrl(element.photos?.get(0)?.photo_reference.toString())
+                        it.place_id.toString(),
+                        it.name.toString(),
+                        getPhotoUrl(it.photos?.get(0)?.photo_reference.toString())
                     )
                 )
             }
@@ -46,21 +51,20 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getSubFoodItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
-        placeApiIntermediary.getSubBannerItem(latLng).collect { results ->
-            for (element in results) {
+    fun getSubGridViewItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
+        subGridViewUseCase(latLng).collect { results ->
+            results.forEach {
                 subItems.add(
                     SubFoodItems(
-                        element.place_id.toString(),
-                        element.name.toString(),
-                        getPhotoUrl(element.photos?.get(0)?.photo_reference.toString())
+                        it.place_id.toString(),
+                        it.name.toString(),
+                        getPhotoUrl(it.photos?.get(0)?.photo_reference.toString())
                     )
                 )
             }
             _subFoodItems.postValue(subItems)
         }
     }
-*/
 
     private fun getPhotoUrl(photoReference: String): String =
         StringBuilder(Constant.PLACE_PHOTO_API_URI)

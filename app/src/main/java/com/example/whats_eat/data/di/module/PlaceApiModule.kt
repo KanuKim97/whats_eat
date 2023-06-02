@@ -1,6 +1,9 @@
 package com.example.whats_eat.data.di.module
 
 import com.example.data.api.PlaceAPIService
+import com.example.data.repository.PlaceApiRepositoryBaseImpl
+import com.example.data.repository.PlaceApiRepositoryImpl
+import com.example.domain.repository.PlaceApiRepositoryBase
 import com.example.whats_eat.data.common.Constant
 import dagger.Module
 import dagger.Provides
@@ -45,4 +48,8 @@ object PlaceApiModule {
     fun provideApiService(retrofit: Retrofit): PlaceAPIService =
         retrofit.create(PlaceAPIService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideApiBaseRepository(apiService: PlaceAPIService): PlaceApiRepositoryBase =
+        PlaceApiRepositoryBaseImpl(apiService)
 }

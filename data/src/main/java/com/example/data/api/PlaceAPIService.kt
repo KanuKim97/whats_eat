@@ -1,7 +1,7 @@
 package com.example.data.api
 
-import com.example.data.placeModel.detailedPlace.DetailedPlace
-import com.example.data.placeModel.nearByPlace.MyPlaces
+import com.example.domain.model.placeItem.detailedPlace.DetailedPlace
+import com.example.domain.model.placeItem.nearByPlace.MyPlaces
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
