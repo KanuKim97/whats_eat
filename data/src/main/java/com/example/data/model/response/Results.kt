@@ -1,4 +1,4 @@
-package com.example.data.placeModel.response
+package com.example.data.model.response
 
 import com.example.whats_eat.data.remote.model.response.content.loaction.Geometry
 import com.example.whats_eat.data.remote.model.response.content.period.OpeningHours

@@ -1,13 +1,11 @@
 package com.example.whats_eat.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.placeItem.response.Results
-import com.example.domain.usecase.place.GetMainBannerItemsUseCase
-import com.example.domain.usecase.place.GetSubGridViewItemsUseCase
+import com.example.domain.usecase.place.GetNearByPlaceUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
@@ -22,8 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val mainBannerUseCase: GetMainBannerItemsUseCase,
-    private val subGridViewUseCase: GetSubGridViewItemsUseCase,
+    private val getNearByPlaceUseCase: GetNearByPlaceUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _mainBannerItems = MutableLiveData<ArrayList<MainBannerItems>>()
@@ -35,9 +32,7 @@ class HomeViewModel @Inject constructor(
     private val subItems: ArrayList<SubFoodItems> = arrayListOf()
 
     fun getMainBannerItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
-        mainBannerUseCase(latLng).collect { results ->
-            Log.d(Constant.LOG_TAG, "$results")
-
+        getNearByPlaceUseCase(latLng).collect { results ->
             val resultsItems: List<Results> =
                 results.sortedBy { it.rating }.slice(0..(results.lastIndex/2))
 
@@ -55,7 +50,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getSubGridViewItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
-        subGridViewUseCase(latLng).collect { results ->
+        getNearByPlaceUseCase(latLng).collect { results ->
             results.forEach {
                 subItems.add(
                     SubFoodItems(

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.filterNotNull
 
 interface DataBaseRepository {
     val userProfile: Flow<ProfileItem>
-    val collectionItem: Flow<ArrayList<DetailedPlace>>
+    val collectionItem: Flow<ArrayList<CollectionItem>>
     val collectionItemsCnt: Flow<String>
 
     suspend fun saveUserProfile(userEmail: String, userNickName: String, userFullName: String)

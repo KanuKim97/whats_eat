@@ -22,17 +22,17 @@ class DataBaseRepositoryImpl @Inject constructor(
     private val database: FirebaseDatabase
 ): DataBaseRepository {
     private val _userProfile = MutableStateFlow<ProfileItem?>(null)
-    private val _collectionItems = MutableStateFlow<ArrayList<DetailedPlace>?>(null)
+    private val _collectionItems = MutableStateFlow<ArrayList<CollectionItem>?>(null)
     private val _collectionItemsCnt = MutableStateFlow<String?>(null)
 
     private val _currentUser: String by lazy { auth.currentUser?.uid.toString() }
     private val _userReference: DatabaseReference by lazy { database.reference.child(_currentUser) }
     private var eventListener: ValueEventListener? = null
-    private var collectionList = ArrayList<DetailedPlace>()
+    private var collectionList = ArrayList<CollectionItem>()
 
     override val userProfile: Flow<ProfileItem>
         get() = _userProfile.filterNotNull()
-    override val collectionItem: Flow<ArrayList<DetailedPlace>>
+    override val collectionItem: Flow<ArrayList<CollectionItem>>
         get() = _collectionItems.filterNotNull()
     override val collectionItemsCnt: Flow<String>
         get() = _collectionItemsCnt.filterNotNull()
@@ -72,7 +72,7 @@ class DataBaseRepositoryImpl @Inject constructor(
             .addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach {
-                        collectionList.add(it.getValue(DetailedPlace::class.java) as DetailedPlace)
+                        collectionList.add(it.getValue(CollectionItem::class.java) as CollectionItem)
                     }
                     _collectionItems.value = collectionList
                 }

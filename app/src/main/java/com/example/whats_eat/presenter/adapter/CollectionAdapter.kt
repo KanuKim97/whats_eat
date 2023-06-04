@@ -5,17 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.domain.model.CollectionItem
 import com.example.whats_eat.databinding.CollectionItemBinding
-import com.example.whats_eat.presenter.ViewModelItems.DetailPlace
 import javax.inject.Inject
 
-class CollectionAdapter @Inject constructor(private val placeList: ArrayList<DetailPlace>)
-    : RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
+class CollectionAdapter @Inject constructor(
+    private val placeList: ArrayList<CollectionItem>
+): RecyclerView.Adapter<CollectionAdapter.CollectionViewHolder>() {
 
     inner class CollectionViewHolder(
         private val binding: CollectionItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(placeList: DetailPlace) {
+        fun bind(placeList: CollectionItem) {
             binding.placeNameTxt.text = placeList.name
             binding.placeAddressTxt.text = placeList.formattedAddress
             binding.ratingNumTxt.text = placeList.rating.toString()

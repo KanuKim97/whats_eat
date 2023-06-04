@@ -27,8 +27,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
-    @MainDispatcher
-    @Inject lateinit var mainDispatcher: CoroutineDispatcher
+    @Inject @MainDispatcher lateinit var mainDispatcher: CoroutineDispatcher
     @Inject lateinit var imageLoader: RequestManager
 
     private var _detailBinding: FragmentDetailPlaceBinding? = null
@@ -42,7 +41,7 @@ class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //getPlaceInformation(placeID)
+        getPlaceInformation(placeID)
     }
 
     override fun onCreateView(
@@ -65,7 +64,7 @@ class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
             loadPlaceImage(result.photoRef)
 
             detailBinding.AddCollectionBtn.setOnClickListener {
-                //detailPlaceViewModel.saveUserCollection(result)
+                detailPlaceViewModel.saveCollectionItems(result)
             }
         }
     }
@@ -116,8 +115,8 @@ class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
 
     private fun setPlaceID(): String = arguments?.getString("PlaceID").toString()
 
-    /*private fun getPlaceInformation(PlaceID: String): Job =
-        detailPlaceViewModel.getPlaceDetailData(PlaceID)*/
+    private fun getPlaceInformation(PlaceID: String): Job =
+        detailPlaceViewModel.getDetailPlaceItem(PlaceID)
 
     private fun setPlaceTitle(name: String?): Job = lifecycleScope.launch(mainDispatcher) {
         detailBinding.placeTitle.text = name

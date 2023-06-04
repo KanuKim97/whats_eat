@@ -1,4 +1,4 @@
-package com.example.data.placeModel.detailedPlace
+package com.example.data.model.detailedPlace
 
 import com.example.domain.model.placeItem.response.Results
 

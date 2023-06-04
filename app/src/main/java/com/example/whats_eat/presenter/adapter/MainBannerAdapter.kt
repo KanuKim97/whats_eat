@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MainBannerAdapter @Inject constructor(
     private val context: FragmentActivity,
     private val placeList: ArrayList<MainBannerItems>
-) : RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {
+): RecyclerView.Adapter<MainBannerAdapter.MainBannerViewHolder>() {
 
     inner class MainBannerViewHolder(
         private val binding: MainbannerItemBinding

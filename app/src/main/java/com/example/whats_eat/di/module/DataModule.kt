@@ -2,12 +2,8 @@ package com.example.whats_eat.di.module
 
 import com.example.data.repository.AuthRepositoryImpl
 import com.example.data.repository.DataBaseRepositoryImpl
-import com.example.data.repository.PlaceApiRepositoryBaseImpl
-import com.example.data.repository.PlaceApiRepositoryImpl
 import com.example.domain.repository.AuthRepository
 import com.example.domain.repository.DataBaseRepository
-import com.example.domain.repository.PlaceApiRepository
-import com.example.domain.repository.PlaceApiRepositoryBase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
@@ -38,10 +34,5 @@ object DataModule {
         auth: FirebaseAuth,
         dataBase: FirebaseDatabase
     ): DataBaseRepository = DataBaseRepositoryImpl(auth, dataBase)
-
-    @Provides
-    fun providePlaceBaseRepository(
-        placeBaseRepository: PlaceApiRepositoryBaseImpl
-    ): PlaceApiRepository = PlaceApiRepositoryImpl(placeBaseRepository)
 
 }

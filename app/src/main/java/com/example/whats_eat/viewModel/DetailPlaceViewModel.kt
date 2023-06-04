@@ -4,43 +4,49 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.CollectionItem
 import com.example.domain.usecase.database.SaveCollectionUseCase
+import com.example.domain.usecase.place.GetDetailPlaceItemUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.presenter.ViewModelItems.DetailPlace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailPlaceViewModel @Inject constructor(
+    private val getDetailPlaceItemUseCase: GetDetailPlaceItemUseCase,
     private val saveCollectionUseCase: SaveCollectionUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    private val _detailPlaceResult = MutableLiveData<DetailPlace>()
-    val detailPlaceResult: LiveData<DetailPlace> get() = _detailPlaceResult
+    private val _detailPlaceResult = MutableLiveData<CollectionItem>()
+    val detailPlaceResult: LiveData<CollectionItem> get() = _detailPlaceResult
 
-/*    fun getPlaceDetailData(placeID: String): Job = viewModelScope.launch(ioDispatcher) {
-        placeApiProducer.detailedPlace(placeID).collect { result ->
-            _detailPlaceResult.postValue(
-                DetailPlace(
-                    name = result.name,
-                    formattedAddress = result.formatted_address,
-                    isOpenNow = result.openingHours?.open_now,
-                    rating = result.rating,
-                    lat = result.geometry?.location?.lat,
-                    lng = result.geometry?.location?.lng,
-                    photoRef = getPhotoUrl(result.photos?.get(0)?.photo_reference.toString())
+    fun getDetailPlaceItem(placeId: String): Job = viewModelScope.launch(ioDispatcher) {
+        getDetailPlaceItemUseCase(placeId).collect { result ->
+            if (result != null) {
+                _detailPlaceResult.postValue(
+                    CollectionItem(
+                        name = result.name,
+                        formattedAddress = result.formatted_address,
+                        isOpenNow = result.openingHours?.open_now,
+                        rating = result.rating,
+                        lat = result.geometry?.location?.lat,
+                        lng = result.geometry?.location?.lng,
+                        photoRef = getPhotoUrl(result.photos?.get(0)?.photo_reference.toString())
+                    )
                 )
-            )
+            }
         }
     }
 
-    fun saveUserCollection(place: DetailPlace): Job = viewModelScope.launch(ioDispatcher) {
-        saveCollectionUseCase.saveUserCollection(place)
-    }*/
+    fun saveCollectionItems(collection: CollectionItem): Job = viewModelScope.launch(ioDispatcher) {
+        saveCollectionUseCase.saveUserCollection(collection)
+    }
 
     private fun getPhotoUrl(photoReference: String): String =
         StringBuilder(Constant.PLACE_PHOTO_API_URI)

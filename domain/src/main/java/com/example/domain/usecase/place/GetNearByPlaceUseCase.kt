@@ -5,10 +5,10 @@ import com.example.domain.repository.PlaceApiRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetSubGridViewItemsUseCase @Inject constructor(
-    private val placeApiIntermediary: PlaceApiRepository
+class GetNearByPlaceUseCase @Inject constructor(
+    private val placeApiProducer: PlaceApiRepository
 ) {
     operator fun invoke(
         latLng: String
-    ): Flow<ArrayList<Results>> = placeApiIntermediary.getSubBannerItems(latLng)
+    ): Flow<ArrayList<Results>> = placeApiProducer.nearByPlace(latLng)
 }

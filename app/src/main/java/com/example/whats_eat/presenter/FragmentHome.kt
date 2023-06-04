@@ -158,9 +158,8 @@ class FragmentHome: Fragment() {
         }
     }
 
-  private fun getMainBannerItems(latLng: String): Job = homeViewModel.getMainBannerItems(latLng)
+    private fun getMainBannerItems(latLng: String): Job = homeViewModel.getMainBannerItems(latLng)
 
-  private fun getSubFoodItems(latLng: String): Job = homeViewModel.getSubGridViewItems(latLng)
-
+    private fun getSubFoodItems(latLng: String): Job = homeViewModel.getSubGridViewItems(latLng)
 
 }

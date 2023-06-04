@@ -1,4 +1,4 @@
-package com.example.data.placeModel.nearByPlace
+package com.example.data.model.nearByPlace
 
 import com.example.domain.model.placeItem.response.Results
 
