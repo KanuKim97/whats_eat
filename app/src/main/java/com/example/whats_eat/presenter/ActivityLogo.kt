@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import android.Manifest
 import com.example.whats_eat.R
-import com.example.whats_eat.data.common.Constant
+import com.example.whats_eat.common.Constant
 import com.example.whats_eat.databinding.ActivityLogoBinding
 import com.example.whats_eat.viewModel.LogoViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,23 +1,19 @@
-package com.example.whats_eat.data.di.module
+package com.example.whats_eat.di.module
 
-import com.example.data.api.PlaceAPIService
 import com.example.data.repository.AuthRepositoryImpl
 import com.example.data.repository.DataBaseRepositoryImpl
 import com.example.data.repository.PlaceApiRepositoryBaseImpl
+import com.example.data.repository.PlaceApiRepositoryImpl
 import com.example.domain.repository.AuthRepository
 import com.example.domain.repository.DataBaseRepository
+import com.example.domain.repository.PlaceApiRepository
 import com.example.domain.repository.PlaceApiRepositoryBase
-import com.example.whats_eat.data.common.Constant
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -42,5 +38,10 @@ object DataModule {
         auth: FirebaseAuth,
         dataBase: FirebaseDatabase
     ): DataBaseRepository = DataBaseRepositoryImpl(auth, dataBase)
+
+    @Provides
+    fun providePlaceBaseRepository(
+        placeBaseRepository: PlaceApiRepositoryBaseImpl
+    ): PlaceApiRepository = PlaceApiRepositoryImpl(placeBaseRepository)
 
 }

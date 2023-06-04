@@ -1,8 +1,8 @@
 package com.example.data.repository
 
-import com.example.data.model.ProfileItem
 import com.example.domain.model.placeItem.detailedPlace.DetailedPlace
 import com.example.domain.model.CollectionItem
+import com.example.domain.model.ProfileItem
 import com.example.domain.repository.DataBaseRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -24,14 +24,18 @@ class DataBaseRepositoryImpl @Inject constructor(
     private val _userProfile = MutableStateFlow<ProfileItem?>(null)
     private val _collectionItems = MutableStateFlow<ArrayList<DetailedPlace>?>(null)
     private val _collectionItemsCnt = MutableStateFlow<String?>(null)
-    val userProfile: Flow<ProfileItem> get() = _userProfile.filterNotNull()
-    val collectionItems: Flow<ArrayList<DetailedPlace>> get() = _collectionItems.filterNotNull()
-    val collectionItemsCnt: Flow<String> get() = _collectionItemsCnt.filterNotNull()
 
     private val _currentUser: String by lazy { auth.currentUser?.uid.toString() }
     private val _userReference: DatabaseReference by lazy { database.reference.child(_currentUser) }
     private var eventListener: ValueEventListener? = null
     private var collectionList = ArrayList<DetailedPlace>()
+
+    override val userProfile: Flow<ProfileItem>
+        get() = _userProfile.filterNotNull()
+    override val collectionItem: Flow<ArrayList<DetailedPlace>>
+        get() = _collectionItems.filterNotNull()
+    override val collectionItemsCnt: Flow<String>
+        get() = _collectionItemsCnt.filterNotNull()
 
     override suspend fun saveUserProfile(
         userEmail: String,
@@ -83,8 +87,7 @@ class DataBaseRepositoryImpl @Inject constructor(
                 _collectionItemsCnt.value = it.result.childrenCount.toString()
             }.addOnFailureListener { _collectionItemsCnt.value = null }
 
-    fun stopEventListening() {
+    override fun stopEventListening() {
         eventListener?.apply { _userReference.removeEventListener(this) }
     }
-
 }

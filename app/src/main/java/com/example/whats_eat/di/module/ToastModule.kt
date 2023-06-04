@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.di.module
+package com.example.whats_eat.di.module
 
 import android.content.Context
 import android.widget.Toast

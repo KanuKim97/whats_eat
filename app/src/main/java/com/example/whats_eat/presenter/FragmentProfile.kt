@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.whats_eat.R
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
+import com.example.whats_eat.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.FragmentProfileBinding
 import com.example.whats_eat.viewModel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +21,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentProfile: Fragment(), View.OnClickListener {
-    @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
+    @MainDispatcher
+    @Inject lateinit var mainDispatcher: CoroutineDispatcher
 
     private var _proFileBinding: FragmentProfileBinding? = null
     private val proFileBinding get() = _proFileBinding!!
@@ -40,6 +41,9 @@ class FragmentProfile: Fragment(), View.OnClickListener {
         proFileBinding.accountSignOutBtn.setOnClickListener(this)
         proFileBinding.accountDeleteBtn.setOnClickListener(this)
 
+        setUserProfile()
+        setUserCollectionCount()
+
         isAccountDelete()
         isAccountSignOut()
     }
@@ -56,7 +60,7 @@ class FragmentProfile: Fragment(), View.OnClickListener {
         }
     }
 
-/*    private fun setUserProfile(): Job = lifecycleScope.launch(mainDispatcher) {
+    private fun setUserProfile(): Job = lifecycleScope.launch(mainDispatcher) {
         profileViewModel.userFlow.collect {
             proFileBinding.userNickNameTxt.text = it.userName
             proFileBinding.userEmailTxt.text = it.userEmail
@@ -69,7 +73,7 @@ class FragmentProfile: Fragment(), View.OnClickListener {
                 proFileBinding.userCollectionCount.text = it
             }
         }
-    }*/
+    }
 
     private fun isAccountDelete(): Unit =
         profileViewModel.isAccountDeleteSuccess.observe(viewLifecycleOwner) { isDeleteSuccess ->

@@ -1,10 +1,9 @@
-package com.example.whats_eat.data.di.module
+package com.example.whats_eat.di.module
 
 import com.example.data.api.PlaceAPIService
 import com.example.data.repository.PlaceApiRepositoryBaseImpl
-import com.example.data.repository.PlaceApiRepositoryImpl
 import com.example.domain.repository.PlaceApiRepositoryBase
-import com.example.whats_eat.data.common.Constant
+import com.example.whats_eat.common.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,4 +51,5 @@ object PlaceApiModule {
     @Singleton
     fun provideApiBaseRepository(apiService: PlaceAPIService): PlaceApiRepositoryBase =
         PlaceApiRepositoryBaseImpl(apiService)
+
 }

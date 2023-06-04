@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.di.dispatcherQualifier
+package com.example.whats_eat.di.dispatcherQualifier
 
 import javax.inject.Qualifier
 

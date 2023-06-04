@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.whats_eat.R
-import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
+import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.FragmentHomeBinding
 import com.example.whats_eat.presenter.adapter.MainBannerAdapter
 import com.example.whats_eat.presenter.adapter.SubFoodGridAdapter

@@ -4,17 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecase.database.LoadAllCollectionUseCase
 import com.example.domain.usecase.database.SaveCollectionUseCase
 import com.example.whats_eat.BuildConfig
-import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.common.Constant
+import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.presenter.ViewModelItems.DetailPlace
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

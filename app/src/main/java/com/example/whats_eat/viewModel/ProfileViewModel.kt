@@ -8,7 +8,7 @@ import com.example.domain.usecase.auth.DeleteAccountUseCase
 import com.example.domain.usecase.auth.LogOutAccountUseCase
 import com.example.domain.usecase.database.LoadAllCollectionCountUseCase
 import com.example.domain.usecase.database.LoadProfileUseCase
-import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -29,10 +29,8 @@ class ProfileViewModel @Inject constructor(
     val isAccountDeleteSuccess: LiveData<Boolean> get() = _isAccountDeleteSuccess
     val isSignOutSuccess: LiveData<Boolean> get() = _isSignOutSuccess
 
-    /*
-    val userFlow: Flow<ProfileClass> get() = loadProfileUseCase.userProfile
-    val collectionFlow: Flow<String> get() = dataBaseProducer.userCollectionCount
-    */
+    val userFlow get() = loadProfileUseCase.userProfile
+    val collectionFlow get() = loadCollectionCntUseCase.collectionItemCnt
 
     init {
         viewModelScope.launch(ioDispatcher) {

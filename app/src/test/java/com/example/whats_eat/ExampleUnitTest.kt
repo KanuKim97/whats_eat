@@ -1,6 +1,6 @@
 package com.example.whats_eat
 
-import com.example.whats_eat.data.common.Constant
+import com.example.whats_eat.common.Constant
 import com.google.android.gms.maps.model.LatLng
 import org.junit.Test
 import org.junit.Assert.*

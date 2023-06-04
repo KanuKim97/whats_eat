@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
+import com.example.whats_eat.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.presenter.adapter.CollectionAdapter
 import com.example.whats_eat.databinding.FragmentCollectionBinding
 import com.example.whats_eat.viewModel.CollectionViewModel
@@ -21,7 +21,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentCollection: Fragment() {
-    @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
+    @MainDispatcher
+    @Inject lateinit var mainDispatcher: CoroutineDispatcher
 
     private var _collectionBinding: FragmentCollectionBinding? = null
     private val collectionBinding get() = _collectionBinding!!
@@ -55,8 +56,8 @@ class FragmentCollection: Fragment() {
         }
     }
 
-    /*private fun setCollectionAdapter(): Job = lifecycleScope.launch(mainDispatcher) {
-        collectionViewModel.collectionFlow.collect {
+/*    private fun setCollectionAdapter(): Job = lifecycleScope.launch(mainDispatcher) {
+        collectionViewModel.collectionItems.collect {
             collectionRecyclerView.adapter = CollectionAdapter(it)
         }
     }*/

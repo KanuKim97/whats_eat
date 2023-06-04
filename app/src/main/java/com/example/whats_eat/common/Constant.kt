@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.common
+package com.example.whats_eat.common
 
 import com.google.android.gms.location.Priority
 

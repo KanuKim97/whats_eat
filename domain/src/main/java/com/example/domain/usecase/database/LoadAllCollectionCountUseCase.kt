@@ -8,5 +8,7 @@ import javax.inject.Inject
 class LoadAllCollectionCountUseCase @Inject constructor(
     private val DataBaseRepo: DataBaseRepository
 ) {
+    val collectionItemCnt = DataBaseRepo.collectionItemsCnt
+
     fun loadAllUserCollectionCount(): Task<DataSnapshot> = DataBaseRepo.loadUserAllCollectionCount()
 }

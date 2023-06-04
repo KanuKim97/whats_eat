@@ -1,5 +1,6 @@
 package com.example.whats_eat.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +9,8 @@ import com.example.domain.model.placeItem.response.Results
 import com.example.domain.usecase.place.GetMainBannerItemsUseCase
 import com.example.domain.usecase.place.GetSubGridViewItemsUseCase
 import com.example.whats_eat.BuildConfig
-import com.example.whats_eat.data.common.Constant
-import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.common.Constant
+import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.presenter.adapter.adapterItems.MainBannerItems
 import com.example.whats_eat.presenter.adapter.adapterItems.SubFoodItems
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,6 +36,8 @@ class HomeViewModel @Inject constructor(
 
     fun getMainBannerItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
         mainBannerUseCase(latLng).collect { results ->
+            Log.d(Constant.LOG_TAG, "$results")
+
             val resultsItems: List<Results> =
                 results.sortedBy { it.rating }.slice(0..(results.lastIndex/2))
 

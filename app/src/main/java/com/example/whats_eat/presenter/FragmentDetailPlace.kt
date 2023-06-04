@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
 import com.example.whats_eat.R
-import com.example.whats_eat.data.di.dispatcherQualifier.MainDispatcher
+import com.example.whats_eat.di.dispatcherQualifier.MainDispatcher
 import com.example.whats_eat.databinding.FragmentDetailPlaceBinding
 import com.example.whats_eat.viewModel.DetailPlaceViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -27,7 +27,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
-    @MainDispatcher @Inject lateinit var mainDispatcher: CoroutineDispatcher
+    @MainDispatcher
+    @Inject lateinit var mainDispatcher: CoroutineDispatcher
     @Inject lateinit var imageLoader: RequestManager
 
     private var _detailBinding: FragmentDetailPlaceBinding? = null

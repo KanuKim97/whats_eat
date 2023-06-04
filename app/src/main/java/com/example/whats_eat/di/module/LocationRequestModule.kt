@@ -1,6 +1,6 @@
-package com.example.whats_eat.data.di.module
+package com.example.whats_eat.di.module
 
-import com.example.whats_eat.data.common.Constant
+import com.example.whats_eat.common.Constant
 import com.google.android.gms.location.CurrentLocationRequest
 import dagger.Module
 import dagger.Provides
