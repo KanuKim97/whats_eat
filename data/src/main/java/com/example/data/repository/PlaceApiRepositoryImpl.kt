@@ -2,7 +2,7 @@ package com.example.data.repository
 
 
 import com.example.data.BuildConfig
-import com.example.data.api.ApiParameter
+import com.example.data.constant.ApiParameter
 import com.example.data.api.PlaceAPIService
 import com.example.domain.model.placeItem.detailedPlace.DetailedPlace
 import com.example.domain.model.placeItem.nearByPlace.MyPlaces
@@ -34,15 +34,6 @@ class PlaceApiRepositoryImpl @Inject constructor(
                 (response.body()?.results) == null -> throw NullPointerException()
             }
         }
-    }.filter { items ->
-        items.removeAll(
-            items.filter { item ->
-                item.rating == 0.0 ||
-                        item.rating == null ||
-                        item.place_id == null ||
-                        item.photos?.get(0)?.photo_reference == null
-            }.toSet()
-        )
     }.catch { exception ->
         if (exception is IOException) {
             emit(arrayListOf())

@@ -1,4 +1,4 @@
-package com.example.data.api
+package com.example.data.constant
 
 object ApiParameter {
     const val LOCATION_RADIUS: String = "1000"

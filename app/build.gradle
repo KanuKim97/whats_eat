@@ -9,9 +9,6 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.dagger.hilt.android'
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 android {
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
@@ -23,9 +20,6 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
-        buildConfigField "String", "PLACE_API_KEY", properties["MAPS_API_KEY"]
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -34,6 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
