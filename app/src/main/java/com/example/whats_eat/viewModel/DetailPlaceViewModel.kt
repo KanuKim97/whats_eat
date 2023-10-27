@@ -52,7 +52,7 @@ class DetailPlaceViewModel @Inject constructor(
         StringBuilder(Constant.PLACE_PHOTO_API_URI)
             .append("?maxwidth=1000")
             .append("&photo_reference=$photoReference")
-            .append("&key=${BuildConfig.PLACE_API_KEY}")
+            .append("&key=${BuildConfig.MAPS_API_KEY}")
             .toString()
 
     override fun onCleared() {

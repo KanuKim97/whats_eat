@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.placeItem.response.Results
 import com.example.domain.usecase.place.GetNearByPlaceUseCase
-import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
 import com.example.whats_eat.presenter.adapter.adapterItems.MainBannerItems
@@ -68,7 +67,7 @@ class HomeViewModel @Inject constructor(
         StringBuilder(Constant.PLACE_PHOTO_API_URI)
             .append("?maxwidth=1000")
             .append("&photo_reference=$photoReference")
-            .append("&key=${BuildConfig.PLACE_API_KEY}")
+            .append("&key=")
             .toString()
 
     override fun onCleared() {
