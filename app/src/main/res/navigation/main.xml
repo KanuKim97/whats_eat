@@ -8,19 +8,19 @@
 
     <fragment
         android:id="@+id/menuHome"
-        android:name="com.example.whats_eat.view.FragmentHome"
+        android:name="com.example.whats_eat.presenter.FragmentHome"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/menuProfile"
-        android:name="com.example.whats_eat.view.FragmentProfile"
+        android:name="com.example.whats_eat.presenter.FragmentProfile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/menuCollection"
-        android:name="com.example.whats_eat.view.FragmentCollection"
+        android:name="com.example.whats_eat.presenter.FragmentCollection"
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection" />
 
