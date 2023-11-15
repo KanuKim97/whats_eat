@@ -49,8 +49,8 @@ dependencies {
 
     // AndroidX
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.4'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.2.1'
 
@@ -72,8 +72,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // FireBase Auth, RealTime DataBase
-    implementation platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.4.0'
+    def firebaseBom = platform('com.google.firebase:firebase-bom:28.4.0')
+    implementation firebaseBom
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-auth:22.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'

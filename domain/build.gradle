@@ -35,8 +35,9 @@ dependencies {
     ksp "com.google.dagger:hilt-android-compiler:2.48"
 
     // FireBase Auth, RealTime DataBase
-    implementation platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.4.0'
+    def firebaseBom = platform('com.google.firebase:firebase-bom:28.4.0')
+    implementation firebaseBom
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-auth:22.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
