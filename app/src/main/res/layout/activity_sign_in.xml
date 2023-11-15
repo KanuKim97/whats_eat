@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
     android:background="#ffffff"
-    tools:context=".view.ActivitySignIn">
+    tools:context=".presenter.ActivitySignIn">
 
     <ImageView
         android:id="@+id/LogoImageView"

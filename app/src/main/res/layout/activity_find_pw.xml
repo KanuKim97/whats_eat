@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
     android:background="#ffffff"
-    tools:context=".view.ActivityFindPassword">
+    tools:context=".presenter.ActivityFindPWD">
 
     <ImageView
         android:id="@+id/imageView"

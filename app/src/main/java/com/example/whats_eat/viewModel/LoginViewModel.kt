@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.whats_eat.data.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.data.flow.producer.FirebaseAuthProducer
+import com.example.domain.usecase.auth.LogInAccountUseCase
+import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancel
@@ -14,14 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authProducer: FirebaseAuthProducer,
+    private val logInUseCase: LogInAccountUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _logInResult = MutableLiveData<Result<Unit>>()
     val logInResult: LiveData<Result<Unit>> get() = _logInResult
 
     fun userLogIn(userEmail: String, userPassword: String) = viewModelScope.launch(ioDispatcher) {
-        authProducer.signInUserAccount(userEmail, userPassword).collect {
+        logInUseCase.logInUserAccount(userEmail, userPassword).collect {
             _logInResult.postValue(it)
         }
     }

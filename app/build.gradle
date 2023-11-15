@@ -1,31 +1,28 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
+    id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-    id 'kotlin-kapt'
 }
-
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.dagger.hilt.android'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
+kotlin { jvmToolchain 17 }
+
 android {
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
+    namespace 'com.example.whats_eat'
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.whats_eat"
-        minSdkVersion 25
-        targetSdkVersion 33
+        minSdk 25
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
-
         buildConfigField "String", "PLACE_API_KEY", properties["MAPS_API_KEY"]
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -34,43 +31,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions { jvmTarget = '1.8'}
 
     buildFeatures { viewBinding = true }
-
-    namespace 'com.example.whats_eat'
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.10.0'
+
+    // Data, Domain Library
+    implementation project(path: ':data')
+    implementation project(path: ':domain')
 
     // Kotlin Coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 
     // AndroidX
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
 
     // Android Jetpack ViewModel, LiveData
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
 
     // Dagger-Hilt DI(Dependency Injection) Tool
-    implementation "com.google.dagger:hilt-android:2.44.2"
-    kapt "com.google.dagger:hilt-android-compiler:2.44.2"
-
-    // Android MultiDex
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "com.google.dagger:hilt-android:2.48"
+    ksp "com.google.dagger:hilt-android-compiler:2.48"
 
     // Android Test Unit
     testImplementation 'junit:junit:4.13.2'
@@ -78,24 +68,25 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Google Android GMS Service Maps SDK, Location
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // FireBase Auth, RealTime DataBase
-    implementation platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
+    def firebaseBom = platform('com.google.firebase:firebase-bom:28.4.0')
+    implementation firebaseBom
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:22.0.0'
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
-    implementation 'com.google.firebase:firebase-database:20.2.1'
-    implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
+    implementation 'com.google.firebase:firebase-auth:22.2.0'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+    implementation 'com.google.firebase:firebase-database:20.3.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.2.0'
 
     // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     // Easy Permission
     implementation 'pub.devrel:easypermissions:3.0.0'
@@ -103,5 +94,3 @@ dependencies {
     //ViewPager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }
-
-kapt { correctErrorTypes = true }
