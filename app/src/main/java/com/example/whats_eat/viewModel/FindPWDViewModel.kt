@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FindPwViewModel @Inject constructor(
+class FindPWDViewModel @Inject constructor(
     private val sendResetEmailUseCase: SendResetEmailUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {

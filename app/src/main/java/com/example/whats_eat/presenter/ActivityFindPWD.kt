@@ -9,17 +9,17 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityFindPwBinding
-import com.example.whats_eat.viewModel.FindPwViewModel
+import com.example.whats_eat.viewModel.FindPWDViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ActivityFindPassword : AppCompatActivity(), View.OnClickListener {
+class ActivityFindPWD : AppCompatActivity(), View.OnClickListener {
     @Inject lateinit var toastMessage: Toast
 
     private val findPwBinding by lazy { ActivityFindPwBinding.inflate(layoutInflater) }
-    private val findPwViewModel: FindPwViewModel by viewModels()
+    private val findPwViewModel: FindPWDViewModel by viewModels()
 
     private val userEmail: String by lazy { setUserEmail() }
 

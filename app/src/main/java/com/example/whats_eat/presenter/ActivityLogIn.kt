@@ -37,7 +37,7 @@ class ActivityLogIn : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?){
         when (v?.id) {
-            R.id.findPwBtn -> startActivity(Intent(this, ActivityFindPassword::class.java))
+            R.id.findPwBtn -> startActivity(Intent(this, ActivityFindPWD::class.java))
             R.id.signUpBtn -> startActivity(Intent(this, ActivitySignIn::class.java))
             R.id.logInBtn -> loginEmailWithPassword(userEmail, userPassword)
         }

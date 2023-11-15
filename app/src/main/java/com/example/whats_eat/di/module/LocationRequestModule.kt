@@ -12,6 +12,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object LocationRequestModule {
     private fun provideDurationMillis(): Long = Constant.MAPS_INTERVAL_MILLIS
+
     private fun provideLocationPriority(): Int = Constant.MAPS_PRIORITY_HIGH
 
     @Provides

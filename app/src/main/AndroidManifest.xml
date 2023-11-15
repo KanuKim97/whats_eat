@@ -41,7 +41,7 @@
         </activity>
         <activity android:name=".presenter.ActivityLogIn" />
         <activity android:name=".presenter.ActivitySignIn" />
-        <activity android:name=".presenter.ActivityFindPassword" />
+        <activity android:name=".presenter.ActivityFindPWD" />
         <activity android:name=".presenter.ActivityMain" />
 
         <meta-data
