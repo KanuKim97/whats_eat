@@ -1,10 +1,12 @@
-package com.example.whats_eat.presenter
+package com.example.whats_eat
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityMainBinding
+import com.example.whats_eat.presenter.FragmentCollection
+import com.example.whats_eat.presenter.FragmentHome
+import com.example.whats_eat.presenter.FragmentProfile
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -7,6 +7,7 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.whats_eat.ActivityMain
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivitySignInBinding
 import com.example.whats_eat.viewModel.SignInViewModel

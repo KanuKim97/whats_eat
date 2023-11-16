@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".presenter.AndroidApp"
+        android:name=".AndroidApp"
         android:enableOnBackInvokedCallback="true"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -42,7 +42,7 @@
         <activity android:name=".presenter.ActivityLogIn" />
         <activity android:name=".presenter.ActivitySignIn" />
         <activity android:name=".presenter.ActivityFindPWD" />
-        <activity android:name=".presenter.ActivityMain" />
+        <activity android:name=".ActivityMain" />
 
         <meta-data
             android:name="preloaded_fonts"

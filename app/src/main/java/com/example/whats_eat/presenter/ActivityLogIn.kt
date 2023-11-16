@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.whats_eat.ActivityMain
 import com.example.whats_eat.R
 import com.example.whats_eat.databinding.ActivityLogInBinding
 import com.example.whats_eat.viewModel.LoginViewModel

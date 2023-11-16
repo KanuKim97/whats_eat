@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import android.Manifest
+import com.example.whats_eat.ActivityMain
 import com.example.whats_eat.R
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.databinding.ActivityLogoBinding
