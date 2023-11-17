@@ -1,12 +1,11 @@
-package com.example.whats_eat.presenter.items.login
+package com.example.whats_eat.presenter.items.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,11 +20,13 @@ import androidx.compose.ui.unit.sp
 import com.example.whats_eat.R
 
 @Composable
-fun LogInTitleRow(modifier: Modifier) {
+fun TitleRow(
+    modifier: Modifier,
+    titleText: String,
+    subTitleText: String
+) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = modifier.wrapContentSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -38,12 +39,12 @@ fun LogInTitleRow(modifier: Modifier) {
             contentScale = ContentScale.Fit
         )
         Text(
-            text = stringResource(id = R.string.LogIn_Title),
+            text = titleText,
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = stringResource(id = R.string.LogIn_SubTitle),
+            text = subTitleText,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium
         )
@@ -53,5 +54,9 @@ fun LogInTitleRow(modifier: Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewLogInTitleRow() {
-    LogInTitleRow(modifier = Modifier)
+    TitleRow(
+        modifier = Modifier,
+        titleText = stringResource(id = R.string.LogIn_Title),
+        subTitleText = stringResource(id = R.string.LogIn_SubTitle)
+    )
 }

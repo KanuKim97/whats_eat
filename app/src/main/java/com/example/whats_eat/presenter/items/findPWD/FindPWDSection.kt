@@ -1,11 +1,12 @@
-package com.example.whats_eat.presenter.items.login
+package com.example.whats_eat.presenter.items.findPWD
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -21,26 +22,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.whats_eat.R
-import com.example.whats_eat.presenter.items.common.PWDInputField
 import com.example.whats_eat.presenter.items.common.TextButton
 import com.example.whats_eat.presenter.items.common.TextInputField
 
 @Composable
-fun LogInSection(
+fun FindPWDSection(
     modifier: Modifier,
     emailValue: String,
-    pwdValue: String,
     onEmailValueChanged: (String) -> Unit,
-    onPWDValueChanged: (String) -> Unit,
     onFindPWDBtnClick: () -> Unit,
-    onLogInBtnClick: () -> Unit,
-    onSignInBtnClick: () -> Unit
+    onLogInPageClick: () -> Unit,
+    onSignInPageClick: () -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        horizontalAlignment = Alignment.End,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         TextInputField(
@@ -55,41 +53,15 @@ fun LogInSection(
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "") },
             onTextValueChanged = onEmailValueChanged,
             keyboardOptions = KeyboardOptions.Default,
-            keyboardActions = KeyboardActions(onNext = KeyboardActions.Default.onNext)
-        )
-        PWDInputField(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(5.dp),
-            textValue = pwdValue,
-            textLabel = stringResource(id = R.string.LogIn_Password_Hint),
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Medium,
-            onTextValueChanged = onPWDValueChanged,
-            keyboardOptions = KeyboardOptions.Default,
             keyboardActions = KeyboardActions(onDone = KeyboardActions.Default.onDone)
         )
+        Spacer(modifier = modifier.size(70.dp))
         TextButton(
             onClick = onFindPWDBtnClick,
             modifier = modifier
-                .wrapContentWidth()
-                .wrapContentHeight()
-                .padding(5.dp),
-            btnTextContent = stringResource(id = R.string.FindPassword_Btn),
-            btnColors = Color.White,
-            btnElevation = 10.dp,
-            textColor = Color.DarkGray,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-        TextButton(
-            onClick = onLogInBtnClick,
-            modifier = modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(5.dp),
-            btnTextContent = stringResource(id = R.string.LogIn_Btn),
+                .wrapContentHeight(),
+            btnTextContent = stringResource(id = R.string.FindPassword_Btn),
             btnColors = Color.Black,
             btnElevation = 10.dp,
             textColor = Color.White,
@@ -97,12 +69,23 @@ fun LogInSection(
             fontWeight = FontWeight.SemiBold
         )
         TextButton(
-            onClick = onSignInBtnClick,
+            onClick = onLogInPageClick,
             modifier = modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(5.dp),
-            btnTextContent = stringResource(id = R.string.SignUp_Btn),
+                .wrapContentHeight(),
+            btnTextContent = stringResource(id = R.string.ToLogIn_Btn),
+            btnColors = Color.Black,
+            btnElevation = 10.dp,
+            textColor = Color.White,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        TextButton(
+            onClick = onSignInPageClick,
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            btnTextContent = stringResource(id = R.string.ToSignUp_Btn),
             btnColors = Color.Black,
             btnElevation = 10.dp,
             textColor = Color.White,
@@ -114,15 +97,13 @@ fun LogInSection(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewLogInSection() {
-    LogInSection(
+fun PreviewFindPWDSection() {
+    FindPWDSection(
         modifier = Modifier,
         emailValue = "",
-        pwdValue = "",
         onEmailValueChanged = {},
-        onPWDValueChanged = {},
-        onFindPWDBtnClick = { /*TODO*/ },
-        onLogInBtnClick = { /*TODO*/ },
-        onSignInBtnClick = {  }
+        onFindPWDBtnClick = {},
+        onLogInPageClick = {},
+        onSignInPageClick = {}
     )
 }
