@@ -115,8 +115,8 @@ class FragmentDetailPlace : Fragment(), OnMapReadyCallback {
 
     private fun setPlaceID(): String = arguments?.getString("PlaceID").toString()
 
-    private fun getPlaceInformation(PlaceID: String): Job =
-        detailPlaceViewModel.getDetailPlaceItem(PlaceID)
+    private fun getPlaceInformation(placeID: String): Job =
+        detailPlaceViewModel.getDetailPlaceItem(placeID)
 
     private fun setPlaceTitle(name: String?): Job = lifecycleScope.launch(mainDispatcher) {
         detailBinding.placeTitle.text = name
