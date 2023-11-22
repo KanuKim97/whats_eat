@@ -25,7 +25,11 @@ import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.signin.SignInSection
 
 @Composable
-fun SignInPage(modifier: Modifier = Modifier) {
+fun SignInPage(
+    modifier: Modifier = Modifier,
+    onLogInBtnClick: () -> Unit,
+    onSignInBtnClick: () -> Unit
+) {
     Surface(
         modifier = modifier
             .fillMaxSize()
@@ -64,7 +68,9 @@ fun SignInPage(modifier: Modifier = Modifier) {
                 onUserNameValueChanged = { userName -> userNameValue = userName },
                 onEmailValueChanged = { email -> emailValue = email },
                 onPWDValueChanged = { password -> pwdValue = password },
-                onConfPWDValueChanged = { confPassword -> confPWDValue = confPassword }
+                onConfPWDValueChanged = { confPassword -> confPWDValue = confPassword },
+                onSignInBtnClick = onSignInBtnClick,
+                onLogInBtnClick = onLogInBtnClick
             )
         }
     }
@@ -73,5 +79,5 @@ fun SignInPage(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInPage() {
-    SignInPage()
+    SignInPage(onLogInBtnClick = {}, onSignInBtnClick = {})
 }

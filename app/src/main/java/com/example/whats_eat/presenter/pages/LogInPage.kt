@@ -25,7 +25,11 @@ import com.example.whats_eat.presenter.items.login.LogInSection
 import com.example.whats_eat.presenter.items.common.TitleRow
 
 @Composable
-fun LogInPage(modifier: Modifier = Modifier) {
+fun LogInPage(
+    modifier: Modifier = Modifier,
+    onSignInBtnClick: () -> Unit,
+    onFindPWDBtnClick: () -> Unit
+) {
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
 
@@ -56,9 +60,9 @@ fun LogInPage(modifier: Modifier = Modifier) {
                 pwdValue = passwordValue,
                 onEmailValueChanged = { email -> emailValue = email },
                 onPWDValueChanged = { password -> passwordValue = password },
-                onFindPWDBtnClick = { /*TODO*/ },
-                onLogInBtnClick = { /*TODO*/ },
-                onSignInBtnClick = { /*TODO*/ }
+                onLogInBtnClick = {  },
+                onSignInBtnClick = onSignInBtnClick,
+                onFindPWDBtnClick = onFindPWDBtnClick
             )
         }
     }
@@ -66,4 +70,9 @@ fun LogInPage(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewLogInPage() { LogInPage() }
+fun PreviewLogInPage() {
+    LogInPage(
+        onFindPWDBtnClick = { /*TODO*/ },
+        onSignInBtnClick = { /*TODO*/ }
+    )
+}

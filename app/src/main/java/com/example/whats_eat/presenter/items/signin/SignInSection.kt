@@ -39,7 +39,9 @@ fun SignInSection(
     onUserNameValueChanged: (String) -> Unit,
     onEmailValueChanged: (String) -> Unit,
     onPWDValueChanged: (String) -> Unit,
-    onConfPWDValueChanged: (String) -> Unit
+    onConfPWDValueChanged: (String) -> Unit,
+    onSignInBtnClick: () -> Unit,
+    onLogInBtnClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -120,7 +122,7 @@ fun SignInSection(
         )
         Spacer(modifier = modifier.size(30.dp))
         TextButton(
-            onClick = {},
+            onClick = onSignInBtnClick,
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -132,7 +134,7 @@ fun SignInSection(
             fontWeight = FontWeight.SemiBold
         )
         TextButton(
-            onClick = {},
+            onClick = onLogInBtnClick,
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -160,6 +162,8 @@ fun PreviewSignInPage() {
         onUserNameValueChanged = {},
         onEmailValueChanged = {},
         onPWDValueChanged = {},
-        onConfPWDValueChanged = {}
+        onConfPWDValueChanged = {},
+        onSignInBtnClick = {},
+        onLogInBtnClick = {}
     )
 }

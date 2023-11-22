@@ -25,7 +25,12 @@ import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.findPWD.FindPWDSection
 
 @Composable
-fun FindPWDPage(modifier: Modifier = Modifier) {
+fun FindPWDPage(
+    modifier: Modifier = Modifier,
+    onLogInBtnClick: () -> Unit,
+    onSignInBtnClick: () -> Unit,
+    onFindPWDBtnClick: () -> Unit
+) {
     var emailValue by remember { mutableStateOf("") }
 
     Surface(
@@ -53,9 +58,9 @@ fun FindPWDPage(modifier: Modifier = Modifier) {
                 modifier = modifier,
                 emailValue = emailValue,
                 onEmailValueChanged = { email -> emailValue = email },
-                onFindPWDBtnClick = { /*TODO*/ },
-                onLogInPageClick = { /*TODO*/ },
-                onSignInPageClick = { /*TODO*/ }
+                onLogInPageClick = onLogInBtnClick,
+                onSignInPageClick = onSignInBtnClick,
+                onFindPWDBtnClick = onFindPWDBtnClick
             )
         }
     }
@@ -64,5 +69,5 @@ fun FindPWDPage(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewFindPWDPage() {
-    FindPWDPage()
+    FindPWDPage(onLogInBtnClick = {}, onSignInBtnClick = {}, onFindPWDBtnClick = {})
 }

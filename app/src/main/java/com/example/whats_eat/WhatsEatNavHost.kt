@@ -3,11 +3,6 @@ package com.example.whats_eat
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.whats_eat.presenter.pages.FindPWDPage
-import com.example.whats_eat.presenter.pages.HomePage
-import com.example.whats_eat.presenter.pages.LogInPage
-import com.example.whats_eat.presenter.pages.SignInPage
 
 @Composable
 fun WhatsEatNavHost(navController: NavHostController) {
@@ -15,6 +10,7 @@ fun WhatsEatNavHost(navController: NavHostController) {
         navController = navController,
         startDestination = LogIn.route
     ) {
+    /*
         composable(
             route = LogIn.route,
             content = { LogInPage() }
@@ -31,5 +27,6 @@ fun WhatsEatNavHost(navController: NavHostController) {
             route = Home.route,
             content = { HomePage() }
         )
+        */
     }
 }
