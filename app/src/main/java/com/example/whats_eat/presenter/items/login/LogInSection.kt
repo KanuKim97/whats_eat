@@ -91,7 +91,7 @@ fun LogInSection(
                 .padding(5.dp),
             btnTextContent = stringResource(id = R.string.LogIn_Btn),
             btnColors = Color.Black,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.White,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold
@@ -104,7 +104,7 @@ fun LogInSection(
                 .padding(5.dp),
             btnTextContent = stringResource(id = R.string.SignUp_Btn),
             btnColors = Color.Black,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.White,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold

@@ -56,7 +56,7 @@ fun SignInPage(
                     )
                 }
             )
-            Spacer(modifier = modifier.size(100.dp))
+            Spacer(modifier = modifier.size(50.dp))
             SignInSection(
                 modifier = modifier,
                 fullNameValue = fullNameValue,

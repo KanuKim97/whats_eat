@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.example.whats_eat.R
 
 @Composable
-fun HomeBannerRow(modifier: Modifier) {
+fun HomeBannerRow(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()

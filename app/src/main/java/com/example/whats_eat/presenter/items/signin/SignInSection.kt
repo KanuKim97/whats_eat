@@ -128,11 +128,12 @@ fun SignInSection(
                 .wrapContentHeight(),
             btnTextContent = stringResource(id = R.string.SignUp_Btn),
             btnColors = Color.White,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.DarkGray,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold
         )
+        Spacer(modifier = modifier.size(10.dp))
         TextButton(
             onClick = onLogInBtnClick,
             modifier = modifier
@@ -140,7 +141,7 @@ fun SignInSection(
                 .wrapContentHeight(),
             btnTextContent = stringResource(id = R.string.ToLogIn_Btn),
             btnColors = Color.White,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.DarkGray,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold

@@ -30,7 +30,7 @@ fun TextButton(
     Button(
         onClick = onClick,
         modifier = modifier,
-        shape = ShapeDefaults.Large,
+        shape = ShapeDefaults.ExtraSmall,
         colors = ButtonDefaults.buttonColors(btnColors),
         elevation = ButtonDefaults.buttonElevation(btnElevation),
         content = {

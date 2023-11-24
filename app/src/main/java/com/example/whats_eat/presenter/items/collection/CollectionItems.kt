@@ -20,11 +20,11 @@ import androidx.compose.ui.unit.sp
 import com.example.whats_eat.presenter.items.common.RatingRow
 
 @Composable
-fun CollectionItem(
+fun CollectionItems(
     modifier: Modifier,
     placeName: String,
     placeAddress: String,
-    ratingNumber: Double
+    ratingNumber: String
 ) {
     Card(
         modifier = modifier
@@ -63,10 +63,10 @@ fun CollectionItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCollectionItem() {
-    CollectionItem(
+    CollectionItems(
         modifier = Modifier,
         placeName = "00상회",
         placeAddress = "00시 000구 000동 000번지 000길 00 0층 000호",
-        ratingNumber = 4.7
+        ratingNumber = "4.7"
     )
 }

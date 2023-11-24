@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RatingRow(
     modifier: Modifier,
-    ratingNumber: Double
+    ratingNumber: String
 ) {
     Row(
         modifier = modifier.wrapContentSize(),
@@ -27,7 +27,7 @@ fun RatingRow(
         content = {
             Icon(imageVector = Icons.Default.StarRate, contentDescription = "")
             Spacer(modifier = modifier.size(3.dp))
-            Text(text = "$ratingNumber")
+            Text(text = ratingNumber)
         }
     )
 }
@@ -35,5 +35,5 @@ fun RatingRow(
 @Preview(showBackground = true)
 @Composable
 fun PreviewRatingRow() {
-    RatingRow(modifier = Modifier, ratingNumber = 4.7)
+    RatingRow(modifier = Modifier, ratingNumber = "4.7")
 }

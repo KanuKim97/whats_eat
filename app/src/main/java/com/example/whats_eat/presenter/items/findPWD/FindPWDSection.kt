@@ -63,7 +63,7 @@ fun FindPWDSection(
                 .wrapContentHeight(),
             btnTextContent = stringResource(id = R.string.FindPassword_Btn),
             btnColors = Color.Black,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.White,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold
@@ -75,7 +75,7 @@ fun FindPWDSection(
                 .wrapContentHeight(),
             btnTextContent = stringResource(id = R.string.ToLogIn_Btn),
             btnColors = Color.Black,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.White,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold
@@ -87,7 +87,7 @@ fun FindPWDSection(
                 .wrapContentHeight(),
             btnTextContent = stringResource(id = R.string.ToSignUp_Btn),
             btnColors = Color.Black,
-            btnElevation = 10.dp,
+            btnElevation = 5.dp,
             textColor = Color.White,
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold
