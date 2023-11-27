@@ -1,8 +1,6 @@
 package com.example.whats_eat.presenter.items.common
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +10,8 @@ import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BottomNavBar(modifier: Modifier = Modifier) {
+fun BottomNavBar(
+    onHomeBtnClick: () -> Unit,
+    onProfileBtnClick: () -> Unit,
+    onCollectionBtnClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     BottomAppBar(
         modifier = modifier
             .fillMaxWidth()
@@ -28,12 +32,15 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(10.dp),
         content = {
             Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.SpaceAround,
                 content = {
-                    HomeIcon()
-                    CollectionIcon()
-                    ProfileIcon()
+                    HomeIcon(onHomeBtnClick)
+                    ProfileIcon(onProfileBtnClick)
+                    CollectionIcon(onCollectionBtnClick)
                 }
             )
         }
@@ -41,38 +48,26 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HomeIcon() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        content = {
-            Image(imageVector = Icons.Default.Home, contentDescription = "")
-            Text(text = "홈 화면")
-        }
+fun HomeIcon(onHomeBtnClick: () -> Unit) {
+    IconButton(
+        onClick = onHomeBtnClick,
+        content = { Icon(imageVector = Icons.Default.Home, contentDescription = "홈") }
     )
 }
 
 @Composable
-fun CollectionIcon() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        content = {
-            Image(imageVector = Icons.Default.Bookmarks, contentDescription = "")
-            Text(text = "컬렉션")
-        }
+fun CollectionIcon(onCollectionBtnClick: () -> Unit) {
+    IconButton(
+        onClick = onCollectionBtnClick,
+        content = { Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "컬렉션") }
     )
 }
 
 @Composable
-fun ProfileIcon() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        content = {
-            Image(imageVector = Icons.Default.People, contentDescription = "")
-            Text(text = "프로필")
-        }
+fun ProfileIcon(onProfileBtnClick: () -> Unit) {
+    IconButton(
+        onClick = onProfileBtnClick,
+        content = { Icon(imageVector = Icons.Default.People, contentDescription = "프로필") }
     )
 }
 
@@ -81,23 +76,23 @@ fun ProfileIcon() {
 @Preview(group = "view")
 @Composable
 fun PreviewNavBar() {
-    BottomNavBar()
+    BottomNavBar(onHomeBtnClick = {}, onCollectionBtnClick = {}, onProfileBtnClick = {})
 }
 
 @Preview(group = "item", showBackground = true)
 @Composable
 fun PreviewNavItem() {
-    HomeIcon()
+    HomeIcon{}
 }
 
 @Preview(group = "item", showBackground = true)
 @Composable
 fun PreviewNavItem2() {
-    CollectionIcon()
+    CollectionIcon{}
 }
 
 @Preview(group = "item", showBackground = true)
 @Composable
 fun PreviewNavItem3() {
-    ProfileIcon()
+    ProfileIcon{}
 }

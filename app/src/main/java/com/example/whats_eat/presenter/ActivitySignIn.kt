@@ -13,14 +13,6 @@ class ActivitySignIn : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        signInBinding.SignInComposeView.setContent {
-            SignInPage(
-                onLogInBtnClick = { startActivity(Intent(this, ActivityLogIn::class.java)) },
-                onSignInBtnClick = {  }
-            )
-        }
-
         setContentView(signInBinding.root)
     }
 

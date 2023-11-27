@@ -20,16 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.whats_eat.LogIn
 import com.example.whats_eat.R
+import com.example.whats_eat.SignIn
 import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.findPWD.FindPWDSection
 
 @Composable
 fun FindPWDPage(
-    modifier: Modifier = Modifier,
-    onLogInBtnClick: () -> Unit,
-    onSignInBtnClick: () -> Unit,
-    onFindPWDBtnClick: () -> Unit
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     var emailValue by remember { mutableStateOf("") }
 
@@ -58,9 +60,9 @@ fun FindPWDPage(
                 modifier = modifier,
                 emailValue = emailValue,
                 onEmailValueChanged = { email -> emailValue = email },
-                onLogInPageClick = onLogInBtnClick,
-                onSignInPageClick = onSignInBtnClick,
-                onFindPWDBtnClick = onFindPWDBtnClick
+                onLogInPageClick = { navController.navigate(LogIn.route) },
+                onSignInPageClick = { navController.navigate(SignIn.route) },
+                onFindPWDBtnClick = {  }
             )
         }
     }
@@ -69,5 +71,5 @@ fun FindPWDPage(
 @Preview(showBackground = true)
 @Composable
 fun PreviewFindPWDPage() {
-    FindPWDPage(onLogInBtnClick = {}, onSignInBtnClick = {}, onFindPWDBtnClick = {})
+    FindPWDPage(navController = rememberNavController())
 }

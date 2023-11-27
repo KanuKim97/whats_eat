@@ -20,15 +20,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.whats_eat.LogIn
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.signin.SignInSection
 
 @Composable
 fun SignInPage(
-    modifier: Modifier = Modifier,
-    onLogInBtnClick: () -> Unit,
-    onSignInBtnClick: () -> Unit
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         modifier = modifier
@@ -69,8 +71,8 @@ fun SignInPage(
                 onEmailValueChanged = { email -> emailValue = email },
                 onPWDValueChanged = { password -> pwdValue = password },
                 onConfPWDValueChanged = { confPassword -> confPWDValue = confPassword },
-                onSignInBtnClick = onSignInBtnClick,
-                onLogInBtnClick = onLogInBtnClick
+                onSignInBtnClick = {  },
+                onLogInBtnClick = { navController.navigate(LogIn.route) }
             )
         }
     }
@@ -79,5 +81,5 @@ fun SignInPage(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInPage() {
-    SignInPage(onLogInBtnClick = {}, onSignInBtnClick = {})
+    SignInPage(navController = rememberNavController())
 }

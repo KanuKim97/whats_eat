@@ -15,15 +15,9 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth
 ): AuthRepository {
-
-    override fun getCurrentUser(): Flow<FirebaseUser?> = flow {
-        emit(auth.currentUser)
-    }.catch { exception ->
-        if (exception is IOException) {
-            emit(null)
-        } else {
-            throw exception
-        }
+    override fun getCurrentUser(): Flow<FirebaseUser?> = callbackFlow {
+        auth.addAuthStateListener { userState -> trySend(userState.currentUser) }
+        awaitClose()
     }
 
     override fun createUserAccount(

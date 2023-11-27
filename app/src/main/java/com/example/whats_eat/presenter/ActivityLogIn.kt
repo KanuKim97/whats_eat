@@ -13,17 +13,6 @@ class ActivityLogIn : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logInBinding.LogInComposeView.setContent {
-            LogInPage(
-                onSignInBtnClick = {
-                    startActivity(Intent(this, ActivitySignIn::class.java))
-                },
-                onFindPWDBtnClick = {
-                    startActivity(Intent(this, ActivityFindPWD::class.java))
-                }
-            )
-        }
-
         setContentView(logInBinding.root)
     }
 

@@ -20,15 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.whats_eat.FindPWD
+import com.example.whats_eat.Home
 import com.example.whats_eat.R
+import com.example.whats_eat.SignIn
 import com.example.whats_eat.presenter.items.login.LogInSection
 import com.example.whats_eat.presenter.items.common.TitleRow
 
 @Composable
 fun LogInPage(
-    modifier: Modifier = Modifier,
-    onSignInBtnClick: () -> Unit,
-    onFindPWDBtnClick: () -> Unit
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
@@ -60,9 +64,12 @@ fun LogInPage(
                 pwdValue = passwordValue,
                 onEmailValueChanged = { email -> emailValue = email },
                 onPWDValueChanged = { password -> passwordValue = password },
-                onLogInBtnClick = {  },
-                onSignInBtnClick = onSignInBtnClick,
-                onFindPWDBtnClick = onFindPWDBtnClick
+                onLogInBtnClick = {
+                    /* TODO("TEST") */
+                    navController.navigate(Home.route)
+                },
+                onSignInBtnClick = { navController.navigate(SignIn.route) },
+                onFindPWDBtnClick = { navController.navigate(FindPWD.route) }
             )
         }
     }
@@ -71,8 +78,5 @@ fun LogInPage(
 @Preview(showBackground = true)
 @Composable
 fun PreviewLogInPage() {
-    LogInPage(
-        onFindPWDBtnClick = { /*TODO*/ },
-        onSignInBtnClick = { /*TODO*/ }
-    )
+    LogInPage(navController = rememberNavController())
 }

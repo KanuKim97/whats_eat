@@ -16,15 +16,13 @@ import com.example.whats_eat.presenter.items.collection.CollectionItems
 
 @Composable
 fun CollectionList(
-    modifier: Modifier,
-    listState: LazyListState,
-    listItems: ArrayList<CollectionItem>
+    listItems: ArrayList<CollectionItem>,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(10.dp),
-        state = listState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         userScrollEnabled = true
@@ -43,9 +41,5 @@ fun CollectionList(
 @Preview(showBackground = true)
 @Composable
 fun PreviewList() {
-    CollectionList(
-        modifier = Modifier,
-        listState = rememberLazyListState(),
-        listItems = arrayListOf()
-    )
+    CollectionList(listItems = arrayListOf())
 }

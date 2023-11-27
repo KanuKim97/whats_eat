@@ -14,14 +14,6 @@ class ActivityFindPWD : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        findPWDBinding.FindPWDComposeView.setContent {
-            FindPWDPage(
-                onLogInBtnClick = { startActivity(Intent(this, ActivityLogIn::class.java)) },
-                onSignInBtnClick = { startActivity(Intent(this, ActivitySignIn::class.java)) },
-                onFindPWDBtnClick = { /*TODO*/ }
-            )
-        }
-
         setContentView(findPWDBinding.root)
     }
 
