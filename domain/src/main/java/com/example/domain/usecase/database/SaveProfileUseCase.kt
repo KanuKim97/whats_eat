@@ -4,11 +4,13 @@ import com.example.domain.repository.DataBaseRepository
 import javax.inject.Inject
 
 class SaveProfileUseCase @Inject constructor(
-    private val DataBaseRepo: DataBaseRepository
+    private val dataBaseRepo: DataBaseRepository
 ) {
+    /* TODO("Need To Fix") */
+
     suspend fun saveUserProfile(
         userEmail: String,
         userNickName: String,
         userFullName: String
-    ): Unit = DataBaseRepo.saveUserProfile(userEmail, userNickName, userFullName)
+    ): Unit = dataBaseRepo.saveUserProfile(userEmail, userNickName, userFullName)
 }

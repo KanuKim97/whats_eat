@@ -28,9 +28,12 @@ import com.example.whats_eat.R
 import com.example.whats_eat.SignIn
 import com.example.whats_eat.presenter.items.login.LogInSection
 import com.example.whats_eat.presenter.items.common.TitleRow
+import com.example.whats_eat.util.AuthState
 
 @Composable
 fun LogInPage(
+    userLogIn: (String, String) -> Unit,
+    userLogInState: AuthState,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -65,8 +68,16 @@ fun LogInPage(
                 onEmailValueChanged = { email -> emailValue = email },
                 onPWDValueChanged = { password -> passwordValue = password },
                 onLogInBtnClick = {
-                    /* TODO("TEST") */
-                    navController.navigate(Home.route)
+                    userLogIn(emailValue, passwordValue)
+
+                    when {
+                        (userLogInState == AuthState.AuthResult(true)) -> {
+                            navController.navigate(Home.route)
+                        }
+                        (userLogInState == AuthState.AuthResult(false)) -> {
+                            // TODO("Error Handling Needed")
+                        }
+                    }
                 },
                 onSignInBtnClick = { navController.navigate(SignIn.route) },
                 onFindPWDBtnClick = { navController.navigate(FindPWD.route) }
@@ -78,5 +89,9 @@ fun LogInPage(
 @Preview(showBackground = true)
 @Composable
 fun PreviewLogInPage() {
-    LogInPage(navController = rememberNavController())
+    LogInPage(
+        userLogIn = { _, _ ->},
+        userLogInState = AuthState.IsLoading(false),
+        navController = rememberNavController()
+    )
 }

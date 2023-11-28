@@ -15,6 +15,7 @@ import com.example.whats_eat.presenter.pages.HomePage
 import com.example.whats_eat.presenter.pages.LogInPage
 import com.example.whats_eat.presenter.pages.ProfilePage
 import com.example.whats_eat.presenter.pages.SignInPage
+import com.example.whats_eat.util.AuthState
 import com.example.whats_eat.viewModel.ApplicationViewModel
 import com.example.whats_eat.viewModel.CollectionViewModel
 import com.example.whats_eat.viewModel.DetailPlaceViewModel
@@ -36,18 +37,33 @@ fun WhatsEatNavHost(navController: NavHostController) {
     ) {
         composable(route = LogIn.route) {
             val logInViewModel: LoginViewModel = hiltViewModel()
+            val logInState by logInViewModel.userLogInResult.collectAsState(AuthState.IsLoading(false))
 
-            LogInPage(navController = navController)
+            LogInPage(
+                userLogIn = logInViewModel::userLogIn,
+                userLogInState = logInState,
+                navController = navController
+            )
         }
         composable(route = SignIn.route) {
             val signInViewModel: SignInViewModel = hiltViewModel()
+            val signInState by signInViewModel.signInState.collectAsState(AuthState.IsLoading(false))
 
-            SignInPage(navController = navController)
+            SignInPage(
+                signIn = signInViewModel::createAccount,
+                signInState = signInState,
+                navController = navController
+            )
         }
         composable(route = FindPWD.route) {
             val findPWDViewModel: FindPWDViewModel = hiltViewModel()
+            val findPWDState by findPWDViewModel.sendEmailState.collectAsState(AuthState.IsLoading(false))
 
-            FindPWDPage(navController = navController)
+            FindPWDPage(
+                findPWD = findPWDViewModel::sendPWDResetEmail,
+                findPWDState = findPWDState,
+                navController = navController
+            )
         }
         composable(route = Home.route) {
             val homeViewModel: HomeViewModel = hiltViewModel()

@@ -27,9 +27,12 @@ import com.example.whats_eat.R
 import com.example.whats_eat.SignIn
 import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.findPWD.FindPWDSection
+import com.example.whats_eat.util.AuthState
 
 @Composable
 fun FindPWDPage(
+    findPWD: (String) -> Unit,
+    findPWDState: AuthState,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -62,7 +65,19 @@ fun FindPWDPage(
                 onEmailValueChanged = { email -> emailValue = email },
                 onLogInPageClick = { navController.navigate(LogIn.route) },
                 onSignInPageClick = { navController.navigate(SignIn.route) },
-                onFindPWDBtnClick = {  }
+                onFindPWDBtnClick = {
+                    findPWD(emailValue)
+
+                    when {
+                        (findPWDState == AuthState.AuthResult(true)) -> {
+                            //TODO("need to show about send email to user email job is complete")
+                            navController.navigate(LogIn.route)
+                        }
+                        (findPWDState == AuthState.AuthResult(false)) -> {
+                            //TODO("Error Handling Needed")
+                        }
+                    }
+                }
             )
         }
     }
@@ -71,5 +86,9 @@ fun FindPWDPage(
 @Preview(showBackground = true)
 @Composable
 fun PreviewFindPWDPage() {
-    FindPWDPage(navController = rememberNavController())
+    FindPWDPage(
+        findPWD = { _ -> },
+        findPWDState = AuthState.IsLoading(false),
+        navController = rememberNavController()
+    )
 }

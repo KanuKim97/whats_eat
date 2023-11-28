@@ -8,8 +8,8 @@ import com.example.domain.model.placeItem.response.Results
 import com.example.domain.usecase.place.GetNearByPlaceUseCase
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
-import com.example.whats_eat.presenter.adapter.adapterItems.MainBannerItems
-import com.example.whats_eat.presenter.adapter.adapterItems.SubFoodItems
+import com.example.whats_eat.util.MainBannerItems
+import com.example.whats_eat.util.SubFoodItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job

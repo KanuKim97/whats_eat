@@ -22,13 +22,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.whats_eat.Home
 import com.example.whats_eat.LogIn
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.signin.SignInSection
+import com.example.whats_eat.util.AuthState
 
 @Composable
 fun SignInPage(
+    signIn: (String, String, String, String) -> Unit,
+    signInState: AuthState,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -71,7 +75,20 @@ fun SignInPage(
                 onEmailValueChanged = { email -> emailValue = email },
                 onPWDValueChanged = { password -> pwdValue = password },
                 onConfPWDValueChanged = { confPassword -> confPWDValue = confPassword },
-                onSignInBtnClick = {  },
+                onSignInBtnClick = {
+                    //TODO("Validate All User Input")
+
+                    signIn(emailValue, pwdValue, fullNameValue, userNameValue)
+
+                    when {
+                        (signInState == AuthState.AuthResult(true)) -> {
+                            navController.navigate(Home.route)
+                        }
+                        (signInState == AuthState.AuthResult(false)) -> {
+                            //TODO("Show reject SignIn")
+                        }
+                    }
+                },
                 onLogInBtnClick = { navController.navigate(LogIn.route) }
             )
         }
@@ -81,5 +98,9 @@ fun SignInPage(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInPage() {
-    SignInPage(navController = rememberNavController())
+    SignInPage(
+        signIn = { _, _, _, _ -> },
+        signInState = AuthState.IsLoading(false),
+        navController = rememberNavController()
+    )
 }

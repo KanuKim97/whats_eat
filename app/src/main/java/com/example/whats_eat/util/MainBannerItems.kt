@@ -1,4 +1,4 @@
-package com.example.whats_eat.presenter.adapter.adapterItems
+package com.example.whats_eat.util
 
 data class MainBannerItems(
     val placeID: String,

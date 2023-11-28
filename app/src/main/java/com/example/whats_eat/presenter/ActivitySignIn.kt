@@ -1,19 +1,14 @@
 package com.example.whats_eat.presenter
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.whats_eat.databinding.ActivitySignInBinding
-import com.example.whats_eat.presenter.pages.SignInPage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ActivitySignIn : AppCompatActivity() {
-    private val signInBinding by lazy { ActivitySignInBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(signInBinding.root)
     }
 
 //    private fun validateUserInput() {

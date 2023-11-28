@@ -43,9 +43,9 @@ class FragmentProfile: Fragment(), View.OnClickListener {
 
         setUserProfile()
         setUserCollectionCount()
-
-        isAccountDelete()
-        isAccountSignOut()
+//
+//        isAccountDelete()
+//        isAccountSignOut()
     }
 
     override fun onDestroyView() {
@@ -75,21 +75,21 @@ class FragmentProfile: Fragment(), View.OnClickListener {
         }
     }
 
-    private fun isAccountDelete(): Unit =
-        profileViewModel.isAccountDeleteSuccess.observe(viewLifecycleOwner) { isDeleteSuccess ->
-            if (isDeleteSuccess) {
-                startActivity(Intent(requireContext(), ActivityLogIn::class.java))
-                activity?.finish()
-            }
-        }
-
-    private fun isAccountSignOut(): Unit =
-        profileViewModel.isSignOutSuccess.observe(viewLifecycleOwner) { isSignOutSuccess ->
-            if (isSignOutSuccess) {
-                startActivity(Intent(requireContext(), ActivityLogIn::class.java))
-                activity?.finish()
-            }
-        }
+//    private fun isAccountDelete(): Unit =
+//        profileViewModel.isAccountDeleteSuccess.observe(viewLifecycleOwner) { isDeleteSuccess ->
+//            if (isDeleteSuccess) {
+//                startActivity(Intent(requireContext(), ActivityLogIn::class.java))
+//                activity?.finish()
+//            }
+//        }
+//
+//    private fun isAccountSignOut(): Unit =
+//        profileViewModel.isSignOutSuccess.observe(viewLifecycleOwner) { isSignOutSuccess ->
+//            if (isSignOutSuccess) {
+//                startActivity(Intent(requireContext(), ActivityLogIn::class.java))
+//                activity?.finish()
+//            }
+//        }
 
     private fun signOutUserAccount(): Job = profileViewModel.signOutUserAccount()
 
