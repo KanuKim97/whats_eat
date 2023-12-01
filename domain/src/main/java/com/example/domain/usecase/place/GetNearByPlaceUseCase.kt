@@ -12,11 +12,13 @@ class GetNearByPlaceUseCase @Inject constructor(
     operator fun invoke(
         latLng: String
     ): Flow<ArrayList<Results>> = placeApiProducer.nearByPlace(latLng).filter {
-        it.removeAll(it.filter { item ->
-            item.rating == 0.0 ||
-                    item.rating == null ||
-                    item.place_id == null ||
-                    item.photos?.get(0)?.photo_reference == null
-        }.toSet())
+        it.removeAll(
+            it.filter { item ->
+                item.rating == 0.0 ||
+                        item.rating == null ||
+                        item.place_id == null ||
+                        item.photos?.get(0)?.photo_reference == null
+            }.toSet()
+        )
     }
 }

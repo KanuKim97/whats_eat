@@ -67,10 +67,19 @@ fun WhatsEatNavHost(navController: NavHostController) {
         }
         composable(route = Home.route) {
             val homeViewModel: HomeViewModel = hiltViewModel()
+            val mainBannerItems by homeViewModel.mainBannerItems.collectAsState(arrayListOf())
+            val mainGridItems by homeViewModel.mainGridItems.collectAsState(arrayListOf())
 
             AppScaffold(
                 navController = navController,
-                content = { HomePage() }
+                content = {
+                    HomePage(
+                        mainBannerItems = mainBannerItems,
+                        mainGridItems = mainGridItems,
+                        getMainBannerItems = homeViewModel::getMainBannerItems,
+                        getMainGridItems = homeViewModel::getSubGridViewItems
+                    )
+                }
             )
         }
         composable(route = Profile.route) {

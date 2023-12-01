@@ -1,7 +1,5 @@
 package com.example.whats_eat.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.placeItem.response.Results
@@ -14,26 +12,32 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getNearByPlaceUseCase: GetNearByPlaceUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    private val _mainBannerItems = MutableLiveData<ArrayList<MainBannerItems>>()
-    private val _subFoodItems = MutableLiveData<ArrayList<SubFoodItems>>()
-    val mainBannerItems: LiveData<ArrayList<MainBannerItems>> get() = _mainBannerItems
-    val subFoodItems: LiveData<ArrayList<SubFoodItems>> get() = _subFoodItems
+    private val _mainBannerItems = MutableStateFlow<ArrayList<MainBannerItems>>(arrayListOf())
+    private val _mainGridItems = MutableStateFlow<ArrayList<SubFoodItems>>(arrayListOf())
+    val mainBannerItems: Flow<ArrayList<MainBannerItems>>
+        get() = _mainBannerItems.asStateFlow()
+    val mainGridItems: Flow<ArrayList<SubFoodItems>>
+        get() = _mainGridItems.asStateFlow()
 
     private val bannerItems: ArrayList<MainBannerItems> = arrayListOf()
-    private val subItems: ArrayList<SubFoodItems> = arrayListOf()
+    private val gridItems: ArrayList<SubFoodItems> = arrayListOf()
 
     fun getMainBannerItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
         getNearByPlaceUseCase(latLng).collect { results ->
-            val resultsItems: List<Results> =
-                results.sortedBy { it.rating }.slice(0..(results.lastIndex/2))
+            val resultsItems: List<Results> = results.sortedBy { items ->  items.rating }
+                .slice(0..(results.lastIndex/2))
 
             resultsItems.forEach {
                 bannerItems.add(
@@ -44,14 +48,14 @@ class HomeViewModel @Inject constructor(
                     )
                 )
             }
-            _mainBannerItems.postValue(bannerItems)
+            _mainBannerItems.value = bannerItems
         }
     }
 
     fun getSubGridViewItems(latLng: String): Job = viewModelScope.launch(ioDispatcher) {
         getNearByPlaceUseCase(latLng).collect { results ->
             results.forEach {
-                subItems.add(
+                gridItems.add(
                     SubFoodItems(
                         it.place_id.toString(),
                         it.name.toString(),
@@ -59,7 +63,7 @@ class HomeViewModel @Inject constructor(
                     )
                 )
             }
-            _subFoodItems.postValue(subItems)
+            _mainGridItems.value = gridItems
         }
     }
 
@@ -72,6 +76,6 @@ class HomeViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        viewModelScope.cancel()
+        viewModelScope.cancel(cause = CancellationException("ViewModel onCleared"))
     }
 }
