@@ -52,7 +52,7 @@ fun HomeGridItem(
                     },
                     failure = {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_baseline_cancel_presentation_24),
+                            painter = painterResource(id = R.drawable.cancel_24),
                             contentDescription = "",
                             modifier = modifier.fillMaxSize(),
                             contentScale = ContentScale.FillBounds,

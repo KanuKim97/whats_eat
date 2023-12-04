@@ -3,6 +3,7 @@ package com.example.whats_eat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -77,7 +78,8 @@ fun WhatsEatNavHost(navController: NavHostController) {
                         mainBannerItems = mainBannerItems,
                         mainGridItems = mainGridItems,
                         getMainBannerItems = homeViewModel::getMainBannerItems,
-                        getMainGridItems = homeViewModel::getSubGridViewItems
+                        getMainGridItems = homeViewModel::getSubGridViewItems,
+                        navController = navController
                     )
                 }
             )
@@ -98,12 +100,23 @@ fun WhatsEatNavHost(navController: NavHostController) {
                 content = { CollectionList(listItems = arrayListOf()) }
             )
         }
-        composable(route = DetailPlaceInfo.route) {
+        composable(
+            route = DetailPlaceInfo.routeWithPlaceID,
+            arguments = DetailPlaceInfo.argument
+        ) { navBackStackEntry ->
+            val placeID = navBackStackEntry.arguments?.getString(DetailPlaceInfo.placeID)
             val detailPlaceViewModel: DetailPlaceViewModel = hiltViewModel()
+            val detailPlaceInfo by detailPlaceViewModel.detailPlaceResult.observeAsState()
 
             AppScaffold(
                 navController = navController,
-                content = { DetailPlaceInfoPage() }
+                content = {
+                    DetailPlaceInfoPage(
+                        placeID = placeID,
+                        detailPlaceInfo = detailPlaceInfo,
+                        getDetailPlaceInfo = detailPlaceViewModel::getDetailPlaceItem
+                    )
+                }
             )
         }
     }

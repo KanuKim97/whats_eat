@@ -1,5 +1,6 @@
 package com.example.whats_eat.presenter.items.detailPlaceInfo
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,22 +13,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.common.TextButton
+import com.example.whats_eat.ui.preview.DevicePreview
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMapComposable
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun DetailPlaceSection(
     modifier: Modifier,
     placeName: String,
     placeAddress: String,
+    placePhotoRef: String,
     openNow: String,
     cameraPositionState: CameraPositionState,
     mapsContent: @Composable @GoogleMapComposable () -> Unit,
@@ -42,7 +47,28 @@ fun DetailPlaceSection(
             modifier = modifier
                 .fillMaxWidth()
                 .height(300.dp),
-            content = { /* TODO */ }
+            content = {
+                GlideImage(
+                    imageModel = { placePhotoRef },
+                    success = { imageState, _ ->
+                        imageState.imageBitmap?.let { image ->
+                            Image(
+                                bitmap = image,
+                                contentDescription = "Image Viewer",
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    },
+                    failure = {
+                        Image(
+                            painter = painterResource(id = R.drawable.cancel_24),
+                            contentDescription = "",
+                            modifier = modifier.fillMaxSize(),
+                            contentScale = ContentScale.FillBounds,
+                        )
+                    }
+                )
+            }
         )
         PlaceInfoTxtView(
             modifier = modifier,
@@ -68,13 +94,14 @@ fun DetailPlaceSection(
     }
 }
 
-@Preview(showBackground = true)
+@DevicePreview
 @Composable
 fun PreviewDetailPlaceSection() {
     DetailPlaceSection(
         modifier = Modifier,
         placeName = "",
         placeAddress = "",
+        placePhotoRef = "",
         openNow = "",
         cameraPositionState = rememberCameraPositionState(),
         mapsContent = { /*TODO*/ },

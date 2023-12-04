@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.whats_eat.util.SubFoodItems
+import com.example.whats_eat.util.MainGridItems
 
 @Composable
 fun HomeGridList(
-    gridItems: ArrayList<SubFoodItems>,
+    gridItems: ArrayList<MainGridItems>,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(

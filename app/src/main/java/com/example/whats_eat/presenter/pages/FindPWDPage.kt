@@ -27,6 +27,7 @@ import com.example.whats_eat.R
 import com.example.whats_eat.SignIn
 import com.example.whats_eat.presenter.items.common.TitleRow
 import com.example.whats_eat.presenter.items.findPWD.FindPWDSection
+import com.example.whats_eat.ui.preview.DevicePreview
 import com.example.whats_eat.util.AuthState
 
 @Composable
@@ -83,7 +84,7 @@ fun FindPWDPage(
     }
 }
 
-@Preview(showBackground = true)
+@DevicePreview
 @Composable
 fun PreviewFindPWDPage() {
     FindPWDPage(

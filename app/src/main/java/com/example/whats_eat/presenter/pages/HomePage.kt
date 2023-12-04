@@ -1,28 +1,27 @@
 package com.example.whats_eat.presenter.pages
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.presenter.items.home.HomeBannerPager
 import com.example.whats_eat.presenter.items.home.HomeBannerRow
 import com.example.whats_eat.presenter.items.home.HomeGridList
 import com.example.whats_eat.presenter.items.home.HomeGridTitleRow
 import com.example.whats_eat.util.MainBannerItems
-import com.example.whats_eat.util.SubFoodItems
+import com.example.whats_eat.util.MainGridItems
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
@@ -31,22 +30,22 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
+import kotlin.text.StringBuilder
 
 @Suppress("MissingPermission")
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomePage(
     mainBannerItems: ArrayList<MainBannerItems>,
-    mainGridItems: ArrayList<SubFoodItems>,
+    mainGridItems: ArrayList<MainGridItems>,
     getMainBannerItems: (String) -> Unit,
     getMainGridItems: (String) -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val pagerState = rememberPagerState(pageCount = { mainBannerItems.size })
     val permissionState = rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
-    val currentLocation = remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         when(permissionState.status) {
@@ -60,17 +59,18 @@ fun HomePage(
                     locationRequest,
                     object : CancellationToken() {
                         override fun onCanceledRequested(
-                            p0: OnTokenCanceledListener
+                            tokenCanceledListener: OnTokenCanceledListener
                         ): CancellationToken = CancellationTokenSource().token
 
                         override fun isCancellationRequested(): Boolean = false
                     }
                 ).addOnSuccessListener { location ->
-                    currentLocation.value = "${location.latitude + location.longitude}"
-                }
+                    val locationLatLng =
+                        StringBuilder("${location.latitude},${location.longitude}").toString()
 
-                getMainBannerItems(currentLocation.value)
-                getMainGridItems(currentLocation.value)
+                    getMainBannerItems(locationLatLng)
+                    getMainGridItems(locationLatLng)
+                }
             }
             is PermissionStatus.Denied -> {
                 //TODO(Permission Denied)
@@ -89,7 +89,10 @@ fun HomePage(
             verticalArrangement = Arrangement.Top
         ) {
             HomeBannerRow()
-            HomeBannerPager(pagerState = pagerState)
+            HomeBannerPager(
+                navController = navController,
+                mainBannerItems = mainBannerItems
+            )
             HomeGridTitleRow()
             HomeGridList(gridItems = mainGridItems)
         }
@@ -103,6 +106,7 @@ fun PreviewHome() {
         mainBannerItems = arrayListOf(),
         mainGridItems = arrayListOf(),
         getMainBannerItems = { _ -> },
-        getMainGridItems = { _ -> }
+        getMainGridItems = { _ -> },
+        navController = rememberNavController()
     )
 }
