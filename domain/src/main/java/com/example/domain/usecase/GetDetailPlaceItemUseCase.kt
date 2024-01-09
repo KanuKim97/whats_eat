@@ -1,4 +1,4 @@
-package com.example.domain.usecase.place
+package com.example.domain.usecase
 
 import com.example.domain.model.placeItem.response.Results
 import com.example.domain.repository.PlaceApiRepository

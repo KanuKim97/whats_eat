@@ -6,12 +6,6 @@ import androidx.navigation.navArgument
 
 interface NavDestination { val route: String }
 
-object LogIn: NavDestination { override val route: String = "LogInPage" }
-
-object SignIn: NavDestination { override val route: String = "SignInPage" }
-
-object FindPWD: NavDestination { override val route: String = "FindPWDPage" }
-
 object Home: NavDestination { override val route: String = "HomePage" }
 
 object DetailPlaceInfo: NavDestination {

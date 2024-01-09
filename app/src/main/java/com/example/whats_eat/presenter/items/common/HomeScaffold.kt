@@ -23,7 +23,6 @@ fun AppScaffold(
         bottomBar = {
             BottomNavBar(
                 onHomeBtnClick = { navController.navigate(Home.route) },
-                onProfileBtnClick = { navController.navigate(Profile.route) },
                 onCollectionBtnClick = { navController.navigate(Collection.route) }
             )
         },

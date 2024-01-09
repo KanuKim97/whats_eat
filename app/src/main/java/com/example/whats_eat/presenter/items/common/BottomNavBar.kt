@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BottomNavBar(
     onHomeBtnClick: () -> Unit,
-    onProfileBtnClick: () -> Unit,
     onCollectionBtnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -39,7 +38,6 @@ fun BottomNavBar(
                 horizontalArrangement = Arrangement.SpaceAround,
                 content = {
                     HomeIcon(onHomeBtnClick)
-                    ProfileIcon(onProfileBtnClick)
                     CollectionIcon(onCollectionBtnClick)
                 }
             )
@@ -63,20 +61,13 @@ fun CollectionIcon(onCollectionBtnClick: () -> Unit) {
     )
 }
 
-@Composable
-fun ProfileIcon(onProfileBtnClick: () -> Unit) {
-    IconButton(
-        onClick = onProfileBtnClick,
-        content = { Icon(imageVector = Icons.Default.People, contentDescription = "프로필") }
-    )
-}
 
 
 
 @Preview(group = "view")
 @Composable
 fun PreviewNavBar() {
-    BottomNavBar(onHomeBtnClick = {}, onCollectionBtnClick = {}, onProfileBtnClick = {})
+    BottomNavBar(onHomeBtnClick = {}, onCollectionBtnClick = {})
 }
 
 @Preview(group = "item", showBackground = true)
@@ -89,10 +80,4 @@ fun PreviewNavItem() {
 @Composable
 fun PreviewNavItem2() {
     CollectionIcon{}
-}
-
-@Preview(group = "item", showBackground = true)
-@Composable
-fun PreviewNavItem3() {
-    ProfileIcon{}
 }

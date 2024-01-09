@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.remote.model.response.content.photo
+package com.example.data.model.response.responseModel.photo
 
 data class Photos (
     val height: Int,

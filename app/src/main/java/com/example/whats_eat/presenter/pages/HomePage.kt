@@ -94,7 +94,10 @@ fun HomePage(
                 mainBannerItems = mainBannerItems
             )
             HomeGridTitleRow()
-            HomeGridList(gridItems = mainGridItems)
+            HomeGridList(
+                gridItems = mainGridItems,
+                navController = navController
+            )
         }
     }
 }

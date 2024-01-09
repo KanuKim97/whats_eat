@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.CollectionItem
-import com.example.domain.usecase.database.SaveCollectionUseCase
-import com.example.domain.usecase.place.GetDetailPlaceItemUseCase
+import com.example.domain.usecase.GetDetailPlaceItemUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
@@ -20,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailPlaceViewModel @Inject constructor(
     private val getDetailPlaceItemUseCase: GetDetailPlaceItemUseCase,
-    private val saveCollectionUseCase: SaveCollectionUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
     private val _detailPlaceResult = MutableLiveData<CollectionItem>()
@@ -42,10 +40,6 @@ class DetailPlaceViewModel @Inject constructor(
                 )
             }
         }
-    }
-
-    fun saveCollectionItems(collection: CollectionItem): Job = viewModelScope.launch(ioDispatcher) {
-        saveCollectionUseCase.saveUserCollection(collection)
     }
 
     private fun getPhotoUrl(photoReference: String): String =

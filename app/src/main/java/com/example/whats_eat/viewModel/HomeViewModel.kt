@@ -3,7 +3,7 @@ package com.example.whats_eat.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.placeItem.response.Results
-import com.example.domain.usecase.place.GetNearByPlaceUseCase
+import com.example.domain.usecase.GetNearByPlaceUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher

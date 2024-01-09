@@ -2,6 +2,8 @@ package com.example.whats_eat.presenter.pages
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +14,10 @@ import com.example.domain.model.CollectionItem
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.detailPlaceInfo.DetailPlaceSection
 import com.example.whats_eat.ui.preview.DevicePreview
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
@@ -41,8 +47,20 @@ fun DetailPlaceInfoPage(
         stringResource(id = R.string.isCloseNow)
     }
 
+    val placeLatLng = if (detailPlaceInfo != null) {
+        LatLng(detailPlaceInfo.lat!!, detailPlaceInfo.lng!!)
+    } else {
+        LatLng(0.0, 0.0)
+    }
+
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(placeLatLng, 10f)
+    }
+
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState(), enabled = true),
         content = {
             DetailPlaceSection(
                 modifier = modifier,
@@ -50,8 +68,8 @@ fun DetailPlaceInfoPage(
                 placeAddress = detailPlaceInfo?.formattedAddress.toString(),
                 placePhotoRef = detailPlaceInfo?.photoRef.toString(),
                 openNow = isOpenNow,
-                cameraPositionState = rememberCameraPositionState(),
-                mapsContent = { /*TODO*/ },
+                cameraPositionState = cameraPositionState,
+                mapsContent = { Marker(state = MarkerState(placeLatLng)) },
                 addCollectionOnClick = { /*TODO*/ }
             )
         }

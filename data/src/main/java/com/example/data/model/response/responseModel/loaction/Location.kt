@@ -1,4 +1,4 @@
-package com.example.whats_eat.data.remote.model.response.content.loaction
+package com.example.data.model.response.responseModel.loaction
 
 data class Location (
     val lat: Double,

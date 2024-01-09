@@ -1,8 +1,8 @@
 package com.example.data.model.response
 
-import com.example.whats_eat.data.remote.model.response.content.loaction.Geometry
-import com.example.whats_eat.data.remote.model.response.content.period.OpeningHours
-import com.example.whats_eat.data.remote.model.response.content.photo.Photos
+import com.example.data.model.response.responseModel.loaction.Geometry
+import com.example.data.model.response.responseModel.period.OpeningHours
+import com.example.data.model.response.responseModel.photo.Photos
 
 data class Results(
     val name: String?,

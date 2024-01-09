@@ -1,6 +1,5 @@
 package com.example.whats_eat.presenter.items.home
 
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -11,11 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.whats_eat.DetailPlaceInfo
 import com.example.whats_eat.util.MainGridItems
 
 @Composable
 fun HomeGridList(
     gridItems: ArrayList<MainGridItems>,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -30,15 +33,21 @@ fun HomeGridList(
                 HomeGridItem(
                     gridItemTitle = item.name,
                     gridItemImgUri = item.photoRef,
-                    gridItemOnClickEvent = { /*TODO*/ }
+                    gridItemOnClickEvent = {
+                        navController.navigateToDetailPage(item.placeID)
+                    }
                 )
             }
         }
     )
 }
 
+private fun NavController.navigateToDetailPage(placeID: String) {
+    this.navigate("${DetailPlaceInfo.route}/$placeID")
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeGridList() {
-    HomeGridList(gridItems = arrayListOf())
+    HomeGridList(gridItems = arrayListOf(), rememberNavController())
 }
