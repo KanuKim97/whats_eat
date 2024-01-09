@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
+    id 'com.google.dagger.hilt.android'
 }
 
 Properties properties = new Properties()
@@ -35,17 +37,11 @@ dependencies {
     // Domain Library
     implementation project(path: ':domain')
 
+    // Dagger-Hilt DI(Dependency Injection) Tool
+    implementation "com.google.dagger:hilt-android:2.48"
+    ksp "com.google.dagger:hilt-android-compiler:2.48"
+
     // Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    // Firebase
-    def firebaseBom = platform('com.google.firebase:firebase-bom:28.4.0')
-    implementation firebaseBom
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.5.0'
-    implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-auth:22.2.0'
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
-    implementation 'com.google.firebase:firebase-database:20.3.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:22.2.0'
 }
