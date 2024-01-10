@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation(Dependencies.androidx_core)
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidx_junit)

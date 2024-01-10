@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation(Dependencies.androidx_core)
 
     implementation(project(Module.domain))
 

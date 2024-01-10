@@ -54,29 +54,29 @@ dependencies {
     implementation(Dependencies.compose_ui_graphics)
     implementation(Dependencies.compose_ui_preview)
     implementation(Dependencies.compose_material3)
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
-    implementation("androidx.navigation:navigation-compose:2.7.6")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-    implementation("com.google.maps.android:maps-compose:2.11.4")
+    implementation(Dependencies.compose_material_icons)
+    implementation(Dependencies.compose_runtime_livedata)
+    implementation(Dependencies.compose_navigation)
+    implementation(Dependencies.compose_navigation_hilt)
+    implementation(Dependencies.compose_maps)
 
     // Data, Domain Library
     implementation(project(Module.data))
     implementation(project(Module.domain))
 
     // Kotlin Coroutine
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(Dependencies.coroutine)
 
     // Dagger-Hilt DI(Dependency Injection) Tool
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
 
     // Google Android GMS Service Maps SDK, Location
-    implementation ("com.google.android.gms:play-services-maps:18.2.0")
-    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation(Dependencies.gms_maps)
+    implementation(Dependencies.gms_location)
 
     // Jetpack Compose Permission (Accompanist)
-    implementation("com.google.accompanist:accompanist-permissions:0.33.2-alpha")
+    implementation(Dependencies.compose_permission)
 
     // Retrofit2
     implementation(Dependencies.retrofit2)

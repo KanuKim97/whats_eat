@@ -4,12 +4,20 @@ object Versions {
     const val kotlin = "1.9.10"
     const val ksp = "1.9.10-1.0.13"
     const val hilt = "2.49"
+    const val coroutine = "1.7.3"
 
     const val gms_service = "4.4.0"
     const val maps_secrets = "2.0.1"
 
+    const val play_gms_maps = "18.2.0"
+    const val play_gms_location = "21.0.1"
+
     const val compose = "1.5.3"
     const val compose_BoM = "2023.10.01"
+    const val compose_permission = "0.33.2-alpha"
+    const val compose_navigation = "2.7.6"
+    const val compose_hilt_navigation = "1.1.0"
+    const val compose_maps = "2.11.4"
     const val activity_compose = "1.8.2"
 
     const val junit = "4.13.2"
@@ -38,10 +46,14 @@ object Plugins {
 
 object Dependencies {
     const val androidx_core = "androidx.core:core:${Versions.core}"
+    const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine}"
 
     const val junit = "junit:junit:${Versions.junit}"
     const val androidx_junit = "androidx.test.ext:junit:${Versions.androidx_junit}"
     const val espresso_core = "com.android.support.test.espresso:espresso-core:${Versions.espresso_core}"
+
+    const val gms_maps = "com.google.android.gms:play-services-maps:${Versions.play_gms_maps}"
+    const val gms_location = "com.google.android.gms:play-services-location:${Versions.play_gms_location}"
 
     const val landscapist_glide = "com.github.skydoves:landscapist-glide:${Versions.landscapist}"
     const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
@@ -53,6 +65,12 @@ object Dependencies {
     const val compose_BoM = "androidx.compose:compose-bom:${Versions.compose_BoM}"
     const val compose_activity = "androidx.activity:activity-compose:${Versions.activity_compose}"
     const val compose_material3 = "androidx.compose.material3:material3"
+    const val compose_runtime_livedata = "androidx.compose.runtime:runtime-livedata"
+    const val compose_material_icons = "androidx.compose.material:material-icons-extended"
+    const val compose_navigation = "androidx.navigation:navigation-compose:${Versions.compose_navigation}"
+    const val compose_navigation_hilt = "androidx.hilt:hilt-navigation-compose:${Versions.compose_hilt_navigation}"
+    const val compose_maps = "com.google.maps.android:maps-compose:${Versions.compose_maps}"
+    const val compose_permission = "com.google.accompanist:accompanist-permissions:${Versions.compose_permission}"
     const val compose_ui = "androidx.compose.ui:ui"
     const val compose_ui_graphics = "androidx.compose.ui:ui-graphics"
     const val compose_ui_preview ="androidx.compose.ui:ui-tooling-preview"
