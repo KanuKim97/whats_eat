@@ -22,7 +22,7 @@ object Versions {
 
     const val junit = "4.13.2"
     const val androidx_junit = "1.1.5"
-    const val espresso_core = "3.0.2"
+    const val espresso_core = "3.5.1"
 
     const val landscapist = "2.2.10"
     const val retrofit = "2.9.0"
@@ -38,6 +38,7 @@ object Plugins {
     const val android_library = "com.android.library"
     const val kotlin_android = "org.jetbrains.kotlin.android"
     const val kotlin_jvm = "org.jetbrains.kotlin.jvm"
+    const val java_library = "java-library"
     const val ksp = "com.google.devtools.ksp"
     const val hilt = "com.google.dagger.hilt.android"
     const val google_service = "com.google.gms.google-services"
@@ -50,7 +51,7 @@ object Dependencies {
 
     const val junit = "junit:junit:${Versions.junit}"
     const val androidx_junit = "androidx.test.ext:junit:${Versions.androidx_junit}"
-    const val espresso_core = "com.android.support.test.espresso:espresso-core:${Versions.espresso_core}"
+    const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espresso_core}"
 
     const val gms_maps = "com.google.android.gms:play-services-maps:${Versions.play_gms_maps}"
     const val gms_location = "com.google.android.gms:play-services-location:${Versions.play_gms_location}"
@@ -81,6 +82,17 @@ object Dependencies {
 
 object Module {
     const val app = ":app"
-    const val data = ":data"
-    const val domain = ":domain"
+
+    // Core
+    const val common = ":core:common"
+    const val data = ":core:data"
+    const val designsystem = ":core:designsystem"
+    const val domain = ":core:domain"
+    const val model = ":core:model"
+    const val network = ":core:network"
+
+    // Feature
+    const val collection = ":feature:collection"
+    const val home = ":feature:home"
+    const val detail = ":feature:place-detail"
 }

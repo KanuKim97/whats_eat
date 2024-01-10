@@ -2,7 +2,7 @@ package com.example.whats_eat.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.cancel

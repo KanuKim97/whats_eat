@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.NotInterested
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,7 +54,7 @@ fun HomeGridItem(
                     },
                     failure = {
                         Image(
-                            painter = painterResource(id = R.drawable.cancel_24),
+                            imageVector = Icons.Default.NotInterested,
                             contentDescription = "",
                             modifier = modifier.fillMaxSize(),
                             contentScale = ContentScale.FillBounds,

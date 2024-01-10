@@ -10,7 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import com.example.domain.model.CollectionItem
+import com.example.model.CollectionItem
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.detailPlaceInfo.DetailPlaceSection
 import com.example.whats_eat.ui.preview.DevicePreview

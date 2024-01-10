@@ -40,6 +40,7 @@ android {
     }
 
     composeOptions.kotlinCompilerExtensionVersion = Versions.compose
+    buildFeatures.buildConfig = true
     buildFeatures.compose = true
 }
 
@@ -63,6 +64,7 @@ dependencies {
     // Data, Domain Library
     implementation(project(Module.data))
     implementation(project(Module.domain))
+    implementation(project(Module.model))
 
     // Kotlin Coroutine
     implementation(Dependencies.coroutine)

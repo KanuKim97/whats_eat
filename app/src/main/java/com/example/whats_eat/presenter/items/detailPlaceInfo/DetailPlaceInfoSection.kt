@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.NotInterested
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +63,7 @@ fun DetailPlaceSection(
                     },
                     failure = {
                         Image(
-                            painter = painterResource(id = R.drawable.cancel_24),
+                            imageVector = Icons.Default.NotInterested,
                             contentDescription = "",
                             modifier = modifier.fillMaxSize(),
                             contentScale = ContentScale.FillBounds,

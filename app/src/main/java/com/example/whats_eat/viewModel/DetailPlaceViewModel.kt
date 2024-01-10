@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.CollectionItem
+import com.example.model.CollectionItem
 import com.example.domain.usecase.GetDetailPlaceItemUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
-import com.example.whats_eat.di.dispatcherQualifier.IoDispatcher
+import com.example.whats_eat.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
