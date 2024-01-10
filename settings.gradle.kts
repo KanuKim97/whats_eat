@@ -15,6 +15,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "what's_eat"
-include ':app'
-include ':data'
-include ':domain'
+include(":app")
+include(":data")
+include(":domain")
