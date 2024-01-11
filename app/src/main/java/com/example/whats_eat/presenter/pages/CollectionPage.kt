@@ -9,12 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.model.CollectionItem
+import com.example.model.collection.Collection
 import com.example.whats_eat.presenter.items.collection.CollectionItems
 
 @Composable
 fun CollectionList(
-    listItems: ArrayList<CollectionItem>,
+    listItems: ArrayList<Collection>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(

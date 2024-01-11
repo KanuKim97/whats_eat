@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.common.TextButton
-import com.example.whats_eat.ui.preview.DevicePreview
+import com.example.whats_eat.preview.DevicePreview
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMapComposable
 import com.google.maps.android.compose.rememberCameraPositionState

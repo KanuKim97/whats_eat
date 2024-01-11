@@ -10,10 +10,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import com.example.model.CollectionItem
+import com.example.model.collection.Collection
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.detailPlaceInfo.DetailPlaceSection
-import com.example.whats_eat.ui.preview.DevicePreview
+import com.example.whats_eat.preview.DevicePreview
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Marker
@@ -23,7 +23,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 @Composable
 fun DetailPlaceInfoPage(
     placeID: String?,
-    detailPlaceInfo: CollectionItem?,
+    detailPlaceInfo: Collection?,
     getDetailPlaceInfo: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {

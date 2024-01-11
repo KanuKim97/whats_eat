@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.model.CollectionItem
-import com.example.domain.usecase.GetDetailPlaceItemUseCase
+import com.example.model.collection.Collection
+import com.example.domain.GetDetailPlaceItemUseCase
 import com.example.whats_eat.BuildConfig
 import com.example.whats_eat.common.Constant
 import com.example.whats_eat.di.IoDispatcher
@@ -21,14 +21,14 @@ class DetailPlaceViewModel @Inject constructor(
     private val getDetailPlaceItemUseCase: GetDetailPlaceItemUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
-    private val _detailPlaceResult = MutableLiveData<CollectionItem>()
-    val detailPlaceResult: LiveData<CollectionItem> get() = _detailPlaceResult
+    private val _detailPlaceResult = MutableLiveData<Collection>()
+    val detailPlaceResult: LiveData<Collection> get() = _detailPlaceResult
 
     fun getDetailPlaceItem(placeId: String): Job = viewModelScope.launch(ioDispatcher) {
         getDetailPlaceItemUseCase(placeId).collect { result ->
             if (result != null) {
                 _detailPlaceResult.postValue(
-                    CollectionItem(
+                    Collection(
                         name = result.name,
                         formattedAddress = result.formatted_address,
                         isOpenNow = result.openingHours?.open_now,
