@@ -7,6 +7,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.SecurityUpdateWarning
 import androidx.compose.material.icons.rounded.CollectionsBookmark
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.StarRate
 
 object EatIcons {
     val HomeBorder = Icons.Rounded.Home
@@ -17,4 +18,5 @@ object EatIcons {
 
     val WarningOutlined = Icons.Outlined.SecurityUpdateWarning
     val CloseOutlined = Icons.Outlined.Close
+    val starBordered = Icons.Rounded.StarRate
 }

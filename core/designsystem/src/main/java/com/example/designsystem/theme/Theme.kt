@@ -21,7 +21,8 @@ private val lightColorTheme = lightColorScheme(
     secondaryContainer = BrightBlue,
     onSecondaryContainer = BrandBlue,
     background = White,
-    surface = White
+    surface = White,
+    inverseSurface = Black
 )
 
 private val darkColorTheme = darkColorScheme()

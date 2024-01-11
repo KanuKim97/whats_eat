@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.model.collection.Collection
-import com.example.whats_eat.presenter.items.collection.CollectionItems
+import com.example.ui.CollectionItems
 
 @Composable
 fun CollectionList(
@@ -26,7 +26,7 @@ fun CollectionList(
         userScrollEnabled = true
     ) {
         items(count = listItems.size) {
-            CollectionItems(
+            com.example.ui.CollectionItems(
                 modifier = modifier,
                 placeName = listItems[it].name.toString(),
                 placeAddress = listItems[it].formattedAddress.toString(),

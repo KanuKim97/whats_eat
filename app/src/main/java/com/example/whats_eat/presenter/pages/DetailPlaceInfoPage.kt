@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.model.collection.Collection
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.detailPlaceInfo.DetailPlaceSection
-import com.example.whats_eat.preview.DevicePreview
+import com.example.ui.preview.DevicePreview
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Marker
@@ -77,7 +77,7 @@ fun DetailPlaceInfoPage(
 
 }
 
-@DevicePreview
+@com.example.ui.preview.DevicePreview
 @Composable
 fun PreviewDetailPlaceInfoPage() {
     DetailPlaceInfoPage(

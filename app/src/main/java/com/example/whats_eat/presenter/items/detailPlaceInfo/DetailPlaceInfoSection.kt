@@ -16,14 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.whats_eat.R
 import com.example.whats_eat.presenter.items.common.TextButton
-import com.example.whats_eat.preview.DevicePreview
+import com.example.ui.preview.DevicePreview
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMapComposable
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -96,7 +95,7 @@ fun DetailPlaceSection(
     }
 }
 
-@DevicePreview
+@com.example.ui.preview.DevicePreview
 @Composable
 fun PreviewDetailPlaceSection() {
     DetailPlaceSection(

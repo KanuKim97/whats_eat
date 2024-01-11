@@ -1,4 +1,4 @@
-package com.example.whats_eat.preview
+package com.example.ui.preview
 
 import androidx.compose.ui.tooling.preview.Preview
 
