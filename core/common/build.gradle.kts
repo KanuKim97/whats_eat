@@ -23,6 +23,8 @@ dependencies {
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
 
+    implementation(Dependencies.coroutine)
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidx_junit)
 }

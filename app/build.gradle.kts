@@ -62,6 +62,8 @@ dependencies {
     implementation(Dependencies.compose_maps)
 
     // Data, Domain Library
+    implementation(project(Module.home))
+    implementation(project(Module.detail))
     implementation(project(Module.data))
     implementation(project(Module.domain))
     implementation(project(Module.model))

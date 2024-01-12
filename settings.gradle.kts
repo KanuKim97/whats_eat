@@ -28,5 +28,5 @@ include(":core:network")
 // Feature Module
 include(":feature:collection")
 include(":feature:home")
-include(":feature:place-detail")
+include(":feature:detail")
 include(":core:ui")

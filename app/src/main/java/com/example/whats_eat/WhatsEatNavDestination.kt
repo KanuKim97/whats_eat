@@ -16,5 +16,3 @@ object DetailPlaceInfo: NavDestination {
 }
 
 object Collection: NavDestination { override val route: String = "CollectionPage" }
-
-object Profile: NavDestination { override val route: String = "ProfilePage" }

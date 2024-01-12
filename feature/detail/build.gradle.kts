@@ -3,12 +3,14 @@ plugins {
     id(Plugins.kotlin_android)
     id(Plugins.ksp)
     id(Plugins.hilt)
+    id(Plugins.google_service)
+    id(Plugins.maps_secret_gradle_plugin)
 }
 
 kotlin.jvmToolchain(AppConfig.jdkVersion)
 
 android {
-    namespace = "com.example.collection"
+    namespace = "com.example.detail"
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
@@ -48,11 +50,15 @@ dependencies {
 
     implementation(Dependencies.landscapist_glide)
 
+    implementation(Dependencies.gms_location)
+    implementation(Dependencies.gms_maps)
+    implementation(Dependencies.compose_maps)
+
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)
     debugImplementation(Dependencies.compose_ui_tooling)
     debugImplementation(Dependencies.compose_ui_test_manifest)
-    
+
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidx_junit)
     androidTestImplementation(Dependencies.espresso_core)

@@ -90,9 +90,10 @@ object Module {
     const val domain = ":core:domain"
     const val model = ":core:model"
     const val network = ":core:network"
+    const val ui = ":core:ui"
 
     // Feature
     const val collection = ":feature:collection"
     const val home = ":feature:home"
-    const val detail = ":feature:place-detail"
+    const val detail = ":feature:detail"
 }
