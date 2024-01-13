@@ -7,15 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,15 +20,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Typography
-import com.example.ui.BannerCard
-import com.example.ui.GridItem
+import com.example.home.component.HomeBanner
+import com.example.home.component.HomeItemGrid
 import com.example.ui.preview.ComponentPreview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
@@ -84,14 +77,14 @@ internal fun HomeRoute(modifier: Modifier = Modifier) {
                     homeViewModel.updateLatLng(locationLatLng)
                 }
             }
-            is PermissionStatus.Denied -> {  }
+            is PermissionStatus.Denied -> { /* TODO */ }
         }
     }
 
     HomeScreen(
         bannerState = bannerState,
         itemGridState = itemGridState,
-        itemOnClick = {},
+        itemOnClick = { /* TODO */ },
         modifier = modifier
     )
 }
@@ -106,12 +99,15 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState(pageCount = { 5 })
+
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
-            modifier = modifier.fillMaxSize().padding(10.dp),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(10.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ) {
@@ -128,28 +124,10 @@ fun HomeScreen(
                 style = Typography.titleSmall
             )
             Spacer(modifier = modifier.size(10.dp))
-            when (bannerState) {
-                is BannerUiState.IsLoading -> { CircularProgressIndicator() }
-                is BannerUiState.IsSuccess -> {
-                    HorizontalPager(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .height(300.dp),
-                        state = pagerState,
-                        pageSpacing = 20.dp,
-                        userScrollEnabled = true,
-                        pageContent = { index ->
-                            BannerCard(
-                                bannerTitle = bannerState.banner?.get(index)?.name.toString(),
-                                bannerImgUri = bannerState.banner?.get(index)?.photoRef.toString(),
-                                bannerOnClick = {  }
-                            )
-                        }
-                    )
-                }
-                is BannerUiState.IsFailed -> { /* TODO() */ }
-            }
-
+            HomeBanner(
+                pagerState = pagerState,
+                bannerUiState = bannerState
+            )
             Spacer(modifier = modifier.size(10.dp))
             Text(
                 text = "근처 맛집",
@@ -157,32 +135,7 @@ fun HomeScreen(
                 style = Typography.titleSmall
             )
             Spacer(modifier = modifier.size(10.dp))
-            when (itemGridState) {
-                is ItemGridUiState.IsLoading -> {
-                    CircularProgressIndicator()
-                }
-                is ItemGridUiState.IsSuccess -> {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(count = 2),
-                        modifier = modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        content = {
-                            itemGridState.item?.let { gridItemList ->
-                                items(items = gridItemList) { item ->
-                                    GridItem(
-                                        itemTitle = item.name,
-                                        itemImgUri = item.photoRef,
-                                        itemOnClick = { /*TODO*/ }
-                                    )
-                                }
-                            }
-                        }
-                    )
-                }
-                is ItemGridUiState.IsFailed -> { /* TODO() */ }
-            }
-
+            HomeItemGrid(itemGridUiState = itemGridState)
         }
     }
 }

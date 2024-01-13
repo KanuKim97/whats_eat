@@ -1,6 +1,5 @@
 package com.example.detail
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +22,8 @@ import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.component.EatTextButton
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Typography
+import com.example.detail.component.DetailInfo
+import com.example.detail.component.DetailPlaceView
 import com.example.ui.preview.ComponentPreview
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -31,13 +32,11 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun DetailScreen(modifier: Modifier = Modifier) {
     val cameraPositionState = rememberCameraPositionState()
 
-    Surface(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(10.dp)
-    ) {
+    Surface(modifier = modifier.fillMaxSize()) {
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -54,57 +53,17 @@ fun DetailScreen(modifier: Modifier = Modifier) {
                         )
                     }
                 },
-                failure = {}
+                failure = { /*TODO*/ }
             )
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center,
-                content = {
-                    Text(
-                        text = "00 음식점",
-                        fontWeight = FontWeight.Bold,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        style = Typography.headlineMedium
-                    )
-                    Text(
-                        text = "00시 00구 00동 000길 00 101호",
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 2,
-                        style = Typography.labelLarge
-                    )
-                    Text(
-                        text = "영업 중",
-                        maxLines = 1,
-                        style = Typography.labelMedium
-                    )
-                }
+            DetailInfo(
+                name = "00 음식점",
+                address = "00시 00구 00동 00로 0길 00 000호",
+                openNow = true
             )
             Spacer(modifier = modifier.size(10.dp))
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center,
-                content = {
-                    Text(
-                        text = "위치",
-                        fontWeight = FontWeight.SemiBold,
-                        style = Typography.headlineMedium
-                    )
-                    GoogleMap(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .height(300.dp),
-                        cameraPositionState = cameraPositionState,
-                    ) {
-
-                    }
-                }
+            DetailPlaceView(
+                cameraPositionState = cameraPositionState,
+                mapsContent = { /*TODO*/ }
             )
             EatTextButton(
                 onClick = { /*TODO*/ },

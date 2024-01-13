@@ -24,9 +24,11 @@ android {
 dependencies {
     implementation(Dependencies.androidx_core)
 
+    implementation(project(Module.common))
     implementation(project(Module.domain))
     implementation(project(Module.ui))
     implementation(project(Module.designsystem))
+    implementation(project(Module.model))
 
     // Kotlin Coroutine
     implementation(Dependencies.coroutine)
