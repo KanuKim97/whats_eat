@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.createSavedStateHandle
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Typography
 import com.example.home.component.HomeBanner
@@ -42,11 +43,11 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-internal fun HomeRoute(modifier: Modifier = Modifier) {
+internal fun HomeRoute(
+    navigateToDetail: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val homeViewModel = hiltViewModel<HomeViewModel>()
-    val bannerState by homeViewModel.bannerState.collectAsState()
-    val itemGridState by homeViewModel.gridItemState.collectAsState()
-
     val context = LocalContext.current
     val permissionState = rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
@@ -81,10 +82,13 @@ internal fun HomeRoute(modifier: Modifier = Modifier) {
         }
     }
 
+    val bannerState by homeViewModel.bannerState.collectAsState()
+    val itemGridState by homeViewModel.gridItemState.collectAsState()
+
     HomeScreen(
         bannerState = bannerState,
         itemGridState = itemGridState,
-        itemOnClick = { /* TODO */ },
+        itemOnClick = navigateToDetail,
         modifier = modifier
     )
 }
@@ -95,11 +99,9 @@ internal fun HomeRoute(modifier: Modifier = Modifier) {
 fun HomeScreen(
     bannerState: BannerUiState,
     itemGridState: ItemGridUiState,
-    itemOnClick: (Int) -> Unit,
+    itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val pagerState = rememberPagerState(pageCount = { 5 })
-
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -125,8 +127,8 @@ fun HomeScreen(
             )
             Spacer(modifier = modifier.size(10.dp))
             HomeBanner(
-                pagerState = pagerState,
-                bannerUiState = bannerState
+                bannerUiState = bannerState,
+                bannerOnClick = itemOnClick
             )
             Spacer(modifier = modifier.size(10.dp))
             Text(
@@ -135,7 +137,10 @@ fun HomeScreen(
                 style = Typography.titleSmall
             )
             Spacer(modifier = modifier.size(10.dp))
-            HomeItemGrid(itemGridUiState = itemGridState)
+            HomeItemGrid(
+                itemGridUiState = itemGridState,
+                itemOnClick = itemOnClick
+            )
         }
     }
 }

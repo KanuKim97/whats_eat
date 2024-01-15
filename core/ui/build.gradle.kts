@@ -22,6 +22,7 @@ dependencies {
     implementation(Dependencies.androidx_core)
 
     implementation(project(Module.designsystem))
+    implementation(project(":core:model"))
 
     // Jetpack Compose
     val composeBom = platform(Dependencies.compose_BoM)

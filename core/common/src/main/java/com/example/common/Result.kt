@@ -15,9 +15,7 @@ sealed interface Result<out T> {
 
 fun <T> Flow<T>.asResult(): Flow<Result<T>> {
     return this
-        .map<T, Result<T>> { type ->
-            Result.Success(type)
-        }
+        .map<T, Result<T>> { type -> Result.Success(type) }
         .onStart { emit(Result.IsLoading) }
         .catch { error -> emit(Result.Error(error)) }
 }

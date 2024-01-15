@@ -13,16 +13,14 @@ class PlaceApiRepositoryImpl @Inject constructor(
     private val network: PlaceDataSource,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ): PlaceApiRepository {
-    override fun nearByPlace(latLng: String): Flow<ArrayList<Results>?> = flow {
-        val response = network.getNearBySearch(latLng)?.results
-
-        emit(response)
+    override fun nearByPlace(latLng: String): Flow<ArrayList<Results>> = flow {
+        val response = network.getNearBySearch(latLng)
+        emit(response.results)
     }.flowOn(ioDispatcher)
 
     override fun detailedPlace(placeID: String): Flow<Results?> = flow {
-        val response = network.getDetail(placeID)?.result
-
-        emit(response)
+        val response = network.getDetail(placeID)
+        emit(response.result)
     }.flowOn(ioDispatcher)
 
 }

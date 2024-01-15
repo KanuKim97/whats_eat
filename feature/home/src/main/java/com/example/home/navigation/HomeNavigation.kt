@@ -20,7 +20,9 @@ fun NavController.onNavigateHome() {
     this.navigate(homeRoute)
 }
 
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(
+    navigateToDetail: (String) -> Unit
+) {
     composable(
         route = homeRoute,
         enterTransition = {
@@ -45,6 +47,6 @@ fun NavGraphBuilder.homeScreen() {
                 )
             )
         },
-        content = { HomeRoute() }
+        content = { HomeRoute(navigateToDetail) }
     )
 }

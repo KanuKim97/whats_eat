@@ -50,9 +50,9 @@ fun RowScope.BottomNavAppBarItem(
         label = label,
         alwaysShowLabel = alwaysShowLabel,
         colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
+            selectedIconColor = MaterialTheme.colorScheme.secondaryContainer,
+            selectedTextColor = MaterialTheme.colorScheme.secondaryContainer,
+            indicatorColor = MaterialTheme.colorScheme.onSecondaryContainer,
             unselectedIconColor = Gray700,
             unselectedTextColor = Gray700,
             disabledIconColor = Gray900,

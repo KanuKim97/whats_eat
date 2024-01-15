@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.collection.navigation.collectionScreen
 import com.example.detail.navigation.detailScreen
+import com.example.detail.navigation.onNavigateDetail
 import com.example.home.navigation.homeScreen
 
 @Composable
@@ -17,7 +18,7 @@ fun WhatsEatNavHost(navController: NavHostController) {
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        homeScreen()
+        homeScreen(navigateToDetail = { id -> navController.onNavigateDetail(id) } )
         collectionScreen()
         detailScreen()
     }

@@ -21,19 +21,19 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Typography
+import com.example.model.home.GridItems
 import com.example.ui.preview.ComponentPreview
 
 @Composable
 fun GridItem(
-    itemTitle: String,
-    itemImgUri: String,
-    itemOnClick: () -> Unit,
+    gridItems: GridItems,
+    itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .wrapContentSize()
-            .clickable(onClick = itemOnClick),
+            .clickable(onClick = { itemOnClick(gridItems.placeID) } ),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -42,7 +42,7 @@ fun GridItem(
             horizontalAlignment = Alignment.Start,
             content = {
                 EatImageLoader(
-                    imageModel = itemImgUri,
+                    imageModel = gridItems.photoRef,
                     modifier = modifier
                         .size(160.dp)
                         .clip(shape = EatShape.medium),
@@ -62,7 +62,7 @@ fun GridItem(
                     }
                 )
                 Text(
-                    text = itemTitle,
+                    text = gridItems.name,
                     modifier = modifier
                         .width(160.dp)
                         .wrapContentHeight(),
@@ -74,14 +74,4 @@ fun GridItem(
             }
         )
     }
-}
-
-@ComponentPreview
-@Composable
-fun PreviewItems() {
-    GridItem(
-        itemTitle = "000상회",
-        itemImgUri = "",
-        itemOnClick = { /*TODO*/ }
-    )
 }

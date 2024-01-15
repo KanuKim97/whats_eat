@@ -12,17 +12,17 @@ import javax.inject.Singleton
 class RetrofitPlaceNetwork @Inject constructor(retrofit: Retrofit): PlaceDataSource {
     private val placeApi: RetrofitPlaceAPI = retrofit.create(RetrofitPlaceAPI::class.java)
 
-    override suspend fun getDetail(placeID: String): DetailedPlace? =
+    override suspend fun getDetail(placeID: String): DetailedPlace =
         placeApi.getDetails(
             placeID = placeID,
             apiKey = BuildConfig.PLACE_API_KEY
-        ).body()
+        ).body()!!
 
-    override suspend fun getNearBySearch(latLng: String): MyPlaces? =
+    override suspend fun getNearBySearch(latLng: String): MyPlaces =
         placeApi.getNearBySearch(
             latLng = latLng,
             radius = Constants.LOCATION_RADIUS,
             type = Constants.LOCATION_TYPE,
             apiKey = BuildConfig.PLACE_API_KEY
-        ).body()
+        ).body()!!
 }

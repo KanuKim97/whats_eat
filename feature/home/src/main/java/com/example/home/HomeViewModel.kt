@@ -1,5 +1,6 @@
 package com.example.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +27,7 @@ class HomeViewModel @Inject constructor(
         get() = _latLng
 
     val bannerState: StateFlow<BannerUiState> = bannerState(
-        latLng = latLng.value.toString(),
+        latLng = "37.5519, 126.9918",
         getNearBySearch = getNearBySearch
     ).stateIn(
         scope = viewModelScope,
@@ -35,7 +36,7 @@ class HomeViewModel @Inject constructor(
     )
 
     val gridItemState: StateFlow<ItemGridUiState> = itemGridState(
-        latLng = latLng.value.toString(),
+        latLng = "37.5519, 126.9918",
         getNearBySearch = getNearBySearch
     ).stateIn(
         scope = viewModelScope,
@@ -53,19 +54,19 @@ private fun bannerState(
     latLng: String,
     getNearBySearch: GetNearBySearchUseCase
 ): Flow<BannerUiState> {
-    val banner = getNearBySearch(latLng).map { resultList ->
-        resultList?.sortedBy { result ->
-            result.rating
-        }?.slice(
-            indices = 0..resultList.lastIndex/2
-        )?.map { element ->
-            BannerItems (
-                element.place_id!!,
-                element.name!!,
-                element.photos?.get(0)?.photo_reference!!
-            )
+    val banner = getNearBySearch(latLng)
+        .map { resultList ->
+            resultList
+                .sortedBy { result -> result.rating }
+                .slice(indices = 0..resultList.lastIndex/2)
+                .map { element ->
+                    BannerItems (
+                        element.place_id!!,
+                        element.name!!,
+                        element.photos?.get(0)?.photo_reference!!
+                    )
+                }
         }
-    }
 
     return banner
         .asResult()
@@ -89,7 +90,7 @@ private fun itemGridState(
     getNearBySearch: GetNearBySearchUseCase
 ): Flow<ItemGridUiState> {
     val gridItem = getNearBySearch(latLng).map { resultList ->
-        resultList?.map { element ->
+        resultList.map { element ->
             GridItems(
                 element.place_id!!,
                 element.name!!,
@@ -102,16 +103,9 @@ private fun itemGridState(
         .asResult()
         .map { gridResult ->
             when (gridResult) {
-                is Result.IsLoading -> {
-                    ItemGridUiState.IsLoading
-                }
-                is Result.Success -> {
-                    val result = gridResult.data
-                    ItemGridUiState.IsSuccess(result)
-                }
-                is Result.Error -> {
-                    ItemGridUiState.IsFailed
-                }
+                is Result.IsLoading -> { ItemGridUiState.IsLoading }
+                is Result.Success -> { ItemGridUiState.IsSuccess(gridResult.data) }
+                is Result.Error -> { ItemGridUiState.IsFailed }
             }
         }
 }

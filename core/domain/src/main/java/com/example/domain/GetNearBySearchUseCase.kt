@@ -4,15 +4,14 @@ import com.example.data.repository.PlaceApiRepository
 import com.example.model.response.Results
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetNearBySearchUseCase @Inject constructor(
     private val placeApiProducer: PlaceApiRepository
 ) {
-    operator fun invoke(latLng: String): Flow<List<Results>?> =
+    operator fun invoke(latLng: String): Flow<List<Results>> =
         placeApiProducer.nearByPlace(latLng).filter { result ->
-            result!!.removeAll(
+            result.removeAll(
                 result.filter { item ->
                     item.rating == 0.0 ||
                         item.rating == null ||

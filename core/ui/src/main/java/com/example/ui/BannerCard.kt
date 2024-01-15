@@ -18,17 +18,17 @@ import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Typography
+import com.example.model.home.BannerItems
 import com.example.ui.preview.ComponentPreview
 
 @Composable
 fun BannerCard(
-    bannerTitle: String,
-    bannerImgUri: String,
-    bannerOnClick: () -> Unit,
+    banner: BannerItems?,
+    bannerOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     EatCard(
-        onClick = bannerOnClick,
+        onClick = { bannerOnClick(banner?.placeID ?: "") },
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
@@ -40,7 +40,7 @@ fun BannerCard(
             verticalArrangement = Arrangement.Center
         ) {
             EatImageLoader(
-                imageModel = bannerImgUri,
+                imageModel = banner?.photoRef ?: "",
                 modifier = modifier
                     .fillMaxWidth()
                     .height(250.dp)
@@ -61,22 +61,10 @@ fun BannerCard(
                 }
             )
             Text(
-                text = bannerTitle,
+                text = banner?.name ?: "",
                 fontWeight = FontWeight.SemiBold,
                 style = Typography.titleMedium
             )
         }
-    }
-}
-
-@ComponentPreview
-@Composable
-fun PreviewHomeCard() {
-    EatTheme {
-        BannerCard(
-            bannerTitle = "00상회",
-            bannerImgUri = "",
-            bannerOnClick = {  }
-        )
     }
 }

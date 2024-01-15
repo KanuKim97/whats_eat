@@ -67,12 +67,7 @@ fun DetailScreen(modifier: Modifier = Modifier) {
             )
             EatTextButton(
                 onClick = { /*TODO*/ },
-                content = {
-                    Text(
-                        text = "컬렉션에 추가하기",
-                        style = Typography.labelLarge
-                    )
-                }
+                content = { Text(text = "컬렉션에 추가하기", style = Typography.labelLarge) }
             )
         }
     }
