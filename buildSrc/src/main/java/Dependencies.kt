@@ -5,6 +5,8 @@ object Versions {
     const val ksp = "1.9.10-1.0.13"
     const val hilt = "2.49"
     const val coroutine = "1.7.3"
+    const val room = "2.6.1"
+
 
     const val gms_service = "4.4.0"
     const val maps_secrets = "2.0.1"
@@ -63,6 +65,10 @@ object Dependencies {
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 
+    const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val room_compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val room_ktx = "androidx.room:room-ktx:${Versions.room}"
+
     const val compose_BoM = "androidx.compose:compose-bom:${Versions.compose_BoM}"
     const val compose_activity = "androidx.activity:activity-compose:${Versions.activity_compose}"
     const val compose_material3 = "androidx.compose.material3:material3"
@@ -86,6 +92,7 @@ object Module {
     // Core
     const val common = ":core:common"
     const val data = ":core:data"
+    const val database = ":core:database"
     const val designsystem = ":core:designsystem"
     const val domain = ":core:domain"
     const val model = ":core:model"

@@ -29,8 +29,9 @@ dependencies {
     implementation(Dependencies.androidx_core)
 
     implementation(project(Module.common))
-    implementation(project(Module.model))
+    implementation(project(Module.database))
     implementation(project(Module.network))
+    implementation(project(Module.model))
 
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidx_junit)

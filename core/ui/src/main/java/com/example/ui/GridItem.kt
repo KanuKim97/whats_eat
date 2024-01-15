@@ -1,10 +1,12 @@
 package com.example.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,9 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatShape
+import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
 import com.example.model.home.GridItems
-import com.example.ui.preview.ComponentPreview
 
 @Composable
 fun GridItem(
@@ -33,7 +35,7 @@ fun GridItem(
     Box(
         modifier = modifier
             .wrapContentSize()
-            .clickable(onClick = { itemOnClick(gridItems.placeID) } ),
+            .clickable(onClick = { itemOnClick(gridItems.placeID) }),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -55,9 +57,18 @@ fun GridItem(
                         }
                     },
                     failure = {
-                        Text(
-                            text = "이미지를 불러오지 못했습니다.",
-                            style = Typography.labelLarge
+                        Box(
+                            modifier = modifier
+                                .fillMaxSize()
+                                .clip(shape = EatShape.medium)
+                                .background(Gray),
+                            contentAlignment = Alignment.Center,
+                            content = {
+                                Text(
+                                    text = "이미지를 불러오지 못했습니다.",
+                                    style = Typography.labelLarge
+                                )
+                            }
                         )
                     }
                 )

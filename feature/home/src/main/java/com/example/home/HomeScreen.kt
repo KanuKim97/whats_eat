@@ -93,8 +93,6 @@ internal fun HomeRoute(
     )
 }
 
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     bannerState: BannerUiState,
@@ -111,37 +109,38 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(10.dp),
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top
-        ) {
-            Text(
-                text = "내 주변 음식점",
-                modifier = modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-                style = Typography.headlineLarge
-            )
-            Text(
-                text = "오늘은 여기 어떤가요?",
-                modifier = modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Medium,
-                style = Typography.titleSmall
-            )
-            Spacer(modifier = modifier.size(10.dp))
-            HomeBanner(
-                bannerUiState = bannerState,
-                bannerOnClick = itemOnClick
-            )
-            Spacer(modifier = modifier.size(10.dp))
-            Text(
-                text = "근처 맛집",
-                fontWeight = FontWeight.Medium,
-                style = Typography.titleSmall
-            )
-            Spacer(modifier = modifier.size(10.dp))
-            HomeItemGrid(
-                itemGridUiState = itemGridState,
-                itemOnClick = itemOnClick
-            )
-        }
+            verticalArrangement = Arrangement.Top,
+            content =  {
+                Text(
+                    text = "내 주변 음식점",
+                    modifier = modifier.fillMaxWidth(),
+                    fontWeight = FontWeight.Bold,
+                    style = Typography.headlineLarge
+                )
+                Text(
+                    text = "오늘은 여기 어떤가요?",
+                    modifier = modifier.fillMaxWidth(),
+                    fontWeight = FontWeight.Medium,
+                    style = Typography.titleSmall
+                )
+                Spacer(modifier = modifier.size(10.dp))
+                HomeBanner(
+                    bannerUiState = bannerState,
+                    bannerOnClick = itemOnClick
+                )
+                Spacer(modifier = modifier.size(10.dp))
+                Text(
+                    text = "근처 맛집",
+                    fontWeight = FontWeight.Medium,
+                    style = Typography.titleSmall
+                )
+                Spacer(modifier = modifier.size(10.dp))
+                HomeItemGrid(
+                    itemGridUiState = itemGridState,
+                    itemOnClick = itemOnClick
+                )
+            }
+        )
     }
 }
 

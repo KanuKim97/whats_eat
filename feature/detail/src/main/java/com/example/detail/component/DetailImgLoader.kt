@@ -1,56 +1,46 @@
-package com.example.ui
+package com.example.detail.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
-import com.example.model.home.BannerItems
-import com.example.ui.preview.ComponentPreview
+import com.example.detail.DetailUiState
 
 @Composable
-fun BannerCard(
-    banner: BannerItems?,
-    bannerOnClick: (String) -> Unit,
+fun DetailImgLoader(
+    detailUiState: DetailUiState,
     modifier: Modifier = Modifier
 ) {
-    EatCard(
-        onClick = { bannerOnClick(banner?.placeID ?: "") },
-        modifier = modifier
-            .fillMaxWidth()
-            .height(300.dp)
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(10.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
+    when (detailUiState) {
+        is DetailUiState.IsLoading -> {
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.primaryContainer,
+                strokeWidth = 3.dp
+            )
+        }
+        is DetailUiState.IsSuccess -> {
             EatImageLoader(
-                imageModel = banner?.photoRef ?: "",
+                imageModel = detailUiState.info?.photos?.get(0)?.photo_reference ?: "",
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(EatShape.large),
-                success = { imageState, _ ->
-                    imageState.imageBitmap?.let { bitmap ->
+                    .height(300.dp)
+                    .clip(shape = EatShape.large),
+                success = { imgState, _ ->
+                    imgState.imageBitmap?.let { bitmap ->
                         Image(
                             bitmap = bitmap,
                             contentDescription = "Image"
@@ -61,23 +51,34 @@ fun BannerCard(
                     Box(
                         modifier = modifier
                             .fillMaxSize()
-                            .clip(EatShape.large)
-                            .background(Gray),
+                            .background(color = Gray)
+                            .clip(shape = EatShape.large),
                         contentAlignment = Alignment.Center,
                         content = {
                             Text(
-                                text = "이미지를 불러오지 못했습니다.",
+                                text = "로딩에 실패하였습니다.",
                                 style = Typography.labelLarge
                             )
                         }
                     )
                 }
             )
-            Text(
-                text = banner?.name ?: "",
-                fontWeight = FontWeight.SemiBold,
-                style = Typography.titleMedium
+        }
+        is DetailUiState.IsFailed -> {
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(color = Gray)
+                    .clip(shape = EatShape.large),
+                contentAlignment = Alignment.Center,
+                content = {
+                    Text(
+                        text = "로딩에 실패하였습니다.",
+                        style = Typography.labelLarge
+                    )
+                }
             )
         }
     }
+
 }
