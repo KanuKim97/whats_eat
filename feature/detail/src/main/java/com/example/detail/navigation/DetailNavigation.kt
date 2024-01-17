@@ -10,6 +10,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.detail.DetailRoute
 import com.example.detail.DetailScreen
 
 const val detailRoute = "Detail"
@@ -45,6 +46,6 @@ fun NavGraphBuilder.detailScreen() {
                 )
             )
         },
-        content = { DetailScreen() }
+        content = { DetailRoute {  } }
     )
 }

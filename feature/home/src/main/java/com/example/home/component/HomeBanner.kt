@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
@@ -42,12 +43,7 @@ fun HomeBanner(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (bannerUiState) {
-            is BannerUiState.IsLoading -> {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    strokeWidth = 3.dp
-                )
-            }
+            is BannerUiState.IsLoading -> { EatCircularProgressIndicator() }
             is BannerUiState.IsSuccess -> {
                 val pagerState = rememberPagerState { bannerUiState.banner?.lastIndex ?: 0 }
                 Log.d("로그", "${bannerUiState.banner}")

@@ -93,6 +93,9 @@ dependencies {
     // LandScapist-Glide
     implementation(Dependencies.landscapist_glide)
 
+    // Easy Permission
+    implementation("com.vmadalin:easypermissions-ktx:1.0.0")
+
     // Android Test Unit
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidx_junit)

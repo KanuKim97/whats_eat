@@ -1,8 +1,5 @@
 package com.example.home
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.Result
@@ -12,40 +9,36 @@ import com.example.model.home.BannerItems
 import com.example.model.home.GridItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getNearBySearch: GetNearBySearchUseCase
+    private val getNearBySearch: GetNearBySearchUseCase
 ): ViewModel() {
-    private val _latLng = MutableLiveData<String>()
-    private val latLng: LiveData<String>
-        get() = _latLng
 
-    val bannerState: StateFlow<BannerUiState> = bannerState(
-        latLng = "37.5519, 126.9918",
-        getNearBySearch = getNearBySearch
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = BannerUiState.IsLoading
-    )
+    private val _bannerUiState = MutableStateFlow<BannerUiState>(BannerUiState.IsLoading)
+    val bannerUiState: StateFlow<BannerUiState>
+        get() = _bannerUiState.asStateFlow()
 
-    val gridItemState: StateFlow<ItemGridUiState> = itemGridState(
-        latLng = "37.5519, 126.9918",
-        getNearBySearch = getNearBySearch
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = ItemGridUiState.IsLoading
-    )
+    private val _itemGridUiState = MutableStateFlow<ItemGridUiState>(ItemGridUiState.IsLoading)
+    val itemGridUiState: StateFlow<ItemGridUiState>
+        get() = _itemGridUiState.asStateFlow()
 
-    fun updateLatLng(latLng: String) {
-        _latLng.value = latLng
+    fun getBannerUiState(latLng: String) = viewModelScope.launch {
+        bannerState(latLng, getNearBySearch).collect { bannerState ->
+            _bannerUiState.value = bannerState
+        }
+    }
+
+    fun getItemGridState(latLng: String) = viewModelScope.launch {
+        itemGridState(latLng, getNearBySearch).collect { gridItemState ->
+            _itemGridUiState.value = gridItemState
+        }
     }
 }
 
@@ -54,6 +47,7 @@ private fun bannerState(
     latLng: String,
     getNearBySearch: GetNearBySearchUseCase
 ): Flow<BannerUiState> {
+
     val banner = getNearBySearch(latLng)
         .map { resultList ->
             resultList

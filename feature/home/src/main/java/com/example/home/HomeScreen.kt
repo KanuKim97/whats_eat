@@ -1,7 +1,9 @@
 package com.example.home
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,67 +24,68 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.createSavedStateHandle
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Typography
 import com.example.home.component.HomeBanner
 import com.example.home.component.HomeItemGrid
 import com.example.ui.preview.ComponentPreview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
 
-@SuppressLint("MissingPermission")
+
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun HomeRoute(
     navigateToDetail: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val homeViewModel = hiltViewModel<HomeViewModel>()
     val context = LocalContext.current
-    val permissionState = rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
+    val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    val isGPSOnline = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
 
-    LaunchedEffect(permissionState) {
-        when (permissionState.status) {
-            is PermissionStatus.Granted -> {
-                val locationRequest = CurrentLocationRequest
-                    .Builder()
-                    .setDurationMillis(5000L)
-                    .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-                    .build()
+    val homeViewModel = hiltViewModel<HomeViewModel>()
+    val bannerState by homeViewModel.bannerUiState.collectAsState()
+    val itemGridState by homeViewModel.itemGridUiState.collectAsState()
 
+    LaunchedEffect(locationPermission, isGPSOnline) {
+        if (!locationPermission.status.isGranted) {
+            locationPermission.launchPermissionRequest()
+        } else {
+            val locationRequest = CurrentLocationRequest.Builder().build()
+
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 fusedLocationClient.getCurrentLocation(
                     locationRequest,
                     object : CancellationToken() {
                         override fun onCanceledRequested(
-                            tokenCanceledListener: OnTokenCanceledListener
+                            p0: OnTokenCanceledListener
                         ): CancellationToken = CancellationTokenSource().token
 
                         override fun isCancellationRequested(): Boolean = false
                     }
-                ).addOnSuccessListener { location ->
-                    val locationLatLng = StringBuilder(
-                        "${location.latitude},${location.longitude}"
-                    ).toString()
-
-                    homeViewModel.updateLatLng(locationLatLng)
+                ).addOnSuccessListener {
+                    val latLng = "${it.latitude},${it.longitude}"
+                    homeViewModel.getBannerUiState(latLng)
+                    homeViewModel.getItemGridState(latLng)
                 }
             }
-            is PermissionStatus.Denied -> { /* TODO */ }
+
         }
     }
-
-    val bannerState by homeViewModel.bannerState.collectAsState()
-    val itemGridState by homeViewModel.gridItemState.collectAsState()
 
     HomeScreen(
         bannerState = bannerState,
@@ -94,7 +96,7 @@ internal fun HomeRoute(
 }
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     bannerState: BannerUiState,
     itemGridState: ItemGridUiState,
     itemOnClick: (String) -> Unit,
@@ -143,6 +145,7 @@ fun HomeScreen(
         )
     }
 }
+
 
 @ComponentPreview
 @Composable

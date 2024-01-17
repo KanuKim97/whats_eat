@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
@@ -35,12 +36,7 @@ fun HomeItemGrid(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (itemGridUiState) {
-            is ItemGridUiState.IsLoading -> {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    strokeWidth = 3.dp
-                )
-            }
+            is ItemGridUiState.IsLoading -> { EatCircularProgressIndicator() }
             is ItemGridUiState.IsSuccess -> {
                 LazyVerticalGrid(
                     columns = gridCells,
