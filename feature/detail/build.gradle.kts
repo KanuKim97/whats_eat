@@ -50,6 +50,8 @@ dependencies {
     implementation(Dependencies.compose_navigation)
     implementation(Dependencies.compose_navigation_hilt)
 
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+
     implementation(Dependencies.landscapist_glide)
 
     implementation(Dependencies.gms_location)

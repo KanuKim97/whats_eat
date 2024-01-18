@@ -5,16 +5,21 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.detail.DetailRoute
-import com.example.detail.DetailScreen
 
 const val detailRoute = "Detail"
-const val placeID = "placeID"
+const val placeIDArgs = "placeID"
+
+internal class PlaceIdArgs(val placeID: String) {
+    constructor(savedStateHandle: SavedStateHandle):
+        this(placeID = checkNotNull(savedStateHandle[placeIDArgs]))
+}
 
 fun NavController.onNavigateDetail(placeID: String) {
     this.navigate("$detailRoute/$placeID")
@@ -22,8 +27,10 @@ fun NavController.onNavigateDetail(placeID: String) {
 
 fun NavGraphBuilder.detailScreen() {
     composable(
-        route = "$detailRoute/{$placeID}",
-        arguments = listOf(navArgument(placeID) { type = NavType.StringType }),
+        route = "$detailRoute/{$placeIDArgs}",
+        arguments = listOf(
+            navArgument(placeIDArgs) { type = NavType.StringType }
+        ),
         enterTransition = {
             fadeIn(
                 animationSpec = tween(
@@ -46,6 +53,6 @@ fun NavGraphBuilder.detailScreen() {
                 )
             )
         },
-        content = { DetailRoute {  } }
+        content = { DetailRoute() }
     )
 }

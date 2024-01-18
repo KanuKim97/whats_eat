@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
@@ -33,6 +34,7 @@ fun HomeBanner(
 ) {
     Column(
         modifier = modifier
+            .padding(vertical = 10.dp)
             .fillMaxWidth()
             .height(300.dp),
         verticalArrangement = Arrangement.Center,

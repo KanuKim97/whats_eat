@@ -1,7 +1,9 @@
 package com.example.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.detail.navigation.PlaceIdArgs
 import com.example.domain.GetPlaceDetailUseCase
 import com.example.model.response.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     getPlaceDetailUseCase: GetPlaceDetailUseCase
 ): ViewModel() {
     val detailUiState = detailState(
-        placeID = "",
+        placeID = PlaceIdArgs(savedStateHandle).placeID,
         getPlaceDetailUseCase = getPlaceDetailUseCase
     ).stateIn(
         scope = viewModelScope,

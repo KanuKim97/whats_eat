@@ -54,13 +54,7 @@ fun DetailInfo(
                     style = Typography.headlineMedium
                 )
                 Text(
-                    text = detailUiState.info?.formatted_address ?: "불러오지 못했습니다.",
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
-                    style = Typography.labelLarge
-                )
-                Text(
-                    text = if (detailUiState.info?.openingHours?.open_now == true) {
+                    text = if (detailUiState.info?.opening_hours?.open_now == true) {
                         "영업 중"
                     } else {
                         "영업 종료"

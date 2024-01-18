@@ -15,7 +15,7 @@ interface RetrofitPlaceAPI {
         @Query("key") apiKey: String
     ): Response<NearBySearch>
 
-    @GET("details")
+    @GET("details/json")
     suspend fun getDetails(
         @Query("place_id") placeID: String,
         @Query("key") apiKey: String

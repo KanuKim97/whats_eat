@@ -16,10 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.theme.Typography
 import com.example.detail.DetailUiState
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.GoogleMapComposable
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -57,7 +56,13 @@ fun DetailPlaceView(
                     )
                 }
                 is DetailUiState.IsSuccess -> {
-                    val cameraPositionState = rememberCameraPositionState()
+                    val lat = detailUiState.info?.geometry?.location?.lat ?: 0.0
+                    val lng = detailUiState.info?.geometry?.location?.lng ?: 0.0
+                    val placeLatLng = LatLng(lat, lng)
+
+                    val cameraPositionState = rememberCameraPositionState {
+                        position = CameraPosition.fromLatLngZoom(placeLatLng, 16f)
+                    }
 
                     GoogleMap(
                         modifier = modifier
@@ -65,10 +70,10 @@ fun DetailPlaceView(
                             .height(300.dp),
                         cameraPositionState = cameraPositionState,
                         content = {
-                            val lat = detailUiState.info?.geometry?.location?.lat ?: 0.0
-                            val lng = detailUiState.info?.geometry?.location?.lng ?: 0.0
-
-                            Marker(state = MarkerState(position = LatLng(lat, lng)))
+                            Marker(
+                                state = MarkerState(position = placeLatLng),
+                                title = detailUiState.info?.name ?: ""
+                            )
                         }
                     )
                 }
@@ -78,12 +83,7 @@ fun DetailPlaceView(
                             .fillMaxWidth()
                             .height(300.dp),
                         contentAlignment = Alignment.Center,
-                        content = {
-                            CircularProgressIndicator(
-                                strokeWidth = 3.dp,
-                                color = MaterialTheme.colorScheme.primaryContainer
-                            )
-                        }
+                        content = { Text(text = "불러오는데 실패했습니다.") }
                     )
                 }
             }

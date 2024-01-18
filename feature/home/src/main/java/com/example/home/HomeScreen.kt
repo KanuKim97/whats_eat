@@ -4,11 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,8 +40,8 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun HomeRoute(
-    navigateToDetail: (String) -> Unit,
-    modifier: Modifier = Modifier
+    scaffoldPaddingValues: PaddingValues,
+    navigateToDetail: (String) -> Unit
 ) {
     val context = LocalContext.current
     val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -93,8 +91,8 @@ internal fun HomeRoute(
     HomeScreen(
         bannerState = bannerUiState,
         itemGridState = gridUiState,
-        itemOnClick = navigateToDetail,
-        modifier = modifier
+        scaffoldPaddingValues = scaffoldPaddingValues,
+        itemOnClick = navigateToDetail
     )
 }
 
@@ -102,44 +100,40 @@ internal fun HomeRoute(
 internal fun HomeScreen(
     bannerState: BannerUiState,
     itemGridState: ItemGridUiState,
+    scaffoldPaddingValues: PaddingValues,
     itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(scaffoldPaddingValues),
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(10.dp),
+            modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             content =  {
                 Text(
                     text = "내 주변 음식점",
-                    modifier = modifier.fillMaxWidth(),
                     fontWeight = FontWeight.Bold,
                     style = Typography.headlineLarge
                 )
                 Text(
                     text = "오늘은 여기 어떤가요?",
-                    modifier = modifier.fillMaxWidth(),
                     fontWeight = FontWeight.Medium,
                     style = Typography.titleSmall
                 )
-                Spacer(modifier = modifier.size(10.dp))
                 HomeBanner(
                     bannerUiState = bannerState,
                     bannerOnClick = itemOnClick
                 )
-                Spacer(modifier = modifier.size(10.dp))
                 Text(
                     text = "근처 맛집",
                     fontWeight = FontWeight.Medium,
                     style = Typography.titleSmall
                 )
-                Spacer(modifier = modifier.size(10.dp))
                 HomeItemGrid(
                     itemGridUiState = itemGridState,
                     itemOnClick = itemOnClick
@@ -155,10 +149,10 @@ internal fun HomeScreen(
 fun PreviewHomeScreen() {
     EatTheme {
         HomeScreen(
+            scaffoldPaddingValues = PaddingValues(bottom = 10.dp),
             bannerState = BannerUiState.IsLoading,
             itemGridState = ItemGridUiState.IsLoading,
             itemOnClick = { _ -> },
-            modifier = Modifier
         )
     }
 }

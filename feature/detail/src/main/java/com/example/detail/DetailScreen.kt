@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.designsystem.component.EatTextButton
 import com.example.designsystem.theme.Typography
 import com.example.detail.component.DetailImgLoader
@@ -22,18 +22,19 @@ import com.example.detail.component.DetailInfo
 import com.example.detail.component.DetailPlaceView
 
 @Composable
-internal fun DetailRoute(addOnCollection: () -> Unit) {
+internal fun DetailRoute(modifier: Modifier = Modifier) {
     val detailViewModel = hiltViewModel<DetailViewModel>()
-    val detailUiState by detailViewModel.detailUiState.collectAsState()
+    val detailUiState by detailViewModel.detailUiState.collectAsStateWithLifecycle()
 
     DetailScreen(
         detailUiState = detailUiState,
-        addOnCollection = addOnCollection
+        addOnCollection = {},
+        modifier = modifier
     )
 }
 
 @Composable
-fun DetailScreen(
+internal fun DetailScreen(
     detailUiState: DetailUiState,
     addOnCollection: () -> Unit,
     modifier: Modifier = Modifier
@@ -49,7 +50,7 @@ fun DetailScreen(
             DetailImgLoader(detailUiState = detailUiState)
             DetailInfo(detailUiState = detailUiState)
             Spacer(modifier = modifier.size(10.dp))
-            DetailPlaceView(detailUiState = detailUiState,)
+            DetailPlaceView(detailUiState = detailUiState)
             EatTextButton(
                 onClick = addOnCollection,
                 content = { Text(text = "컬렉션에 추가하기", style = Typography.labelLarge) }

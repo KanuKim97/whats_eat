@@ -34,7 +34,7 @@ fun DetailImgLoader(
         }
         is DetailUiState.IsSuccess -> {
             EatImageLoader(
-                imageModel = detailUiState.info?.photos?.get(0)?.photo_reference ?: "",
+                imageModel = detailUiState.info?.let { it.photos[0].photo_reference },
                 modifier = modifier
                     .fillMaxWidth()
                     .height(300.dp)

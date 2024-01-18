@@ -5,6 +5,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -16,7 +17,10 @@ fun NavController.onNavigateHome() {
     this.navigate(homeRoute)
 }
 
-fun NavGraphBuilder.homeScreen(navigateToDetail: (String) -> Unit) {
+fun NavGraphBuilder.homeScreen(
+    scaffoldPaddingValues: PaddingValues,
+    navigateToDetail: (String) -> Unit
+) {
     composable(
         route = homeRoute,
         enterTransition = {
@@ -41,6 +45,11 @@ fun NavGraphBuilder.homeScreen(navigateToDetail: (String) -> Unit) {
                 )
             )
         },
-        content = { HomeRoute(navigateToDetail = navigateToDetail) }
+        content = {
+            HomeRoute(
+                scaffoldPaddingValues = scaffoldPaddingValues,
+                navigateToDetail = navigateToDetail
+            )
+        }
     )
 }
