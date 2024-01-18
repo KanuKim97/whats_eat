@@ -1,6 +1,5 @@
 package com.example.home.component
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,10 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,7 +42,6 @@ fun HomeBanner(
             is BannerUiState.IsLoading -> { EatCircularProgressIndicator() }
             is BannerUiState.IsSuccess -> {
                 val pagerState = rememberPagerState { bannerUiState.banner?.lastIndex ?: 0 }
-                Log.d("로그", "${bannerUiState.banner}")
 
                 HorizontalPager(
                     modifier = modifier.fillMaxSize(),
@@ -56,7 +51,9 @@ fun HomeBanner(
                     pageContent = { index ->
                         BannerCard(
                             banner = bannerUiState.banner?.get(index),
-                            bannerOnClick = bannerOnClick
+                            bannerOnClick = {
+                                bannerOnClick(bannerUiState.banner?.get(index)?.placeID ?: "")
+                            }
                         )
                     }
                 )

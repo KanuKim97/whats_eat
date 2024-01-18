@@ -2,107 +2,79 @@ package com.example.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.Result
-import com.example.common.asResult
-import com.example.domain.GetNearBySearchUseCase
+import com.example.domain.GetGridItemUseCase
+import com.example.domain.GetMainBannerUseCase
 import com.example.model.home.BannerItems
 import com.example.model.home.GridItems
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getNearBySearch: GetNearBySearchUseCase
+    private val getMainBannerUseCase: GetMainBannerUseCase,
+    private val getGridItemUseCase: GetGridItemUseCase
 ): ViewModel() {
 
-    private val _bannerUiState = MutableStateFlow<BannerUiState>(BannerUiState.IsLoading)
+    private var _bannerUiState = MutableStateFlow<BannerUiState>(BannerUiState.IsLoading)
     val bannerUiState: StateFlow<BannerUiState>
-        get() = _bannerUiState.asStateFlow()
+        get() =  _bannerUiState.asStateFlow()
+
 
     private val _itemGridUiState = MutableStateFlow<ItemGridUiState>(ItemGridUiState.IsLoading)
     val itemGridUiState: StateFlow<ItemGridUiState>
         get() = _itemGridUiState.asStateFlow()
 
     fun getBannerUiState(latLng: String) = viewModelScope.launch {
-        bannerState(latLng, getNearBySearch).collect { bannerState ->
-            _bannerUiState.value = bannerState
+        bannerUiState(latLng, getMainBannerUseCase).collect { bannerUiState ->
+            _bannerUiState.value = bannerUiState
         }
     }
 
-    fun getItemGridState(latLng: String) = viewModelScope.launch {
-        itemGridState(latLng, getNearBySearch).collect { gridItemState ->
-            _itemGridUiState.value = gridItemState
+    fun getItemGridUiState(latLng: String) = viewModelScope.launch {
+        itemGridUiState(latLng, getGridItemUseCase).collect { itemGridUiState ->
+            _itemGridUiState.value = itemGridUiState
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }
 
-
-private fun bannerState(
+private fun bannerUiState(
     latLng: String,
-    getNearBySearch: GetNearBySearchUseCase
+    getMainBannerUseCase: GetMainBannerUseCase
 ): Flow<BannerUiState> {
-
-    val banner = getNearBySearch(latLng)
-        .map { resultList ->
-            resultList
-                .sortedBy { result -> result.rating }
-                .slice(indices = 0..resultList.lastIndex/2)
-                .map { element ->
-                    BannerItems (
-                        element.place_id!!,
-                        element.name!!,
-                        element.photos?.get(0)?.photo_reference!!
-                    )
-                }
-        }
-
-    return banner
-        .asResult()
-        .map { result ->
-            when (result) {
-                is Result.IsLoading -> {
-                    BannerUiState.IsLoading
-                }
-                is Result.Success -> {
-                    BannerUiState.IsSuccess(result.data)
-                }
-                is Result.Error -> {
-                    BannerUiState.IsFailed
-                }
-            }
+    return getMainBannerUseCase(latLng)
+        .onStart { BannerUiState.IsLoading }
+        .catch { BannerUiState.IsFailed }
+        .map<List<BannerItems>, BannerUiState> { bannerList ->
+            BannerUiState.IsSuccess(bannerList)
         }
 }
 
-private fun itemGridState(
+private fun itemGridUiState(
     latLng: String,
-    getNearBySearch: GetNearBySearchUseCase
+    getGridItemUseCase: GetGridItemUseCase
 ): Flow<ItemGridUiState> {
-    val gridItem = getNearBySearch(latLng).map { resultList ->
-        resultList.map { element ->
-            GridItems(
-                element.place_id!!,
-                element.name!!,
-                element.photos?.get(0)?.photo_reference!!
-            )
-        }
-    }
-
-    return gridItem
-        .asResult()
-        .map { gridResult ->
-            when (gridResult) {
-                is Result.IsLoading -> { ItemGridUiState.IsLoading }
-                is Result.Success -> { ItemGridUiState.IsSuccess(gridResult.data) }
-                is Result.Error -> { ItemGridUiState.IsFailed }
-            }
+    return getGridItemUseCase(latLng)
+        .onStart { ItemGridUiState.IsLoading }
+        .catch { ItemGridUiState.IsFailed }
+        .map<List<GridItems>, ItemGridUiState> { itemGridList ->
+            ItemGridUiState.IsSuccess(itemGridList)
         }
 }
+
 
 sealed interface BannerUiState {
     data class IsSuccess(val banner: List<BannerItems>?): BannerUiState

@@ -1,7 +1,7 @@
 package com.example.network
 
 import com.example.model.details.DetailedPlace
-import com.example.model.nearBySearch.MyPlaces
+import com.example.model.nearBySearch.NearBySearch
 import com.example.network.api.RetrofitPlaceAPI
 import com.example.network.constant.Constants
 import retrofit2.Retrofit
@@ -18,7 +18,7 @@ class RetrofitPlaceNetwork @Inject constructor(retrofit: Retrofit): PlaceDataSou
             apiKey = BuildConfig.PLACE_API_KEY
         ).body()!!
 
-    override suspend fun getNearBySearch(latLng: String): MyPlaces =
+    override suspend fun getNearBySearch(latLng: String): NearBySearch =
         placeApi.getNearBySearch(
             latLng = latLng,
             radius = Constants.LOCATION_RADIUS,

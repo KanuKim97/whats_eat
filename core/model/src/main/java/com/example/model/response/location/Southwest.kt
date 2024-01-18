@@ -1,6 +1,6 @@
 package com.example.model.response.location
 
-data class Location(
+data class Southwest(
     val lat: Double,
     val lng: Double
 )

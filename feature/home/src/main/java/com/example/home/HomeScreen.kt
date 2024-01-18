@@ -1,9 +1,7 @@
 package com.example.home
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Typography
 import com.example.home.component.HomeBanner
@@ -36,10 +34,10 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
-
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -49,47 +47,52 @@ internal fun HomeRoute(
 ) {
     val context = LocalContext.current
     val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
-    val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    val isGPSOnline = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
 
     val homeViewModel = hiltViewModel<HomeViewModel>()
-    val bannerState by homeViewModel.bannerUiState.collectAsState()
-    val itemGridState by homeViewModel.itemGridUiState.collectAsState()
+    val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
+    val gridUiState by homeViewModel.itemGridUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(locationPermission, isGPSOnline) {
-        if (!locationPermission.status.isGranted) {
-            locationPermission.launchPermissionRequest()
-        } else {
-            val locationRequest = CurrentLocationRequest.Builder().build()
+    LaunchedEffect(
+        key1 = locationPermission,
+        block = {
+            if (!locationPermission.status.isGranted) {
+                locationPermission.launchPermissionRequest()
+            } else {
+                val locationRequest: CurrentLocationRequest = CurrentLocationRequest
+                    .Builder()
+                    .setDurationMillis(5000L)
+                    .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
+                    .build()
 
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                fusedLocationClient.getCurrentLocation(
-                    locationRequest,
-                    object : CancellationToken() {
-                        override fun onCanceledRequested(
-                            p0: OnTokenCanceledListener
-                        ): CancellationToken = CancellationTokenSource().token
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    fusedLocationClient.getCurrentLocation(
+                        locationRequest,
+                        object : CancellationToken() {
+                            override fun onCanceledRequested(
+                                p0: OnTokenCanceledListener
+                            ): CancellationToken = CancellationTokenSource().token
 
-                        override fun isCancellationRequested(): Boolean = false
+                            override fun isCancellationRequested(): Boolean = false
+                        }
+                    ).addOnSuccessListener {
+                        val latLng = "${it.latitude},${it.longitude}"
+                        homeViewModel.getBannerUiState(latLng)
+                        homeViewModel.getItemGridUiState(latLng)
                     }
-                ).addOnSuccessListener {
-                    val latLng = "${it.latitude},${it.longitude}"
-                    homeViewModel.getBannerUiState(latLng)
-                    homeViewModel.getItemGridState(latLng)
                 }
-            }
 
+            }
         }
-    }
+    )
 
     HomeScreen(
-        bannerState = bannerState,
-        itemGridState = itemGridState,
+        bannerState = bannerUiState,
+        itemGridState = gridUiState,
         itemOnClick = navigateToDetail,
         modifier = modifier
     )
@@ -152,8 +155,8 @@ internal fun HomeScreen(
 fun PreviewHomeScreen() {
     EatTheme {
         HomeScreen(
-            bannerState = BannerUiState.IsSuccess(listOf()),
-            itemGridState = ItemGridUiState.IsSuccess(listOf()),
+            bannerState = BannerUiState.IsLoading,
+            itemGridState = ItemGridUiState.IsLoading,
             itemOnClick = { _ -> },
             modifier = Modifier
         )

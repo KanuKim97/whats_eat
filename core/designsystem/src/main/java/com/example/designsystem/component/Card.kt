@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
 import com.example.designsystem.theme.Black
 import com.example.designsystem.theme.EatShape
 
@@ -30,7 +29,6 @@ fun EatCard(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = Black
         ),
-        elevation = CardDefaults.cardElevation(8.dp),
         content = content
     )
 }

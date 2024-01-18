@@ -20,12 +20,11 @@ import com.example.designsystem.theme.Typography
 import com.example.detail.component.DetailImgLoader
 import com.example.detail.component.DetailInfo
 import com.example.detail.component.DetailPlaceView
-import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 internal fun DetailRoute(addOnCollection: () -> Unit) {
     val detailViewModel = hiltViewModel<DetailViewModel>()
-    val detailUiState by detailViewModel.detailState.collectAsState()
+    val detailUiState by detailViewModel.detailUiState.collectAsState()
 
     DetailScreen(
         detailUiState = detailUiState,

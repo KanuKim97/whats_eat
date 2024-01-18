@@ -1,7 +1,7 @@
 package com.example.network.api
 
 import com.example.model.details.DetailedPlace
-import com.example.model.nearBySearch.MyPlaces
+import com.example.model.nearBySearch.NearBySearch
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,7 +13,7 @@ interface RetrofitPlaceAPI {
         @Query("radius") radius: String,
         @Query("type") type: String,
         @Query("key") apiKey: String
-    ): Response<MyPlaces>
+    ): Response<NearBySearch>
 
     @GET("details")
     suspend fun getDetails(

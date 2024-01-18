@@ -2,14 +2,14 @@ package com.example.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.Result
-import com.example.common.asResult
 import com.example.domain.GetPlaceDetailUseCase
 import com.example.model.response.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     getPlaceDetailUseCase: GetPlaceDetailUseCase
 ): ViewModel() {
-    val detailState = detailState(
+    val detailUiState = detailState(
         placeID = "",
         getPlaceDetailUseCase = getPlaceDetailUseCase
     ).stateIn(
@@ -32,13 +32,10 @@ private fun detailState(
     getPlaceDetailUseCase: GetPlaceDetailUseCase
 ): Flow<DetailUiState> {
     return getPlaceDetailUseCase(placeID)
-        .asResult()
-        .map { result ->
-            when (result) {
-                is Result.IsLoading -> { DetailUiState.IsLoading }
-                is Result.Success -> { DetailUiState.IsSuccess(result.data) }
-                is Result.Error -> { DetailUiState.IsFailed }
-            }
+        .onStart { DetailUiState.IsLoading }
+        .catch { DetailUiState.IsFailed }
+        .map<Results?, DetailUiState> { result ->
+            DetailUiState.IsSuccess(result)
         }
 }
 

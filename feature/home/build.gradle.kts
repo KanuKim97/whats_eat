@@ -54,6 +54,8 @@ dependencies {
     implementation(Dependencies.landscapist_glide)
     implementation(Dependencies.compose_permission)
 
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)
     debugImplementation(Dependencies.compose_ui_tooling)

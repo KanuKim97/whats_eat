@@ -1,8 +1,6 @@
 package com.example.home.navigation
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -10,9 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.home.HomeRoute
-import com.example.home.HomeScreen
 
 const val homeRoute = "Home"
 
@@ -20,9 +16,7 @@ fun NavController.onNavigateHome() {
     this.navigate(homeRoute)
 }
 
-fun NavGraphBuilder.homeScreen(
-    navigateToDetail: (String) -> Unit
-) {
+fun NavGraphBuilder.homeScreen(navigateToDetail: (String) -> Unit) {
     composable(
         route = homeRoute,
         enterTransition = {
@@ -47,6 +41,6 @@ fun NavGraphBuilder.homeScreen(
                 )
             )
         },
-        content = { HomeRoute(navigateToDetail) }
+        content = { HomeRoute(navigateToDetail = navigateToDetail) }
     )
 }

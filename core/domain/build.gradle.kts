@@ -20,6 +20,7 @@ android {
 dependencies {
     implementation(Dependencies.androidx_core)
 
+    implementation(project(Module.common))
     implementation(project(Module.data))
     implementation(project(Module.model))
 
