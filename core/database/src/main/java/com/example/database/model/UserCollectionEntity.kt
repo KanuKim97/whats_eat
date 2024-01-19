@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 data class UserCollectionEntity(
     @PrimaryKey val placeID: String,
     @ColumnInfo("placeName") val placeName: String,
-    @ColumnInfo("placeAddress") val placeAddress: String,
     @ColumnInfo("placeImgUrl") val placeImgUrl: String,
     @ColumnInfo("placeLatLng") val placeLatLng: String
 )

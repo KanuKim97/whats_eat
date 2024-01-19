@@ -1,8 +1,10 @@
 package com.example.data.repository
 
 import com.example.common.IODispatcher
+import com.example.data.util.modelToEntityMapper
 import com.example.database.dao.EatDao
 import com.example.database.model.UserCollectionEntity
+import com.example.model.collection.Collection
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -21,12 +23,18 @@ class DatabaseRepositoryImpl @Inject constructor(
 
     override fun readCollectionEntity(
         placeID: String
-    ): Flow<UserCollectionEntity> = eatDao.readCollectionEntity(placeID).flowOn(ioDispatcher)
+    ): Flow<UserCollectionEntity> = flow<UserCollectionEntity> {
+        val response = eatDao.readCollectionEntity(placeID)
+
+
+    }.flowOn(ioDispatcher)
 
     override fun saveUserCollection(
-        content: UserCollectionEntity
+        content: Collection
     ): Flow<Result<Unit>> = flow {
-        eatDao.saveUserCollection(content)
+        val entity: UserCollectionEntity = modelToEntityMapper(content)
+
+        eatDao.saveUserCollection(entity)
         emit(Result.success(Unit))
     }.catch { exception ->
         when (exception) {
@@ -38,9 +46,11 @@ class DatabaseRepositoryImpl @Inject constructor(
     }.flowOn(ioDispatcher)
 
     override fun deleteUserCollection(
-        content: UserCollectionEntity
+        content: Collection
     ): Flow<Result<Unit>> = flow {
-        eatDao.deleteUserCollection(content)
+        val entity: UserCollectionEntity = modelToEntityMapper(content)
+
+        eatDao.deleteUserCollection(entity)
         emit(Result.success(Unit))
     }.catch { exception ->
         when (exception) {

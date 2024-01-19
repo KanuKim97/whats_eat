@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetPlaceDetailUseCase @Inject constructor(
-    private val placeApiProducer: PlaceApiRepository
+    private val network: PlaceApiRepository
 ) {
     operator fun invoke(placeId: String): Flow<Results?> =
-        placeApiProducer.detailedPlace(placeId)
+        network.detailedPlace(placeId)
 }
