@@ -25,6 +25,7 @@ dependencies {
     implementation(project(Module.domain))
     implementation(project(Module.ui))
     implementation(project(Module.designsystem))
+    implementation(project(Module.model))
 
     // Kotlin Coroutine
     implementation(Dependencies.coroutine)
@@ -47,6 +48,8 @@ dependencies {
     implementation(Dependencies.compose_navigation_hilt)
 
     implementation(Dependencies.landscapist_glide)
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)

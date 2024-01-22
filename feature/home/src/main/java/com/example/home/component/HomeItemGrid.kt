@@ -5,16 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCircularProgressIndicator
+import com.example.designsystem.component.EatVerticalGrid
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
@@ -26,7 +24,6 @@ fun HomeItemGrid(
     itemGridUiState: ItemGridUiState,
     itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    gridCells: GridCells = GridCells.Fixed(2)
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -36,11 +33,8 @@ fun HomeItemGrid(
         when (itemGridUiState) {
             is ItemGridUiState.IsLoading -> { EatCircularProgressIndicator() }
             is ItemGridUiState.IsSuccess -> {
-                LazyVerticalGrid(
-                    columns = gridCells,
+                EatVerticalGrid(
                     modifier = modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                     content = {
                         itemGridUiState.item?.let { itemList ->
                             items(

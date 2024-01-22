@@ -1,7 +1,5 @@
 package com.example.detail
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,8 +24,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.component.EatTextButton
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
 import com.example.model.collection.Collection
 import com.google.android.gms.maps.model.CameraPosition
@@ -82,40 +77,17 @@ internal fun DetailScreen(
                     val lat = detailUiState.info?.geometry?.location?.lat ?: 0.0
                     val lng = detailUiState.info?.geometry?.location?.lng ?: 0.0
                     val placeLatLng = LatLng(lat, lng)
-
                     val cameraPositionState = rememberCameraPositionState {
                         position = CameraPosition.fromLatLngZoom(placeLatLng, 16f)
                     }
 
                     EatImageLoader(
-                        imageModel = detailUiState.info?.let { it.photos[0].photo_reference },
+                        imageModel = detailUiState.info?.let { photo ->
+                            photo.photos[0].photo_reference
+                        },
                         modifier = modifier
                             .fillMaxWidth()
                             .height(300.dp)
-                            .clip(shape = EatShape.large),
-                        success = { imgState, _ ->
-                            imgState.imageBitmap?.let { bitmap ->
-                                Image(
-                                    bitmap = bitmap,
-                                    contentDescription = "Image"
-                                )
-                            }
-                        },
-                        failure = {
-                            Box(
-                                modifier = modifier
-                                    .fillMaxSize()
-                                    .background(color = Gray)
-                                    .clip(shape = EatShape.large),
-                                contentAlignment = Alignment.Center,
-                                content = {
-                                    Text(
-                                        text = "로딩에 실패하였습니다.",
-                                        style = Typography.labelLarge
-                                    )
-                                }
-                            )
-                        }
                     )
                     Text(
                         text = detailUiState.info?.name ?: "불러오지 못했습니다.",

@@ -6,16 +6,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.home.HomeRoute
 
 const val homeRoute = "Home"
-
-fun NavController.onNavigateHome() {
-    this.navigate(homeRoute)
-}
 
 fun NavGraphBuilder.homeScreen(
     scaffoldPaddingValues: PaddingValues,

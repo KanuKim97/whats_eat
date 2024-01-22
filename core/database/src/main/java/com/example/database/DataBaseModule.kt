@@ -12,7 +12,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataBaseModule {
-
     @Provides
     @Singleton
     fun provideDatabase(
@@ -22,5 +21,4 @@ object DataBaseModule {
         klass = EatDataBase::class.java,
         name = "EatDatabase"
     ).build()
-
 }

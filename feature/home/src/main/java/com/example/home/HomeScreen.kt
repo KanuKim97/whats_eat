@@ -108,7 +108,7 @@ internal fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(scaffoldPaddingValues),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.surface
     ) {
         Column(
             modifier = modifier.fillMaxSize(),

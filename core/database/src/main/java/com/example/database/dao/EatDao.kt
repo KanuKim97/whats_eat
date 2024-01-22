@@ -3,22 +3,22 @@ package com.example.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.database.model.UserCollectionEntity
+import com.example.database.model.CollectionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EatDao {
     @Query("SELECT * FROM collection_entity")
-    fun readAllCollectionEntities(): Flow<List<UserCollectionEntity>>
-
+    fun readAllCollectionEntities(): Flow<List<CollectionEntity>>
 
     @Query("SELECT * FROM Collection_Entity WHERE placeID = (:placeID)")
-    fun readCollectionEntity(placeID: String): Flow<UserCollectionEntity>
+    fun readCollectionEntity(placeID: String): Flow<CollectionEntity>
 
-    @Insert
-    fun saveUserCollection(content: UserCollectionEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveUserCollection(content: CollectionEntity)
 
-    @Delete
-    fun deleteUserCollection(content: UserCollectionEntity)
+    @Delete(entity = CollectionEntity::class)
+    fun deleteUserCollection(content: CollectionEntity)
 }

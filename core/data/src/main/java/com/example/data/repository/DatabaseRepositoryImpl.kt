@@ -1,15 +1,17 @@
 package com.example.data.repository
 
 import com.example.common.IODispatcher
+import com.example.data.util.entityToModelMapper
 import com.example.data.util.modelToEntityMapper
-import com.example.database.dao.EatDao
-import com.example.database.model.UserCollectionEntity
 import com.example.model.collection.Collection
+import com.example.database.dao.EatDao
+import com.example.database.model.CollectionEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import java.io.IOException
 import java.sql.SQLDataException
 import javax.inject.Inject
@@ -18,21 +20,31 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val eatDao: EatDao,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ): DatabaseRepository {
-    override fun readAllCollectionEntities(): Flow<List<UserCollectionEntity>> =
-        eatDao.readAllCollectionEntities().flowOn(ioDispatcher)
+    override fun readAllCollectionEntities() = eatDao
+        .readAllCollectionEntities()
+        .map { entityList ->
+            entityList.map { entity -> entityToModelMapper(entity) }
+        }
+        .catch { exception ->
+            when (exception) {
+                is IOException -> emit(listOf())
+                is SQLDataException -> emit(listOf())
+                is ClassNotFoundException -> emit(listOf())
+                else -> emit(listOf())
+            }
+        }.flowOn(ioDispatcher)
 
     override fun readCollectionEntity(
         placeID: String
-    ): Flow<UserCollectionEntity> = flow<UserCollectionEntity> {
-        val response = eatDao.readCollectionEntity(placeID)
-
-
-    }.flowOn(ioDispatcher)
+    ): Flow<Collection> = eatDao
+        .readCollectionEntity(placeID)
+        .map { entity -> entityToModelMapper(entity) }
+        .flowOn(ioDispatcher)
 
     override fun saveUserCollection(
         content: Collection
     ): Flow<Result<Unit>> = flow {
-        val entity: UserCollectionEntity = modelToEntityMapper(content)
+        val entity: CollectionEntity = modelToEntityMapper(content)
 
         eatDao.saveUserCollection(entity)
         emit(Result.success(Unit))
@@ -48,7 +60,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     override fun deleteUserCollection(
         content: Collection
     ): Flow<Result<Unit>> = flow {
-        val entity: UserCollectionEntity = modelToEntityMapper(content)
+        val entity: CollectionEntity = modelToEntityMapper(content)
 
         eatDao.deleteUserCollection(entity)
         emit(Result.success(Unit))

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCircularProgressIndicator
+import com.example.designsystem.component.EatHorizontalPager
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.Typography
@@ -30,7 +30,6 @@ fun HomeBanner(
     bannerUiState: BannerUiState,
     bannerOnClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    userScrollEnabled: Boolean = true
 ) {
     Column(
         modifier = modifier
@@ -45,20 +44,17 @@ fun HomeBanner(
             is BannerUiState.IsSuccess -> {
                 val pagerState = rememberPagerState { bannerUiState.banner?.lastIndex ?: 0 }
 
-                HorizontalPager(
-                    modifier = modifier.fillMaxSize(),
-                    state = pagerState,
-                    pageSpacing = 20.dp,
-                    userScrollEnabled = userScrollEnabled,
-                    pageContent = { index ->
-                        BannerCard(
-                            banner = bannerUiState.banner?.get(index),
-                            bannerOnClick = {
-                                bannerOnClick(bannerUiState.banner?.get(index)?.placeID ?: "")
-                            }
-                        )
-                    }
-                )
+                EatHorizontalPager(
+                    pagerState = pagerState,
+                    modifier = modifier.fillMaxSize()
+                ) { index ->
+                    BannerCard(
+                        banner = bannerUiState.banner?.get(index),
+                        bannerOnClick = {
+                            bannerOnClick(bannerUiState.banner?.get(index)?.placeID ?: "")
+                        }
+                    )
+                }
             }
             is BannerUiState.IsFailed -> {
                 Box(
