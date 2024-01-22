@@ -21,6 +21,7 @@ object Versions {
     const val compose_hilt_navigation = "1.1.0"
     const val compose_maps = "2.11.4"
     const val activity_compose = "1.8.2"
+    const val compose_lifecycle_runtime = "2.7.0"
 
     const val junit = "4.13.2"
     const val androidx_junit = "1.1.5"
@@ -73,6 +74,7 @@ object Dependencies {
     const val compose_activity = "androidx.activity:activity-compose:${Versions.activity_compose}"
     const val compose_material3 = "androidx.compose.material3:material3"
     const val compose_runtime_livedata = "androidx.compose.runtime:runtime-livedata"
+    const val compose_runtime_lifecycle = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.compose_lifecycle_runtime}"
     const val compose_material_icons = "androidx.compose.material:material-icons-extended"
     const val compose_navigation = "androidx.navigation:navigation-compose:${Versions.compose_navigation}"
     const val compose_navigation_hilt = "androidx.hilt:hilt-navigation-compose:${Versions.compose_hilt_navigation}"
@@ -89,7 +91,7 @@ object Dependencies {
 object Module {
     const val app = ":app"
 
-    // Core
+    // core
     const val common = ":core:common"
     const val data = ":core:data"
     const val database = ":core:database"
@@ -99,7 +101,7 @@ object Module {
     const val network = ":core:network"
     const val ui = ":core:ui"
 
-    // Feature
+    // feature
     const val collection = ":feature:collection"
     const val home = ":feature:home"
     const val detail = ":feature:detail"

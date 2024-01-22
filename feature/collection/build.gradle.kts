@@ -44,12 +44,11 @@ dependencies {
     implementation(Dependencies.compose_material3)
     implementation(Dependencies.compose_material_icons)
     implementation(Dependencies.compose_runtime_livedata)
+    implementation(Dependencies.compose_runtime_lifecycle)
     implementation(Dependencies.compose_navigation)
     implementation(Dependencies.compose_navigation_hilt)
 
     implementation(Dependencies.landscapist_glide)
-
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)
