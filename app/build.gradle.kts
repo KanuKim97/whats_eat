@@ -59,8 +59,6 @@ dependencies {
     implementation(project(Module.detail))
     implementation(project(Module.collection))
 
-    implementation(Dependencies.coroutine)
-
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
 
