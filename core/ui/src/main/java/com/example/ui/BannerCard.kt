@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.Typography
-import com.example.model.home.BannerItems
+import com.example.model.feature.BannerItemsModel
 
 @Composable
 fun BannerCard(
-    banner: BannerItems?,
+    banner: BannerItemsModel?,
     bannerOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {

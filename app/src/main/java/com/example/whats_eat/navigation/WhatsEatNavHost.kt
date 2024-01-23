@@ -27,7 +27,7 @@ fun WhatsEatNavHost(
             scaffoldPaddingValues = scaffoldPaddingValues,
             navigateToDetail = { id -> navController.onNavigateDetail(id) }
         )
-        collectionScreen()
+        collectionScreen(scaffoldPaddingValues = scaffoldPaddingValues)
         detailScreen()
     }
 }

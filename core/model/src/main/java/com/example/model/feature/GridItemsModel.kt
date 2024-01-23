@@ -1,6 +1,6 @@
-package com.example.model.home
+package com.example.model.feature
 
-data class GridItems(
+data class GridItemsModel(
     val placeID: String,
     val name: String,
     val photoRef: String

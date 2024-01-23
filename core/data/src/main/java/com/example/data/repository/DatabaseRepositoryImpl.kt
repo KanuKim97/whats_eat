@@ -3,7 +3,7 @@ package com.example.data.repository
 import com.example.common.IODispatcher
 import com.example.data.util.entityToModelMapper
 import com.example.data.util.modelToEntityMapper
-import com.example.model.collection.Collection
+import com.example.model.feature.CollectionModel
 import com.example.database.dao.EatDao
 import com.example.database.model.CollectionEntity
 import kotlinx.coroutines.CoroutineDispatcher
@@ -36,13 +36,13 @@ class DatabaseRepositoryImpl @Inject constructor(
 
     override fun readCollectionEntity(
         placeID: String
-    ): Flow<Collection> = eatDao
+    ): Flow<CollectionModel> = eatDao
         .readCollectionEntity(placeID)
         .map { entity -> entityToModelMapper(entity) }
         .flowOn(ioDispatcher)
 
     override fun saveUserCollection(
-        content: Collection
+        content: CollectionModel
     ): Flow<Result<Unit>> = flow {
         val entity: CollectionEntity = modelToEntityMapper(content)
 
@@ -58,7 +58,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     }.flowOn(ioDispatcher)
 
     override fun deleteUserCollection(
-        content: Collection
+        content: CollectionModel
     ): Flow<Result<Unit>> = flow {
         val entity: CollectionEntity = modelToEntityMapper(content)
 

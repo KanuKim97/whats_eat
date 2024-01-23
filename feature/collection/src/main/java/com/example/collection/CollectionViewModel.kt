@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.DeleteCollectionUseCase
 import com.example.domain.ReadAllCollectionUseCase
-import com.example.model.collection.Collection
+import com.example.model.feature.CollectionModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -38,7 +38,7 @@ class CollectionViewModel @Inject constructor(
                 initialValue = ReadAllCollectionUiState.IsLoading
             )
 
-    fun deleteCollection(collection: Collection): Job = viewModelScope.launch {
+    fun deleteCollection(collection: CollectionModel): Job = viewModelScope.launch {
         deleteCollectionState(
             collection = collection,
             deleteCollectionUseCase = deleteCollectionUseCase
@@ -57,13 +57,13 @@ private fun readAllCollectionState(
     return readAllCollectionUseCase()
         .onStart { ReadAllCollectionUiState.IsLoading }
         .catch { ReadAllCollectionUiState.IsFailed }
-        .map<List<Collection>, ReadAllCollectionUiState> { collectionList ->
+        .map<List<CollectionModel>, ReadAllCollectionUiState> { collectionList ->
             ReadAllCollectionUiState.IsSuccess(collectionList)
         }
 }
 
 private fun deleteCollectionState(
-    collection: Collection,
+    collection: CollectionModel,
     deleteCollectionUseCase: DeleteCollectionUseCase
 ): Flow<DeleteCollectionUiState> {
     return deleteCollectionUseCase(collection)
@@ -77,7 +77,7 @@ private fun deleteCollectionState(
 sealed interface ReadAllCollectionUiState {
     data object IsLoading: ReadAllCollectionUiState
 
-    data class IsSuccess(val data: List<Collection>): ReadAllCollectionUiState
+    data class IsSuccess(val data: List<CollectionModel>): ReadAllCollectionUiState
 
     data object IsFailed: ReadAllCollectionUiState
 }

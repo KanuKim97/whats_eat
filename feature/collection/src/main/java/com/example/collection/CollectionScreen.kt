@@ -1,7 +1,9 @@
 package com.example.collection
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,12 +20,13 @@ import com.example.designsystem.theme.Typography
 import com.example.ui.CollectionCard
 
 @Composable
-internal fun CollectionRoute() {
+internal fun CollectionRoute(scaffoldPaddingValues: PaddingValues) {
     val collectionViewModel = hiltViewModel<CollectionViewModel>()
     val deleteContentUiState by collectionViewModel.deleteCollectionState.collectAsStateWithLifecycle()
     val readAllContentUiState by collectionViewModel.readAllCollectionUiState.collectAsStateWithLifecycle()
 
     CollectionScreen(
+        scaffoldPaddingValues = scaffoldPaddingValues,
         deleteContentUiState = deleteContentUiState,
         readAllContentUiState = readAllContentUiState
     )
@@ -31,12 +34,15 @@ internal fun CollectionRoute() {
 
 @Composable
 internal fun CollectionScreen(
+    scaffoldPaddingValues: PaddingValues,
     deleteContentUiState: DeleteCollectionUiState,
     readAllContentUiState: ReadAllCollectionUiState,
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(scaffoldPaddingValues),
         color = MaterialTheme.colorScheme.surface,
         content = {
             when (readAllContentUiState) {

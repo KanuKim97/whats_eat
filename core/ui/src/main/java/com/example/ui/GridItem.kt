@@ -18,11 +18,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.Typography
-import com.example.model.home.GridItems
+import com.example.model.feature.GridItemsModel
 
 @Composable
 fun GridItem(
-    gridItems: GridItems,
+    gridItems: GridItemsModel,
     itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {

@@ -1,6 +1,6 @@
-package com.example.model.collection
+package com.example.model.feature
 
-data class Collection(
+data class CollectionModel(
     val id: String,
     val name: String,
     val latLng: String,

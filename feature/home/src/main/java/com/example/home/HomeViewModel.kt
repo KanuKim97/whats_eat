@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.GetGridItemUseCase
 import com.example.domain.GetMainBannerUseCase
-import com.example.model.home.BannerItems
-import com.example.model.home.GridItems
+import com.example.model.feature.BannerItemsModel
+import com.example.model.feature.GridItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -58,7 +58,7 @@ private fun bannerUiState(
     return getMainBannerUseCase(latLng)
         .onStart { BannerUiState.IsLoading }
         .catch { BannerUiState.IsFailed }
-        .map<List<BannerItems>, BannerUiState> { bannerList ->
+        .map<List<BannerItemsModel>, BannerUiState> { bannerList ->
             BannerUiState.IsSuccess(bannerList)
         }
 }
@@ -70,14 +70,14 @@ private fun itemGridUiState(
     return getGridItemUseCase(latLng)
         .onStart { ItemGridUiState.IsLoading }
         .catch { ItemGridUiState.IsFailed }
-        .map<List<GridItems>, ItemGridUiState> { itemGridList ->
+        .map<List<GridItemsModel>, ItemGridUiState> { itemGridList ->
             ItemGridUiState.IsSuccess(itemGridList)
         }
 }
 
 
 sealed interface BannerUiState {
-    data class IsSuccess(val banner: List<BannerItems>?): BannerUiState
+    data class IsSuccess(val banner: List<BannerItemsModel>?): BannerUiState
 
     data object IsLoading: BannerUiState
 
@@ -85,7 +85,7 @@ sealed interface BannerUiState {
 }
 
 sealed interface ItemGridUiState {
-    data class IsSuccess(val item: List<GridItems>?): ItemGridUiState
+    data class IsSuccess(val item: List<GridItemsModel>?): ItemGridUiState
 
     data object IsLoading: ItemGridUiState
 

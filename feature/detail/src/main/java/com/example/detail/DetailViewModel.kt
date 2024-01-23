@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.detail.navigation.PlaceIdArgs
 import com.example.domain.GetPlaceDetailUseCase
 import com.example.domain.SaveCollectionUseCase
-import com.example.model.collection.Collection
-import com.example.model.response.Results
+import com.example.model.feature.CollectionModel
+import com.example.model.feature.DetailedModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -41,7 +41,7 @@ class DetailViewModel @Inject constructor(
         initialValue = DetailUiState.IsLoading
     )
 
-    fun saveCollection(content: Collection): Job = viewModelScope.launch {
+    fun saveCollection(content: CollectionModel): Job = viewModelScope.launch {
         saveCollectionState(
             collection = content,
             saveUserCollectionUseCase = saveUserCollectionUseCase
@@ -56,13 +56,13 @@ private fun detailState(
     return getPlaceDetailUseCase(placeID)
         .onStart { DetailUiState.IsLoading }
         .catch { DetailUiState.IsFailed }
-        .map<Results?, DetailUiState> { result ->
+        .map<DetailedModel, DetailUiState> { result ->
             DetailUiState.IsSuccess(result)
         }
 }
 
 private fun saveCollectionState(
-    collection: Collection,
+    collection: CollectionModel,
     saveUserCollectionUseCase: SaveCollectionUseCase
 ): Flow<SaveCollectionState> {
     return saveUserCollectionUseCase(collection)
@@ -74,7 +74,7 @@ private fun saveCollectionState(
 sealed interface DetailUiState {
     data object IsLoading: DetailUiState
 
-    data class IsSuccess(val info: Results?): DetailUiState
+    data class IsSuccess(val info: DetailedModel): DetailUiState
 
     data object IsFailed: DetailUiState
 }

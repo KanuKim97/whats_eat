@@ -1,5 +1,6 @@
 package com.example.detail
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,7 +27,7 @@ import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.component.EatTextButton
 import com.example.designsystem.theme.Typography
-import com.example.model.collection.Collection
+import com.example.model.feature.CollectionModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -51,9 +53,11 @@ internal fun DetailRoute(modifier: Modifier = Modifier) {
 internal fun DetailScreen(
     detailUiState: DetailUiState,
     collectionUiState: SaveCollectionState,
-    addOnCollection: (Collection) -> Unit,
+    addOnCollection: (CollectionModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val localContext = LocalContext.current
+
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surface
@@ -74,30 +78,28 @@ internal fun DetailScreen(
                     )
                 }
                 is DetailUiState.IsSuccess -> {
-                    val lat = detailUiState.info?.geometry?.location?.lat ?: 0.0
-                    val lng = detailUiState.info?.geometry?.location?.lng ?: 0.0
+                    val lat = detailUiState.info.placeLatitude
+                    val lng = detailUiState.info.placeLongitude
                     val placeLatLng = LatLng(lat, lng)
                     val cameraPositionState = rememberCameraPositionState {
                         position = CameraPosition.fromLatLngZoom(placeLatLng, 16f)
                     }
 
                     EatImageLoader(
-                        imageModel = detailUiState.info?.let { photo ->
-                            photo.photos[0].photo_reference
-                        },
+                        imageModel = detailUiState.info.placeImgUrl,
                         modifier = modifier
                             .fillMaxWidth()
                             .height(300.dp)
                     )
                     Text(
-                        text = detailUiState.info?.name ?: "불러오지 못했습니다.",
+                        text = detailUiState.info.placeName,
                         fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                         style = Typography.headlineMedium
                     )
                     Text(
-                        text = if (detailUiState.info?.opening_hours?.open_now == true) {
+                        text = if (detailUiState.info.isPlaceOpenNow) {
                             "영업 중"
                         } else {
                             "영업 종료"
@@ -118,22 +120,38 @@ internal fun DetailScreen(
                         content = {
                             Marker(
                                 state = MarkerState(position = placeLatLng),
-                                title = detailUiState.info?.name ?: ""
+                                title = detailUiState.info.placeName
                             )
                         }
                     )
                     Spacer(modifier = modifier.size(20.dp))
                     EatTextButton(
                         onClick = {
-                            val collection = detailUiState.info?.let {
-                                Collection(
-                                    id = it.place_id,
-                                    name = it.name,
-                                    latLng = "${lat},${lng}",
-                                    imgUrl = it.photos[0].photo_reference
-                                )
+                            val collection = CollectionModel(
+                                id = detailUiState.info.placeId,
+                                name = detailUiState.info.placeName,
+                                latLng = "${lat},${lng}",
+                                imgUrl = detailUiState.info.placeImgUrl
+                            )
+
+                            addOnCollection(collection)
+                            when (collectionUiState) {
+                                is SaveCollectionState.IsLoading -> {}
+                                is SaveCollectionState.IsSuccess -> {
+                                    Toast.makeText(
+                                        localContext,
+                                        "저장이 완료되었습니다.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                is SaveCollectionState.IsFailed -> {
+                                    Toast.makeText(
+                                        localContext,
+                                        "저장에 실패하였습니다.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
-                            addOnCollection(checkNotNull(collection))
                         },
                         modifier = modifier.fillMaxWidth(),
                         content = { Text(text = "컬렉션에 추가하기", style = Typography.labelLarge) }
