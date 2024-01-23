@@ -5,6 +5,8 @@ object Versions {
     const val ksp = "1.9.10-1.0.13"
     const val hilt = "2.49"
     const val coroutine = "1.7.3"
+    const val room = "2.6.1"
+
 
     const val gms_service = "4.4.0"
     const val maps_secrets = "2.0.1"
@@ -19,10 +21,11 @@ object Versions {
     const val compose_hilt_navigation = "1.1.0"
     const val compose_maps = "2.11.4"
     const val activity_compose = "1.8.2"
+    const val compose_lifecycle_runtime = "2.7.0"
 
     const val junit = "4.13.2"
     const val androidx_junit = "1.1.5"
-    const val espresso_core = "3.0.2"
+    const val espresso_core = "3.5.1"
 
     const val landscapist = "2.2.10"
     const val retrofit = "2.9.0"
@@ -38,6 +41,7 @@ object Plugins {
     const val android_library = "com.android.library"
     const val kotlin_android = "org.jetbrains.kotlin.android"
     const val kotlin_jvm = "org.jetbrains.kotlin.jvm"
+    const val java_library = "java-library"
     const val ksp = "com.google.devtools.ksp"
     const val hilt = "com.google.dagger.hilt.android"
     const val google_service = "com.google.gms.google-services"
@@ -50,7 +54,7 @@ object Dependencies {
 
     const val junit = "junit:junit:${Versions.junit}"
     const val androidx_junit = "androidx.test.ext:junit:${Versions.androidx_junit}"
-    const val espresso_core = "com.android.support.test.espresso:espresso-core:${Versions.espresso_core}"
+    const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espresso_core}"
 
     const val gms_maps = "com.google.android.gms:play-services-maps:${Versions.play_gms_maps}"
     const val gms_location = "com.google.android.gms:play-services-location:${Versions.play_gms_location}"
@@ -62,10 +66,15 @@ object Dependencies {
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 
+    const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val room_compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val room_ktx = "androidx.room:room-ktx:${Versions.room}"
+
     const val compose_BoM = "androidx.compose:compose-bom:${Versions.compose_BoM}"
     const val compose_activity = "androidx.activity:activity-compose:${Versions.activity_compose}"
     const val compose_material3 = "androidx.compose.material3:material3"
     const val compose_runtime_livedata = "androidx.compose.runtime:runtime-livedata"
+    const val compose_runtime_lifecycle = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.compose_lifecycle_runtime}"
     const val compose_material_icons = "androidx.compose.material:material-icons-extended"
     const val compose_navigation = "androidx.navigation:navigation-compose:${Versions.compose_navigation}"
     const val compose_navigation_hilt = "androidx.hilt:hilt-navigation-compose:${Versions.compose_hilt_navigation}"
@@ -81,6 +90,19 @@ object Dependencies {
 
 object Module {
     const val app = ":app"
-    const val data = ":data"
-    const val domain = ":domain"
+
+    // core
+    const val common = ":core:common"
+    const val data = ":core:data"
+    const val database = ":core:database"
+    const val designsystem = ":core:designsystem"
+    const val domain = ":core:domain"
+    const val model = ":core:model"
+    const val network = ":core:network"
+    const val ui = ":core:ui"
+
+    // feature
+    const val collection = ":feature:collection"
+    const val home = ":feature:home"
+    const val detail = ":feature:detail"
 }
