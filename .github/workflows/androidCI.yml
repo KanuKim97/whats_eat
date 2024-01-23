@@ -1,0 +1,48 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 레포지토리 체크아웃
+      uses: actions/checkout@v3
+    
+    - name: JDK 17 설정
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Android SDK 설정
+      uses: android-actions/setup-android@v3
+
+    - name: Gradle package 캐싱
+      uses: actions/cache@v3
+      with: 
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+        restore-keys: ${{ runner.os }}-gradle-
+      
+    - name: Gradlew 실행 권한 승인
+      run: chmod +x gradlew
+
+    - name: local.properties 생성
+      env: 
+        LOCAL_PROPERTIES: "${{ secrets.LOCAL_PROPERTIES }}"
+      run: echo $LOCAL_PROPERTIES > ./local.properties
+      
+    - name: Gradle과 함께 빌드
+      run: ./gradlew build
+
+    - name: Application 빌드
+      run: ./gradlew --no-daemon build
