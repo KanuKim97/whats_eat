@@ -43,6 +43,3 @@ jobs:
       
     - name: Gradle과 함께 빌드
       run: ./gradlew build
-
-    - name: Application 빌드
-      run: ./gradlew --no-daemon build
