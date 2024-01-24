@@ -26,8 +26,8 @@ dependencies {
     implementation(project(Module.model))
 
     testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.androidx_junit)
 
+    androidTestImplementation(Dependencies.androidx_junit)
 
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)

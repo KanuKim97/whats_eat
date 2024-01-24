@@ -5,7 +5,6 @@ import com.example.data.util.entityToModelMapper
 import com.example.data.util.modelToEntityMapper
 import com.example.model.feature.CollectionModel
 import com.example.database.dao.EatDao
-import com.example.database.model.CollectionEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -44,9 +43,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     override fun saveUserCollection(
         content: CollectionModel
     ): Flow<Result<Unit>> = flow {
-        val entity: CollectionEntity = modelToEntityMapper(content)
-
-        eatDao.saveUserCollection(entity)
+        eatDao.saveUserCollection(modelToEntityMapper(content))
         emit(Result.success(Unit))
     }.catch { exception ->
         when (exception) {
@@ -60,9 +57,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     override fun deleteUserCollection(
         content: CollectionModel
     ): Flow<Result<Unit>> = flow {
-        val entity: CollectionEntity = modelToEntityMapper(content)
-
-        eatDao.deleteUserCollection(entity)
+        eatDao.deleteUserCollection(modelToEntityMapper(content))
         emit(Result.success(Unit))
     }.catch { exception ->
         when (exception) {
@@ -72,5 +67,4 @@ class DatabaseRepositoryImpl @Inject constructor(
             else -> emit(Result.failure(exception))
         }
     }.flowOn(ioDispatcher)
-
 }

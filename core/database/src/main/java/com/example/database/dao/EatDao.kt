@@ -17,8 +17,8 @@ interface EatDao {
     fun readCollectionEntity(placeID: String): Flow<CollectionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUserCollection(content: CollectionEntity)
+    suspend fun saveUserCollection(content: CollectionEntity)
 
     @Delete(entity = CollectionEntity::class)
-    fun deleteUserCollection(content: CollectionEntity)
+    suspend fun deleteUserCollection(content: CollectionEntity)
 }
