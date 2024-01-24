@@ -33,6 +33,7 @@ dependencies {
     implementation(project(Module.model))
 
     testImplementation(Dependencies.junit)
+    testImplementation(Dependencies.coroutine_test)
     androidTestImplementation(Dependencies.androidx_junit)
 
     implementation(Dependencies.retrofit2)

@@ -51,6 +51,7 @@ object Plugins {
 object Dependencies {
     const val androidx_core = "androidx.core:core:${Versions.core}"
     const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine}"
+    const val coroutine_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine}"
 
     const val junit = "junit:junit:${Versions.junit}"
     const val androidx_junit = "androidx.test.ext:junit:${Versions.androidx_junit}"
