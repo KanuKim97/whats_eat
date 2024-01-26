@@ -5,7 +5,7 @@
 <br>
 <img src="https://img.shields.io/badge/Kotlin_version-1.9.10-7F52FF?style=flat&logo=Kotlin&logoColor=white"/>
 <img src="https://img.shields.io/badge/Kotlin-Flow_API-7F52FF?style=flat&logo=Kotlin&logoColor=white"/>
-<img src="https://img.shields.io/badge/Annotation_Processor-Kotlitn_ksp-7F52FF?style=flat"/>
+<img src="https://img.shields.io/badge/Annotation_Processor-Kotlin_ksp-7F52FF?style=flat"/>
 <br>
 <img src="https://img.shields.io/badge/Dagger--Hilt_version-2.49-3DDC84?style=flat"/>
 <img src="https://img.shields.io/badge/Jetpack_Compose_version-1.5.3-4285F4?style=flat&logo=jetpackcompose&logoColor=white"/>
