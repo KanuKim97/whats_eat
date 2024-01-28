@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.glide.GlideImageState
@@ -73,7 +73,7 @@ fun EatImageLoader(
                 content = {
                     Text(
                         text = "이미지 불러오기에 실패하였습니다.",
-                        style = Typography.labelLarge
+                        style = EatTypography.labelLarge
                     )
                 }
             )

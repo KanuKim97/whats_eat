@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.icons.EatIcons
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 
 @Composable
 fun RatingRow(
@@ -33,7 +33,7 @@ fun RatingRow(
             Text(
                 text = ratingNumber,
                 fontWeight = FontWeight.Bold,
-                style = Typography.labelLarge
+                style = EatTypography.labelLarge
             )
         }
     )

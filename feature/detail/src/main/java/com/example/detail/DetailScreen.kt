@@ -1,32 +1,30 @@
 package com.example.detail
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.designsystem.component.EatCenterAlignedAppBar
 import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatImageLoader
-import com.example.designsystem.component.EatTextButton
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.icons.EatIcons
+import com.example.designsystem.theme.EatTypography
 import com.example.model.feature.CollectionModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -36,7 +34,11 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-internal fun DetailRoute(modifier: Modifier = Modifier) {
+internal fun DetailRoute(
+    navigationIconOnClick: () -> Unit,
+    navigateToCollectionScreen: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val detailViewModel = hiltViewModel<DetailViewModel>()
     val detailUiState by detailViewModel.detailUiState.collectAsStateWithLifecycle()
     val collectionUiState by detailViewModel.saveCollectionState.collectAsStateWithLifecycle()
@@ -44,6 +46,8 @@ internal fun DetailRoute(modifier: Modifier = Modifier) {
     DetailScreen(
         detailUiState = detailUiState,
         collectionUiState = collectionUiState,
+        navigationIconOnClick = navigationIconOnClick,
+        navigateToCollectionScreen = navigateToCollectionScreen,
         addOnCollection = detailViewModel::saveCollection,
         modifier = modifier
     )
@@ -54,18 +58,43 @@ internal fun DetailScreen(
     detailUiState: DetailUiState,
     collectionUiState: SaveCollectionState,
     addOnCollection: (CollectionModel) -> Unit,
+    navigationIconOnClick: () -> Unit,
+    navigateToCollectionScreen: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val localContext = LocalContext.current
-
-    Surface(
+    Scaffold(
         modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.surface
-    ) {
+        topBar = {
+            EatCenterAlignedAppBar(
+                navigationIcon = EatIcons.arrowBackOutlined,
+                navigationIconOnClick = navigationIconOnClick,
+                actions = {
+                    IconButton(
+                        onClick = { /*TODO*/ },
+                        content = {
+                            Icon(
+                                imageVector = EatIcons.plusOutlined,
+                                contentDescription = "Add"
+                            )
+                        }
+                    )
+                    IconButton(
+                        onClick = navigateToCollectionScreen,
+                        content = {
+                            Icon(
+                                imageVector = EatIcons.CollectionOutlined,
+                                contentDescription = "Collection"
+                            )
+                        }
+                    )
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(10.dp),
+                .padding(paddingValues),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
@@ -96,7 +125,7 @@ internal fun DetailScreen(
                         fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
-                        style = Typography.headlineMedium
+                        style = EatTypography.headlineMedium
                     )
                     Text(
                         text = if (detailUiState.info.isPlaceOpenNow) {
@@ -105,12 +134,12 @@ internal fun DetailScreen(
                             "영업 종료"
                         },
                         maxLines = 1,
-                        style = Typography.labelMedium
+                        style = EatTypography.labelMedium
                     )
                     Text(
                         text = "위치",
                         fontWeight = FontWeight.SemiBold,
-                        style = Typography.headlineMedium
+                        style = EatTypography.headlineMedium
                     )
                     GoogleMap(
                         modifier = modifier
@@ -124,44 +153,12 @@ internal fun DetailScreen(
                             )
                         }
                     )
-                    Spacer(modifier = modifier.size(20.dp))
-                    EatTextButton(
-                        onClick = {
-                            val collection = CollectionModel(
-                                id = detailUiState.info.placeId,
-                                name = detailUiState.info.placeName,
-                                latLng = "${lat},${lng}",
-                                imgUrl = detailUiState.info.placeImgUrl
-                            )
-
-                            addOnCollection(collection)
-                            when (collectionUiState) {
-                                is SaveCollectionState.IsLoading -> {}
-                                is SaveCollectionState.IsSuccess -> {
-                                    Toast.makeText(
-                                        localContext,
-                                        "저장이 완료되었습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                is SaveCollectionState.IsFailed -> {
-                                    Toast.makeText(
-                                        localContext,
-                                        "저장에 실패하였습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        },
-                        modifier = modifier.fillMaxWidth(),
-                        content = { Text(text = "컬렉션에 추가하기", style = Typography.labelLarge) }
-                    )
                 }
                 is DetailUiState.IsFailed -> {
                     Box(
                         modifier = modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
-                        content = { Text(text = "로딩에 실패하였습니다.", style = Typography.labelLarge) }
+                        content = { Text(text = "로딩에 실패하였습니다.", style = EatTypography.labelLarge) }
                     )
                 }
             }

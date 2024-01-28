@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatImageLoader
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.example.model.feature.BannerItemsModel
 
 @Composable
@@ -43,7 +43,7 @@ fun BannerCard(
                 Text(
                     text = banner?.name ?: "",
                     fontWeight = FontWeight.SemiBold,
-                    style = Typography.titleMedium
+                    style = EatTypography.titleMedium
                 )
             }
         )

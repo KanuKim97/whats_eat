@@ -47,7 +47,7 @@ fun EatTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         shapes = EatShape,
-        typography = Typography,
+        typography = EatTypography,
         content = content
     )
 }

@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.icons.EatIcons
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.EatTheme
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 
 @Composable
 fun NoticeSnackBar(
@@ -50,7 +50,7 @@ fun NoticeSnackBar(
                     Spacer(modifier = modifier.size(8.dp))
                     Text(
                         text = text,
-                        style = Typography.labelLarge
+                        style = EatTypography.labelLarge
                     )
                 }
             )

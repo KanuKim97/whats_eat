@@ -26,7 +26,7 @@ import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatIconButton
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.icons.EatIcons
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 
 @Composable
 fun CollectionCard(
@@ -65,7 +65,7 @@ fun CollectionCard(
                             text = placeName,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = Typography.headlineSmall
+                            style = EatTypography.headlineSmall
                         )
                         EatIconButton(
                             onClick = { expandedState = !expandedState },

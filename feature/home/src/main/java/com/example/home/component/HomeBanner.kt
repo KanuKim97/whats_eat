@@ -20,7 +20,7 @@ import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatHorizontalPager
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.example.home.BannerUiState
 import com.example.ui.BannerCard
 
@@ -33,7 +33,7 @@ fun HomeBanner(
 ) {
     Column(
         modifier = modifier
-            .padding(vertical = 10.dp)
+            .padding(bottom = 10.dp)
             .fillMaxWidth()
             .height(300.dp),
         verticalArrangement = Arrangement.Center,
@@ -66,7 +66,7 @@ fun HomeBanner(
                     content = {
                         Text(
                             text = "로딩에 실패하였습니다.",
-                            style = Typography.bodyMedium
+                            style = EatTypography.bodyMedium
                         )
                     }
                 )

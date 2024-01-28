@@ -15,7 +15,7 @@ import com.example.designsystem.icons.EatIcons
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.Gray700
 import com.example.designsystem.theme.Gray900
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 
 @Composable
 fun BottomAppNavBar(
@@ -83,7 +83,7 @@ fun PreviewItem() {
                         Text(
                             text = item,
                             fontWeight = FontWeight.Bold,
-                            style = Typography.labelMedium
+                            style = EatTypography.labelMedium
                         )
                     }
                 )

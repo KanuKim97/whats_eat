@@ -25,7 +25,10 @@ fun NavController.onNavigateDetail(placeID: String) {
     this.navigate("$detailRoute/$placeID")
 }
 
-fun NavGraphBuilder.detailScreen() {
+fun NavGraphBuilder.detailScreen(
+    navigationIconOnClick: () -> Unit,
+    navigateToCollectionScreen: () -> Unit
+) {
     composable(
         route = "$detailRoute/{$placeIDArgs}",
         arguments = listOf(
@@ -52,7 +55,11 @@ fun NavGraphBuilder.detailScreen() {
                     easing = LinearEasing
                 )
             )
-        },
-        content = { DetailRoute() }
-    )
+        }
+    ) {
+        DetailRoute(
+            navigationIconOnClick = navigationIconOnClick,
+            navigateToCollectionScreen = navigateToCollectionScreen
+        )
+    }
 }

@@ -4,11 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,13 +15,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.designsystem.component.EatLargeTopAppBar
+import com.example.designsystem.icons.EatIcons
 import com.example.designsystem.theme.EatTheme
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.example.home.component.HomeBanner
 import com.example.home.component.HomeItemGrid
 import com.example.ui.preview.ComponentPreview
@@ -40,7 +39,7 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun HomeRoute(
-    scaffoldPaddingValues: PaddingValues,
+    navigateToCollection: () -> Unit,
     navigateToDetail: (String) -> Unit
 ) {
     val context = LocalContext.current
@@ -91,8 +90,8 @@ internal fun HomeRoute(
     HomeScreen(
         bannerState = bannerUiState,
         itemGridState = gridUiState,
-        scaffoldPaddingValues = scaffoldPaddingValues,
-        itemOnClick = navigateToDetail
+        itemOnClick = navigateToDetail,
+        actionIconOnClick = navigateToCollection
     )
 }
 
@@ -100,39 +99,36 @@ internal fun HomeRoute(
 internal fun HomeScreen(
     bannerState: BannerUiState,
     itemGridState: ItemGridUiState,
-    scaffoldPaddingValues: PaddingValues,
     itemOnClick: (String) -> Unit,
+    actionIconOnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Surface(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(scaffoldPaddingValues),
-        color = MaterialTheme.colorScheme.surface
-    ) {
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = {
+            EatLargeTopAppBar(
+                mainTitle = "내 주변 음식점",
+                subTitle = "오늘은 여기 어떤가요?",
+                actionIcon = EatIcons.CollectionOutlined,
+                actionIconOnClick = actionIconOnClick
+            )
+        }
+    ) { paddingValues ->
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
-            content =  {
-                Text(
-                    text = "내 주변 음식점",
-                    fontWeight = FontWeight.Bold,
-                    style = Typography.headlineLarge
-                )
-                Text(
-                    text = "오늘은 여기 어떤가요?",
-                    fontWeight = FontWeight.Medium,
-                    style = Typography.titleSmall
-                )
+            content = {
                 HomeBanner(
                     bannerUiState = bannerState,
                     bannerOnClick = itemOnClick
                 )
                 Text(
                     text = "근처 맛집",
-                    fontWeight = FontWeight.Medium,
-                    style = Typography.titleSmall
+                    modifier = modifier.padding(start = 16.dp),
+                    style = EatTypography.titleSmall
                 )
                 HomeItemGrid(
                     itemGridUiState = itemGridState,
@@ -149,10 +145,10 @@ internal fun HomeScreen(
 fun PreviewHomeScreen() {
     EatTheme {
         HomeScreen(
-            scaffoldPaddingValues = PaddingValues(bottom = 10.dp),
             bannerState = BannerUiState.IsLoading,
             itemGridState = ItemGridUiState.IsLoading,
             itemOnClick = { _ -> },
+            actionIconOnClick = {  }
         )
     }
 }

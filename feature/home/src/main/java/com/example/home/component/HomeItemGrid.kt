@@ -15,7 +15,7 @@ import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatVerticalGrid
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.Gray
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.example.home.ItemGridUiState
 import com.example.ui.GridItem
 
@@ -60,7 +60,7 @@ fun HomeItemGrid(
                     content = {
                         Text(
                             text = "로딩에 실패하였습니다.",
-                            style = Typography.bodyMedium
+                            style = EatTypography.bodyMedium
                         )
                     }
                 )

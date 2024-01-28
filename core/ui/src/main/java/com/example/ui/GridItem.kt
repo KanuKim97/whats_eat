@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatImageLoader
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.example.model.feature.GridItemsModel
 
 @Composable
@@ -49,7 +49,7 @@ fun GridItem(
                     fontWeight = FontWeight.SemiBold,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
-                    style = Typography.labelLarge
+                    style = EatTypography.labelLarge
                 )
             }
         )

@@ -11,7 +11,7 @@ import com.example.designsystem.component.EatAlertDialog
 import com.example.designsystem.component.EatOutlinedTextButton
 import com.example.designsystem.icons.EatIcons
 import com.example.designsystem.theme.EatTheme
-import com.example.designsystem.theme.Typography
+import com.example.designsystem.theme.EatTypography
 import com.example.ui.preview.ComponentPreview
 
 @Composable
@@ -29,7 +29,7 @@ fun PermissionAlertDialog(
             Text(
                 text = "권한을 허용해주세요!",
                 fontWeight = FontWeight.Bold,
-                style = Typography.titleLarge
+                style = EatTypography.titleLarge
             )
         },
         text = {
@@ -38,7 +38,7 @@ fun PermissionAlertDialog(
                     "위치 사용 권한을 허용해야합니다.\n" +
                     "허용하시겠습니까?",
                 fontWeight = FontWeight.Medium,
-                style = Typography.bodySmall
+                style = EatTypography.bodySmall
             )
         },
         onDismissRequest = onDismiss,
@@ -49,7 +49,7 @@ fun PermissionAlertDialog(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                content = { Text(text = "네", style = Typography.labelLarge) }
+                content = { Text(text = "네", style = EatTypography.labelLarge) }
             )
         },
         dismissButton = {
@@ -59,7 +59,7 @@ fun PermissionAlertDialog(
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentColor = MaterialTheme.colorScheme.inverseSurface
                 ),
-                content = { Text(text = "아니요", style = Typography.labelLarge) }
+                content = { Text(text = "아니요", style = EatTypography.labelLarge) }
             )
         }
     )

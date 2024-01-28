@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.whats_eat" />
-                  <option name="mobileSdkAppId" value="1:626792811310:android:9a05d099af997cd94f48bf" />
-                  <option name="projectId" value="lostmyphone-20d12" />
-                  <option name="projectNumber" value="626792811310" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

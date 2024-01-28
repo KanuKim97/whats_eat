@@ -5,14 +5,18 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.collection.CollectionRoute
 
 const val collectionRoute = "Collection"
 
-fun NavGraphBuilder.collectionScreen(scaffoldPaddingValues: PaddingValues) {
+fun NavController.toCollectionScreen() {
+    this.navigate(collectionRoute)
+}
+
+fun NavGraphBuilder.collectionScreen(navigationIconClick: () -> Unit) {
     composable(
         route = collectionRoute,
         enterTransition = {
@@ -36,7 +40,8 @@ fun NavGraphBuilder.collectionScreen(scaffoldPaddingValues: PaddingValues) {
                     easing = LinearEasing
                 )
             )
-        },
-        content =  { CollectionRoute(scaffoldPaddingValues) }
-    )
+        }
+    ) {
+        CollectionRoute(navigationIconOnClick = navigationIconClick)
+    }
 }
