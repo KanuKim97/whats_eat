@@ -3,7 +3,6 @@ plugins {
     id(Plugins.kotlin_android)
     id(Plugins.ksp)
     id(Plugins.hilt)
-    id(Plugins.google_service)
     id(Plugins.maps_secret_gradle_plugin)
 }
 

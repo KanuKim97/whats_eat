@@ -1,12 +1,13 @@
 package com.example.home
 
 import android.Manifest
-import android.content.pm.PackageManager
+import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.designsystem.component.EatLargeTopAppBar
@@ -29,14 +29,17 @@ import com.example.ui.preview.ComponentPreview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
 
 @OptIn(ExperimentalPermissionsApi::class)
+@RequiresPermission(
+    anyOf = [
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ]
+)
 @Composable
 internal fun HomeRoute(
     navigateToCollection: () -> Unit,
@@ -44,7 +47,8 @@ internal fun HomeRoute(
 ) {
     val context = LocalContext.current
     val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
-    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val locationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+
 
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
@@ -56,36 +60,21 @@ internal fun HomeRoute(
             if (!locationPermission.status.isGranted) {
                 locationPermission.launchPermissionRequest()
             } else {
-                val locationRequest: CurrentLocationRequest = CurrentLocationRequest
-                    .Builder()
-                    .setDurationMillis(5000L)
-                    .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
-                    .build()
-
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    fusedLocationClient.getCurrentLocation(
-                        locationRequest,
-                        object : CancellationToken() {
-                            override fun onCanceledRequested(
-                                p0: OnTokenCanceledListener
-                            ): CancellationToken = CancellationTokenSource().token
-
-                            override fun isCancellationRequested(): Boolean = false
-                        }
-                    ).addOnSuccessListener {
-                        val latLng = "${it.latitude},${it.longitude}"
+                locationClient.getCurrentLocation(
+                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                    CancellationTokenSource().token
+                ).addOnSuccessListener { location ->
+                    if (location != null) {
+                        val latLng = "${location.latitude},${location.longitude}"
                         homeViewModel.getBannerUiState(latLng)
                         homeViewModel.getItemGridUiState(latLng)
                     }
                 }
-
             }
         }
     )
+
+
 
     HomeScreen(
         bannerState = bannerUiState,
@@ -112,6 +101,9 @@ internal fun HomeScreen(
                 actionIcon = EatIcons.CollectionOutlined,
                 actionIconOnClick = actionIconOnClick
             )
+        },
+        snackbarHost = {
+            SnackbarHostState()
         }
     ) { paddingValues ->
         Column(

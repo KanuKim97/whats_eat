@@ -12,12 +12,14 @@ interface RetrofitPlaceAPI {
         @Query("location") latLng: String,
         @Query("radius") radius: String,
         @Query("type") type: String,
+        @Query("language") language: String,
         @Query("key") apiKey: String
     ): Response<NearBySearch>
 
     @GET("details/json")
     suspend fun getDetails(
         @Query("place_id") placeID: String,
+        @Query("language") language: String,
         @Query("key") apiKey: String
     ): Response<DetailedPlace>
 }

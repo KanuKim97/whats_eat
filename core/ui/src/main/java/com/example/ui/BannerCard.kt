@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatTypography
-import com.example.model.feature.BannerItemsModel
+import com.example.domain.entity.BannerItemsModel
 
 @Composable
 fun BannerCard(

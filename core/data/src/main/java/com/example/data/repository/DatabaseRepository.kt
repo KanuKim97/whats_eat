@@ -1,6 +1,6 @@
 package com.example.data.repository
 
-import com.example.model.feature.CollectionModel
+import com.example.model.collection.CollectionModel
 import kotlinx.coroutines.flow.Flow
 
 interface DatabaseRepository {

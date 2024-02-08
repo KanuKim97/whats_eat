@@ -2,10 +2,10 @@ package com.example.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.GetGridItemUseCase
-import com.example.domain.GetMainBannerUseCase
-import com.example.model.feature.BannerItemsModel
-import com.example.model.feature.GridItemsModel
+import com.example.domain.network.GetGridItemUseCase
+import com.example.domain.network.GetMainBannerUseCase
+import com.example.domain.entity.BannerItemsModel
+import com.example.domain.entity.GridItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow

@@ -15,6 +15,7 @@ class RetrofitPlaceNetwork @Inject constructor(retrofit: Retrofit): PlaceDataSou
     override suspend fun getDetail(placeID: String): DetailedPlace =
         placeApi.getDetails(
             placeID = placeID,
+            language = Constants.LANGUAGE,
             apiKey = BuildConfig.PLACE_API_KEY
         ).body()!!
 
@@ -23,6 +24,7 @@ class RetrofitPlaceNetwork @Inject constructor(retrofit: Retrofit): PlaceDataSou
             latLng = latLng,
             radius = Constants.LOCATION_RADIUS,
             type = Constants.LOCATION_TYPE,
+            language = Constants.LANGUAGE,
             apiKey = BuildConfig.PLACE_API_KEY
         ).body()!!
 }

@@ -12,5 +12,25 @@ val NotoSansKR = FontFamily(
         resId = R.font.notosans_kr,
         style = FontStyle.Normal,
         weight = FontWeight.Medium
+    ),
+    Font(
+        resId = R.font.notosans_kr,
+        style = FontStyle.Normal,
+        weight = FontWeight.SemiBold
+    ),
+    Font(
+        resId = R.font.notosans_kr,
+        style = FontStyle.Normal,
+        weight = FontWeight.Bold
+    ),
+    Font(
+        resId = R.font.notosans_kr,
+        style = FontStyle.Normal,
+        weight = FontWeight.ExtraBold
+    ),
+    Font(
+        resId = R.font.notosans_kr,
+        style = FontStyle.Normal,
+        weight = FontWeight.Black
     )
 )

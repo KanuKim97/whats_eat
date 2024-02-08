@@ -3,7 +3,6 @@ plugins {
     id(Plugins.kotlin_android)
     id(Plugins.ksp)
     id(Plugins.hilt)
-    id(Plugins.google_service)
 }
 
 kotlin.jvmToolchain(AppConfig.jdkVersion)
@@ -31,14 +30,11 @@ dependencies {
 
     implementation(Dependencies.gms_location)
 
-    // Kotlin Coroutine
     implementation(Dependencies.coroutine)
 
-    // Dagger-Hilt DI(Dependency Injection) Tool
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
 
-    // Jetpack Compose
     val composeBom = platform(Dependencies.compose_BoM)
     implementation(composeBom)
     implementation(Dependencies.compose_activity)

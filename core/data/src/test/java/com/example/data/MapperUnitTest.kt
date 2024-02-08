@@ -1,9 +1,9 @@
 package com.example.data
 
-import com.example.data.util.entityToModelMapper
-import com.example.data.util.modelToEntityMapper
+import com.example.data.mapper.entityToModelMapper
+import com.example.data.mapper.modelToEntityMapper
 import com.example.database.model.CollectionEntity
-import com.example.model.feature.CollectionModel
+import com.example.model.collection.CollectionModel
 import org.junit.Test
 import org.junit.Assert.assertEquals
 
@@ -17,12 +17,13 @@ class MapperUnitTest {
         placeLatLng = "dummy",
         placeImgUrl = "dummy"
     )
-    private val collectionModel: CollectionModel = CollectionModel(
-        id = "dummy",
-        name = "dummy",
-        latLng = "dummy",
-        imgUrl = "dummy"
-    )
+    private val collectionModel: CollectionModel =
+        CollectionModel(
+            id = "dummy",
+            name = "dummy",
+            latLng = "dummy",
+            imgUrl = "dummy"
+        )
 
 
     @Test

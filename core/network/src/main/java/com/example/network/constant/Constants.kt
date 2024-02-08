@@ -12,4 +12,7 @@ object Constants {
 
     // LOCATION TYPE = Restaurant
     const val LOCATION_TYPE: String = "restaurant"
+
+    // LANGUAGE Setting = "korea"
+    const val LANGUAGE: String = "ko"
 }

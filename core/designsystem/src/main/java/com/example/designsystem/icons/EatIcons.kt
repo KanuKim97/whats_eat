@@ -7,6 +7,8 @@ import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.CollectionsBookmark
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.SecurityUpdateWarning
+import androidx.compose.material.icons.rounded.AccessTimeFilled
+import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.CollectionsBookmark
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Home
@@ -21,12 +23,15 @@ object EatIcons {
     val CollectionOutlined = Icons.Outlined.CollectionsBookmark
 
     val WarningOutlined = Icons.Outlined.SecurityUpdateWarning
-    val CloseOutlined = Icons.Outlined.Close
-    val starBordered = Icons.Rounded.StarRate
 
+    val CloseOutlined = Icons.Outlined.Close
     val arrowBackOutlined = Icons.Outlined.ArrowBack
     val plusOutlined = Icons.Outlined.Add
 
-    val locationPermissionBordered = Icons.Rounded.LocationOn
+    val starBordered = Icons.Rounded.StarRate
+    val locationOnBordered = Icons.Rounded.LocationOn
+    val accessTimeBordered = Icons.Rounded.AccessTimeFilled
+    val callBordered = Icons.Rounded.Call
+
     val extendedMoreBordered = Icons.Rounded.ExpandMore
 }

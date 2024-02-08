@@ -73,7 +73,7 @@ fun Preview() {
             onDismiss = { /*TODO*/ },
             onOkClick = {},
             onDismissClick = {},
-            icon = { Icon(imageVector = EatIcons.locationPermissionBordered, contentDescription = "") }
+            icon = { Icon(imageVector = EatIcons.locationOnBordered, contentDescription = "") }
         )
     }
 }

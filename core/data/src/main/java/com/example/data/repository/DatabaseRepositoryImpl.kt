@@ -1,10 +1,10 @@
 package com.example.data.repository
 
 import com.example.common.IODispatcher
-import com.example.data.util.entityToModelMapper
-import com.example.data.util.modelToEntityMapper
-import com.example.model.feature.CollectionModel
+import com.example.data.mapper.entityToModelMapper
+import com.example.data.mapper.modelToEntityMapper
 import com.example.database.dao.EatDao
+import com.example.model.collection.CollectionModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,10 +19,10 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val eatDao: EatDao,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ): DatabaseRepository {
-    override fun readAllCollectionEntities() = eatDao
+    override fun readAllCollectionEntities(): Flow<List<CollectionModel>> = eatDao
         .readAllCollectionEntities()
-        .map { entityList ->
-            entityList.map { entity -> entityToModelMapper(entity) }
+        .map { entities ->
+            entities.map { entity -> entityToModelMapper(entity) }
         }
         .catch { exception ->
             when (exception) {

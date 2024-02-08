@@ -23,6 +23,7 @@ dependencies {
 
     implementation(project(Module.designsystem))
     implementation(project(":core:model"))
+    implementation(project(":core:domain"))
 
     // Jetpack Compose
     val composeBom = platform(Dependencies.compose_BoM)

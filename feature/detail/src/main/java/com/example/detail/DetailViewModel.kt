@@ -4,10 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.detail.navigation.PlaceIdArgs
-import com.example.domain.GetPlaceDetailUseCase
-import com.example.domain.SaveCollectionUseCase
-import com.example.model.feature.CollectionModel
-import com.example.model.feature.DetailedModel
+import com.example.domain.network.GetPlaceDetailUseCase
+import com.example.domain.database.SaveCollectionUseCase
+import com.example.model.collection.CollectionModel
+import com.example.domain.entity.DetailedModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
