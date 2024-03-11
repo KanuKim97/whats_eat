@@ -55,7 +55,7 @@ dependencies {
     debugImplementation(Dependencies.compose_ui_tooling)
     debugImplementation(Dependencies.compose_ui_test_manifest)
     
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.androidx_junit)
-    androidTestImplementation(Dependencies.espresso_core)
+    testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.androidx_junit)
+    androidTestImplementation(TestDependencies.espresso_core)
 }

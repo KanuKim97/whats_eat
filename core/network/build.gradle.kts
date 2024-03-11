@@ -32,15 +32,16 @@ dependencies {
 
     implementation(project(Module.model))
 
-    testImplementation(Dependencies.junit)
-    testImplementation(Dependencies.coroutine_test)
-    androidTestImplementation(Dependencies.androidx_junit)
 
     implementation(Dependencies.retrofit2)
     implementation(Dependencies.retrofit2_gson_converter)
 
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
+
+    testImplementation(TestDependencies.junit)
+    testImplementation(TestDependencies.coroutine_test)
+    androidTestImplementation(TestDependencies.androidx_junit)
 }
 
 fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)

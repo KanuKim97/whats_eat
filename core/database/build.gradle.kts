@@ -29,10 +29,10 @@ dependencies {
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
 
-    testImplementation(Dependencies.junit)
-    testImplementation("androidx.test.ext:junit-ktx:1.1.5")
-    testImplementation("androidx.test:core-ktx:1.5.0")
-    testImplementation("org.robolectric:robolectric:4.11.1")
-    testImplementation(Dependencies.coroutine_test)
-    androidTestImplementation(Dependencies.androidx_junit)
+    testImplementation(TestDependencies.junit)
+    testImplementation(TestDependencies.androidx_test_core_ktx)
+    testImplementation(TestDependencies.androidx_test_junit_ktx)
+    testImplementation(TestDependencies.robolectric)
+    testImplementation(TestDependencies.coroutine_test)
+    androidTestImplementation(TestDependencies.androidx_junit)
 }

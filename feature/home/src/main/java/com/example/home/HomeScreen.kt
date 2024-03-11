@@ -1,7 +1,7 @@
 package com.example.home
 
 import android.Manifest
-import androidx.annotation.RequiresPermission
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,13 +33,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 
+@SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
-@RequiresPermission(
-    anyOf = [
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    ]
-)
 @Composable
 internal fun HomeRoute(
     navigateToCollection: () -> Unit,
@@ -48,7 +43,6 @@ internal fun HomeRoute(
     val context = LocalContext.current
     val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
     val locationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
-
 
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
@@ -73,8 +67,6 @@ internal fun HomeRoute(
             }
         }
     )
-
-
 
     HomeScreen(
         bannerState = bannerUiState,
@@ -113,19 +105,13 @@ internal fun HomeScreen(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             content = {
-                HomeBanner(
-                    bannerUiState = bannerState,
-                    bannerOnClick = itemOnClick
-                )
+                HomeBanner(bannerUiState = bannerState, bannerOnClick = itemOnClick)
                 Text(
                     text = "근처 맛집",
                     modifier = modifier.padding(start = 16.dp),
                     style = EatTypography.titleSmall
                 )
-                HomeItemGrid(
-                    itemGridUiState = itemGridState,
-                    itemOnClick = itemOnClick
-                )
+                HomeItemGrid(itemGridUiState = itemGridState, itemOnClick = itemOnClick)
             }
         )
     }

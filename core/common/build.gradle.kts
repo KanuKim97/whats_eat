@@ -25,6 +25,6 @@ dependencies {
 
     implementation(Dependencies.coroutine)
 
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.androidx_junit)
+    testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.androidx_junit)
 }

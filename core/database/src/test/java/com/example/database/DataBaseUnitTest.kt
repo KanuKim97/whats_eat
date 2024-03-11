@@ -22,7 +22,7 @@ class DataBaseUnitTest {
     private lateinit var eatDataBase: EatDataBase
 
     @Before
-    fun createEatDB() {
+    fun createDataBase() {
         val context: Context = ApplicationProvider.getApplicationContext()
 
         eatDataBase = Room.inMemoryDatabaseBuilder(
@@ -34,13 +34,13 @@ class DataBaseUnitTest {
     }
 
     @After
-    fun closeEatDB() {
+    fun closeDataBase() {
         eatDataBase.close()
     }
 
     @Test
     @Throws(Exception::class)
-    fun save_COLLECTION_INTO_TEST_DATABASE() = runTest {
+    fun insert_collection_into_database() = runTest {
         eatDAO.saveUserCollection(defaultEntityList[0])
         eatDAO.saveUserCollection(defaultEntityList[1])
         eatDAO.saveUserCollection(defaultEntityList[2])
@@ -52,7 +52,7 @@ class DataBaseUnitTest {
 
     @Test
     @Throws(Exception::class)
-    fun delete_COLLECTION_INTO_TEST_DATABASE() = runTest {
+    fun delete_collection_into_database() = runTest {
         eatDAO.saveUserCollection(defaultEntityList[0])
         eatDAO.saveUserCollection(defaultEntityList[1])
         eatDAO.saveUserCollection(defaultEntityList[2])

@@ -38,7 +38,9 @@ private fun readAllCollectionState(
 ): Flow<ReadAllCollectionUiState> {
     return readAllCollectionUseCase()
         .onStart { ReadAllCollectionUiState.IsLoading }
-        .catch { ReadAllCollectionUiState.IsFailed }
+        .catch { exception ->
+            ReadAllCollectionUiState.IsFailed(exception.message.toString())
+        }
         .map<List<CollectionModel>, ReadAllCollectionUiState> { collectionList ->
             ReadAllCollectionUiState.IsSuccess(collectionList)
         }
@@ -50,5 +52,5 @@ sealed interface ReadAllCollectionUiState {
 
     data class IsSuccess(val data: List<CollectionModel>): ReadAllCollectionUiState
 
-    data object IsFailed: ReadAllCollectionUiState
+    data class IsFailed(val msg: String): ReadAllCollectionUiState
 }

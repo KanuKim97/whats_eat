@@ -25,9 +25,11 @@ dependencies {
     implementation(project(Module.network))
     implementation(project(Module.model))
 
-    testImplementation(Dependencies.junit)
-
-    androidTestImplementation(Dependencies.androidx_junit)
+    testImplementation(TestDependencies.mockito_core)
+    testImplementation(TestDependencies.mockito_kotlin)
+    testImplementation(TestDependencies.coroutine_test)
+    testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.androidx_junit)
 
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)

@@ -1,7 +1,5 @@
 package com.example.whats_eat.navigation
 
-import android.Manifest
-import androidx.annotation.RequiresPermission
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -14,7 +12,6 @@ import com.example.detail.navigation.onNavigateDetail
 import com.example.home.navigation.homeRoute
 import com.example.home.navigation.homeScreen
 
-@RequiresPermission(anyOf = [Manifest.permission.ACCESS_FINE_LOCATION])
 @Composable
 fun WhatsEatNavHost(navController: NavHostController) {
     NavHost(

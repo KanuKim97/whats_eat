@@ -40,8 +40,7 @@ fun NavGraphBuilder.collectionScreen(navigationIconClick: () -> Unit) {
                     easing = LinearEasing
                 )
             )
-        }
-    ) {
-        CollectionRoute(navigationIconOnClick = navigationIconClick)
-    }
+        },
+        content = { CollectionRoute(navigationIconOnClick = navigationIconClick) }
+    )
 }

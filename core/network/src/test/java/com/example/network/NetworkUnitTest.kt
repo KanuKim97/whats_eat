@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
+ * NetworkUnitTest Class
  * Network local unit test, which will execute on the development machine (host).
  */
 class NetworkUnitTest {
@@ -44,24 +45,28 @@ class NetworkUnitTest {
 
 
     @Test
-    fun call_NearBySearch_GET_RESULT() = runTest {
+    fun get_nearbysearch_result() = runTest {
         val response = network.getNearBySearch(
             latLng = defaultLatLng,
             radius = Constants.LOCATION_RADIUS,
             type = Constants.LOCATION_TYPE,
+            language = Constants.LANGUAGE,
             apiKey = BuildConfig.PLACE_API_KEY
         )
 
         assertEquals(200, response.code())
+        assertEquals("ZERO_RESULTS", response.body()?.status)
     }
 
     @Test
-    fun call_Detail_GET_RESULT() = runTest {
+    fun get_detail_result() = runTest {
         val response = network.getDetails(
             placeID = defaultPlaceID,
+            language = Constants.LANGUAGE,
             apiKey = BuildConfig.PLACE_API_KEY
         )
 
         assertEquals(200, response.code())
+        assertEquals("OK", response.body()?.status)
     }
 }

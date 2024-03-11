@@ -34,12 +34,12 @@ dependencies {
     implementation(project(Module.data))
     implementation(project(Module.model))
 
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.androidx_junit)
-
     // Dagger-Hilt DI(Dependency Injection) Tool
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
+
+    testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.androidx_junit)
 }
 
 fun getApiKey(

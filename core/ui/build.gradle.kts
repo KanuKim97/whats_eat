@@ -22,8 +22,8 @@ dependencies {
     implementation(Dependencies.androidx_core)
 
     implementation(project(Module.designsystem))
-    implementation(project(":core:model"))
-    implementation(project(":core:domain"))
+    implementation(project(Module.model))
+    implementation(project(Module.domain))
 
     // Jetpack Compose
     val composeBom = platform(Dependencies.compose_BoM)
@@ -45,7 +45,7 @@ dependencies {
     debugImplementation(Dependencies.compose_ui_tooling)
     debugImplementation(Dependencies.compose_ui_test_manifest)
 
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.androidx_junit)
-    androidTestImplementation(Dependencies.espresso_core)
+    testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.androidx_junit)
+    androidTestImplementation(TestDependencies.espresso_core)
 }

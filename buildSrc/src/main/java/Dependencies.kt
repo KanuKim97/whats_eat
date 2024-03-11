@@ -7,7 +7,6 @@ object Versions {
     const val coroutine = "1.7.3"
     const val room = "2.6.1"
 
-
     const val gms_service = "4.4.0"
     const val maps_secrets = "2.0.1"
 
@@ -29,6 +28,11 @@ object Versions {
 
     const val landscapist = "2.2.10"
     const val retrofit = "2.9.0"
+
+    const val mockito_core = "5.8.0"
+    const val mockito_kotlin = "5.2.1"
+    const val robolectric = "4.11.1"
+    const val androidx_test_core = "1.5.0"
 }
 
 object ProjectClassPath {
@@ -51,11 +55,6 @@ object Plugins {
 object Dependencies {
     const val androidx_core = "androidx.core:core:${Versions.core}"
     const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine}"
-    const val coroutine_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine}"
-
-    const val junit = "junit:junit:${Versions.junit}"
-    const val androidx_junit = "androidx.test.ext:junit:${Versions.androidx_junit}"
-    const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espresso_core}"
 
     const val gms_maps = "com.google.android.gms:play-services-maps:${Versions.play_gms_maps}"
     const val gms_location = "com.google.android.gms:play-services-location:${Versions.play_gms_location}"
@@ -87,6 +86,22 @@ object Dependencies {
     const val compose_ui_junit4 = "androidx.compose.ui:ui-test-junit4"
     const val compose_ui_tooling = "androidx.compose.ui:ui-tooling"
     const val compose_ui_test_manifest = "androidx.compose.ui:ui-test-manifest"
+}
+
+object TestDependencies {
+    const val junit = "junit:junit:${Versions.junit}"
+    const val androidx_junit = "androidx.test.ext:junit:${Versions.androidx_junit}"
+    const val androidx_test_junit_ktx = "androidx.test.ext:junit-ktx:${Versions.androidx_junit}"
+
+    const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espresso_core}"
+    const val androidx_test_core_ktx = "androidx.test:core-ktx:${Versions.androidx_test_core}"
+
+    const val mockito_core = "org.mockito:mockito-core:${Versions.mockito_core}"
+    const val mockito_kotlin = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito_kotlin}"
+
+    const val coroutine_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine}"
+
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
 }
 
 object Module {

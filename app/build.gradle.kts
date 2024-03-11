@@ -62,9 +62,9 @@ dependencies {
     implementation(Dependencies.hilt)
     ksp(Dependencies.hilt_compiler)
 
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.androidx_junit)
-    androidTestImplementation(Dependencies.espresso_core)
+    testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.androidx_junit)
+    androidTestImplementation(TestDependencies.espresso_core)
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)
