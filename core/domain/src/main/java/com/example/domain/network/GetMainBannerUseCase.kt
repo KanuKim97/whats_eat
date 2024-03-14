@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetMainBannerUseCase @Inject constructor(
-    private val network: PlaceApiRepository,
+    private val network: PlaceApiRepository
 ) {
     operator fun invoke(
         latLng: String

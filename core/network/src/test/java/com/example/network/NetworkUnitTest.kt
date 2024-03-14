@@ -56,6 +56,7 @@ class NetworkUnitTest {
 
         assertEquals(200, response.code())
         assertEquals("ZERO_RESULTS", response.body()?.status)
+        println(response.body())
     }
 
     @Test
@@ -68,5 +69,6 @@ class NetworkUnitTest {
 
         assertEquals(200, response.code())
         assertEquals("OK", response.body()?.status)
+        println(response.body())
     }
 }

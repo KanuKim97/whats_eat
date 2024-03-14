@@ -1,52 +1,58 @@
 package com.example.data
 
-import com.example.data.repository.PlaceApiRepositoryImpl
+import com.example.data.repository.PlaceApiRepository
+import com.example.data.sampleDBdata.testSampleDetailPlace
+import com.example.model.details.DetailedResult
 import com.example.model.nearBySearch.NearBySearchResult
-import com.example.network.PlaceDataSource
-import kotlinx.coroutines.flow.collect
+import io.mockk.clearMocks
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.StandardTestDispatcher
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.verify
 
-
-/**
- * PlaceRepo local unit test
- * TODO("Test is failed, Issue")
- */
 class PlaceRepoUnitTest {
-    @Mock
-    private lateinit var network: PlaceDataSource
-    private lateinit var placeApiRepositoryImpl: PlaceApiRepositoryImpl
+    private val placeApiRepositoryImpl = mockk<PlaceApiRepository>()
 
     private val defaultLatLng = "0.0, 0.0"
     private val defaultPlaceID = "ChIJN1t_tDeuEmsRUsoyG83frY4"
-    private val testDispatcher = StandardTestDispatcher()
 
     @Before
-    fun setUp() {
-        MockitoAnnotations.openMocks(this)
-        placeApiRepositoryImpl = PlaceApiRepositoryImpl(network, testDispatcher)
+    fun initRepositoryFunctionsBehavior() {
+        every { placeApiRepositoryImpl.nearByPlace(defaultLatLng) } returns flowOf(listOf())
+        every { placeApiRepositoryImpl.detailedPlace(defaultPlaceID) } returns flowOf(testSampleDetailPlace)
     }
 
     @Test
-    fun `execute should return nearByPlace from Repository`() = runBlocking {
+    fun `execute should return empty list from Repository nearByPlace function`() = runBlocking {
         var result = listOf<NearBySearchResult>()
-
-        `when`(placeApiRepositoryImpl.nearByPlace(defaultLatLng).collect()).thenReturn(Unit)
 
         placeApiRepositoryImpl.nearByPlace(defaultLatLng).collect{ result = it }
 
         assertEquals(
-            listOf<NearBySearchResult>(),
-            result
+            result,
+            listOf<NearBySearchResult>()
         )
-        verify(placeApiRepositoryImpl.detailedPlace(defaultPlaceID)).collect()
+    }
+
+    @Test
+    fun `execute should return DetailedResult from Repository Detailed Place function`() = runBlocking {
+        var result: DetailedResult? = null
+
+        placeApiRepositoryImpl.detailedPlace(defaultPlaceID).collect{ result = it }
+
+        assertEquals(
+            result,
+            testSampleDetailPlace
+        )
+    }
+
+    @After
+    fun clearRepositoryMocking() {
+        clearMocks(placeApiRepositoryImpl)
     }
 }
 

@@ -10,13 +10,13 @@ val sampleCollectionData = listOf(
         imgUrl = "default"
     ),
     CollectionModel(
-        id =  "1",
+        id =  "2",
         name = "default",
         latLng = "default",
         imgUrl = "default"
     ),
     CollectionModel(
-        id =  "1",
+        id =  "3",
         name = "default",
         latLng = "default",
         imgUrl = "default"

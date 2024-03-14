@@ -31,6 +31,8 @@ object Versions {
 
     const val mockito_core = "5.8.0"
     const val mockito_kotlin = "5.2.1"
+    const val mockk = "1.12.0"
+
     const val robolectric = "4.11.1"
     const val androidx_test_core = "1.5.0"
 }
@@ -98,6 +100,8 @@ object TestDependencies {
 
     const val mockito_core = "org.mockito:mockito-core:${Versions.mockito_core}"
     const val mockito_kotlin = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito_kotlin}"
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val mockk_android = "io.mockk:mockk-android:${Versions.mockk}"
 
     const val coroutine_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine}"
 

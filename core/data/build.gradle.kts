@@ -25,10 +25,10 @@ dependencies {
     implementation(project(Module.network))
     implementation(project(Module.model))
 
-    testImplementation(TestDependencies.mockito_core)
-    testImplementation(TestDependencies.mockito_kotlin)
+    testImplementation(TestDependencies.mockk)
     testImplementation(TestDependencies.coroutine_test)
     testImplementation(TestDependencies.junit)
+    androidTestImplementation(TestDependencies.mockk_android)
     androidTestImplementation(TestDependencies.androidx_junit)
 
     implementation(Dependencies.hilt)

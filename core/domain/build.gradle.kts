@@ -39,6 +39,9 @@ dependencies {
     ksp(Dependencies.hilt_compiler)
 
     testImplementation(TestDependencies.junit)
+    testImplementation (TestDependencies.mockk)
+    androidTestImplementation (TestDependencies.mockk_android)
+
     androidTestImplementation(TestDependencies.androidx_junit)
 }
 
