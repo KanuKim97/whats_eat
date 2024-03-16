@@ -2,6 +2,8 @@ package com.example.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,14 +12,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.designsystem.component.EatLargeTopAppBar
 import com.example.designsystem.icons.EatIcons
@@ -41,18 +47,29 @@ internal fun HomeRoute(
     navigateToDetail: (String) -> Unit
 ) {
     val context = LocalContext.current
-    val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    val lifecycleOwner = LocalLifecycleOwner.current
     val locationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { permission ->
+            if (permission) {
+
+            } else {
+
+            }
+        }
+    )
 
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
     val gridUiState by homeViewModel.itemGridUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(
-        key1 = locationPermission,
+        key1 = locationPermissionState,
         block = {
-            if (!locationPermission.status.isGranted) {
-                locationPermission.launchPermissionRequest()
+            if (!locationPermissionState.status.isGranted) {
+                locationPermissionState.launchPermissionRequest()
             } else {
                 locationClient.getCurrentLocation(
                     Priority.PRIORITY_BALANCED_POWER_ACCURACY,
@@ -65,6 +82,20 @@ internal fun HomeRoute(
                     }
                 }
             }
+        }
+    )
+
+    DisposableEffect(
+        key1 = lifecycleOwner,
+        effect = {
+            val observer = LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_START && !locationPermissionState.status.isGranted) {
+                    locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+
+            onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
         }
     )
 
