@@ -100,6 +100,7 @@ object TestDependencies {
 
     const val mockito_core = "org.mockito:mockito-core:${Versions.mockito_core}"
     const val mockito_kotlin = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito_kotlin}"
+
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val mockk_android = "io.mockk:mockk-android:${Versions.mockk}"
 

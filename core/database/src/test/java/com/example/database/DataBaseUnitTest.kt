@@ -33,11 +33,6 @@ class DataBaseUnitTest {
         eatDAO = eatDataBase.eatDao()
     }
 
-    @After
-    fun closeDataBase() {
-        eatDataBase.close()
-    }
-
     @Test
     @Throws(Exception::class)
     fun insert_collection_into_database() = runTest {
@@ -62,5 +57,10 @@ class DataBaseUnitTest {
         val result = eatDAO.readAllCollectionEntities().first()
 
         assertEquals(listOf(defaultEntityList[1], defaultEntityList[2]), result)
+    }
+
+    @After
+    fun closeDataBase() {
+        eatDataBase.close()
     }
 }
