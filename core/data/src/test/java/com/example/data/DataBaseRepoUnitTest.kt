@@ -46,12 +46,53 @@ class DataBaseRepoUnitTest {
     }
 
     @Test
-    fun `read data should be return CollectionModel from dbRepoImpl`() = runBlocking {
+    fun `read data should be return sampleCollectionData1 from dbRepoImpl`() = runBlocking {
         var result: CollectionModel? = null
 
         dbRepoImpl.readCollectionEntity("1").collect { data -> result = data }
         assertEquals(result, sampleCollectionData[0])
     }
+
+    @Test
+    fun `read data should be return sampleCollectionData2 from dbRepoImpl`() = runBlocking {
+        var result: CollectionModel? = null
+
+        dbRepoImpl.readCollectionEntity("2").collect { data -> result = data }
+        assertEquals(result, sampleCollectionData[1])
+    }
+
+    @Test
+    fun `read data should be return sampleCollectionData3 from dbRepoImpl`() = runBlocking {
+        var result: CollectionModel? = null
+
+        dbRepoImpl.readCollectionEntity("3").collect { data -> result = data }
+        assertEquals(result, sampleCollectionData[2])
+    }
+
+    @Test
+    fun `save sampleCollectionData1 should be return Success from dbRepoImpl`() = runBlocking {
+        var result: Result<Unit>? = null
+
+        dbRepoImpl.saveUserCollection(sampleCollectionData[0]).collect { isSuccess -> result = isSuccess }
+        assertEquals(result, Result.success(Unit))
+    }
+
+    @Test
+    fun `save sampleCollectionData2 should be return Success from dbRepoImpl`() = runBlocking {
+        var result: Result<Unit>? = null
+
+        dbRepoImpl.saveUserCollection(sampleCollectionData[1]).collect { isSuccess -> result = isSuccess }
+        assertEquals(result, Result.success(Unit))
+    }
+
+    @Test
+    fun `save sampleCollectionData3 should be return Success from dbRepoImpl`() = runBlocking {
+        var result: Result<Unit>? = null
+
+        dbRepoImpl.saveUserCollection(sampleCollectionData[2]).collect { isSuccess -> result = isSuccess }
+        assertEquals(result, Result.success(Unit))
+    }
+
 
     @Test
     fun `delete data should be return success from dbRepoImpl`() = runBlocking {
