@@ -1,6 +1,7 @@
 package com.example.domain.network
 
 import com.example.data.repository.PlaceApiRepository
+import com.example.domain.BuildConfig
 import com.example.domain.entity.BannerItemsModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -18,8 +19,16 @@ class GetMainBannerUseCase @Inject constructor(
                 BannerItemsModel(
                     placeID = it.place_id,
                     name = it.name,
-                    photoRef = it.photos[0].photo_reference
+                    photoRef = makePhotoRef(it.photos[0].photo_reference)
                 )
-            } .slice(0..resultList.lastIndex/3)
+            }.slice(0..resultList.lastIndex/3)
         }
+
+    private fun makePhotoRef(photoRef: String): String {
+        return StringBuilder("https://maps.googleapis.com/maps/api/place/photo")
+            .append("?maxwidth=1000")
+            .append("&photo_reference=${photoRef}")
+            .append("&key=${BuildConfig.PLACE_API_KEY}")
+            .toString()
+    }
 }
