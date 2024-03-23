@@ -2,8 +2,10 @@ package com.example.home
 
 import android.Manifest
 import android.annotation.SuppressLint
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,18 +14,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.designsystem.component.EatLargeTopAppBar
 import com.example.designsystem.icons.EatIcons
@@ -31,10 +30,12 @@ import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.EatTypography
 import com.example.home.component.HomeBanner
 import com.example.home.component.HomeItemGrid
+import com.example.ui.PermissionAlertDialog
 import com.example.ui.preview.ComponentPreview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
@@ -47,36 +48,23 @@ internal fun HomeRoute(
     navigateToDetail: (String) -> Unit
 ) {
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
     val locationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
-    val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { permission ->
-            if (permission) {
-
-            } else {
-
-            }
-        }
-    )
 
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
     val gridUiState by homeViewModel.itemGridUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = locationPermissionState,
-        block = {
-            if (!locationPermissionState.status.isGranted) {
-                locationPermissionState.launchPermissionRequest()
-            } else {
+    val locationPermissionShowRational = remember { mutableStateOf(false) }
+    val locationPermissionState = rememberPermissionState(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        onPermissionResult = { isGranted ->
+            if (isGranted) {
                 locationClient.getCurrentLocation(
                     Priority.PRIORITY_BALANCED_POWER_ACCURACY,
                     CancellationTokenSource().token
                 ).addOnSuccessListener { location ->
-                    if (location != null) {
-                        val latLng = "${location.latitude},${location.longitude}"
+                    location?.let {
+                        val latLng = "${it.latitude},${it.longitude}"
                         homeViewModel.getBannerUiState(latLng)
                         homeViewModel.getItemGridUiState(latLng)
                     }
@@ -85,19 +73,31 @@ internal fun HomeRoute(
         }
     )
 
-    DisposableEffect(
-        key1 = lifecycleOwner,
-        effect = {
-            val observer = LifecycleEventObserver { _, event ->
-                if (event == Lifecycle.Event.ON_START && !locationPermissionState.status.isGranted) {
-                    locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    LaunchedEffect(
+        key1 = locationPermissionState,
+        block = {
+            if (!locationPermissionState.status.isGranted) {
+                if (locationPermissionState.status.shouldShowRationale) {
+                    locationPermissionShowRational.value = true
+                } else {
+                    locationPermissionState.launchPermissionRequest()
                 }
             }
-            lifecycleOwner.lifecycle.addObserver(observer)
-
-            onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
         }
     )
+
+    if (locationPermissionShowRational.value) {
+        PermissionAlertDialog(
+            onDismiss = { context.openAppSetting() },
+            onOkClick = {
+                locationPermissionShowRational.value = false
+                locationPermissionState.launchPermissionRequest()
+            },
+            onDismissClick = {
+                locationPermissionShowRational.value = false
+            }
+        )
+    }
 
     HomeScreen(
         bannerState = bannerUiState,
@@ -146,6 +146,13 @@ internal fun HomeScreen(
             }
         )
     }
+}
+
+fun Context.openAppSetting() {
+    Intent(
+        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        Uri.fromParts("package", packageName, null)
+    ).also { startActivity(it) }
 }
 
 

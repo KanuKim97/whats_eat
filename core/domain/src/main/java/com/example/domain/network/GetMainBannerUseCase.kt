@@ -20,6 +20,6 @@ class GetMainBannerUseCase @Inject constructor(
                     name = it.name,
                     photoRef = it.photos[0].photo_reference
                 )
-            } .slice(0..resultList.lastIndex/3)
+            }.slice(0..resultList.lastIndex/3)
         }
 }

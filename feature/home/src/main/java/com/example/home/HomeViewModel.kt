@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
 
     private var _bannerUiState = MutableStateFlow<BannerUiState>(BannerUiState.IsLoading)
     val bannerUiState: StateFlow<BannerUiState>
-        get() =  _bannerUiState.asStateFlow()
+        get() = _bannerUiState.asStateFlow()
 
 
     private val _itemGridUiState = MutableStateFlow<ItemGridUiState>(ItemGridUiState.IsLoading)
