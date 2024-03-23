@@ -38,6 +38,6 @@ This application is introduced nearby food restaurant at your current location
  - The result of the API calls is json document
   
 ## Sdk Build Version
- - minSdkVersion : 25
+ - minSdkVersion : 31
  - targetSdkVersion : 34
  - compileSdkVersion : 34
