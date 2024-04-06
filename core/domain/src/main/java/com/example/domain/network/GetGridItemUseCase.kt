@@ -8,11 +8,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetGridItemUseCase @Inject constructor(
-    private val network: PlaceApiRepository,
+    private val network: PlaceApiRepository
 ) {
-    operator fun invoke(
-        latLng: String
-    ): Flow<List<GridItemsModel>> = network
+    operator fun invoke(latLng: String): Flow<List<GridItemsModel>> = network
         .nearByPlace(latLng)
         .map { list ->
             list.map {

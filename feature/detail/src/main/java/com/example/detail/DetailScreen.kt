@@ -212,6 +212,7 @@ fun PreviewDetailScreen() {
             saveCollectionUiState = SaveCollectionState.IsLoading,
             saveCollection = { /*TODO*/ },
             navigationIconOnClick = { /*TODO*/ },
-            navigateToCollectionScreen = { /*TODO*/ })
+            navigateToCollectionScreen = { /*TODO*/ }
+        )
     }
 }

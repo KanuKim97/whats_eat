@@ -10,9 +10,7 @@ import javax.inject.Inject
 class GetMainBannerUseCase @Inject constructor(
     private val network: PlaceApiRepository
 ) {
-    operator fun invoke(
-        latLng: String
-    ): Flow<List<BannerItemsModel>> = network
+    operator fun invoke(latLng: String): Flow<List<BannerItemsModel>> = network
         .nearByPlace(latLng)
         .map { resultList ->
             resultList.map {

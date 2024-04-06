@@ -59,6 +59,7 @@ fun EatImageLoader(
             imgState.imageBitmap?.let { bitmap ->
                 Image(
                     bitmap = bitmap,
+                    modifier = modifier.matchParentSize(),
                     contentScale = ContentScale.Crop,
                     contentDescription = "Image"
                 )
