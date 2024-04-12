@@ -31,6 +31,7 @@ fun HomeItemGrid(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (itemGridUiState) {
+            is ItemGridUiState.Init -> {  }
             is ItemGridUiState.IsLoading -> { EatCircularProgressIndicator() }
             is ItemGridUiState.IsSuccess -> {
                 EatVerticalGrid(

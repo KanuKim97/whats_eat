@@ -5,15 +5,18 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.home.HomeRoute
+import com.example.home.HomeViewModel
 
 const val homeRoute = "Home"
 
 fun NavGraphBuilder.homeScreen(
     navigateToDetail: (String) -> Unit,
-    navigateToCollection: () -> Unit
 ) {
     composable(
         route = homeRoute,
@@ -40,9 +43,16 @@ fun NavGraphBuilder.homeScreen(
             )
         },
         content = {
+            val homeViewModel = hiltViewModel<HomeViewModel>()
+            val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
+            val gridUiState by homeViewModel.itemGridUiState.collectAsStateWithLifecycle()
+
             HomeRoute(
                 navigateToDetail = navigateToDetail,
-                navigateToCollection = navigateToCollection
+                getBannerUiState = homeViewModel::getBannerUiState,
+                getItemGridUiState = homeViewModel::getItemGridUiState,
+                getMainBannerState = bannerUiState,
+                getItemsState = gridUiState
             )
         }
     )

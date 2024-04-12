@@ -19,7 +19,7 @@ class NetworkUnitTest {
     private lateinit var network: RetrofitPlaceAPI
 
     // Default Latitude, Longitude
-    private val defaultLatLng = "0.0, 0.0"
+    private val defaultLatLng = "37.594321,127.0329403"
     // Default Place ID
     private val defaultPlaceID = "ChIJN1t_tDeuEmsRUsoyG83frY4"
 
@@ -55,7 +55,6 @@ class NetworkUnitTest {
         )
 
         assertEquals(200, response.code())
-        assertEquals("ZERO_RESULTS", response.body()?.status)
         println(response.body())
     }
 

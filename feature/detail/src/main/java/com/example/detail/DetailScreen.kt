@@ -1,5 +1,7 @@
 package com.example.detail
 
+import android.widget.Toast
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,24 +11,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.designsystem.component.EatCenterAlignedAppBar
 import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatImageLoader
-import com.example.designsystem.icons.EatIcons
+import com.example.designsystem.component.EatTextButton
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.EatTypography
@@ -43,20 +41,17 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 internal fun DetailRoute(
-    navigationIconOnClick: () -> Unit,
-    navigateToCollectionScreen: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    detailUiState: DetailUiState,
+    saveCollectionUiState: SaveCollectionState,
+    scrollState: ScrollState,
+    saveCollection: (CollectionModel) -> Unit
 ) {
-    val detailViewModel = hiltViewModel<DetailViewModel>()
-    val detailUiState by detailViewModel.detailUiState.collectAsStateWithLifecycle()
-    val saveCollectionUiState by detailViewModel.saveCollectionState.collectAsStateWithLifecycle()
-
     DetailScreen(
         detailUiState = detailUiState,
         saveCollectionUiState = saveCollectionUiState,
-        saveCollection = detailViewModel::saveCollection,
-        navigationIconOnClick = navigationIconOnClick,
-        navigateToCollectionScreen = navigateToCollectionScreen,
+        scrollState = scrollState,
+        saveCollection = saveCollection,
         modifier = modifier
     )
 }
@@ -65,11 +60,12 @@ internal fun DetailRoute(
 internal fun DetailScreen(
     detailUiState: DetailUiState,
     saveCollectionUiState: SaveCollectionState,
+    scrollState: ScrollState,
     saveCollection: (CollectionModel) -> Unit,
-    navigationIconOnClick: () -> Unit,
-    navigateToCollectionScreen: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val localContext = LocalContext.current
+
     when (detailUiState) {
         is DetailUiState.IsLoading -> {
             Column(
@@ -80,102 +76,94 @@ internal fun DetailScreen(
             )
         }
         is DetailUiState.IsSuccess -> {
-            Scaffold(
-                modifier = modifier.fillMaxSize(),
-                topBar = {
-                    EatCenterAlignedAppBar(
-                        navigationIcon = EatIcons.arrowBackOutlined,
-                        navigationIconOnClick = navigationIconOnClick,
-                        actions = {
-                            IconButton(
-                                onClick = {
-                                    val collection = CollectionModel(
-                                        id = detailUiState.info.placeId,
-                                        name = detailUiState.info.placeName,
-                                        latLng = "${detailUiState.info.placeLatitude}, ${detailUiState.info.placeLongitude}",
-                                        imgUrl = detailUiState.info.placeImgUrl
-                                    )
-                                    saveCollection(collection)
-
-                                    when (saveCollectionUiState) {
-                                        is SaveCollectionState.IsLoading -> {  }
-                                        is SaveCollectionState.IsSuccess -> {  }
-                                        is SaveCollectionState.IsFailed -> {  }
-                                    }
-                                },
-                                content = {
-                                    Icon(
-                                        imageVector = EatIcons.plusOutlined,
-                                        contentDescription = "Add"
-                                    )
-                                }
-                            )
-                            IconButton(
-                                onClick = navigateToCollectionScreen,
-                                content = {
-                                    Icon(
-                                        imageVector = EatIcons.CollectionOutlined,
-                                        contentDescription = "Collection"
-                                    )
-                                }
-                            )
-                        }
-                    )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp)
+                    .verticalScroll(scrollState),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                val lat = detailUiState.info.placeLatitude
+                val lng = detailUiState.info.placeLongitude
+                val placeLatLng = LatLng(lat, lng)
+                val cameraPositionState = rememberCameraPositionState {
+                    position = CameraPosition.fromLatLngZoom(placeLatLng, 16f)
                 }
-            ) { paddingValues ->
-                Column(
+                EatImageLoader(
+                    imageModel = detailUiState.info.placeImgUrl,
                     modifier = modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .padding(10.dp),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    val lat = detailUiState.info.placeLatitude
-                    val lng = detailUiState.info.placeLongitude
-                    val placeLatLng = LatLng(lat, lng)
-                    val cameraPositionState = rememberCameraPositionState {
-                        position = CameraPosition.fromLatLngZoom(placeLatLng, 16f)
+                        .fillMaxWidth()
+                        .height(200.dp)
+                )
+                Text(
+                    text = detailUiState.info.placeName,
+                    fontWeight = FontWeight.Bold,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    style = EatTypography.titleLarge
+                )
+                Spacer(modifier = modifier.size(3.dp))
+                PlaceInfo(
+                    address = detailUiState.info.placeAddress,
+                    openTime = detailUiState.info.isPlaceOpenNow,
+                    phoneNumber = detailUiState.info.placePhoneNumber,
+                    ratingNumber = detailUiState.info.placeRating
+                )
+                Spacer(modifier = modifier.size(9.dp))
+                Text(
+                    text = "위치",
+                    fontWeight = FontWeight.SemiBold,
+                    style = EatTypography.titleMedium
+                )
+                GoogleMap(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .clip(EatShape.large),
+                    cameraPositionState = cameraPositionState,
+                    content = {
+                        Marker(
+                            state = MarkerState(position = placeLatLng),
+                            title = detailUiState.info.placeName
+                        )
                     }
-                    EatImageLoader(
-                        imageModel = detailUiState.info.placeImgUrl,
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                    )
-                    Text(
-                        text = detailUiState.info.placeName,
-                        fontWeight = FontWeight.Bold,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        style = EatTypography.titleLarge
-                    )
-                    Spacer(modifier = modifier.size(3.dp))
-                    PlaceInfo(
-                        address = detailUiState.info.placeAddress,
-                        openTime = detailUiState.info.isPlaceOpenNow,
-                        phoneNumber = detailUiState.info.placePhoneNumber,
-                        ratingNumber = detailUiState.info.placeRating
-                    )
-                    Spacer(modifier = modifier.size(9.dp))
-                    Text(
-                        text = "위치",
-                        fontWeight = FontWeight.SemiBold,
-                        style = EatTypography.titleMedium
-                    )
-                    GoogleMap(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .height(300.dp)
-                            .clip(EatShape.large),
-                        cameraPositionState = cameraPositionState,
-                        content = {
-                            Marker(
-                                state = MarkerState(position = placeLatLng),
-                                title = detailUiState.info.placeName
-                            )
-                        }
-                    )
+                )
+                Spacer(modifier = modifier.height(50.dp))
+
+                when (saveCollectionUiState) {
+                    SaveCollectionState.Init -> {
+                        EatTextButton(
+                            onClick = {
+                                val collectionModel = CollectionModel(
+                                    id = detailUiState.info.placeId,
+                                    name = detailUiState.info.placeName,
+                                    latLng = "${detailUiState.info.placeLatitude}, ${detailUiState.info.placeLongitude}",
+                                    imgUrl = detailUiState.info.placeImgUrl
+                                )
+
+                                saveCollection(collectionModel)
+                            },
+                            modifier = modifier.fillMaxWidth(),
+                            shape = EatShape.extraLarge,
+                            content = { Text(text = "저장하기", style = EatTypography.labelLarge) }
+                        )
+                    }
+                    SaveCollectionState.IsLoading -> { EatCircularProgressIndicator() }
+                    SaveCollectionState.IsSuccess -> {
+                        Toast.makeText(
+                            localContext,
+                            "저장에 성공하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is SaveCollectionState.IsFailed -> {
+                        Toast.makeText(
+                            localContext,
+                            "저장에 실패하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
@@ -192,7 +180,7 @@ internal fun DetailScreen(
 
 @DevicePreview
 @Composable
-fun PreviewDetailScreen() {
+fun PreviewDetailScreenWhenSuccess() {
     EatTheme {
         DetailScreen(
             detailUiState = DetailUiState
@@ -209,10 +197,22 @@ fun PreviewDetailScreen() {
                         placePhoneNumber = "02-3333-4444",
                     )
                 ),
-            saveCollectionUiState = SaveCollectionState.IsLoading,
-            saveCollection = { /*TODO*/ },
-            navigationIconOnClick = { /*TODO*/ },
-            navigateToCollectionScreen = { /*TODO*/ }
+            scrollState = rememberScrollState(),
+            saveCollectionUiState = SaveCollectionState.Init,
+            saveCollection = { _ -> }
+        )
+    }
+}
+
+@DevicePreview
+@Composable
+fun PreviewDetailScreenWhenFailed() {
+    EatTheme {
+        DetailScreen(
+            detailUiState = DetailUiState.IsFailed,
+            scrollState = rememberScrollState(),
+            saveCollectionUiState = SaveCollectionState.Init,
+            saveCollection = { _ -> }
         )
     }
 }

@@ -27,10 +27,8 @@ class DetailViewModel @Inject constructor(
     getPlaceDetailUseCase: GetPlaceDetailUseCase,
     private val saveUserCollectionUseCase: SaveCollectionUseCase
 ): ViewModel() {
-    private val _saveCollectionState =
-        MutableStateFlow<SaveCollectionState>(SaveCollectionState.IsLoading)
-    val saveCollectionState: StateFlow<SaveCollectionState>
-        get() = _saveCollectionState
+    private val _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
+    val saveCollectionState: StateFlow<SaveCollectionState> = _saveCollectionState
 
     val detailUiState = detailState(
         placeID = PlaceIdArgs(savedStateHandle).placeID,
@@ -47,6 +45,18 @@ class DetailViewModel @Inject constructor(
             saveUserCollectionUseCase = saveUserCollectionUseCase
         ).collect { state -> _saveCollectionState.value = state }
     }
+
+    private fun saveCollectionState(
+        collection: CollectionModel,
+        saveUserCollectionUseCase: SaveCollectionUseCase
+    ): Flow<SaveCollectionState> {
+        return saveUserCollectionUseCase(collection)
+            .onStart { _saveCollectionState.value = SaveCollectionState.IsLoading }
+            .catch { exception ->
+                _saveCollectionState.value = SaveCollectionState.IsFailed(exception.message)
+            }
+            .map { SaveCollectionState.IsSuccess }
+    }
 }
 
 private fun detailState(
@@ -61,16 +71,6 @@ private fun detailState(
         }
 }
 
-private fun saveCollectionState(
-    collection: CollectionModel,
-    saveUserCollectionUseCase: SaveCollectionUseCase
-): Flow<SaveCollectionState> {
-    return saveUserCollectionUseCase(collection)
-        .onStart { SaveCollectionState.IsLoading }
-        .catch { SaveCollectionState.IsFailed }
-        .map { SaveCollectionState.IsSuccess }
-}
-
 sealed interface DetailUiState {
     data object IsLoading: DetailUiState
 
@@ -80,9 +80,11 @@ sealed interface DetailUiState {
 }
 
 sealed interface SaveCollectionState {
+    data object Init: SaveCollectionState
+
     data object IsLoading: SaveCollectionState
 
     data object IsSuccess: SaveCollectionState
 
-    data object IsFailed: SaveCollectionState
+    data class IsFailed(val message: String? = null): SaveCollectionState
 }

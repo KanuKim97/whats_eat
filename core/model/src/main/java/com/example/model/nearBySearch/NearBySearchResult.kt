@@ -13,7 +13,7 @@ data class NearBySearchResult(
     val icon_mask_base_uri: String,
     val name: String,
     val opening_hours: OpeningHours,
-    val photos: List<Photo>,
+    val photos: List<Photo> = listOf(),
     val place_id: String,
     val plus_code: PlusCode,
     val price_level: Int,

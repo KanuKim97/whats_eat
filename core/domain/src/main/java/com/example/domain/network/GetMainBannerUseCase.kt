@@ -1,8 +1,7 @@
 package com.example.domain.network
 
 import com.example.data.repository.PlaceApiRepository
-import com.example.domain.BuildConfig
-import com.example.domain.entity.BannerItemsModel
+import com.example.model.nearBySearch.NearBySearchResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -10,23 +9,7 @@ import javax.inject.Inject
 class GetMainBannerUseCase @Inject constructor(
     private val network: PlaceApiRepository
 ) {
-    operator fun invoke(latLng: String): Flow<List<BannerItemsModel>> = network
+    operator fun invoke(latLng: String): Flow<List<NearBySearchResult>> = network
         .nearByPlace(latLng)
-        .map { resultList ->
-            resultList.map {
-                BannerItemsModel(
-                    placeID = it.place_id,
-                    name = it.name,
-                    photoRef = makePhotoRef(it.photos[0].photo_reference)
-                )
-            }.slice(0..resultList.lastIndex/3)
-        }
-
-    private fun makePhotoRef(photoRef: String): String {
-        return StringBuilder("https://maps.googleapis.com/maps/api/place/photo")
-            .append("?maxwidth=1000")
-            .append("&photo_reference=${photoRef}")
-            .append("&key=${BuildConfig.PLACE_API_KEY}")
-            .toString()
-    }
+        .map { resultList -> resultList.slice(0..resultList.lastIndex/3) }
 }
