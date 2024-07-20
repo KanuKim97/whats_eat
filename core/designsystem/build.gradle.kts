@@ -19,7 +19,8 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
+    implementation(libs.landscapist.glide)
 
     // Jetpack Compose
     val composeBom = platform(Dependencies.compose_BoM)
@@ -33,8 +34,6 @@ dependencies {
     implementation(Dependencies.compose_runtime_livedata)
     implementation(Dependencies.compose_navigation)
     implementation(Dependencies.compose_navigation_hilt)
-
-    implementation(Dependencies.landscapist_glide)
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)

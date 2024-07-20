@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
 
     implementation(project(Module.domain))
     implementation(project(Module.ui))
@@ -28,11 +28,11 @@ dependencies {
     implementation(project(Module.model))
 
     // Kotlin Coroutine
-    implementation(Dependencies.coroutine)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Dagger-Hilt DI(Dependency Injection) Tool
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
     // Jetpack Compose
     val composeBom = platform(Dependencies.compose_BoM)
@@ -48,7 +48,7 @@ dependencies {
     implementation(Dependencies.compose_navigation)
     implementation(Dependencies.compose_navigation_hilt)
 
-    implementation(Dependencies.landscapist_glide)
+    implementation(libs.landscapist.glide)
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)

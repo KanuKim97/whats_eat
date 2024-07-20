@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
 
     implementation(project(Module.designsystem))
     implementation(project(Module.model))
@@ -38,7 +38,7 @@ dependencies {
     implementation(Dependencies.compose_navigation)
     implementation(Dependencies.compose_navigation_hilt)
 
-    implementation(Dependencies.landscapist_glide)
+    implementation(libs.landscapist.glide)
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)

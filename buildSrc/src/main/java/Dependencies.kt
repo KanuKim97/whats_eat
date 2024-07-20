@@ -15,7 +15,6 @@ object Versions {
 
     const val compose = "1.5.3"
     const val compose_BoM = "2023.10.01"
-    const val compose_permission = "0.33.2-alpha"
     const val compose_navigation = "2.7.6"
     const val compose_hilt_navigation = "1.1.0"
     const val compose_maps = "2.11.4"
@@ -50,27 +49,12 @@ object Plugins {
     const val java_library = "java-library"
     const val ksp = "com.google.devtools.ksp"
     const val hilt = "com.google.dagger.hilt.android"
-    const val google_service = "com.google.gms.google-services"
     const val maps_secret_gradle_plugin = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
 }
 
 object Dependencies {
-    const val androidx_core = "androidx.core:core:${Versions.core}"
-    const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine}"
-
     const val gms_maps = "com.google.android.gms:play-services-maps:${Versions.play_gms_maps}"
     const val gms_location = "com.google.android.gms:play-services-location:${Versions.play_gms_location}"
-
-    const val landscapist_glide = "com.github.skydoves:landscapist-glide:${Versions.landscapist}"
-    const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofit2_gson_converter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
-
-    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
-    const val hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
-
-    const val room = "androidx.room:room-runtime:${Versions.room}"
-    const val room_compiler = "androidx.room:room-compiler:${Versions.room}"
-    const val room_ktx = "androidx.room:room-ktx:${Versions.room}"
 
     const val compose_BoM = "androidx.compose:compose-bom:${Versions.compose_BoM}"
     const val compose_activity = "androidx.activity:activity-compose:${Versions.activity_compose}"
@@ -81,7 +65,7 @@ object Dependencies {
     const val compose_navigation = "androidx.navigation:navigation-compose:${Versions.compose_navigation}"
     const val compose_navigation_hilt = "androidx.hilt:hilt-navigation-compose:${Versions.compose_hilt_navigation}"
     const val compose_maps = "com.google.maps.android:maps-compose:${Versions.compose_maps}"
-    const val compose_permission = "com.google.accompanist:accompanist-permissions:${Versions.compose_permission}"
+
     const val compose_ui = "androidx.compose.ui:ui"
     const val compose_ui_graphics = "androidx.compose.ui:ui-graphics"
     const val compose_ui_preview ="androidx.compose.ui:ui-tooling-preview"
@@ -98,8 +82,6 @@ object TestDependencies {
     const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espresso_core}"
     const val androidx_test_core_ktx = "androidx.test:core-ktx:${Versions.androidx_test_core}"
 
-    const val mockito_core = "org.mockito:mockito-core:${Versions.mockito_core}"
-    const val mockito_kotlin = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito_kotlin}"
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val mockk_android = "io.mockk:mockk-android:${Versions.mockk}"
 

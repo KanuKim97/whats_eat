@@ -18,7 +18,13 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
+
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 
     implementation(project(Module.common))
     implementation(project(Module.database))
@@ -30,10 +36,4 @@ dependencies {
     testImplementation(TestDependencies.junit)
     androidTestImplementation(TestDependencies.mockk_android)
     androidTestImplementation(TestDependencies.androidx_junit)
-
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
-
-    implementation(Dependencies.retrofit2)
-    implementation(Dependencies.retrofit2_gson_converter)
 }

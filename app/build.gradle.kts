@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
 
     val composeBom = platform(Dependencies.compose_BoM)
     implementation(composeBom)
@@ -60,8 +60,8 @@ dependencies {
     implementation(project(Module.detail))
     implementation(project(Module.collection))
 
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
     testImplementation(TestDependencies.junit)
     androidTestImplementation(TestDependencies.androidx_junit)

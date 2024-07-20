@@ -28,15 +28,14 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
+
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
     implementation(project(Module.common))
     implementation(project(Module.data))
     implementation(project(Module.model))
-
-    // Dagger-Hilt DI(Dependency Injection) Tool
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
 
     testImplementation(TestDependencies.junit)
     testImplementation (TestDependencies.mockk)

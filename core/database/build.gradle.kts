@@ -20,14 +20,14 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
 
-    implementation(Dependencies.room)
-    ksp(Dependencies.room_compiler)
-    implementation(Dependencies.room_ktx)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
 
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
     testImplementation(TestDependencies.junit)
     testImplementation(TestDependencies.androidx_test_core_ktx)

@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
 
     implementation(project(Module.common))
     implementation(project(Module.domain))
@@ -30,10 +30,10 @@ dependencies {
 
     implementation(Dependencies.gms_location)
 
-    implementation(Dependencies.coroutine)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
     val composeBom = platform(Dependencies.compose_BoM)
     implementation(composeBom)
@@ -48,8 +48,8 @@ dependencies {
     implementation(Dependencies.compose_navigation)
     implementation(Dependencies.compose_navigation_hilt)
 
-    implementation(Dependencies.landscapist_glide)
-    implementation(Dependencies.compose_permission)
+    implementation(libs.landscapist.glide)
+    implementation(libs.compose.permission)
 
     androidTestImplementation(composeBom)
     androidTestImplementation(Dependencies.compose_ui_junit4)
@@ -57,8 +57,6 @@ dependencies {
     debugImplementation(Dependencies.compose_ui_test_manifest)
 
     testImplementation(TestDependencies.junit)
-    testImplementation(TestDependencies.mockito_core)
-    testImplementation(TestDependencies.mockito_kotlin)
     androidTestImplementation(TestDependencies.androidx_junit)
     androidTestImplementation(TestDependencies.espresso_core)
 }

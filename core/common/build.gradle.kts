@@ -18,12 +18,12 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.androidx.core)
 
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
-    implementation(Dependencies.coroutine)
+    implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(TestDependencies.junit)
     androidTestImplementation(TestDependencies.androidx_junit)
