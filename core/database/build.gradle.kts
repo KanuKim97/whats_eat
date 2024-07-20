@@ -29,10 +29,10 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
-    testImplementation(TestDependencies.junit)
-    testImplementation(TestDependencies.androidx_test_core_ktx)
-    testImplementation(TestDependencies.androidx_test_junit_ktx)
-    testImplementation(TestDependencies.robolectric)
-    testImplementation(TestDependencies.coroutine_test)
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(libs.androidx.junit.ktx)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(TestDependencies.androidx_junit)
 }

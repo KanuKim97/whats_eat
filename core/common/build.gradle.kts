@@ -25,6 +25,6 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
 
-    testImplementation(TestDependencies.junit)
+    testImplementation(libs.junit)
     androidTestImplementation(TestDependencies.androidx_junit)
 }

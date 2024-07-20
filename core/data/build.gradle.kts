@@ -31,9 +31,9 @@ dependencies {
     implementation(project(Module.network))
     implementation(project(Module.model))
 
-    testImplementation(TestDependencies.mockk)
-    testImplementation(TestDependencies.coroutine_test)
-    testImplementation(TestDependencies.junit)
-    androidTestImplementation(TestDependencies.mockk_android)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.mockk.android)
     androidTestImplementation(TestDependencies.androidx_junit)
 }

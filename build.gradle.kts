@@ -4,8 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(ProjectClassPath.gms_google_service)
-        classpath(ProjectClassPath.maps_secrets_gradle)
+        classpath(libs.bundles.classpath.gms)
     }
 }
 

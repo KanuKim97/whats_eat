@@ -37,31 +37,19 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Jetpack Compose
-    val composeBom = platform(Dependencies.compose_BoM)
+    val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
-    implementation(Dependencies.compose_activity)
-    implementation(Dependencies.compose_ui)
-    implementation(Dependencies.compose_ui_graphics)
-    implementation(Dependencies.compose_ui_preview)
-    implementation(Dependencies.compose_material3)
-    implementation(Dependencies.compose_material_icons)
-    implementation(Dependencies.compose_runtime_livedata)
-    implementation(Dependencies.compose_runtime_lifecycle)
-    implementation(Dependencies.compose_navigation)
-    implementation(Dependencies.compose_navigation_hilt)
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.compose.lifecycle)
+    implementation(libs.bundles.gms)
 
     implementation(libs.landscapist.glide)
 
-    implementation(Dependencies.gms_location)
-    implementation(Dependencies.gms_maps)
-    implementation(Dependencies.compose_maps)
-
     androidTestImplementation(composeBom)
-    androidTestImplementation(Dependencies.compose_ui_junit4)
-    debugImplementation(Dependencies.compose_ui_tooling)
-    debugImplementation(Dependencies.compose_ui_test_manifest)
+    androidTestImplementation(libs.compose.ui.junit4)
+    debugImplementation(libs.bundles.compose.debug)
 
-    testImplementation(TestDependencies.junit)
+    testImplementation(libs.junit)
     androidTestImplementation(TestDependencies.androidx_junit)
     androidTestImplementation(TestDependencies.espresso_core)
 }

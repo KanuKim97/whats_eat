@@ -37,9 +37,9 @@ dependencies {
     implementation(project(Module.data))
     implementation(project(Module.model))
 
-    testImplementation(TestDependencies.junit)
-    testImplementation (TestDependencies.mockk)
-    androidTestImplementation (TestDependencies.mockk_android)
+    testImplementation(libs.junit)
+    testImplementation (libs.mockk)
+    androidTestImplementation (libs.mockk.android)
 
     androidTestImplementation(TestDependencies.androidx_junit)
 }

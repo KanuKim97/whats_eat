@@ -38,8 +38,8 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
-    testImplementation(TestDependencies.junit)
-    testImplementation(TestDependencies.coroutine_test)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(TestDependencies.androidx_junit)
 }
 
