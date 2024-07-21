@@ -90,7 +90,7 @@ mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "moc
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidx-junit" }
 androidx-test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidx-test-core" }
-androidx-text-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 [bundles]
 compose = ['compose-activity', 'compose-ui', 'compose-ui-graphics', 'compose-ui-tooling-preview', 'compose-material3', 'compose-material-icons', 'compose-navigation', 'compose-navigation-hilt']

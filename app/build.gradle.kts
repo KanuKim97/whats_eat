@@ -31,7 +31,7 @@ android {
         }
     }
 
-    composeOptions.kotlinCompilerExtensionVersion = Versions.compose
+    composeOptions.kotlinCompilerExtensionVersion = "1.5.3"
     buildFeatures.buildConfig = true
     buildFeatures.compose = true
 }
@@ -44,22 +44,21 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.compose.maps)
 
-    implementation(project(Module.detail))
-    implementation(project(Module.data))
-    implementation(project(Module.domain))
-    implementation(project(Module.model))
-    implementation(project(Module.designsystem))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
+    implementation(project(":core:designsystem"))
 
-    implementation(project(Module.home))
-    implementation(project(Module.detail))
-    implementation(project(Module.collection))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:collection"))
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
-    androidTestImplementation(TestDependencies.androidx_junit)
-    androidTestImplementation(TestDependencies.espresso_core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test.espresso)
 
     androidTestImplementation(composeBom)
     androidTestImplementation(libs.compose.ui.junit4)

@@ -3,8 +3,7 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id(Plugins.android_library)
-    id(Plugins.kotlin_android)
+    id("com.whats-eat.default-library")
     id(Plugins.ksp)
     id(Plugins.hilt)
 }
@@ -13,37 +12,25 @@ val apiKey = Properties().apply {
     load(FileInputStream(rootProject.file("local.properties")))
 }
 
-kotlin.jvmToolchain(AppConfig.jdkVersion)
-
 android {
     namespace = "com.example.domain"
-    compileSdk = AppConfig.compileSdk
-
-    defaultConfig {
-        minSdk = AppConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
-    }
+    defaultConfig.buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
     buildFeatures.buildConfig = true
 }
 
 dependencies {
-    implementation(libs.androidx.core)
-
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
-    implementation(project(Module.common))
-    implementation(project(Module.data))
-    implementation(project(Module.model))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
 
     testImplementation(libs.junit)
     testImplementation (libs.mockk)
     androidTestImplementation (libs.mockk.android)
 
-    androidTestImplementation(TestDependencies.androidx_junit)
+    androidTestImplementation(libs.androidx.junit)
 }
 
-fun getApiKey(
-    propertyKey: String
-): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
+fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
