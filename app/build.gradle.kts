@@ -1,24 +1,13 @@
 plugins {
-    id(Plugins.android_application)
-    id(Plugins.kotlin_android)
-    id(Plugins.ksp)
-    id(Plugins.hilt)
-    id(Plugins.maps_secret_gradle_plugin)
+    id("com.whats-eat.application")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
-
-kotlin.jvmToolchain(AppConfig.jdkVersion)
 
 android {
     namespace = "com.example.whats_eat"
-    compileSdk = AppConfig.compileSdk
 
-    defaultConfig {
-        applicationId = "com.example.whats_eat"
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
-    }
+    defaultConfig.applicationId = "com.example.whats_eat"
 
     buildTypes {
         release {
@@ -30,20 +19,9 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
-
-    composeOptions.kotlinCompilerExtensionVersion = "1.5.3"
-    buildFeatures.buildConfig = true
-    buildFeatures.compose = true
 }
 
 dependencies {
-    implementation(libs.androidx.core)
-
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
-    implementation(libs.bundles.compose)
-    implementation(libs.compose.maps)
-
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:model"))
@@ -55,12 +33,4 @@ dependencies {
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.test.espresso)
-
-    androidTestImplementation(composeBom)
-    androidTestImplementation(libs.compose.ui.junit4)
-    debugImplementation(libs.bundles.compose.debug)
 }

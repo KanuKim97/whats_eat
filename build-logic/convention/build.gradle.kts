@@ -33,5 +33,9 @@ gradlePlugin {
             id = "com.whats-eat.default-library"
             implementationClass = "DefaultLibraryPlugin"
         }
+        register("application") {
+            id = "com.whats-eat.application"
+            implementationClass = "ApplicationPlugin"
+        }
     }
 }

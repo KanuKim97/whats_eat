@@ -1,6 +1,6 @@
 plugins {
     id("com.whats-eat.feature")
-    id(Plugins.maps_secret_gradle_plugin)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {

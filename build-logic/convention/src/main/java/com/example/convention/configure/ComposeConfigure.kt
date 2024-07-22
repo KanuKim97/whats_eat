@@ -1,16 +1,10 @@
 package com.example.convention.configure
 
-import com.android.build.gradle.LibraryExtension
 import com.example.convention.util.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
-internal fun Project.composeConfigure(extension: LibraryExtension) {
-    extension.apply {
-        buildFeatures.compose = true
-        composeOptions.kotlinCompilerExtensionVersion = libs.findVersion("compose").get().requiredVersion
-    }
-
+internal fun Project.composeConfigure() {
     dependencies {
         // Jetpack Compose
         val composeBom = platform(libs.findLibrary("compose-bom").get())

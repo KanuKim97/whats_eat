@@ -1,7 +1,7 @@
 plugins {
     id("com.whats-eat.default-library")
-    id(Plugins.ksp)
-    id(Plugins.hilt)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 
