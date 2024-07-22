@@ -3,45 +3,34 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id(Plugins.android_library)
-    id(Plugins.kotlin_android)
-    id(Plugins.ksp)
-    id(Plugins.hilt)
+    id("com.whats-eat.default-library")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 val apiKey = Properties().apply {
     load(FileInputStream(rootProject.file("local.properties")))
 }
 
-kotlin.jvmToolchain(AppConfig.jdkVersion)
-
 android {
     namespace = "com.example.network"
-    compileSdk = AppConfig.compileSdk
 
-    defaultConfig {
-        minSdk = AppConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
-    }
+    defaultConfig.buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
     buildFeatures.buildConfig = true
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 
-    implementation(project(Module.model))
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
+    implementation(project(":core:model"))
 
-    implementation(Dependencies.retrofit2)
-    implementation(Dependencies.retrofit2_gson_converter)
-
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
-
-    testImplementation(TestDependencies.junit)
-    testImplementation(TestDependencies.coroutine_test)
-    androidTestImplementation(TestDependencies.androidx_junit)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
 }
 
 fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)

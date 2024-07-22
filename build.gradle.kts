@@ -4,16 +4,15 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(ProjectClassPath.gms_google_service)
-        classpath(ProjectClassPath.maps_secrets_gradle)
+        classpath(libs.bundles.classpath.gms)
     }
 }
 
 plugins {
-    id(Plugins.android_application) version Versions.gradle apply false
-    id(Plugins.android_library) version Versions.gradle apply false
-    id(Plugins.kotlin_android) version Versions.kotlin apply false
-    id(Plugins.ksp) version Versions.ksp apply false
-    id(Plugins.hilt) version Versions.hilt apply false
-    id(Plugins.kotlin_jvm) version Versions.kotlin apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
 }
