@@ -20,8 +20,11 @@ android {
 }
 
 dependencies {
+    implementation(libs.okhttp3)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
+    implementation(libs.retrofit.json.converter)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)

@@ -1,6 +1,6 @@
 package com.example.data.sampleDBdata
 
-import com.example.model.details.DetailedResult
+import com.example.model.network.detailPlace.DetailedResult
 import com.example.model.network.CurrentOpeningHours
 import com.example.model.network.Geometry
 import com.example.model.network.Location

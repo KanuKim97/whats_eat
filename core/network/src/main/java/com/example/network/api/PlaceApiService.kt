@@ -1,12 +1,12 @@
 package com.example.network.api
 
-import com.example.model.details.DetailedPlace
-import com.example.model.nearBySearch.NearBySearch
+import com.example.model.network.detailPlace.DetailedPlace
+import com.example.model.network.nearBySearch.NearBySearch
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface RetrofitPlaceAPI {
+interface PlaceApiService {
     @GET("nearbysearch/json")
     suspend fun getNearBySearch(
         @Query("location") latLng: String,

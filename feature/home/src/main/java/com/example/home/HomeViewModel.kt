@@ -2,11 +2,10 @@ package com.example.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.BuildConfig
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
-import com.example.domain.entity.BannerItemsModel
-import com.example.domain.entity.GridItemsModel
+import com.example.model.domain.BannerItemsModel
+import com.example.model.domain.GridItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -49,17 +48,7 @@ class HomeViewModel @Inject constructor(
             .onStart { _bannerUiState.value = BannerUiState.IsLoading }
             .catch { exception ->
                 _bannerUiState.value = BannerUiState.IsFailed(exception.message.toString())
-            }.map { result ->
-                val bannerItemsModel = result.map { item ->
-                    BannerItemsModel(
-                        placeID = item.place_id,
-                        name = item.name,
-                        photoRef = makePhotoRef(item.photos[0].photo_reference)
-                    )
-                }
-
-                BannerUiState.IsSuccess(bannerItemsModel)
-            }
+            }.map { result -> BannerUiState.IsSuccess(result) }
     }
 
     private fun itemGridUiState(
@@ -69,29 +58,7 @@ class HomeViewModel @Inject constructor(
         return getGridItemUseCase(latLng)
             .onStart { _itemGridUiState.value = ItemGridUiState.IsLoading }
             .catch { _itemGridUiState.value = ItemGridUiState.IsFailed }
-            .map { result ->
-                val itemGridList = result.map { item ->
-                    GridItemsModel(
-                        placeID = item.place_id,
-                        name = item.name,
-                        photoRef = if (item.photos != null) {
-                            makePhotoRef(item.photos[0].photo_reference)
-                        } else {
-                            ""
-                        }
-                    )
-                }
-
-                ItemGridUiState.IsSuccess(itemGridList)
-            }
-    }
-
-    private fun makePhotoRef(photoRef: String): String {
-        return StringBuilder("https://maps.googleapis.com/maps/api/place/photo")
-            .append("?maxwidth=1000")
-            .append("&photo_reference=${photoRef}")
-            .append("&key=${BuildConfig.PLACE_API_KEY}")
-            .toString()
+            .map { result -> ItemGridUiState.IsSuccess(result) }
     }
 
     override fun onCleared() {

@@ -1,7 +1,7 @@
 package com.example.data.mapper
 
 import com.example.database.model.CollectionEntity
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.CollectionModel
 
 fun entityToModelMapper(
     entity: CollectionEntity

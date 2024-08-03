@@ -1,6 +1,6 @@
 package com.example.data.sampleDBdata
 
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.CollectionModel
 
 val sampleCollectionData = listOf(
     CollectionModel(

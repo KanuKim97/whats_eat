@@ -28,8 +28,8 @@ import com.example.designsystem.component.EatTextButton
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.EatTypography
-import com.example.domain.entity.DetailedModel
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.DetailedModel
+import com.example.model.domain.CollectionModel
 import com.example.ui.PlaceInfo
 import com.example.ui.preview.DevicePreview
 import com.google.android.gms.maps.model.CameraPosition

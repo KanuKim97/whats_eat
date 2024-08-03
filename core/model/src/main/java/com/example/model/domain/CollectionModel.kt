@@ -1,4 +1,4 @@
-package com.example.model.collection
+package com.example.model.domain
 
 data class CollectionModel(
     val id: String,

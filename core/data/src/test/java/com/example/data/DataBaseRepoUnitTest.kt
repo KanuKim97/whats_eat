@@ -2,7 +2,7 @@ package com.example.data
 
 import com.example.data.repository.DatabaseRepository
 import com.example.data.sampleDBdata.sampleCollectionData
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.CollectionModel
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf

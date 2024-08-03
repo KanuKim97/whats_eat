@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.detail.navigation.PlaceIdArgs
 import com.example.domain.network.GetPlaceDetailUseCase
 import com.example.domain.database.SaveCollectionUseCase
-import com.example.model.collection.CollectionModel
-import com.example.domain.entity.DetailedModel
+import com.example.model.domain.CollectionModel
+import com.example.model.domain.DetailedModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -43,7 +43,9 @@ class DetailViewModel @Inject constructor(
         saveCollectionState(
             collection = content,
             saveUserCollectionUseCase = saveUserCollectionUseCase
-        ).collect { state -> _saveCollectionState.value = state }
+        ).collect { state ->
+            _saveCollectionState.value = state
+        }
     }
 
     private fun saveCollectionState(
@@ -66,9 +68,7 @@ private fun detailState(
     return getPlaceDetailUseCase(placeID)
         .onStart { DetailUiState.IsLoading }
         .catch { DetailUiState.IsFailed }
-        .map<DetailedModel, DetailUiState> { result ->
-            DetailUiState.IsSuccess(result)
-        }
+        .map<DetailedModel, DetailUiState> { result -> DetailUiState.IsSuccess(result) }
 }
 
 sealed interface DetailUiState {
