@@ -2,7 +2,6 @@ package com.example.network.api
 
 import com.example.model.network.detailPlace.DetailedPlace
 import com.example.model.network.nearBySearch.NearBySearch
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,12 +13,12 @@ interface PlaceApiService {
         @Query("type") type: String,
         @Query("language") language: String,
         @Query("key") apiKey: String
-    ): Response<NearBySearch>
+    ): NearBySearch
 
     @GET("details/json")
     suspend fun getDetails(
         @Query("place_id") placeID: String,
         @Query("language") language: String,
         @Query("key") apiKey: String
-    ): Response<DetailedPlace>
+    ): DetailedPlace
 }

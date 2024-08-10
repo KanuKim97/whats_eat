@@ -1,6 +1,7 @@
 package com.example.network.di
 
 import com.example.network.util.addDefaultTimeOut
+import com.example.network.util.httpLoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +15,6 @@ object OkHttpModule {
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
         .newBuilder()
         .addDefaultTimeOut()
+        .addInterceptor(httpLoggingInterceptor)
         .build()
 }

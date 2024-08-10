@@ -67,7 +67,11 @@ private fun detailState(
 ): Flow<DetailUiState> {
     return getPlaceDetailUseCase(placeID)
         .onStart { DetailUiState.IsLoading }
-        .catch { DetailUiState.IsFailed }
+        .catch { exception ->
+            exception.printStackTrace()
+
+            DetailUiState.IsFailed
+        }
         .map<DetailedModel, DetailUiState> { result -> DetailUiState.IsSuccess(result) }
 }
 

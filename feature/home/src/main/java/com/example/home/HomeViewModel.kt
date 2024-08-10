@@ -79,11 +79,11 @@ sealed interface BannerUiState {
 }
 
 sealed interface ItemGridUiState {
-    data class IsSuccess(val item: List<GridItemsModel>?): ItemGridUiState
-
     data object Init: ItemGridUiState
 
     data object IsLoading: ItemGridUiState
+
+    data class IsSuccess(val item: List<GridItemsModel>?): ItemGridUiState
 
     data object IsFailed: ItemGridUiState
 }
