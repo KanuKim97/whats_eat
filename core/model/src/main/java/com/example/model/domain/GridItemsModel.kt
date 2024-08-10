@@ -1,4 +1,4 @@
-package com.example.domain.entity
+package com.example.model.domain
 
 data class GridItemsModel(
     val placeID: String,

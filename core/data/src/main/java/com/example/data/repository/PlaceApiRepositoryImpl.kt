@@ -1,8 +1,8 @@
 package com.example.data.repository
 
 import com.example.common.IODispatcher
-import com.example.model.nearBySearch.NearBySearchResult
-import com.example.model.details.DetailedResult
+import com.example.model.network.nearBySearch.NearBySearchResult
+import com.example.model.network.detailPlace.DetailedResult
 import com.example.network.PlaceDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

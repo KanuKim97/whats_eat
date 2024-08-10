@@ -1,7 +1,11 @@
 package com.example.model.network
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CurrentOpeningHours(
-    val open_now: Boolean,
-    val periods: List<Period>,
-    val weekday_text: List<String>
+    @SerialName("open_now") val openNow: Boolean,
+    @SerialName("periods") val periods: List<Period>,
+    @SerialName("weekday_text") val weekdayText: List<String>
 )

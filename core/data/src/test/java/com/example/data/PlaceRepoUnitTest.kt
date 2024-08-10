@@ -2,8 +2,8 @@ package com.example.data
 
 import com.example.data.repository.PlaceApiRepository
 import com.example.data.sampleDBdata.testSampleDetailPlace
-import com.example.model.details.DetailedResult
-import com.example.model.nearBySearch.NearBySearchResult
+import com.example.model.network.detailPlace.DetailedResult
+import com.example.model.network.nearBySearch.NearBySearchResult
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk

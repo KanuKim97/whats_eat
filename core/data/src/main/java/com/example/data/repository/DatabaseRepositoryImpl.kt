@@ -4,7 +4,7 @@ import com.example.common.IODispatcher
 import com.example.data.mapper.entityToModelMapper
 import com.example.data.mapper.modelToEntityMapper
 import com.example.database.dao.EatDao
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.CollectionModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

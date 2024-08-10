@@ -1,8 +1,8 @@
 package com.example.domain
 
-import com.example.domain.entity.BannerItemsModel
-import com.example.domain.entity.DetailedModel
-import com.example.domain.entity.GridItemsModel
+import com.example.model.domain.BannerItemsModel
+import com.example.model.domain.DetailedModel
+import com.example.model.domain.GridItemsModel
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
 import com.example.domain.network.GetPlaceDetailUseCase
