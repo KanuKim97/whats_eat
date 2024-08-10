@@ -1,15 +1,9 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.io.FileInputStream
-import java.util.Properties
 
 plugins {
     id("com.whats-eat.default-library")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-}
-
-val apiKey = Properties().apply {
-    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
@@ -38,4 +32,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
 }
 
-fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
+fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir, providers).getProperty(propertyKey)

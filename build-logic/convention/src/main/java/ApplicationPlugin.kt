@@ -12,6 +12,7 @@ class ApplicationPlugin: Plugin<Project> {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
                 apply("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+                apply("org.jetbrains.kotlin.plugin.compose")
             }
 
             extensions.configure<BaseAppModuleExtension> {

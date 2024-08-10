@@ -6,7 +6,6 @@ plugins {
 
 android {
     namespace = "com.example.whats_eat"
-
     defaultConfig.applicationId = "com.example.whats_eat"
 
     buildTypes {

@@ -20,7 +20,6 @@ internal fun Project.applicationConfigure(extension: BaseAppModuleExtension) {
             versionName = Constant.VERSION_NAME
         }
 
-        composeOptions.kotlinCompilerExtensionVersion = libs.findVersion("compose").get().requiredVersion
         buildFeatures.apply {
             buildConfig = true
             compose = true

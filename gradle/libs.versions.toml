@@ -1,12 +1,11 @@
 [versions]
 core = "1.13.1"
-agp = "8.2.2"
-kotlin = "1.9.10"
-kotlin-ksp = "1.9.10-1.0.13"
+agp = "8.5.2"
+kotlin = "2.0.0"
+kotlin-ksp = "2.0.0-1.0.23"
 kotlin-coroutine = "1.8.1"
 hilt = "2.50"
 logging-interceptor = "4.11.0"
-okhttp-urlconnection = "4.9.1"
 room = "2.6.1"
 retrofit = "2.9.0"
 okhttp3 = "4.12.0"
@@ -14,7 +13,6 @@ kotlinx-serialization-json = "1.6.3"
 retrofit2-kotlinx-serialization-converter = "1.0.0"
 
 landscapist = "2.2.10"
-compose = "1.5.3"
 compose-bom = "2024.06.00"
 compose-activity = "1.9.1"
 compose-lifecycle = "2.8.4"
@@ -43,6 +41,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
 [libraries]
