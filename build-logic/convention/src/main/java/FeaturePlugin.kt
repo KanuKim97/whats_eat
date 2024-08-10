@@ -12,6 +12,7 @@ class FeaturePlugin: Plugin<Project> {
                 apply("org.jetbrains.kotlin.android")
                 apply("com.google.devtools.ksp")
                 apply("com.google.dagger.hilt.android")
+                apply("org.jetbrains.kotlin.plugin.compose")
             }
 
             extensions.configure<LibraryExtension> {

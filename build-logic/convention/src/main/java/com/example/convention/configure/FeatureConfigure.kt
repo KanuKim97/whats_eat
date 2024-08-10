@@ -18,7 +18,7 @@ internal fun Project.featureConfigure(extension: LibraryExtension) {
 
         kotlinExtension.jvmToolchain(17)
 
-        composeOptions.kotlinCompilerExtensionVersion = libs.findVersion("compose").get().requiredVersion
+        buildFeatures.buildConfig = true
         buildFeatures.compose = true
     }
 

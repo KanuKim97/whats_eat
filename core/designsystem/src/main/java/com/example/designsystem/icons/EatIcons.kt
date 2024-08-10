@@ -1,8 +1,7 @@
 package com.example.designsystem.icons
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.CollectionsBookmark
 import androidx.compose.material.icons.outlined.Home
@@ -25,8 +24,7 @@ object EatIcons {
     val WarningOutlined = Icons.Outlined.SecurityUpdateWarning
 
     val CloseOutlined = Icons.Outlined.Close
-    val arrowBackOutlined = Icons.Outlined.ArrowBack
-    val plusOutlined = Icons.Outlined.Add
+    val arrowBackOutlined = Icons.AutoMirrored.Outlined.ArrowBack
 
     val starBordered = Icons.Rounded.StarRate
     val locationOnBordered = Icons.Rounded.LocationOn
