@@ -1,6 +1,10 @@
 package com.example.model.network
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PlusCode(
-    val compound_code: String,
-    val global_code: String
+    @SerialName("compound_code") val compoundCode: String,
+    @SerialName("global_code") val globalCode: String
 )

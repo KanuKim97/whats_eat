@@ -1,6 +1,6 @@
 package com.example.network
 
-import com.example.network.api.RetrofitPlaceAPI
+import com.example.network.api.PlaceApiService
 import com.example.network.constant.Constants
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
  * Network local unit test, which will execute on the development machine (host).
  */
 class NetworkUnitTest {
-    private lateinit var network: RetrofitPlaceAPI
+    private lateinit var network: PlaceApiService
 
     // Default Latitude, Longitude
     private val defaultLatLng = "37.594321,127.0329403"
@@ -40,7 +40,7 @@ class NetworkUnitTest {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        network = retrofitInstance.create(RetrofitPlaceAPI::class.java)
+        network = retrofitInstance.create(PlaceApiService::class.java)
     }
 
 

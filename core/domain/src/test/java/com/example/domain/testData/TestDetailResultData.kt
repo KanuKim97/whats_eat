@@ -1,6 +1,6 @@
 package com.example.domain.testData
 
-import com.example.domain.entity.DetailedModel
+import com.example.model.domain.DetailedModel
 
 
 val sampleDetailedModel = DetailedModel(

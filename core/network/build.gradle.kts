@@ -14,13 +14,18 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
+
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.logging.interceptor)
+
     implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit.json.converter)
+    implementation(libs.kotlinx.serialization.json)
+
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
-
-    implementation(project(":core:model"))
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
