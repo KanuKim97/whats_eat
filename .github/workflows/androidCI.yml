@@ -24,18 +24,18 @@ jobs:
     - name: Android SDK 설정
       uses: android-actions/setup-android@v3
 
+    - name: Gradlew 실행 권한 승인
+      run: chmod +x gradlew
+
     - name: Gradle package 캐싱
       uses: actions/cache@v3
       with: 
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/build-logic/**/*.kt') }}
         restore-keys: ${{ runner.os }}-gradle-
       
-    - name: Gradlew 실행 권한 승인
-      run: chmod +x gradlew
-
     - name: local.properties 생성
       env: 
         LOCAL_PROPERTIES: "${{ secrets.LOCAL_PROPERTIES }}"

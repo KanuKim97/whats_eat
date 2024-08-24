@@ -40,6 +40,7 @@ fun HomeBanner(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (bannerUiState) {
+            is BannerUiState.Init -> {  }
             is BannerUiState.IsLoading -> { EatCircularProgressIndicator() }
             is BannerUiState.IsSuccess -> {
                 val pagerState = rememberPagerState { bannerUiState.banner?.lastIndex ?: 0 }
@@ -50,9 +51,7 @@ fun HomeBanner(
                 ) { index ->
                     BannerCard(
                         banner = bannerUiState.banner?.get(index),
-                        bannerOnClick = {
-                            bannerOnClick(bannerUiState.banner?.get(index)?.placeID ?: "")
-                        }
+                        bannerOnClick = { bannerOnClick(bannerUiState.banner?.get(index)?.placeID ?: "") }
                     )
                 }
             }

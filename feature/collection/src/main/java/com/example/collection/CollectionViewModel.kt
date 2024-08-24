@@ -3,7 +3,7 @@ package com.example.collection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.database.ReadAllCollectionUseCase
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.CollectionModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow

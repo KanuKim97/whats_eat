@@ -25,7 +25,19 @@ private val lightColorTheme = lightColorScheme(
     inverseSurface = Black
 )
 
-private val darkColorTheme = darkColorScheme()
+private val darkColorTheme = darkColorScheme(
+    primary = LogoColor,
+    onPrimary = Black,
+    primaryContainer = BrightBlue,
+    onPrimaryContainer = BrandBlue,
+    secondary = Brand,
+    onSecondary = Black,
+    secondaryContainer = BrightBlue,
+    onSecondaryContainer = BrandBlue,
+    background = Black,
+    surface = Black,
+    inverseSurface = White
+)
 
 @Composable
 fun EatTheme(
