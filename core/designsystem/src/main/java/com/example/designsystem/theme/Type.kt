@@ -5,11 +5,11 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.designsystem.font.NotoSansKR
+import com.example.designsystem.font.pretendard
 
 val EatTypography = Typography(
     displayLarge = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 57.sp,
         lineHeight = 64.sp,
@@ -17,7 +17,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     displayMedium = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 45.sp,
         lineHeight = 52.sp,
@@ -25,7 +25,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     displaySmall = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
         lineHeight = 44.sp,
@@ -33,7 +33,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     headlineLarge = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 32.sp,
         lineHeight = 40.sp,
@@ -41,7 +41,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     headlineMedium = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 28.sp,
         lineHeight = 36.sp,
@@ -49,7 +49,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     headlineSmall = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         lineHeight = 32.sp,
@@ -57,7 +57,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     titleLarge = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         lineHeight = 28.sp,
@@ -65,7 +65,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     titleMedium = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -73,7 +73,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     titleSmall = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -81,7 +81,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     bodyLarge = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -89,7 +89,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     bodyMedium = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -97,7 +97,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     bodySmall = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -105,7 +105,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     labelLarge = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -113,7 +113,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     labelMedium = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -121,7 +121,7 @@ val EatTypography = Typography(
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     labelSmall = TextStyle(
-        fontFamily = NotoSansKR,
+        fontFamily = pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 11.sp,
         lineHeight = 16.sp,
