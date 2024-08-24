@@ -11,12 +11,12 @@ data class Viewport(
 
 @Serializable
 data class Southwest(
-    @SerialName("lat") val lat: Double,
-    @SerialName("lng") val lng: Double
+    @SerialName("lat") val lat: Double? = 0.0,
+    @SerialName("lng") val lng: Double? = 0.0
 )
 
 @Serializable
 data class Northeast(
-    @SerialName("lat") val lat: Double,
-    @SerialName("lng") val lng: Double
+    @SerialName("lat") val lat: Double? = 0.0,
+    @SerialName("lng") val lng: Double? = 0.0
 )
