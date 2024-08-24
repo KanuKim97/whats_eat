@@ -16,8 +16,8 @@ class GetMainBannerUseCase @Inject constructor(
         .map { result ->
             result.map {
                 BannerItemsModel(
-                    placeID = it.placeId,
-                    name = it.name,
+                    placeID = it.placeId ?: "",
+                    name = it.name ?: "",
                     photoRef = it.photos[0].getFullPhotoReference(BuildConfig.PLACE_API_KEY)
                 )
             }

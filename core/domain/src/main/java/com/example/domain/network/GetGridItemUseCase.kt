@@ -16,8 +16,8 @@ class GetGridItemUseCase @Inject constructor(
         .map { result ->
             result.map {
                 GridItemsModel(
-                    placeID = it.placeId,
-                    name = it.name,
+                    placeID = it.placeId ?: "",
+                    name = it.name ?: "",
                     photoRef = if (it.photos.isNotEmpty()) {
                         it.photos[0].getFullPhotoReference(BuildConfig.PLACE_API_KEY)
                     } else {

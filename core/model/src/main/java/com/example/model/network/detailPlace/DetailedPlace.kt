@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DetailedPlace(
     @SerialName("status") val status : String,
-    @SerialName("result") val result : DetailedResult
+    @SerialName("result") val result : DetailedResult? = null
 )
 
 @Serializable
