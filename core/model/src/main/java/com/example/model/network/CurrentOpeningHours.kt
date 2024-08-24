@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CurrentOpeningHours(
-    @SerialName("open_now") val openNow: Boolean,
-    @SerialName("periods") val periods: List<Period>,
-    @SerialName("weekday_text") val weekdayText: List<String>
+    @SerialName("open_now") val openNow: Boolean? = null,
+    @SerialName("periods") val periods: List<Period>? = emptyList(),
+    @SerialName("weekday_text") val weekdayText: List<String>? = emptyList()
 )

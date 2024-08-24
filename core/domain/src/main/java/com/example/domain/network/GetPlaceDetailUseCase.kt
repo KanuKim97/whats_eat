@@ -16,7 +16,9 @@ class GetPlaceDetailUseCase @Inject constructor(
             DetailedModel(
                 placeId = value?.placeId.toString(),
                 placeName = value?.name.toString(),
-                placeImgUrl = value?.photos?.get(0)?.getFullPhotoReference(BuildConfig.PLACE_API_KEY) ?: "",
+                placeImgUrl = value?.photos?.let { photos ->
+                    if (photos.isNotEmpty()) photos[0].getFullPhotoReference(BuildConfig.PLACE_API_KEY) else ""
+                } ?: "",
                 placeRating = value?.rating.toString(),
                 placeAddress = value?.formattedAddress.toString(),
                 placePhoneNumber = value?.formattedPhoneNumber.toString(),

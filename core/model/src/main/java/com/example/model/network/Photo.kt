@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Photo(
-    @SerialName("height") val height: Int,
-    @SerialName("html_attributions") val htmlAttributions: List<String>,
-    @SerialName("photo_reference") val photoReference: String = "",
-    @SerialName("width") val width: Int
+    @SerialName("height") val height: Int? = 0,
+    @SerialName("width") val width: Int? = 0,
+    @SerialName("html_attributions") val htmlAttributions: List<String>? = emptyList(),
+    @SerialName("photo_reference") val photoReference: String = ""
 ) {
     fun getFullPhotoReference(apiKey: String): String {
         return StringBuilder("https://maps.googleapis.com/maps/api/place/photo")

@@ -11,14 +11,14 @@ data class Period(
 
 @Serializable
 data class Open(
-    @SerialName("date") val date: String,
-    @SerialName("day") val day: Int,
-    @SerialName("time") val time: String
+    @SerialName("date") val date: String? = "",
+    @SerialName("day") val day: Int? = 0,
+    @SerialName("time") val time: String? = ""
 )
 
 @Serializable
 data class Close(
-    @SerialName("date") val date: String,
-    @SerialName("day") val day: Int,
-    @SerialName("time") val time: String
+    @SerialName("date") val date: String? = "",
+    @SerialName("day") val day: Int? = 0,
+    @SerialName("time") val time: String? = ""
 )
