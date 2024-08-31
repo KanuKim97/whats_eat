@@ -3,8 +3,8 @@ package com.example.domain
 import com.example.domain.database.ReadAllCollectionUseCase
 import com.example.domain.database.ReadCollectionUseCase
 import com.example.domain.database.SaveCollectionUseCase
-import com.example.domain.testData.testCollectionModelList
-import com.example.model.collection.CollectionModel
+import com.example.domain.DomainLayerDummyData.DUMMY_COLLECTION_DATA
+import com.example.model.domain.CollectionModel
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -23,22 +23,22 @@ class DomainLayerDataBasePackageUnitTest {
 
     @Before
     fun init_UseCases() {
-        every { saveCollectionUseCase(testCollectionModelList[0]) } returns flowOf(Result.success(Unit))
-        every { saveCollectionUseCase(testCollectionModelList[1]) } returns flowOf(Result.success(Unit))
-        every { saveCollectionUseCase(testCollectionModelList[2]) } returns flowOf(Result.success(Unit))
+        every { saveCollectionUseCase(DUMMY_COLLECTION_DATA[0]) } returns flowOf(Result.success(Unit))
+        every { saveCollectionUseCase(DUMMY_COLLECTION_DATA[1]) } returns flowOf(Result.success(Unit))
+        every { saveCollectionUseCase(DUMMY_COLLECTION_DATA[2]) } returns flowOf(Result.success(Unit))
 
-        every { readCollectionUseCase("1") } returns flowOf(testCollectionModelList[0])
-        every { readCollectionUseCase("2") } returns flowOf(testCollectionModelList[1])
-        every { readCollectionUseCase("3") } returns flowOf(testCollectionModelList[2])
+        every { readCollectionUseCase("1") } returns flowOf(DUMMY_COLLECTION_DATA[0])
+        every { readCollectionUseCase("2") } returns flowOf(DUMMY_COLLECTION_DATA[1])
+        every { readCollectionUseCase("3") } returns flowOf(DUMMY_COLLECTION_DATA[2])
 
-        every { readAllCollectionUseCase() } returns flowOf(testCollectionModelList)
+        every { readAllCollectionUseCase() } returns flowOf(DUMMY_COLLECTION_DATA)
     }
 
     @Test
     fun `test collection list index 0 should be return success from saveCollectionUseCase`() = runBlocking {
         var saveResult: Result<Unit>? = null
 
-        saveCollectionUseCase(testCollectionModelList[0]).collect { result -> saveResult = result }
+        saveCollectionUseCase(DUMMY_COLLECTION_DATA[0]).collect { result -> saveResult = result }
         assertEquals(saveResult, Result.success(Unit))
     }
 
@@ -46,7 +46,7 @@ class DomainLayerDataBasePackageUnitTest {
     fun `test collection list index 1 should be return success from saveCollectionUseCase`() = runBlocking {
         var saveResult: Result<Unit>? = null
 
-        saveCollectionUseCase(testCollectionModelList[1]).collect { result -> saveResult = result }
+        saveCollectionUseCase(DUMMY_COLLECTION_DATA[1]).collect { result -> saveResult = result }
         assertEquals(saveResult, Result.success(Unit))
     }
 
@@ -54,7 +54,7 @@ class DomainLayerDataBasePackageUnitTest {
     fun `test collection list index 2 should be return success from saveCollectionUseCase`() = runBlocking {
         var saveResult: Result<Unit>? = null
 
-        saveCollectionUseCase(testCollectionModelList[2]).collect { result -> saveResult = result }
+        saveCollectionUseCase(DUMMY_COLLECTION_DATA[2]).collect { result -> saveResult = result }
         assertEquals(saveResult, Result.success(Unit))
     }
 
@@ -64,11 +64,11 @@ class DomainLayerDataBasePackageUnitTest {
 
         readCollectionUseCase("1").collect { result -> data = result }
 
-        assertEquals(data, testCollectionModelList[0])
-        assertEquals(data?.id, testCollectionModelList[0].id)
-        assertEquals(data?.name, testCollectionModelList[0].name)
-        assertEquals(data?.latLng, testCollectionModelList[0].latLng)
-        assertEquals(data?.imgUrl, testCollectionModelList[0].imgUrl)
+        assertEquals(data, DUMMY_COLLECTION_DATA[0])
+        assertEquals(data?.id, DUMMY_COLLECTION_DATA[0].id)
+        assertEquals(data?.name, DUMMY_COLLECTION_DATA[0].name)
+        assertEquals(data?.latLng, DUMMY_COLLECTION_DATA[0].latLng)
+        assertEquals(data?.imgUrl, DUMMY_COLLECTION_DATA[0].imgUrl)
     }
     @Test
     fun `place id 2 should be return testCollection index 0 data from readCollectionUseCase`() = runBlocking {
@@ -76,11 +76,11 @@ class DomainLayerDataBasePackageUnitTest {
 
         readCollectionUseCase("2").collect { result -> data = result }
 
-        assertEquals(data, testCollectionModelList[1])
-        assertEquals(data?.id, testCollectionModelList[1].id)
-        assertEquals(data?.name, testCollectionModelList[1].name)
-        assertEquals(data?.latLng, testCollectionModelList[1].latLng)
-        assertEquals(data?.imgUrl, testCollectionModelList[1].imgUrl)
+        assertEquals(data, DUMMY_COLLECTION_DATA[1])
+        assertEquals(data?.id, DUMMY_COLLECTION_DATA[1].id)
+        assertEquals(data?.name, DUMMY_COLLECTION_DATA[1].name)
+        assertEquals(data?.latLng, DUMMY_COLLECTION_DATA[1].latLng)
+        assertEquals(data?.imgUrl, DUMMY_COLLECTION_DATA[1].imgUrl)
     }
 
     @Test
@@ -89,11 +89,11 @@ class DomainLayerDataBasePackageUnitTest {
 
             readCollectionUseCase("3").collect { result -> data = result }
 
-            assertEquals(data, testCollectionModelList[2])
-            assertEquals(data?.id, testCollectionModelList[2].id)
-            assertEquals(data?.name, testCollectionModelList[2].name)
-            assertEquals(data?.latLng, testCollectionModelList[2].latLng)
-            assertEquals(data?.imgUrl, testCollectionModelList[2].imgUrl)
+            assertEquals(data, DUMMY_COLLECTION_DATA[2])
+            assertEquals(data?.id, DUMMY_COLLECTION_DATA[2].id)
+            assertEquals(data?.name, DUMMY_COLLECTION_DATA[2].name)
+            assertEquals(data?.latLng, DUMMY_COLLECTION_DATA[2].latLng)
+            assertEquals(data?.imgUrl, DUMMY_COLLECTION_DATA[2].imgUrl)
         }
 
     @Test
@@ -101,7 +101,7 @@ class DomainLayerDataBasePackageUnitTest {
         var data: List<CollectionModel> = listOf()
 
         readAllCollectionUseCase().collect { result -> data = result }
-        assertEquals(data, testCollectionModelList)
+        assertEquals(data, DUMMY_COLLECTION_DATA)
     }
 
     @After
