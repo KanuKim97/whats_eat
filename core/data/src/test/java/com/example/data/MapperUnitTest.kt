@@ -3,7 +3,7 @@ package com.example.data
 import com.example.data.mapper.entityToModelMapper
 import com.example.data.mapper.modelToEntityMapper
 import com.example.database.model.CollectionEntity
-import com.example.model.collection.CollectionModel
+import com.example.model.domain.CollectionModel
 import org.junit.Test
 import org.junit.Assert.assertEquals
 

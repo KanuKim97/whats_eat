@@ -1,50 +1,30 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.io.FileInputStream
-import java.util.Properties
 
 plugins {
-    id(Plugins.android_library)
-    id(Plugins.kotlin_android)
-    id(Plugins.ksp)
-    id(Plugins.hilt)
+    id("com.whats-eat.default-library")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
-
-val apiKey = Properties().apply {
-    load(FileInputStream(rootProject.file("local.properties")))
-}
-
-kotlin.jvmToolchain(AppConfig.jdkVersion)
 
 android {
     namespace = "com.example.domain"
-    compileSdk = AppConfig.compileSdk
-
-    defaultConfig {
-        minSdk = AppConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
-    }
+    defaultConfig.buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
     buildFeatures.buildConfig = true
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
-    implementation(project(Module.common))
-    implementation(project(Module.data))
-    implementation(project(Module.model))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
 
-    // Dagger-Hilt DI(Dependency Injection) Tool
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    testImplementation(libs.junit)
+    testImplementation (libs.mockk)
+    androidTestImplementation (libs.mockk.android)
 
-    testImplementation(TestDependencies.junit)
-    testImplementation (TestDependencies.mockk)
-    androidTestImplementation (TestDependencies.mockk_android)
-
-    androidTestImplementation(TestDependencies.androidx_junit)
+    androidTestImplementation(libs.androidx.junit)
 }
 
-fun getApiKey(
-    propertyKey: String
-): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
+fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir, providers).getProperty(propertyKey)

@@ -1,38 +1,26 @@
 plugins {
-    id(Plugins.android_library)
-    id(Plugins.kotlin_android)
-    id(Plugins.ksp)
-    id(Plugins.hilt)
+    id("com.whats-eat.default-library")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
-
-kotlin.jvmToolchain(AppConfig.jdkVersion)
 
 android {
     namespace = "com.example.database"
-    compileSdk = AppConfig.compileSdk
-
-    defaultConfig {
-        minSdk = AppConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
 
-    implementation(Dependencies.room)
-    ksp(Dependencies.room_compiler)
-    implementation(Dependencies.room_ktx)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
-
-    testImplementation(TestDependencies.junit)
-    testImplementation(TestDependencies.androidx_test_core_ktx)
-    testImplementation(TestDependencies.androidx_test_junit_ktx)
-    testImplementation(TestDependencies.robolectric)
-    testImplementation(TestDependencies.coroutine_test)
-    androidTestImplementation(TestDependencies.androidx_junit)
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(libs.androidx.junit.ktx)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
 }

@@ -6,28 +6,23 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.collection.navigation.collectionScreen
-import com.example.collection.navigation.toCollectionScreen
 import com.example.detail.navigation.detailScreen
 import com.example.detail.navigation.onNavigateDetail
 import com.example.home.navigation.homeRoute
 import com.example.home.navigation.homeScreen
 
 @Composable
-fun WhatsEatNavHost(navController: NavHostController) {
+fun WhatsEatNavHost(
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
         startDestination = homeRoute,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
-        homeScreen(
-            navigateToDetail = { id -> navController.onNavigateDetail(id) },
-            navigateToCollection = { navController.toCollectionScreen() }
-        )
-        collectionScreen(navigationIconClick = { navController.popBackStack() })
-        detailScreen(
-            navigationIconOnClick = { navController.popBackStack() },
-            navigateToCollectionScreen = { navController.toCollectionScreen() }
-        )
+        homeScreen(navigateToDetail = { id -> navController.onNavigateDetail(id) })
+        collectionScreen()
+        detailScreen()
     }
 }

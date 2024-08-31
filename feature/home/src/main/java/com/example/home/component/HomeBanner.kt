@@ -1,7 +1,6 @@
 package com.example.home.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,12 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatHorizontalPager
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.Gray
 import com.example.designsystem.theme.EatTypography
 import com.example.home.BannerUiState
 import com.example.ui.BannerCard
@@ -40,28 +36,36 @@ fun HomeBanner(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (bannerUiState) {
+            is BannerUiState.Init -> {  }
             is BannerUiState.IsLoading -> { EatCircularProgressIndicator() }
             is BannerUiState.IsSuccess -> {
-                val pagerState = rememberPagerState { bannerUiState.banner?.lastIndex ?: 0 }
+                if (bannerUiState.banner.isNullOrEmpty()) {
+                    Box(
+                        modifier = modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "주변에 음식점이 없습니다!",
+                            style = EatTypography.bodyMedium
+                        )
+                    }
+                } else {
+                    val pagerState = rememberPagerState { bannerUiState.banner.lastIndex }
 
-                EatHorizontalPager(
-                    pagerState = pagerState,
-                    modifier = modifier.fillMaxSize()
-                ) { index ->
-                    BannerCard(
-                        banner = bannerUiState.banner?.get(index),
-                        bannerOnClick = {
-                            bannerOnClick(bannerUiState.banner?.get(index)?.placeID ?: "")
-                        }
-                    )
+                    EatHorizontalPager(
+                        pagerState = pagerState,
+                        modifier = modifier.fillMaxSize()
+                    ) { index ->
+                        BannerCard(
+                            banner = bannerUiState.banner[index],
+                            bannerOnClick = { bannerOnClick(bannerUiState.banner[index].placeID) }
+                        )
+                    }
                 }
             }
             is BannerUiState.IsFailed -> {
                 Box(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .clip(shape = EatShape.large)
-                        .background(Gray),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
                     content = {
                         Text(

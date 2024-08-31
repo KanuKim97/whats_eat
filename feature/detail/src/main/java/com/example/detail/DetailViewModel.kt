@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.detail.navigation.PlaceIdArgs
 import com.example.domain.network.GetPlaceDetailUseCase
 import com.example.domain.database.SaveCollectionUseCase
-import com.example.model.collection.CollectionModel
-import com.example.domain.entity.DetailedModel
+import com.example.model.domain.CollectionModel
+import com.example.model.domain.DetailedModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -27,10 +27,8 @@ class DetailViewModel @Inject constructor(
     getPlaceDetailUseCase: GetPlaceDetailUseCase,
     private val saveUserCollectionUseCase: SaveCollectionUseCase
 ): ViewModel() {
-    private val _saveCollectionState =
-        MutableStateFlow<SaveCollectionState>(SaveCollectionState.IsLoading)
-    val saveCollectionState: StateFlow<SaveCollectionState>
-        get() = _saveCollectionState
+    private val _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
+    val saveCollectionState: StateFlow<SaveCollectionState> = _saveCollectionState
 
     val detailUiState = detailState(
         placeID = PlaceIdArgs(savedStateHandle).placeID,
@@ -45,7 +43,21 @@ class DetailViewModel @Inject constructor(
         saveCollectionState(
             collection = content,
             saveUserCollectionUseCase = saveUserCollectionUseCase
-        ).collect { state -> _saveCollectionState.value = state }
+        ).collect { state ->
+            _saveCollectionState.value = state
+        }
+    }
+
+    private fun saveCollectionState(
+        collection: CollectionModel,
+        saveUserCollectionUseCase: SaveCollectionUseCase
+    ): Flow<SaveCollectionState> {
+        return saveUserCollectionUseCase(collection)
+            .onStart { _saveCollectionState.value = SaveCollectionState.IsLoading }
+            .catch { exception ->
+                _saveCollectionState.value = SaveCollectionState.IsFailed(exception.message)
+            }
+            .map { SaveCollectionState.IsSuccess }
     }
 }
 
@@ -55,20 +67,12 @@ private fun detailState(
 ): Flow<DetailUiState> {
     return getPlaceDetailUseCase(placeID)
         .onStart { DetailUiState.IsLoading }
-        .catch { DetailUiState.IsFailed }
-        .map<DetailedModel, DetailUiState> { result ->
-            DetailUiState.IsSuccess(result)
-        }
-}
+        .catch { exception ->
+            exception.printStackTrace()
 
-private fun saveCollectionState(
-    collection: CollectionModel,
-    saveUserCollectionUseCase: SaveCollectionUseCase
-): Flow<SaveCollectionState> {
-    return saveUserCollectionUseCase(collection)
-        .onStart { SaveCollectionState.IsLoading }
-        .catch { SaveCollectionState.IsFailed }
-        .map { SaveCollectionState.IsSuccess }
+            DetailUiState.IsFailed
+        }
+        .map<DetailedModel, DetailUiState> { result -> DetailUiState.IsSuccess(result) }
 }
 
 sealed interface DetailUiState {
@@ -80,9 +84,11 @@ sealed interface DetailUiState {
 }
 
 sealed interface SaveCollectionState {
+    data object Init: SaveCollectionState
+
     data object IsLoading: SaveCollectionState
 
     data object IsSuccess: SaveCollectionState
 
-    data object IsFailed: SaveCollectionState
+    data class IsFailed(val message: String? = null): SaveCollectionState
 }

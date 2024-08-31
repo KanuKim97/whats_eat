@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatTypography
-import com.example.domain.entity.BannerItemsModel
+import com.example.model.domain.BannerItemsModel
 
 @Composable
 fun BannerCard(
@@ -43,7 +44,8 @@ fun BannerCard(
                 Text(
                     text = banner?.name ?: "",
                     fontWeight = FontWeight.SemiBold,
-                    style = EatTypography.titleMedium
+                    style = EatTypography.titleMedium,
+                    color = MaterialTheme.colorScheme.inverseSurface
                 )
             }
         )

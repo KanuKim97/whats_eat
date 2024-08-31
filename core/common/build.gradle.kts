@@ -1,30 +1,19 @@
 plugins {
-    id(Plugins.android_library)
-    id(Plugins.kotlin_android)
-    id(Plugins.ksp)
-    id(Plugins.hilt)
+    id("com.whats-eat.default-library")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
-
-kotlin.jvmToolchain(AppConfig.jdkVersion)
 
 android {
     namespace = "com.example.common"
-    compileSdk = AppConfig.compileSdk
-
-    defaultConfig {
-        minSdk = AppConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 }
 
 dependencies {
-    implementation(Dependencies.androidx_core)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
 
-    implementation(Dependencies.hilt)
-    ksp(Dependencies.hilt_compiler)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation(Dependencies.coroutine)
-
-    testImplementation(TestDependencies.junit)
-    androidTestImplementation(TestDependencies.androidx_junit)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
 }

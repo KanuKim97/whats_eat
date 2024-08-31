@@ -1,12 +1,11 @@
 package com.example.domain
 
-import com.example.domain.entity.BannerItemsModel
-import com.example.domain.entity.DetailedModel
-import com.example.domain.entity.GridItemsModel
+import com.example.model.domain.BannerItemsModel
+import com.example.model.domain.DetailedModel
+import com.example.model.domain.GridItemsModel
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
 import com.example.domain.network.GetPlaceDetailUseCase
-import com.example.domain.testData.sampleDetailedModel
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -30,7 +29,7 @@ class DomainLayerNetworkPackageUnitTest {
     fun initUseCasesBehavior() {
         every { getMainBannerUseCase(defaultLatLng) } returns  flowOf(listOf())
         every { getGridItemUseCase(defaultLatLng) } returns flowOf(listOf())
-        every { getPlaceDetailUseCase(defaultPlaceID) } returns flowOf(sampleDetailedModel)
+        every { getPlaceDetailUseCase(defaultPlaceID) } returns flowOf(DomainLayerDummyData.DUMMY_DETAILED_PLACE_DATA)
     }
 
     @Test
@@ -64,7 +63,7 @@ class DomainLayerNetworkPackageUnitTest {
         getPlaceDetailUseCase(defaultPlaceID).collect { detailedInfo -> result = detailedInfo }
 
         assertEquals(
-            sampleDetailedModel,
+            DomainLayerDummyData.DUMMY_DETAILED_PLACE_DATA,
             result
         )
     }
