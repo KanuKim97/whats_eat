@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.database.dao.EatDao
-import com.example.database.data.defaultEntityList
+import com.example.database.DataBaseLayerDummyData.DUMMY_ENTITIES_LIST
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -33,34 +33,34 @@ class DataBaseUnitTest {
         eatDAO = eatDataBase.eatDao()
     }
 
-    @After
-    fun closeDataBase() {
-        eatDataBase.close()
-    }
-
     @Test
     @Throws(Exception::class)
     fun insert_collection_into_database() = runTest {
-        eatDAO.saveUserCollection(defaultEntityList[0])
-        eatDAO.saveUserCollection(defaultEntityList[1])
-        eatDAO.saveUserCollection(defaultEntityList[2])
+        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[0])
+        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[1])
+        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[2])
 
-        val result = eatDAO.readCollectionEntity(defaultEntityList[0].placeID).first()
+        val result = eatDAO.readCollectionEntity(DUMMY_ENTITIES_LIST[0].placeID).first()
 
-        assertEquals(defaultEntityList[0], result)
+        assertEquals(DUMMY_ENTITIES_LIST[0], result)
     }
 
     @Test
     @Throws(Exception::class)
     fun delete_collection_into_database() = runTest {
-        eatDAO.saveUserCollection(defaultEntityList[0])
-        eatDAO.saveUserCollection(defaultEntityList[1])
-        eatDAO.saveUserCollection(defaultEntityList[2])
+        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[0])
+        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[1])
+        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[2])
 
-        eatDAO.deleteUserCollection(defaultEntityList[0])
+        eatDAO.deleteUserCollection(DUMMY_ENTITIES_LIST[0])
 
         val result = eatDAO.readAllCollectionEntities().first()
 
-        assertEquals(listOf(defaultEntityList[1], defaultEntityList[2]), result)
+        assertEquals(listOf(DUMMY_ENTITIES_LIST[1], DUMMY_ENTITIES_LIST[2]), result)
+    }
+
+    @After
+    fun closeDataBase() {
+        eatDataBase.close()
     }
 }
