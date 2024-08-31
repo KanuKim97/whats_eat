@@ -1,7 +1,6 @@
 package com.example.data
 
 import com.example.data.repository.PlaceApiRepository
-import com.example.data.sampleDBdata.testSampleDetailPlace
 import com.example.model.network.detailPlace.DetailedResult
 import com.example.model.network.nearBySearch.NearBySearchResult
 import io.mockk.clearMocks
@@ -23,7 +22,7 @@ class PlaceRepoUnitTest {
     @Before
     fun initRepositoryFunctionsBehavior() {
         every { placeApiRepositoryImpl.nearByPlace(defaultLatLng) } returns flowOf(listOf())
-        every { placeApiRepositoryImpl.detailedPlace(defaultPlaceID) } returns flowOf(testSampleDetailPlace)
+        every { placeApiRepositoryImpl.detailedPlace(defaultPlaceID) } returns flowOf(DataLayerDummyData.DUMMY_DETAIL_PLACE_DATA)
     }
 
     @Test
@@ -46,7 +45,7 @@ class PlaceRepoUnitTest {
 
         assertEquals(
             result,
-            testSampleDetailPlace
+            DataLayerDummyData.DUMMY_DETAIL_PLACE_DATA
         )
     }
 

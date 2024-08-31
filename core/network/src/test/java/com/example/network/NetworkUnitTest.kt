@@ -2,72 +2,66 @@ package com.example.network
 
 import com.example.network.api.PlaceApiService
 import com.example.network.constant.Constants
+import com.example.network.util.addDefaultTimeOut
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 /**
  * NetworkUnitTest Class
  * Network local unit test, which will execute on the development machine (host).
  */
 class NetworkUnitTest {
-    private lateinit var network: PlaceApiService
+    private val json by lazy { Json { ignoreUnknownKeys = true } }
 
-    // Default Latitude, Longitude
-    private val defaultLatLng = "37.594321,127.0329403"
-    // Default Place ID
-    private val defaultPlaceID = "ChIJN1t_tDeuEmsRUsoyG83frY4"
+    private lateinit var httpClient: OkHttpClient
+    private lateinit var retrofitClient: Retrofit
+    private lateinit var network: PlaceApiService
 
     @Before
     fun init() {
-        val okHttpClient = OkHttpClient()
+        httpClient = OkHttpClient()
             .newBuilder()
-            .callTimeout(Constants.TIMEOUT_SEC, TimeUnit.SECONDS)
-            .readTimeout(Constants.TIMEOUT_SEC, TimeUnit.SECONDS)
-            .writeTimeout(Constants.TIMEOUT_SEC, TimeUnit.SECONDS)
-            .connectTimeout(Constants.TIMEOUT_SEC, TimeUnit.SECONDS)
+            .addDefaultTimeOut()
             .build()
 
-        val retrofitInstance = Retrofit
+        retrofitClient = Retrofit
             .Builder()
             .baseUrl(Constants.PLACE_API_BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 
-        network = retrofitInstance.create(PlaceApiService::class.java)
+        network = retrofitClient.create(PlaceApiService::class.java)
     }
 
-
     @Test
-    fun get_nearbysearch_result() = runTest {
+    fun `Get Near By Search Result When Result Status is Success`() = runTest {
         val response = network.getNearBySearch(
-            latLng = defaultLatLng,
+            latLng = NetworkLayerDummyData.DUMMY_LAT_LNG,
             radius = Constants.LOCATION_RADIUS,
             type = Constants.LOCATION_TYPE,
             language = Constants.LANGUAGE,
             apiKey = BuildConfig.PLACE_API_KEY
         )
 
-        assertEquals(200, response.code())
-        println(response.body())
+        assertEquals("OK", response.status)
     }
 
     @Test
-    fun get_detail_result() = runTest {
+    fun `Get Detail Place Result When Result Status is Success`() = runTest {
         val response = network.getDetails(
-            placeID = defaultPlaceID,
+            placeID = NetworkLayerDummyData.DUMMY_PLACE_ID,
             language = Constants.LANGUAGE,
             apiKey = BuildConfig.PLACE_API_KEY
         )
 
-        assertEquals(200, response.code())
-        assertEquals("OK", response.body()?.status)
-        println(response.body())
+        assertEquals("OK", response.status)
     }
 }
