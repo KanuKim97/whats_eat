@@ -56,6 +56,12 @@ fun NavGraphBuilder.detailScreen() {
                     durationMillis = 300,
                     easing = LinearEasing
                 )
+            ) + slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Start,
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearEasing
+                )
             )
         }
     ) {

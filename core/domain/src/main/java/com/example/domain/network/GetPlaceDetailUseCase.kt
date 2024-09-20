@@ -2,6 +2,7 @@ package com.example.domain.network
 
 import com.example.data.repository.PlaceApiRepository
 import com.example.domain.BuildConfig
+import com.example.model.domain.DetailedDomainModel
 import com.example.model.domain.DetailedModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -10,15 +11,15 @@ import javax.inject.Inject
 class GetPlaceDetailUseCase @Inject constructor(
     private val network: PlaceApiRepository
 ) {
-    operator fun invoke(placeId: String): Flow<DetailedModel> = network
+    operator fun invoke(placeId: String): Flow<DetailedDomainModel> = network
         .detailedPlace(placeId)
         .map { value ->
-            DetailedModel(
+            DetailedDomainModel(
                 placeId = value?.placeId.toString(),
                 placeName = value?.name.toString(),
                 placeImgUrl = value?.photos?.let { photos ->
-                    if (photos.isNotEmpty()) photos[0].getFullPhotoReference(BuildConfig.PLACE_API_KEY) else ""
-                } ?: "",
+                    photos.map { photo -> photo.getFullPhotoReference(BuildConfig.PLACE_API_KEY) }
+                } ?: emptyList(),
                 placeRating = value?.rating.toString(),
                 placeAddress = value?.formattedAddress.toString(),
                 placePhoneNumber = value?.formattedPhoneNumber.toString(),
