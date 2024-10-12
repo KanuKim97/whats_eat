@@ -15,16 +15,16 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCard
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatTypography
-import com.example.model.domain.BannerItemsModel
+import com.example.domain.model.NearByPlaceItemModel
 
 @Composable
 fun BannerCard(
-    banner: BannerItemsModel?,
-    bannerOnClick: (String) -> Unit,
+    item: NearByPlaceItemModel?,
+    itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     EatCard(
-        onClick = { bannerOnClick(banner?.placeID ?: "") },
+        onClick = { itemOnClick(item?.placeId ?: "") },
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
@@ -36,13 +36,13 @@ fun BannerCard(
             verticalArrangement = Arrangement.Center,
             content = {
                 EatImageLoader(
-                    imageModel = banner?.photoRef ?: "",
+                    imageModel = item?.placePhotoReference ?: "",
                     modifier = modifier
                         .fillMaxWidth()
                         .height(250.dp)
                 )
                 Text(
-                    text = banner?.name ?: "",
+                    text = item?.placeName ?: "",
                     fontWeight = FontWeight.SemiBold,
                     style = EatTypography.titleMedium,
                     color = MaterialTheme.colorScheme.inverseSurface

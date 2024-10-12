@@ -1,6 +1,6 @@
-package com.example.model.domain
+package com.example.domain.model
 
-data class DetailedModel(
+data class PlaceDetailItemModel(
     val placeId: String,
     val placeName: String,
     val placeRating: String,

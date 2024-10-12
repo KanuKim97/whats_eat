@@ -28,8 +28,6 @@ import com.example.designsystem.component.EatTextButton
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.EatTheme
 import com.example.designsystem.theme.EatTypography
-import com.example.model.domain.DetailedModel
-import com.example.model.domain.CollectionModel
 import com.example.ui.PlaceInfo
 import com.example.ui.preview.DevicePreview
 import com.google.android.gms.maps.model.CameraPosition
@@ -41,11 +39,11 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 internal fun DetailRoute(
-    modifier: Modifier = Modifier,
     detailUiState: DetailUiState,
     saveCollectionUiState: SaveCollectionState,
     scrollState: ScrollState,
-    saveCollection: (CollectionModel) -> Unit
+    saveCollection: (String, String, String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     DetailScreen(
         detailUiState = detailUiState,
@@ -61,7 +59,7 @@ internal fun DetailScreen(
     detailUiState: DetailUiState,
     saveCollectionUiState: SaveCollectionState,
     scrollState: ScrollState,
-    saveCollection: (CollectionModel) -> Unit,
+    saveCollection: (String, String, String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val localContext = LocalContext.current
@@ -135,14 +133,12 @@ internal fun DetailScreen(
                     SaveCollectionState.Init -> {
                         EatTextButton(
                             onClick = {
-                                val collectionModel = CollectionModel(
-                                    id = detailUiState.info.placeId,
-                                    name = detailUiState.info.placeName,
-                                    latLng = "${detailUiState.info.placeLatitude}, ${detailUiState.info.placeLongitude}",
-                                    imgUrl = detailUiState.info.placeImgUrl
+                                saveCollection(
+                                    detailUiState.info.placeId,
+                                    detailUiState.info.placeName,
+                                    detailUiState.info.placeImgUrl,
+                                    "${detailUiState.info.placeLatitude}, ${detailUiState.info.placeLongitude}"
                                 )
-
-                                saveCollection(collectionModel)
                             },
                             modifier = modifier.fillMaxWidth(),
                             shape = EatShape.extraLarge,
@@ -183,23 +179,10 @@ internal fun DetailScreen(
 fun PreviewDetailScreenWhenSuccess() {
     EatTheme {
         DetailScreen(
-            detailUiState = DetailUiState
-                .IsSuccess(
-                    DetailedModel(
-                        placeId = "",
-                        placeName = "종암에너비스 종암지점",
-                        placeAddress = "성북구 종암동 10-15",
-                        placeImgUrl = "",
-                        placeLatitude = 0.0,
-                        placeLongitude = 0.0,
-                        isPlaceOpenNow = false,
-                        placeRating = "4.7",
-                        placePhoneNumber = "02-3333-4444",
-                    )
-                ),
+            detailUiState = DetailUiState.IsLoading,
             scrollState = rememberScrollState(),
             saveCollectionUiState = SaveCollectionState.Init,
-            saveCollection = { _ -> }
+            saveCollection = { _, _, _, _ -> }
         )
     }
 }
@@ -212,7 +195,7 @@ fun PreviewDetailScreenWhenFailed() {
             detailUiState = DetailUiState.IsFailed,
             scrollState = rememberScrollState(),
             saveCollectionUiState = SaveCollectionState.Init,
-            saveCollection = { _ -> }
+            saveCollection = { _, _, _, _ -> }
         )
     }
 }

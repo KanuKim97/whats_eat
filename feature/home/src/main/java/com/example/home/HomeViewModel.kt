@@ -2,10 +2,9 @@ package com.example.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.NearByPlaceItemModel
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
-import com.example.model.domain.BannerItemsModel
-import com.example.model.domain.GridItemsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -73,7 +72,7 @@ sealed interface BannerUiState {
 
     data object IsLoading: BannerUiState
 
-    data class IsSuccess(val banner: List<BannerItemsModel>?): BannerUiState
+    data class IsSuccess(val banner: List<NearByPlaceItemModel>?): BannerUiState
 
     data class IsFailed(val message: String = ""): BannerUiState
 }
@@ -83,7 +82,7 @@ sealed interface ItemGridUiState {
 
     data object IsLoading: ItemGridUiState
 
-    data class IsSuccess(val item: List<GridItemsModel>?): ItemGridUiState
+    data class IsSuccess(val item: List<NearByPlaceItemModel>?): ItemGridUiState
 
     data object IsFailed: ItemGridUiState
 }

@@ -18,18 +18,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatImageLoader
 import com.example.designsystem.theme.EatTypography
-import com.example.model.domain.GridItemsModel
+import com.example.domain.model.NearByPlaceItemModel
 
 @Composable
 fun GridItem(
-    gridItems: GridItemsModel,
+    item: NearByPlaceItemModel,
     itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .wrapContentSize()
-            .clickable(onClick = { itemOnClick(gridItems.placeID) }),
+            .clickable(onClick = { itemOnClick(item.placeId) }),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -38,11 +38,11 @@ fun GridItem(
             horizontalAlignment = Alignment.Start,
             content = {
                 EatImageLoader(
-                    imageModel = gridItems.photoRef,
+                    imageModel = item.placePhotoReference,
                     modifier = modifier.size(160.dp)
                 )
                 Text(
-                    text = gridItems.name,
+                    text = item.placeName,
                     modifier = modifier
                         .width(160.dp)
                         .wrapContentHeight(),

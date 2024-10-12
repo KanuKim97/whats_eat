@@ -13,8 +13,8 @@ interface EatDao {
     @Query("SELECT * FROM collection_entity")
     fun readAllCollectionEntities(): Flow<List<CollectionEntity>>
 
-    @Query("SELECT * FROM Collection_Entity WHERE placeID = (:placeID)")
-    fun readCollectionEntity(placeID: String): Flow<CollectionEntity>
+    @Query("SELECT * FROM Collection_Entity WHERE placeID = (:placeId)")
+    fun readCollectionEntity(placeId: String): Flow<CollectionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveUserCollection(content: CollectionEntity)
