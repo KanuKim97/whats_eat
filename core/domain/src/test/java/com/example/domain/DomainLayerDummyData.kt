@@ -1,23 +1,23 @@
 package com.example.domain
 
-import com.example.model.domain.CollectionModel
-import com.example.model.domain.DetailedModel
+import com.example.domain.model.CollectionDomainModel
+import com.example.domain.model.PlaceDetailItemModel
 
 internal object DomainLayerDummyData {
     val DUMMY_COLLECTION_DATA = listOf(
-        CollectionModel(
+        CollectionDomainModel(
             id = "1",
             name = "Test Collection 1",
             latLng = "1.0, 1.0",
             imgUrl = "Test Collection Image Url 1"
         ),
-        CollectionModel(
+        CollectionDomainModel(
             id = "2",
             name = "Test Collection 2",
             latLng = "2.0, 2.0",
             imgUrl = "Test Collection Image Url 2"
         ),
-        CollectionModel(
+        CollectionDomainModel(
             id = "3",
             name = "Test Collection 3",
             latLng = "3.0, 3.0",
@@ -25,7 +25,7 @@ internal object DomainLayerDummyData {
         )
     )
 
-    val DUMMY_DETAILED_PLACE_DATA = DetailedModel(
+    val DUMMY_DETAILED_PLACE_DATA = PlaceDetailItemModel(
         placeId = "",
         placeName = "xx네 분식",
         placeRating = "4.9",

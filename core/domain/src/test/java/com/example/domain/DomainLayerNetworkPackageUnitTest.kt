@@ -1,8 +1,7 @@
 package com.example.domain
 
-import com.example.model.domain.BannerItemsModel
-import com.example.model.domain.DetailedModel
-import com.example.model.domain.GridItemsModel
+import com.example.domain.model.NearByPlaceItemModel
+import com.example.domain.model.PlaceDetailItemModel
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
 import com.example.domain.network.GetPlaceDetailUseCase
@@ -34,31 +33,31 @@ class DomainLayerNetworkPackageUnitTest {
 
     @Test
     fun `execute should be return empty list from MainGridBannerUseCase`() = runBlocking {
-        var result = listOf<BannerItemsModel>()
+        var result = listOf<NearByPlaceItemModel>()
 
         getMainBannerUseCase(defaultLatLng).collect { result = it }
 
         assertEquals(
-            listOf<BannerItemsModel>(),
+            listOf<NearByPlaceItemModel>(),
             result
         )
     }
 
     @Test
     fun `execute should be return empty list from SubGridBannerUseCase`() = runBlocking {
-        var result = listOf<GridItemsModel>()
+        var result = listOf<NearByPlaceItemModel>()
 
         getGridItemUseCase(defaultLatLng).collect { result = it }
 
         assertEquals(
-            listOf<GridItemsModel>(),
+            listOf<NearByPlaceItemModel>(),
             result
         )
     }
 
     @Test
     fun `execute should be return Detail from Repository`() = runBlocking {
-        var result: DetailedModel? = null
+        var result: PlaceDetailItemModel? = null
 
         getPlaceDetailUseCase(defaultPlaceID).collect { detailedInfo -> result = detailedInfo }
 
