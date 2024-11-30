@@ -2,6 +2,8 @@ package com.example.convention.configure
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.example.convention.constant.Constant
+import com.example.convention.util.implementation
+import com.example.convention.util.library
 import com.example.convention.util.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -26,7 +28,5 @@ internal fun Project.applicationConfigure(extension: BaseAppModuleExtension) {
         }
     }
 
-    dependencies {
-        add("implementation", libs.findLibrary("androidx-core").get())
-    }
+    dependencies { implementation(library("androidx-core")) }
 }
