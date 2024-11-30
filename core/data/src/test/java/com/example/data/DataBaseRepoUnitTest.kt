@@ -1,7 +1,7 @@
 package com.example.data
 
+import com.example.data.model.CollectionDataModel
 import com.example.data.repository.DatabaseRepository
-import com.example.model.domain.CollectionModel
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -31,7 +31,7 @@ class DataBaseRepoUnitTest {
 
     @Test
     fun `execute should return readAllCollectionEntities`() = runTest {
-        var result = listOf<CollectionModel>()
+        var result = listOf<CollectionDataModel>()
 
         databaseRepositoryImpl
             .readAllCollectionEntities()

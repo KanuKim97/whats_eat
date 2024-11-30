@@ -1,9 +1,9 @@
 package com.example.data
 
-import com.example.data.mapper.entityToModelMapper
-import com.example.data.mapper.modelToEntityMapper
+import com.example.data.mapper.entityToDataModelMapper
+import com.example.data.mapper.dataModelToEntityMapper
+import com.example.data.model.CollectionDataModel
 import com.example.database.model.CollectionEntity
-import com.example.model.domain.CollectionModel
 import org.junit.Test
 import org.junit.Assert.assertEquals
 
@@ -17,8 +17,8 @@ class MapperUnitTest {
         placeLatLng = "dummy",
         placeImgUrl = "dummy"
     )
-    private val collectionModel: CollectionModel =
-        CollectionModel(
+    private val collectionModel: CollectionDataModel =
+        CollectionDataModel(
             id = "dummy",
             name = "dummy",
             latLng = "dummy",
@@ -28,13 +28,13 @@ class MapperUnitTest {
 
     @Test
     fun mapping_ENTITY_TO_MODEL() {
-        val mappingResult = entityToModelMapper(collectionEntity)
+        val mappingResult = entityToDataModelMapper(collectionEntity)
         assertEquals(collectionModel, mappingResult)
     }
 
     @Test
     fun mapping_MODEL_TO_ENTITY() {
-        val mappingResult = modelToEntityMapper(collectionModel)
+        val mappingResult = dataModelToEntityMapper(collectionModel)
         assertEquals(collectionEntity, mappingResult)
     }
 }

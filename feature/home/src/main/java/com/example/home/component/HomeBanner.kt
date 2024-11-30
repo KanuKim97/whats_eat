@@ -57,8 +57,8 @@ fun HomeBanner(
                         modifier = modifier.fillMaxSize()
                     ) { index ->
                         BannerCard(
-                            banner = bannerUiState.banner[index],
-                            bannerOnClick = { bannerOnClick(bannerUiState.banner[index].placeID) }
+                            item = bannerUiState.banner[index],
+                            itemOnClick = { bannerOnClick(bannerUiState.banner[index].placeId) }
                         )
                     }
                 }

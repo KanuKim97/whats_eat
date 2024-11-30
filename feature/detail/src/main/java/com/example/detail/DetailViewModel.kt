@@ -3,19 +3,19 @@ package com.example.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.repository.DatabaseRepository
 import com.example.detail.navigation.PlaceIdArgs
 import com.example.domain.network.GetPlaceDetailUseCase
-import com.example.domain.database.SaveCollectionUseCase
-import com.example.model.domain.CollectionModel
-import com.example.model.domain.DetailedModel
+import com.example.domain.model.PlaceDetailItemModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -25,9 +25,9 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getPlaceDetailUseCase: GetPlaceDetailUseCase,
-    private val saveUserCollectionUseCase: SaveCollectionUseCase
+    private val dbRepository: DatabaseRepository
 ): ViewModel() {
-    private val _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
+    private var _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
     val saveCollectionState: StateFlow<SaveCollectionState> = _saveCollectionState
 
     val detailUiState = detailState(
@@ -39,26 +39,43 @@ class DetailViewModel @Inject constructor(
         initialValue = DetailUiState.IsLoading
     )
 
-    fun saveCollection(content: CollectionModel): Job = viewModelScope.launch {
+    fun savePlaceInfo(
+        placeId: String,
+        placeName: String,
+        placeImgUrl: String,
+        placeLatLng: String
+    ) = viewModelScope.launch {
         saveCollectionState(
-            collection = content,
-            saveUserCollectionUseCase = saveUserCollectionUseCase
-        ).collect { state ->
-            _saveCollectionState.value = state
-        }
+            placeId = placeId,
+            placeName = placeName,
+            placeImgUrl = placeImgUrl,
+            placeLatLng = placeLatLng,
+            databaseRepository = dbRepository
+        ).collectLatest { result -> _saveCollectionState.value = result }
     }
 
     private fun saveCollectionState(
-        collection: CollectionModel,
-        saveUserCollectionUseCase: SaveCollectionUseCase
+        placeId: String,
+        placeName: String,
+        placeImgUrl: String,
+        placeLatLng: String,
+        databaseRepository: DatabaseRepository
     ): Flow<SaveCollectionState> {
-        return saveUserCollectionUseCase(collection)
+        return databaseRepository
+            .saveUserCollection(
+                placeId = placeId,
+                placeName = placeName,
+                placeImgUrl = placeImgUrl,
+                placeLatLng = placeLatLng
+            )
             .onStart { _saveCollectionState.value = SaveCollectionState.IsLoading }
             .catch { exception ->
                 _saveCollectionState.value = SaveCollectionState.IsFailed(exception.message)
             }
             .map { SaveCollectionState.IsSuccess }
+            .onCompletion { _saveCollectionState.value = SaveCollectionState.Init }
     }
+
 }
 
 private fun detailState(
@@ -67,18 +84,14 @@ private fun detailState(
 ): Flow<DetailUiState> {
     return getPlaceDetailUseCase(placeID)
         .onStart { DetailUiState.IsLoading }
-        .catch { exception ->
-            exception.printStackTrace()
-
-            DetailUiState.IsFailed
-        }
-        .map<DetailedModel, DetailUiState> { result -> DetailUiState.IsSuccess(result) }
+        .catch { _ -> DetailUiState.IsFailed }
+        .map<PlaceDetailItemModel, DetailUiState> { result -> DetailUiState.IsSuccess(result) }
 }
 
 sealed interface DetailUiState {
     data object IsLoading: DetailUiState
 
-    data class IsSuccess(val info: DetailedModel): DetailUiState
+    data class IsSuccess(val info: PlaceDetailItemModel): DetailUiState
 
     data object IsFailed: DetailUiState
 }

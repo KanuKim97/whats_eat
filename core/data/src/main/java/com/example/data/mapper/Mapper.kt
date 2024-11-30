@@ -1,19 +1,19 @@
 package com.example.data.mapper
 
+import com.example.data.model.CollectionDataModel
 import com.example.database.model.CollectionEntity
-import com.example.model.domain.CollectionModel
 
-fun entityToModelMapper(
+fun entityToDataModelMapper(
     entity: CollectionEntity
-): CollectionModel = CollectionModel(
+): CollectionDataModel = CollectionDataModel(
     id = entity.placeID,
     name = entity.placeName,
     latLng = entity.placeLatLng,
     imgUrl = entity.placeImgUrl
 )
 
-fun modelToEntityMapper(
-    model: CollectionModel
+fun dataModelToEntityMapper(
+    model: CollectionDataModel
 ): CollectionEntity = CollectionEntity(
     placeID = model.id,
     placeName = model.name,
