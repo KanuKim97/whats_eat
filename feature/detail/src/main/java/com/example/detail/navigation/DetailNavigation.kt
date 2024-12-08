@@ -75,7 +75,7 @@ fun NavGraphBuilder.detailScreen() {
             detailUiState = detailUiState,
             saveCollectionUiState = saveCollectionState,
             scrollState = scrollState,
-            saveCollection = detailViewModel::saveCollection
+            saveCollection = detailViewModel::savePlaceInfo
         )
     }
 }

@@ -2,7 +2,14 @@ package com.example.convention.configure
 
 import com.android.build.gradle.LibraryExtension
 import com.example.convention.constant.Constant
+import com.example.convention.util.androidTestImplementation
+import com.example.convention.util.bundle
+import com.example.convention.util.debugImplementation
+import com.example.convention.util.implementation
+import com.example.convention.util.ksp
+import com.example.convention.util.library
 import com.example.convention.util.libs
+import com.example.convention.util.testImplementation
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
@@ -23,31 +30,31 @@ internal fun Project.featureConfigure(extension: LibraryExtension) {
     }
 
     dependencies {
-        add("implementation", libs.findLibrary("androidx-core").get())
+        implementation(library("androidx-core"))
 
         // Kotlin Coroutines
-        add("implementation", libs.findLibrary("kotlinx-coroutines-android").get())
+        implementation(library("kotlinx-coroutines-android"))
 
         // Dagger Hilt
-        add("implementation", libs.findLibrary("hilt").get())
-        add("ksp", libs.findLibrary("hilt-compiler").get())
+        implementation(library("hilt"))
+        ksp(library("hilt-compiler"))
 
         // Jetpack Compose
-        val composeBom = platform(libs.findLibrary("compose-bom").get())
-        add("implementation", composeBom)
-        add("implementation", libs.findBundle("compose").get())
-        add("implementation", libs.findBundle("compose-lifecycle").get())
+        val composeBom = platform(library("compose-bom"))
+        implementation(composeBom)
+        implementation(bundle("compose"))
+        implementation(bundle("compose-lifecycle"))
 
-        add("androidTestImplementation", composeBom)
-        add("androidTestImplementation", libs.findLibrary("compose-ui-junit4").get())
-        add("debugImplementation", libs.findBundle("compose-debug").get())
+        androidTestImplementation(composeBom)
+        androidTestImplementation(library("compose-ui-junit4"))
+        debugImplementation(bundle("compose-debug"))
 
         // landscapist-glide
-        add("implementation", libs.findLibrary("landscapist-glide").get())
+        implementation(library("landscapist-glide"))
 
         // Android Test
-        add("testImplementation", libs.findLibrary("junit").get())
-        add("androidTestImplementation", libs.findLibrary("androidx-junit").get())
-        add("androidTestImplementation", libs.findLibrary("androidx-test-espresso").get())
+        testImplementation(library("junit"))
+        androidTestImplementation(library("androidx-junit"))
+        androidTestImplementation(library("androidx-test-espresso"))
     }
 }

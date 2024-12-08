@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.bundles.gms)
 
     implementation(project(":core:common"))
+    implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation(project(":core:designsystem"))

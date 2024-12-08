@@ -33,11 +33,11 @@ import com.example.ui.preview.DevicePreview
 
 @Composable
 internal fun DetailRoute(
-    modifier: Modifier = Modifier,
     detailUiState: DetailUiState,
     saveCollectionUiState: SaveCollectionState,
     scrollState: ScrollState,
-    saveCollection: (String, String, String, String) -> Unit
+    saveCollection: (String, String, String, String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     DetailScreen(
         detailUiState = detailUiState,
@@ -112,8 +112,8 @@ internal fun DetailScreen(
                                 saveCollection(
                                     detailUiState.info.placeId,
                                     detailUiState.info.placeName,
-                                    "${detailUiState.info.placeLatitude}, ${detailUiState.info.placeLongitude}",
-                                    detailUiState.info.placeImgUrl.first()
+                                    detailUiState.info.placeImgUrl.first(),
+                                    "${detailUiState.info.placeLatitude}, ${detailUiState.info.placeLongitude}"
                                 )
                             },
                             modifier = modifier.fillMaxWidth(),
@@ -153,6 +153,19 @@ internal fun DetailScreen(
 @DevicePreview
 @Composable
 fun PreviewDetailScreenWhenSuccess() {
+    EatTheme {
+        DetailScreen(
+            detailUiState = DetailUiState.IsLoading,
+            scrollState = rememberScrollState(),
+            saveCollectionUiState = SaveCollectionState.Init,
+            saveCollection = { _, _, _, _ -> }
+        )
+    }
+}
+
+@DevicePreview
+@Composable
+fun PreviewDetailScreenWhenFailed() {
     EatTheme {
         DetailScreen(
             detailUiState = DetailUiState.IsFailed,

@@ -3,14 +3,11 @@ package com.example.domain.network
 import com.example.data.repository.PlaceApiRepository
 import com.example.domain.BuildConfig
 import com.example.model.domain.DetailedDomainModel
-import com.example.model.domain.DetailedModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetPlaceDetailUseCase @Inject constructor(
-    private val network: PlaceApiRepository
-) {
+class GetPlaceDetailUseCase @Inject constructor(private val network: PlaceApiRepository) {
     operator fun invoke(placeId: String): Flow<DetailedDomainModel> = network
         .detailedPlace(placeId)
         .map { value ->

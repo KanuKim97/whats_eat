@@ -1,10 +1,11 @@
 package com.example.data.repository
 
 import com.example.common.IODispatcher
-import com.example.data.mapper.entityToModelMapper
-import com.example.data.mapper.modelToEntityMapper
+import com.example.data.mapper.dataModelToEntityMapper
+import com.example.data.mapper.entityToDataModelMapper
+import com.example.data.model.CollectionDataModel
 import com.example.database.dao.EatDao
-import com.example.model.domain.CollectionModel
+import com.example.database.model.CollectionEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,31 +20,45 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val eatDao: EatDao,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ): DatabaseRepository {
-    override fun readAllCollectionEntities(): Flow<List<CollectionModel>> = eatDao
+    override fun readAllCollectionEntities(): Flow<List<CollectionDataModel>> = eatDao
         .readAllCollectionEntities()
-        .map { entities ->
-            entities.map { entity -> entityToModelMapper(entity) }
-        }
+        .map { it.map { entity -> entityToDataModelMapper(entity) } }
         .catch { exception ->
             when (exception) {
-                is IOException -> emit(listOf())
-                is SQLDataException -> emit(listOf())
-                is ClassNotFoundException -> emit(listOf())
-                else -> emit(listOf())
+                is IOException -> throw IOException()
+                is SQLDataException -> throw SQLDataException()
+                is ClassNotFoundException -> throw ClassNotFoundException()
+                else -> throw exception
             }
         }.flowOn(ioDispatcher)
 
-    override fun readCollectionEntity(
-        placeID: String
-    ): Flow<CollectionModel> = eatDao
-        .readCollectionEntity(placeID)
-        .map { entity -> entityToModelMapper(entity) }
-        .flowOn(ioDispatcher)
+    override fun readCollectionEntity(placeId: String): Flow<CollectionDataModel> = eatDao
+        .readCollectionEntity(placeId)
+        .map { entityToDataModelMapper(it) }
+        .catch { exception ->
+            when (exception) {
+                is IOException -> throw IOException()
+                is SQLDataException -> throw SQLDataException()
+                is ClassNotFoundException -> throw ClassNotFoundException()
+                else -> throw exception
+            }
+        }.flowOn(ioDispatcher)
 
     override fun saveUserCollection(
-        content: CollectionModel
+        placeId: String,
+        placeName: String,
+        placeImgUrl: String,
+        placeLatLng: String
     ): Flow<Result<Unit>> = flow {
-        eatDao.saveUserCollection(modelToEntityMapper(content))
+        val entity = CollectionEntity(
+            placeID = placeId,
+            placeName = placeName,
+            placeImgUrl = placeImgUrl,
+            placeLatLng = placeLatLng
+        )
+
+
+        eatDao.saveUserCollection(entity)
         emit(Result.success(Unit))
     }.catch { exception ->
         when (exception) {
@@ -54,10 +69,10 @@ class DatabaseRepositoryImpl @Inject constructor(
         }
     }.flowOn(ioDispatcher)
 
-    override fun deleteUserCollection(
-        content: CollectionModel
-    ): Flow<Result<Unit>> = flow {
-        eatDao.deleteUserCollection(modelToEntityMapper(content))
+    override fun deleteUserCollection(content: CollectionDataModel): Flow<Result<Unit>> = flow {
+        val entity = dataModelToEntityMapper(content)
+
+        eatDao.deleteUserCollection(entity)
         emit(Result.success(Unit))
     }.catch { exception ->
         when (exception) {

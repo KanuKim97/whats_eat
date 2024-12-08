@@ -1,6 +1,6 @@
-package com.example.model.domain
+package com.example.domain.model
 
-data class CollectionModel(
+data class CollectionDomainModel(
     val id: String,
     val name: String,
     val latLng: String,

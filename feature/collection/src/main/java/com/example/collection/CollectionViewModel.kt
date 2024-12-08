@@ -2,8 +2,8 @@ package com.example.collection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.database.ReadAllCollectionUseCase
-import com.example.model.domain.CollectionModel
+import com.example.data.repository.DatabaseRepository
+import com.example.domain.model.CollectionDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
-    readAllCollectionUseCase: ReadAllCollectionUseCase,
+    databaseRepository: DatabaseRepository
 ): ViewModel() {
     val readAllCollectionUiState: StateFlow<ReadAllCollectionUiState> =
-        readAllCollectionState(readAllCollectionUseCase)
+        readAllCollectionState(databaseRepository)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000L),
@@ -34,23 +34,30 @@ class CollectionViewModel @Inject constructor(
 }
 
 private fun readAllCollectionState(
-    readAllCollectionUseCase: ReadAllCollectionUseCase
+    databaseRepository: DatabaseRepository
 ): Flow<ReadAllCollectionUiState> {
-    return readAllCollectionUseCase()
+    return databaseRepository.readAllCollectionEntities()
         .onStart { ReadAllCollectionUiState.IsLoading }
         .catch { exception ->
             ReadAllCollectionUiState.IsFailed(exception.message.toString())
-        }
-        .map<List<CollectionModel>, ReadAllCollectionUiState> { collectionList ->
-            ReadAllCollectionUiState.IsSuccess(collectionList)
+        }.map { collectionList ->
+            val collections = collectionList.map { entity ->
+                CollectionDomainModel(
+                    id = entity.id,
+                    name = entity.name,
+                    latLng = entity.latLng,
+                    imgUrl = entity.imgUrl
+                )
+            }
+
+            ReadAllCollectionUiState.IsSuccess(collections)
         }
 }
-
 
 sealed interface ReadAllCollectionUiState {
     data object IsLoading: ReadAllCollectionUiState
 
-    data class IsSuccess(val data: List<CollectionModel>): ReadAllCollectionUiState
+    data class IsSuccess(val data: List<CollectionDomainModel>): ReadAllCollectionUiState
 
     data class IsFailed(val msg: String): ReadAllCollectionUiState
 }

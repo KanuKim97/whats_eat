@@ -1,6 +1,6 @@
 package com.example.data
 
-import com.example.model.domain.CollectionModel
+import com.example.data.model.CollectionDataModel
 import com.example.model.network.CurrentOpeningHours
 import com.example.model.network.Geometry
 import com.example.model.network.OpeningHours
@@ -8,19 +8,19 @@ import com.example.model.network.detailPlace.DetailedResult
 
 internal object DataLayerDummyData {
     val DUMMY_COLLECTION_DATA = listOf(
-        CollectionModel(
+        CollectionDataModel(
             id =  "1",
             name = "default",
             latLng = "default",
             imgUrl = "default"
         ),
-        CollectionModel(
+        CollectionDataModel(
             id =  "2",
             name = "default",
             latLng = "default",
             imgUrl = "default"
         ),
-        CollectionModel(
+        CollectionDataModel(
             id =  "3",
             name = "default",
             latLng = "default",
