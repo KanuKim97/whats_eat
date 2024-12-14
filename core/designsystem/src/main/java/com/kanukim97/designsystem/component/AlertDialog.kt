@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.example.designsystem.theme.EatShape
 import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.component.EatOutlinedTextButton
 
 @Composable
 fun EatAlertDialog(

@@ -1,4 +1,4 @@
-package com.example.domain.model
+package com.kanukim97.domain.model
 
 data class PlaceDetailItemModel(
     val placeId: String,

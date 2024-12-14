@@ -1,12 +1,14 @@
-package com.example.detail
+package com.kanukim97.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repository.DatabaseRepository
-import com.example.detail.navigation.PlaceIdArgs
-import com.example.domain.model.DetailedDomainModel
+import com.kanukim97.detail.navigation.PlaceIdArgs
+import com.kanukim97.domain.model.DetailedDomainModel
 import com.example.domain.network.GetPlaceDetailUseCase
+import com.kanukim97.detail.state.DetailUiState
+import com.kanukim97.detail.state.SaveCollectionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +38,7 @@ class DetailViewModel @Inject constructor(
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = DetailUiState.IsLoading
+        initialValue = DetailUiState.Loading
     )
 
     fun savePlaceInfo(
@@ -68,11 +70,11 @@ class DetailViewModel @Inject constructor(
                 placeImgUrl = placeImgUrl,
                 placeLatLng = placeLatLng
             )
-            .onStart { _saveCollectionState.value = SaveCollectionState.IsLoading }
+            .onStart { _saveCollectionState.value = SaveCollectionState.Loading }
             .catch { exception ->
-                _saveCollectionState.value = SaveCollectionState.IsFailed(exception.message)
+                _saveCollectionState.value = SaveCollectionState.Failed(exception.message)
             }
-            .map { SaveCollectionState.IsSuccess }
+            .map { SaveCollectionState.Success }
             .onCompletion { _saveCollectionState.value = SaveCollectionState.Init }
     }
 
@@ -83,27 +85,7 @@ private fun detailState(
     getPlaceDetailUseCase: GetPlaceDetailUseCase
 ): Flow<DetailUiState> {
     return getPlaceDetailUseCase(placeID)
-        .onStart { DetailUiState.IsLoading }
-        .catch { _ -> DetailUiState.IsFailed }
-        .map<DetailedDomainModel, DetailUiState> {
-            result -> DetailUiState.IsSuccess(result)
-        }
-}
-
-sealed interface DetailUiState {
-    data object IsLoading: DetailUiState
-
-    data class IsSuccess(val info: DetailedDomainModel): DetailUiState
-
-    data object IsFailed: DetailUiState
-}
-
-sealed interface SaveCollectionState {
-    data object Init: SaveCollectionState
-
-    data object IsLoading: SaveCollectionState
-
-    data object IsSuccess: SaveCollectionState
-
-    data class IsFailed(val message: String? = null): SaveCollectionState
+        .onStart { DetailUiState.Loading }
+        .catch { _ -> DetailUiState.Failed }
+        .map<DetailedDomainModel, DetailUiState> { result -> DetailUiState.Success(result) }
 }

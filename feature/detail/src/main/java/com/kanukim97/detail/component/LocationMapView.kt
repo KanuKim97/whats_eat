@@ -1,4 +1,4 @@
-package com.example.detail.component
+package com.kanukim97.detail.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

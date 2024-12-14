@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.collection.navigation.collectionScreen
-import com.example.detail.navigation.detailScreen
-import com.example.detail.navigation.onNavigateDetail
+import com.kanukim97.detail.navigation.detailScreen
+import com.kanukim97.detail.navigation.onNavigateDetail
 import com.example.home.navigation.homeRoute
 import com.example.home.navigation.homeScreen
 
