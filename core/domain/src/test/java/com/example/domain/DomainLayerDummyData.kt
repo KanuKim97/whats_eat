@@ -1,7 +1,7 @@
 package com.example.domain
 
 import com.example.domain.model.CollectionDomainModel
-import com.example.domain.model.PlaceDetailItemModel
+import com.kanukim97.domain.model.PlaceDetailItemModel
 
 internal object DomainLayerDummyData {
     val DUMMY_COLLECTION_DATA = listOf(

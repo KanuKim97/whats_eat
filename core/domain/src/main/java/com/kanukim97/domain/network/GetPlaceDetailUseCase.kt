@@ -1,0 +1,28 @@
+package com.example.domain.network
+
+import com.example.data.repository.PlaceApiRepository
+import com.example.domain.BuildConfig
+import com.kanukim97.domain.model.DetailedDomainModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+
+class GetPlaceDetailUseCase @Inject constructor(private val network: PlaceApiRepository) {
+    operator fun invoke(placeId: String): Flow<DetailedDomainModel> = network
+        .detailedPlace(placeId)
+        .map { value ->
+            DetailedDomainModel(
+                placeId = value?.placeId.toString(),
+                placeName = value?.name.toString(),
+                placeImgUrl = value?.photos?.let { photos ->
+                    photos.map { photo -> photo.getFullPhotoReference(BuildConfig.PLACE_API_KEY) }
+                } ?: emptyList(),
+                placeRating = value?.rating.toString(),
+                placeAddress = value?.formattedAddress.toString(),
+                placePhoneNumber = value?.formattedPhoneNumber.toString(),
+                placeLatitude = value?.geometry?.location?.lat ?: 0.0,
+                placeLongitude = value?.geometry?.location?.lng ?: 0.0,
+                isPlaceOpenNow = value?.openingHours?.openNow == true
+            )
+        }
+}
