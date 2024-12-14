@@ -1,10 +1,11 @@
-package com.example.home
+package com.kanukim97.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.NearByPlaceItemModel
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
+import com.kanukim97.home.state.BannerUiState
+import com.kanukim97.home.state.ItemGridUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -44,10 +45,13 @@ class HomeViewModel @Inject constructor(
         getMainBannerUseCase: GetMainBannerUseCase
     ): Flow<BannerUiState> {
         return getMainBannerUseCase(latLng)
-            .onStart { _bannerUiState.value = BannerUiState.IsLoading }
-            .catch { exception ->
-                _bannerUiState.value = BannerUiState.IsFailed(exception.message.toString())
-            }.map { result -> BannerUiState.IsSuccess(result) }
+            .onStart { BannerUiState.Loading }
+            .catch { BannerUiState.Failed(it.message.toString()) }
+            .map { result ->
+                if (result.isEmpty()) BannerUiState.Empty
+
+                BannerUiState.Success(result)
+            }
     }
 
     private fun itemGridUiState(
@@ -55,34 +59,17 @@ class HomeViewModel @Inject constructor(
         getGridItemUseCase: GetGridItemUseCase
     ): Flow<ItemGridUiState> {
         return getGridItemUseCase(latLng)
-            .onStart { _itemGridUiState.value = ItemGridUiState.IsLoading }
-            .catch { _itemGridUiState.value = ItemGridUiState.IsFailed }
-            .map { result -> ItemGridUiState.IsSuccess(result) }
+            .onStart { ItemGridUiState.Loading }
+            .catch { ItemGridUiState.Failed }
+            .map { result ->
+                if (result.isEmpty()) ItemGridUiState.Empty
+
+                ItemGridUiState.Success(result)
+            }
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
     }
-}
-
-
-sealed interface BannerUiState {
-    data object Init: BannerUiState
-
-    data object IsLoading: BannerUiState
-
-    data class IsSuccess(val banner: List<NearByPlaceItemModel>?): BannerUiState
-
-    data class IsFailed(val message: String = ""): BannerUiState
-}
-
-sealed interface ItemGridUiState {
-    data object Init: ItemGridUiState
-
-    data object IsLoading: ItemGridUiState
-
-    data class IsSuccess(val item: List<NearByPlaceItemModel>?): ItemGridUiState
-
-    data object IsFailed: ItemGridUiState
 }

@@ -1,6 +1,5 @@
-package com.example.home.component
+package com.kanukim97.home.component
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,10 +16,9 @@ import androidx.compose.ui.unit.dp
 import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatHorizontalPager
 import com.example.designsystem.theme.EatTypography
-import com.example.home.BannerUiState
 import com.example.ui.BannerCard
+import com.kanukim97.home.state.BannerUiState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeBanner(
     bannerUiState: BannerUiState,
@@ -37,8 +35,8 @@ fun HomeBanner(
     ) {
         when (bannerUiState) {
             is BannerUiState.Init -> {  }
-            is BannerUiState.IsLoading -> { EatCircularProgressIndicator() }
-            is BannerUiState.IsSuccess -> {
+            is BannerUiState.Loading -> { EatCircularProgressIndicator() }
+            is BannerUiState.Success -> {
                 if (bannerUiState.banner.isNullOrEmpty()) {
                     Box(
                         modifier = modifier.fillMaxSize(),
@@ -63,7 +61,7 @@ fun HomeBanner(
                     }
                 }
             }
-            is BannerUiState.IsFailed -> {
+            is BannerUiState.Failed -> {
                 Box(
                     modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
@@ -74,6 +72,9 @@ fun HomeBanner(
                         )
                     }
                 )
+            }
+            is BannerUiState.Empty -> {
+
             }
         }
     }

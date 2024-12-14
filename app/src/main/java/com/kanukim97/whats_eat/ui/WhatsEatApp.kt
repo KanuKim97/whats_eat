@@ -22,7 +22,7 @@ import com.example.designsystem.component.EatCenterAlignedAppBar
 import com.example.designsystem.component.EatLargeTopAppBar
 import com.example.designsystem.icons.EatIcons
 import com.kanukim97.detail.navigation.detailRoute
-import com.example.home.navigation.homeRoute
+import com.kanukim97.home.navigation.homeRoute
 import com.example.whats_eat.navigation.WhatsEatNavHost
 
 @Composable

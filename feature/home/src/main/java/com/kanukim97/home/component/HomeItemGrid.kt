@@ -1,4 +1,4 @@
-package com.example.home.component
+package com.kanukim97.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import com.example.designsystem.component.EatCircularProgressIndicator
 import com.example.designsystem.component.EatVerticalGrid
 import com.example.designsystem.theme.EatTypography
-import com.example.home.ItemGridUiState
 import com.example.ui.GridItem
+import com.kanukim97.home.state.ItemGridUiState
 
 @Composable
 fun HomeItemGrid(
@@ -28,8 +28,8 @@ fun HomeItemGrid(
     ) {
         when (itemGridUiState) {
             is ItemGridUiState.Init -> {}
-            is ItemGridUiState.IsLoading -> { EatCircularProgressIndicator() }
-            is ItemGridUiState.IsSuccess -> {
+            is ItemGridUiState.Loading -> { EatCircularProgressIndicator() }
+            is ItemGridUiState.Success -> {
                 if (itemGridUiState.item.isNullOrEmpty()) {
                     Box(
                         modifier = modifier.fillMaxSize(),
@@ -51,7 +51,7 @@ fun HomeItemGrid(
                     }
                 }
             }
-            is ItemGridUiState.IsFailed -> {
+            is ItemGridUiState.Failed -> {
                 Box(
                     modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
@@ -62,6 +62,9 @@ fun HomeItemGrid(
                         )
                     }
                 )
+            }
+            is ItemGridUiState.Empty -> {
+
             }
         }
     }
