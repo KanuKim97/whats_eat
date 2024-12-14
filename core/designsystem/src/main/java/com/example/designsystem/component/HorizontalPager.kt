@@ -1,6 +1,5 @@
 package com.example.designsystem.component
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
@@ -9,12 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EatHorizontalPager(
     pagerState: PagerState,
-    modifier: Modifier = Modifier,
     pageSpacing: Dp,
+    modifier: Modifier = Modifier,
     userScrollEnabled: Boolean = true,
     pageContent: @Composable (PagerScope.(Int) -> Unit)
 ) {
@@ -27,7 +25,6 @@ fun EatHorizontalPager(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EatHorizontalPager(
     pagerState: PagerState,

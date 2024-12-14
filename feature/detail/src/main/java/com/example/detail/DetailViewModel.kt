@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repository.DatabaseRepository
 import com.example.detail.navigation.PlaceIdArgs
+import com.example.domain.model.DetailedDomainModel
 import com.example.domain.network.GetPlaceDetailUseCase
-import com.example.model.domain.DetailedDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
