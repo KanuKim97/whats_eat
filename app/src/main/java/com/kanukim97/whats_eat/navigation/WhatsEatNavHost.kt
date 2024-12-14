@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import com.example.collection.navigation.collectionScreen
 import com.kanukim97.detail.navigation.detailScreen
 import com.kanukim97.detail.navigation.onNavigateDetail
-import com.example.home.navigation.homeRoute
-import com.example.home.navigation.homeScreen
+import com.kanukim97.home.navigation.homeRoute
+import com.kanukim97.home.navigation.homeScreen
 
 @Composable
 fun WhatsEatNavHost(

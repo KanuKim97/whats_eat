@@ -1,6 +1,6 @@
 package com.example.domain
 
-import com.example.domain.model.NearByPlaceItemModel
+import com.kanukim97.domain.model.NearByPlaceItemModel
 import com.kanukim97.domain.model.PlaceDetailItemModel
 import com.example.domain.network.GetGridItemUseCase
 import com.example.domain.network.GetMainBannerUseCase
