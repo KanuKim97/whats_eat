@@ -1,4 +1,4 @@
-package com.example.data.model
+package com.kanukim97.data.model
 
 data class CollectionDataModel(
     val id: String,

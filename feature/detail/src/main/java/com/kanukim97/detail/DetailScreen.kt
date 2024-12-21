@@ -25,12 +25,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.designsystem.component.EatCircularProgressIndicator
-import com.kanukim97.designsystem.component.EatTextButton
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.component.EatCircularProgressIndicator
+import com.kanukim97.designsystem.theme.EatShape
+import com.kanukim97.designsystem.theme.EatTypography
 import com.kanukim97.detail.component.LocationMapView
-import com.example.ui.PlaceInfo
+import com.kanukim97.ui.PlaceInfo
 import com.kanukim97.designsystem.component.EatOutlinedTextButton
 import com.kanukim97.detail.state.DetailUiState
 import com.kanukim97.detail.state.SaveCollectionState

@@ -1,6 +1,6 @@
-package com.example.database
+package com.kanukim97.database
 
-import com.example.database.dao.EatDao
+import com.kanukim97.database.dao.EatDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

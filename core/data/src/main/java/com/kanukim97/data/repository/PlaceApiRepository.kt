@@ -1,7 +1,7 @@
-package com.example.data.repository
+package com.kanukim97.data.repository
 
-import com.example.model.network.detailPlace.DetailedResult
-import com.example.model.network.nearBySearch.NearBySearchResult
+import com.kanukim97.model.network.detailPlace.DetailedResult
+import com.kanukim97.model.network.nearBySearch.NearBySearchResult
 import kotlinx.coroutines.flow.Flow
 
 interface PlaceApiRepository {

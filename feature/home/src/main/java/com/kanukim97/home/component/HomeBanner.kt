@@ -1,4 +1,4 @@
-package com.example.home.component
+package com.kanukim97.home.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -14,11 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.component.EatCircularProgressIndicator
-import com.example.designsystem.component.EatHorizontalPager
-import com.example.designsystem.theme.EatTypography
-import com.example.home.BannerUiState
-import com.example.ui.BannerCard
+import com.kanukim97.designsystem.component.EatCircularProgressIndicator
+import com.kanukim97.designsystem.component.EatHorizontalPager
+import com.kanukim97.designsystem.theme.EatTypography
+import com.kanukim97.home.BannerUiState
+import com.kanukim97.ui.BannerCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -1,4 +1,4 @@
-package com.example.ui
+package com.kanukim97.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
@@ -23,11 +23,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.component.EatCard
-import com.example.designsystem.component.EatIconButton
-import com.example.designsystem.component.EatImageLoader
-import com.example.designsystem.icons.EatIcons
-import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.component.EatCard
+import com.kanukim97.designsystem.component.EatIconButton
+import com.kanukim97.designsystem.component.EatImageLoader
+import com.kanukim97.designsystem.icons.EatIcons
+import com.kanukim97.designsystem.theme.EatTypography
 
 @Composable
 fun CollectionCard(

@@ -1,7 +1,7 @@
-package com.example.network.di
+package com.kanukim97.network.di
 
-import com.example.network.PlaceDataSource
-import com.example.network.PlaceDataSourceImpl
+import com.kanukim97.network.PlaceDataSource
+import com.kanukim97.network.PlaceDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

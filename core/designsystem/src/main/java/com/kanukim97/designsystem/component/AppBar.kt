@@ -1,4 +1,4 @@
-package com.example.designsystem.component
+package com.kanukim97.designsystem.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.theme.EatTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.Gray500
+import com.kanukim97.designsystem.theme.EatShape
+import com.kanukim97.designsystem.theme.Gray500
 
 @Composable
 fun EatTextButton(

@@ -1,7 +1,7 @@
-package com.example.common.di
+package com.kanukim97.common.di
 
-import com.example.common.DefaultDispatcher
-import com.example.common.IODispatcher
+import com.kanukim97.common.DefaultDispatcher
+import com.kanukim97.common.IODispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

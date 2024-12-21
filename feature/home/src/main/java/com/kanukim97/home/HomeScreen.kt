@@ -1,4 +1,4 @@
-package com.example.home
+package com.kanukim97.home
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -19,10 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.theme.EatTypography
-import com.example.home.component.HomeBanner
-import com.example.home.component.HomeItemGrid
-import com.example.ui.PermissionAlertDialog
+import com.kanukim97.designsystem.theme.EatTypography
+import com.kanukim97.home.component.HomeBanner
+import com.kanukim97.home.component.HomeItemGrid
+import com.kanukim97.ui.PermissionAlertDialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState

@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.component.EatHorizontalPager
-import com.example.designsystem.component.EatImageLoader
-import com.example.ui.preview.ComponentPreview
+import com.kanukim97.designsystem.component.EatHorizontalPager
+import com.kanukim97.designsystem.component.EatImageLoader
+import com.kanukim97.ui.preview.ComponentPreview
 
 @Composable
 fun EatImageHorizontalPager(

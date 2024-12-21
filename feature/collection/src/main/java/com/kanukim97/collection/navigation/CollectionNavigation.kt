@@ -1,4 +1,4 @@
-package com.example.collection.navigation
+package com.kanukim97.collection.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.LinearEasing
@@ -11,8 +11,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.collection.CollectionRoute
-import com.example.collection.CollectionViewModel
+import com.kanukim97.collection.CollectionRoute
+import com.kanukim97.collection.CollectionViewModel
 
 const val collectionRoute = "Collection"
 

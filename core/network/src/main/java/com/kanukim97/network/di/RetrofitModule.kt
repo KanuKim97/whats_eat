@@ -1,7 +1,7 @@
-package com.example.network.di
+package com.kanukim97.network.di
 
 import com.example.network.api.PlaceApiService
-import com.example.network.constant.Constants
+import com.kanukim97.network.constant.Constants
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

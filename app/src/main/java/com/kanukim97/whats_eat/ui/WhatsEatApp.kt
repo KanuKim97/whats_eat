@@ -16,13 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.collection.navigation.collectionRoute
-import com.example.collection.navigation.toCollectionScreen
-import com.example.designsystem.component.EatCenterAlignedAppBar
-import com.example.designsystem.component.EatLargeTopAppBar
-import com.example.designsystem.icons.EatIcons
+import com.kanukim97.collection.navigation.collectionRoute
+import com.kanukim97.collection.navigation.toCollectionScreen
+import com.kanukim97.designsystem.component.EatCenterAlignedAppBar
+import com.kanukim97.designsystem.component.EatLargeTopAppBar
+import com.kanukim97.designsystem.icons.EatIcons
 import com.kanukim97.detail.navigation.detailRoute
-import com.example.home.navigation.homeRoute
+import com.kanukim97.home.navigation.homeRoute
 import com.example.whats_eat.navigation.WhatsEatNavHost
 
 @Composable

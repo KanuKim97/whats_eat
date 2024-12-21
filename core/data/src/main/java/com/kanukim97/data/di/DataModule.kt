@@ -1,8 +1,8 @@
-package com.example.data.di
+package com.kanukim97.data.di
 
-import com.example.data.repository.DatabaseRepository
-import com.example.data.repository.DatabaseRepositoryImpl
-import com.example.data.repository.PlaceApiRepository
+import com.kanukim97.data.repository.DatabaseRepository
+import com.kanukim97.data.repository.DatabaseRepositoryImpl
+import com.kanukim97.data.repository.PlaceApiRepository
 import com.example.data.repository.PlaceApiRepositoryImpl
 import dagger.Binds
 import dagger.Module

@@ -1,4 +1,4 @@
-package com.example.designsystem.component
+package com.kanukim97.designsystem.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.icons.EatIcons
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.EatTheme
-import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.icons.EatIcons
+import com.kanukim97.designsystem.theme.EatShape
+import com.kanukim97.designsystem.theme.EatTheme
+import com.kanukim97.designsystem.theme.EatTypography
 
 @Composable
 fun NoticeSnackBar(

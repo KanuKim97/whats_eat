@@ -1,4 +1,4 @@
-package com.example.designsystem.theme
+package com.kanukim97.designsystem.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

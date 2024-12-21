@@ -1,12 +1,12 @@
-package com.example.ui
+package com.kanukim97.ui
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.designsystem.component.EatAlertDialog
-import com.example.designsystem.icons.EatIcons
-import com.example.designsystem.theme.EatTheme
-import com.example.ui.preview.ComponentPreview
+import com.kanukim97.designsystem.component.EatAlertDialog
+import com.kanukim97.designsystem.icons.EatIcons
+import com.kanukim97.designsystem.theme.EatTheme
+import com.kanukim97.ui.preview.ComponentPreview
 
 @Composable
 fun PermissionAlertDialog(

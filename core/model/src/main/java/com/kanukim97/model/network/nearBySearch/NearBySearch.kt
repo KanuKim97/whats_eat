@@ -1,9 +1,9 @@
-package com.example.model.network.nearBySearch
+package com.kanukim97.model.network.nearBySearch
 
-import com.example.model.network.Geometry
-import com.example.model.network.OpeningHours
-import com.example.model.network.Photo
-import com.example.model.network.PlusCode
+import com.kanukim97.model.network.Geometry
+import com.kanukim97.model.network.OpeningHours
+import com.kanukim97.model.network.Photo
+import com.kanukim97.model.network.PlusCode
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

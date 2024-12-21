@@ -1,11 +1,11 @@
-package com.example.data.repository
+package com.kanukim97.data.repository
 
-import com.example.common.IODispatcher
-import com.example.data.mapper.dataModelToEntityMapper
-import com.example.data.mapper.entityToDataModelMapper
-import com.example.data.model.CollectionDataModel
-import com.example.database.dao.EatDao
-import com.example.database.model.CollectionEntity
+import com.kanukim97.common.IODispatcher
+import com.kanukim97.data.mapper.dataModelToEntityMapper
+import com.kanukim97.data.mapper.entityToDataModelMapper
+import com.kanukim97.data.model.CollectionDataModel
+import com.kanukim97.database.dao.EatDao
+import com.kanukim97.database.model.CollectionEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

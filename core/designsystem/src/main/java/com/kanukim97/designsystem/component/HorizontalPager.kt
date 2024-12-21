@@ -1,4 +1,4 @@
-package com.example.designsystem.component
+package com.kanukim97.designsystem.component
 
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope

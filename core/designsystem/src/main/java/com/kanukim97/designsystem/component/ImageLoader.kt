@@ -1,4 +1,4 @@
-package com.example.designsystem.component
+package com.kanukim97.designsystem.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,9 +13,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.Gray
-import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.theme.EatShape
+import com.kanukim97.designsystem.theme.Gray
+import com.kanukim97.designsystem.theme.EatTypography
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.glide.GlideImageState

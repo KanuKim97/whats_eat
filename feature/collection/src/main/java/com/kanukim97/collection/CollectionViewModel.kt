@@ -1,9 +1,9 @@
-package com.example.collection
+package com.kanukim97.collection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repository.DatabaseRepository
-import com.example.domain.model.CollectionDomainModel
+import com.kanukim97.data.repository.DatabaseRepository
+import com.kanukim97.domain.model.CollectionDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow

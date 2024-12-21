@@ -1,7 +1,7 @@
-package com.example.network
+package com.kanukim97.network
 
-import com.example.model.network.detailPlace.DetailedPlace
-import com.example.model.network.nearBySearch.NearBySearch
+import com.kanukim97.model.network.detailPlace.DetailedPlace
+import com.kanukim97.model.network.nearBySearch.NearBySearch
 
 interface PlaceDataSource {
     suspend fun getDetail(placeID: String): DetailedPlace

@@ -1,4 +1,4 @@
-package com.example.designsystem.component
+package com.kanukim97.designsystem.component
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.designsystem.icons.EatIcons
-import com.example.designsystem.theme.EatTheme
-import com.example.designsystem.theme.Gray700
-import com.example.designsystem.theme.Gray900
-import com.example.designsystem.theme.EatTypography
+import com.kanukim97.designsystem.icons.EatIcons
+import com.kanukim97.designsystem.theme.EatTheme
+import com.kanukim97.designsystem.theme.Gray700
+import com.kanukim97.designsystem.theme.Gray900
+import com.kanukim97.designsystem.theme.EatTypography
 
 @Composable
 fun BottomAppNavBar(

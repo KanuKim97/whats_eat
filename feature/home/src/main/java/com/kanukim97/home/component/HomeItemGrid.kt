@@ -1,4 +1,4 @@
-package com.example.home.component
+package com.kanukim97.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,11 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.designsystem.component.EatCircularProgressIndicator
-import com.example.designsystem.component.EatVerticalGrid
-import com.example.designsystem.theme.EatTypography
-import com.example.home.ItemGridUiState
-import com.example.ui.GridItem
+import com.kanukim97.designsystem.component.EatCircularProgressIndicator
+import com.kanukim97.designsystem.component.EatVerticalGrid
+import com.kanukim97.designsystem.theme.EatTypography
+import com.kanukim97.home.ItemGridUiState
+import com.kanukim97.ui.GridItem
 
 @Composable
 fun HomeItemGrid(

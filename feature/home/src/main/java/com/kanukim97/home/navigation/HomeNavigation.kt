@@ -1,4 +1,4 @@
-package com.example.home.navigation
+package com.kanukim97.home.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.LinearEasing
@@ -9,8 +9,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.home.HomeRoute
-import com.example.home.HomeViewModel
+import com.kanukim97.home.HomeRoute
+import com.kanukim97.home.HomeViewModel
 
 const val homeRoute = "Home"
 

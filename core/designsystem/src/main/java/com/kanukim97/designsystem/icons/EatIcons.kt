@@ -1,4 +1,4 @@
-package com.example.designsystem.icons
+package com.kanukim97.designsystem.icons
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack

@@ -1,11 +1,11 @@
-package com.example.database.dao
+package com.kanukim97.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.database.model.CollectionEntity
+import com.kanukim97.database.model.CollectionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

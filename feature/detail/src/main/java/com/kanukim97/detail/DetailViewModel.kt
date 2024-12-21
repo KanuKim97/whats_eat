@@ -3,10 +3,10 @@ package com.kanukim97.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repository.DatabaseRepository
+import com.kanukim97.data.repository.DatabaseRepository
 import com.kanukim97.detail.navigation.PlaceIdArgs
 import com.kanukim97.domain.model.DetailedDomainModel
-import com.example.domain.network.GetPlaceDetailUseCase
+import com.kanukim97.domain.network.GetPlaceDetailUseCase
 import com.kanukim97.detail.state.DetailUiState
 import com.kanukim97.detail.state.SaveCollectionState
 import dagger.hilt.android.lifecycle.HiltViewModel

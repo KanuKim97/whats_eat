@@ -1,6 +1,6 @@
-package com.example.network.util
+package com.kanukim97.network.util
 
-import com.example.network.constant.Constants
+import com.kanukim97.network.constant.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit

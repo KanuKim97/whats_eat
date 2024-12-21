@@ -1,4 +1,4 @@
-package com.example.collection
+package com.kanukim97.collection
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,10 +7,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.designsystem.component.EatCircularProgressIndicator
-import com.example.designsystem.component.EatLazyColumn
-import com.example.designsystem.theme.EatTypography
-import com.example.ui.CollectionCard
+import com.kanukim97.designsystem.component.EatCircularProgressIndicator
+import com.kanukim97.designsystem.component.EatLazyColumn
+import com.kanukim97.designsystem.theme.EatTypography
+import com.kanukim97.ui.CollectionCard
 
 @Composable
 internal fun CollectionRoute(readAllContentUiState: ReadAllCollectionUiState) {

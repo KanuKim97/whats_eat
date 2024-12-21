@@ -1,12 +1,12 @@
-package com.example.model.network.detailPlace
+package com.kanukim97.model.network.detailPlace
 
-import com.example.model.network.AddressComponent
-import com.example.model.network.CurrentOpeningHours
-import com.example.model.network.Geometry
-import com.example.model.network.OpeningHours
-import com.example.model.network.Photo
-import com.example.model.network.PlusCode
-import com.example.model.network.Review
+import com.kanukim97.model.network.AddressComponent
+import com.kanukim97.model.network.CurrentOpeningHours
+import com.kanukim97.model.network.Geometry
+import com.kanukim97.model.network.OpeningHours
+import com.kanukim97.model.network.Photo
+import com.kanukim97.model.network.PlusCode
+import com.kanukim97.model.network.Review
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

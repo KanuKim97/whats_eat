@@ -1,8 +1,8 @@
-package com.example.domain.network
+package com.kanukim97.domain.network
 
-import com.example.data.repository.PlaceApiRepository
+import com.kanukim97.data.repository.PlaceApiRepository
 import com.example.domain.BuildConfig
-import com.example.domain.model.NearByPlaceItemModel
+import com.kanukim97.domain.model.NearByPlaceItemModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

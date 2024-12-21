@@ -1,4 +1,4 @@
-package com.example.ui
+package com.kanukim97.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.component.EatImageLoader
-import com.example.designsystem.theme.EatTypography
-import com.example.domain.model.NearByPlaceItemModel
+import com.kanukim97.designsystem.component.EatImageLoader
+import com.kanukim97.designsystem.theme.EatTypography
+import com.kanukim97.domain.model.NearByPlaceItemModel
 
 @Composable
 fun GridItem(

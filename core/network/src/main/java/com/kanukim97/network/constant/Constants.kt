@@ -1,4 +1,4 @@
-package com.example.network.constant
+package com.kanukim97.network.constant
 
 object Constants {
     // OkhttpClient TimeOut Seconds

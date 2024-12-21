@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.theme.EatShape
-import com.example.designsystem.theme.EatTypography
-import com.example.ui.preview.ComponentPreview
+import com.kanukim97.designsystem.theme.EatShape
+import com.kanukim97.designsystem.theme.EatTypography
+import com.kanukim97.ui.preview.ComponentPreview
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap

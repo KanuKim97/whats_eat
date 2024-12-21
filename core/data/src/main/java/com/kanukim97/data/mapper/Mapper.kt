@@ -1,7 +1,7 @@
-package com.example.data.mapper
+package com.kanukim97.data.mapper
 
-import com.example.data.model.CollectionDataModel
-import com.example.database.model.CollectionEntity
+import com.kanukim97.data.model.CollectionDataModel
+import com.kanukim97.database.model.CollectionEntity
 
 fun entityToDataModelMapper(
     entity: CollectionEntity

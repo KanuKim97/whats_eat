@@ -1,4 +1,4 @@
-package com.example.designsystem.font
+package com.kanukim97.designsystem.font
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

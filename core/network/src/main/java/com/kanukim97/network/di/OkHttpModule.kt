@@ -1,7 +1,7 @@
-package com.example.network.di
+package com.kanukim97.network.di
 
-import com.example.network.util.addDefaultTimeOut
-import com.example.network.util.httpLoggingInterceptor
+import com.kanukim97.network.util.addDefaultTimeOut
+import com.kanukim97.network.util.httpLoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

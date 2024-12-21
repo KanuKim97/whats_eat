@@ -1,6 +1,6 @@
-package com.example.domain.network
+package com.kanukim97.domain.network
 
-import com.example.data.repository.PlaceApiRepository
+import com.kanukim97.data.repository.PlaceApiRepository
 import com.example.domain.BuildConfig
 import com.kanukim97.domain.model.DetailedDomainModel
 import kotlinx.coroutines.flow.Flow

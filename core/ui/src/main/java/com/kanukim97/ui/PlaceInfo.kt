@@ -1,4 +1,4 @@
-package com.example.ui
+package com.kanukim97.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,8 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.theme.EatTheme
-import com.example.ui.preview.ComponentPreview
+import com.example.ui.PlacePhoneNumberRow
+import com.kanukim97.designsystem.theme.EatTheme
+import com.kanukim97.ui.preview.ComponentPreview
 
 @Composable
 fun PlaceInfo(

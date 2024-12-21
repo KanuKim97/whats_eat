@@ -1,9 +1,10 @@
 package com.example.data.repository
 
-import com.example.common.IODispatcher
-import com.example.model.network.nearBySearch.NearBySearchResult
-import com.example.model.network.detailPlace.DetailedResult
-import com.example.network.PlaceDataSource
+import com.kanukim97.common.IODispatcher
+import com.kanukim97.model.network.nearBySearch.NearBySearchResult
+import com.kanukim97.model.network.detailPlace.DetailedResult
+import com.kanukim97.network.PlaceDataSource
+import com.kanukim97.data.repository.PlaceApiRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

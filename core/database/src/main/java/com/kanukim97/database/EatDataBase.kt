@@ -1,9 +1,9 @@
-package com.example.database
+package com.kanukim97.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.database.dao.EatDao
-import com.example.database.model.CollectionEntity
+import com.kanukim97.database.dao.EatDao
+import com.kanukim97.database.model.CollectionEntity
 
 @Database(
     entities = [CollectionEntity::class],

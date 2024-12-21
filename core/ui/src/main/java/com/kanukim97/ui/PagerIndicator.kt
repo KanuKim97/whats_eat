@@ -17,9 +17,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.designsystem.theme.Gray550
-import com.example.designsystem.theme.LogoColor
-import com.example.ui.preview.ComponentPreview
+import com.kanukim97.designsystem.theme.Gray550
+import com.kanukim97.designsystem.theme.LogoColor
 
 @Composable
 fun EatPagerIndicators(

@@ -1,11 +1,11 @@
-package com.example.designsystem.theme
+package com.kanukim97.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.designsystem.font.pretendard
+import com.kanukim97.designsystem.font.pretendard
 
 val EatTypography = Typography(
     displayLarge = TextStyle(

@@ -1,7 +1,7 @@
 package com.example.network.api
 
-import com.example.model.network.detailPlace.DetailedPlace
-import com.example.model.network.nearBySearch.NearBySearch
+import com.kanukim97.model.network.detailPlace.DetailedPlace
+import com.kanukim97.model.network.nearBySearch.NearBySearch
 import retrofit2.http.GET
 import retrofit2.http.Query
 

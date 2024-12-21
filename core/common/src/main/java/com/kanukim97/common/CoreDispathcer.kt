@@ -1,4 +1,4 @@
-package com.example.common
+package com.kanukim97.common
 
 import javax.inject.Qualifier
 
