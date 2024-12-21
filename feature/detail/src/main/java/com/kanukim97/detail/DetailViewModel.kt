@@ -1,10 +1,8 @@
 package com.kanukim97.detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kanukim97.data.repository.DatabaseRepository
-import com.kanukim97.detail.navigation.PlaceIdArgs
 import com.kanukim97.domain.model.DetailedDomainModel
 import com.kanukim97.domain.network.GetPlaceDetailUseCase
 import com.kanukim97.detail.state.DetailUiState
@@ -12,34 +10,33 @@ import com.kanukim97.detail.state.SaveCollectionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    getPlaceDetailUseCase: GetPlaceDetailUseCase,
+    private val getPlaceDetailUseCase: GetPlaceDetailUseCase,
     private val dbRepository: DatabaseRepository
 ): ViewModel() {
     private var _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
     val saveCollectionState: StateFlow<SaveCollectionState> = _saveCollectionState
 
-    val detailUiState = detailState(
-        placeID = PlaceIdArgs(savedStateHandle).placeID,
-        getPlaceDetailUseCase = getPlaceDetailUseCase
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = DetailUiState.Loading
-    )
+    private val _detailUiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
+    val detailUiState = _detailUiState.asStateFlow()
+
+    fun getDetailUiState(placeId: String) = viewModelScope.launch {
+        detailState(
+            placeId = placeId,
+            getPlaceDetailUseCase = getPlaceDetailUseCase
+        ).collectLatest { state -> _detailUiState.value = state }
+    }
 
     fun savePlaceInfo(
         placeId: String,
@@ -81,10 +78,10 @@ class DetailViewModel @Inject constructor(
 }
 
 private fun detailState(
-    placeID: String,
+    placeId: String,
     getPlaceDetailUseCase: GetPlaceDetailUseCase
 ): Flow<DetailUiState> {
-    return getPlaceDetailUseCase(placeID)
+    return getPlaceDetailUseCase(placeId)
         .onStart { DetailUiState.Loading }
         .catch { _ -> DetailUiState.Failed }
         .map<DetailedDomainModel, DetailUiState> { result -> DetailUiState.Success(result) }

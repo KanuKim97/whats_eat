@@ -4,19 +4,13 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.kanukim97.home.HomeRoute
-import com.kanukim97.home.HomeViewModel
-
-const val homeRoute = "Home"
+import com.kanukim97.home.HomeScreenRoot
+import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.homeScreen(navigateToDetail: (String) -> Unit) {
-    composable(
-        route = homeRoute,
+    composable<HomeRoute>(
         exitTransition = {
             fadeOut(
                 animationSpec = tween(
@@ -32,6 +26,11 @@ fun NavGraphBuilder.homeScreen(navigateToDetail: (String) -> Unit) {
             )
         }
     ) {
-        HomeRoute(navigateToDetail)
+        HomeScreenRoot(navigateToDetail)
     }
+}
+
+@Serializable
+data object HomeRoute {
+    const val ROUTE = "Home"
 }

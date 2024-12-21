@@ -5,32 +5,19 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.kanukim97.detail.DetailRoute
-
-const val detailRoute = "Detail"
-const val placeIDArgs = "placeID"
-
-internal class PlaceIdArgs(val placeID: String) {
-    constructor(savedStateHandle: SavedStateHandle):
-        this(placeID = checkNotNull(savedStateHandle[placeIDArgs]))
-}
+import androidx.navigation.toRoute
+import com.kanukim97.detail.DetailScreenRoot
+import kotlinx.serialization.Serializable
 
 fun NavController.onNavigateDetail(placeID: String) {
-    this.navigate("$detailRoute/$placeID")
+    this.navigate(DetailRoute(placeID))
 }
 
 fun NavGraphBuilder.detailScreen() {
-    composable(
-        route = "$detailRoute/{$placeIDArgs}",
-        arguments = listOf(
-            navArgument(placeIDArgs) { type = NavType.StringType }
-        ),
+    composable<DetailRoute>(
         enterTransition = {
             fadeIn(
                 animationSpec = tween(
@@ -60,6 +47,13 @@ fun NavGraphBuilder.detailScreen() {
             )
         }
     ) {
-        DetailRoute()
+        val detailRoute: DetailRoute = it.toRoute()
+
+        DetailScreenRoot(detailRoute.placeId)
     }
+}
+
+@Serializable
+data class DetailRoute(val placeId: String) {
+    companion object { const val ROUTE = "Detail" }
 }

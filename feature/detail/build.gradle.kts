@@ -1,6 +1,7 @@
 plugins {
     id("com.whats-eat.feature")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -9,6 +10,7 @@ android {
 
 dependencies {
     implementation(libs.bundles.gms)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(project(":core:common"))
     implementation(project(":core:data"))

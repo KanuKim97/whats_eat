@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import com.kanukim97.collection.navigation.collectionScreen
 import com.kanukim97.detail.navigation.detailScreen
 import com.kanukim97.detail.navigation.onNavigateDetail
-import com.kanukim97.home.navigation.homeRoute
+import com.kanukim97.home.navigation.HomeRoute
 import com.kanukim97.home.navigation.homeScreen
 
 @Composable
@@ -17,7 +17,7 @@ fun WhatsEatNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = homeRoute,
+        startDestination = HomeRoute,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {

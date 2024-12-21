@@ -39,7 +39,7 @@ import com.kanukim97.home.state.ItemGridUiState
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-internal fun HomeRoute(
+internal fun HomeScreenRoot(
     navigateToDetail: (String) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {

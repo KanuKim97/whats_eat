@@ -13,7 +13,7 @@ import com.kanukim97.designsystem.theme.EatTypography
 import com.kanukim97.ui.CollectionCard
 
 @Composable
-internal fun CollectionRoute(readAllContentUiState: ReadAllCollectionUiState) {
+internal fun CollectionScreenRoot(readAllContentUiState: ReadAllCollectionUiState) {
     CollectionScreen(readAllContentUiState = readAllContentUiState)
 }
 

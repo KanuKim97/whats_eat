@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kanukim97.designsystem.component.EatCircularProgressIndicator
 import com.kanukim97.designsystem.theme.EatShape
@@ -36,12 +38,17 @@ import com.kanukim97.detail.state.SaveCollectionState
 import com.kanukim97.ui.EatImageHorizontalPagerWithIndicator
 
 @Composable
-internal fun DetailRoute(
+internal fun DetailScreenRoot(
+    placeId: String,
     modifier: Modifier = Modifier,
     detailViewModel: DetailViewModel = hiltViewModel()
 ) {
     val detailUiState by detailViewModel.detailUiState.collectAsStateWithLifecycle()
     val saveCollectionUiState by detailViewModel.saveCollectionState.collectAsStateWithLifecycle()
+
+    LifecycleEventEffect(Lifecycle.Event.ON_START) {
+        detailViewModel.getDetailUiState(placeId)
+    }
 
     DetailScreen(
         detailUiState = detailUiState,

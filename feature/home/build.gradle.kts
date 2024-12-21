@@ -1,5 +1,6 @@
 plugins {
     id("com.whats-eat.feature")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -9,6 +10,7 @@ android {
 dependencies {
     implementation(libs.gms.location)
     implementation(libs.compose.permission)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(project(":core:common"))
     implementation(project(":core:domain"))

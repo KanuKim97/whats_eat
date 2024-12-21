@@ -16,13 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kanukim97.collection.navigation.collectionRoute
+import com.kanukim97.collection.navigation.CollectionRoute
 import com.kanukim97.collection.navigation.toCollectionScreen
 import com.kanukim97.designsystem.component.EatCenterAlignedAppBar
 import com.kanukim97.designsystem.component.EatLargeTopAppBar
 import com.kanukim97.designsystem.icons.EatIcons
-import com.kanukim97.detail.navigation.detailRoute
-import com.kanukim97.home.navigation.homeRoute
+import com.kanukim97.detail.navigation.DetailRoute
+import com.kanukim97.home.navigation.HomeRoute
 import com.kanukim97.whats_eat.navigation.WhatsEatNavHost
 
 @Composable
@@ -37,7 +37,7 @@ fun WhatsEatApp(modifier: Modifier = Modifier) {
         topBar = {
             currentRoute?.let { destination ->
                 when {
-                    destination.contains(homeRoute) -> {
+                    destination.contains(HomeRoute.ROUTE) -> {
                         EatLargeTopAppBar(
                             mainTitle = "내 주변 음식점",
                             subTitle = "오늘은 여기 어떤가요?",
@@ -45,7 +45,7 @@ fun WhatsEatApp(modifier: Modifier = Modifier) {
                             actionIconOnClick = { navController.toCollectionScreen() }
                         )
                     }
-                    destination.contains(detailRoute) -> {
+                    destination.contains(DetailRoute.ROUTE) -> {
                         EatCenterAlignedAppBar(
                             navigationIcon = EatIcons.arrowBackOutlined,
                             navigationIconOnClick = { navController.popBackStack() },
@@ -62,7 +62,7 @@ fun WhatsEatApp(modifier: Modifier = Modifier) {
                             }
                         )
                     }
-                    destination.contains(collectionRoute) -> {
+                    destination.contains(CollectionRoute.ROUTE) -> {
                         EatCenterAlignedAppBar(
                             navigationIcon = EatIcons.arrowBackOutlined,
                             navigationIconOnClick = { navController.popBackStack() }

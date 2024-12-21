@@ -1,7 +1,8 @@
 plugins {
     id("com.whats-eat.application")
-    id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {

@@ -11,18 +11,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.kanukim97.collection.CollectionRoute
+import com.kanukim97.collection.CollectionScreenRoot
 import com.kanukim97.collection.CollectionViewModel
-
-const val collectionRoute = "Collection"
+import kotlinx.serialization.Serializable
 
 fun NavController.toCollectionScreen() {
-    this.navigate(collectionRoute)
+    this.navigate(CollectionRoute)
 }
 
 fun NavGraphBuilder.collectionScreen() {
-    composable(
-        route = collectionRoute,
+    composable<CollectionRoute>(
         enterTransition = {
             fadeIn(
                 animationSpec = tween(
@@ -49,7 +47,12 @@ fun NavGraphBuilder.collectionScreen() {
             val collectionViewModel = hiltViewModel<CollectionViewModel>()
             val readAllContentUiState by collectionViewModel.readAllCollectionUiState.collectAsStateWithLifecycle()
 
-            CollectionRoute(readAllContentUiState)
+            CollectionScreenRoot(readAllContentUiState)
         }
     )
+}
+
+@Serializable
+data object CollectionRoute {
+    const val ROUTE = "Collection"
 }
