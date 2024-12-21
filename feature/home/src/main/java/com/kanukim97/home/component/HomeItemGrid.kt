@@ -28,8 +28,8 @@ fun HomeItemGrid(
     ) {
         when (itemGridUiState) {
             is ItemGridUiState.Init -> {}
-            is ItemGridUiState.IsLoading -> { EatCircularProgressIndicator() }
-            is ItemGridUiState.IsSuccess -> {
+            is ItemGridUiState.Loading -> { EatCircularProgressIndicator() }
+            is ItemGridUiState.Success -> {
                 if (itemGridUiState.item.isNullOrEmpty()) {
                     Box(
                         modifier = modifier.fillMaxSize(),
@@ -51,7 +51,7 @@ fun HomeItemGrid(
                     }
                 }
             }
-            is ItemGridUiState.IsFailed -> {
+            is ItemGridUiState.Failed -> {
                 Box(
                     modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
@@ -62,6 +62,9 @@ fun HomeItemGrid(
                         )
                     }
                 )
+            }
+            is ItemGridUiState.Empty -> {
+
             }
         }
     }

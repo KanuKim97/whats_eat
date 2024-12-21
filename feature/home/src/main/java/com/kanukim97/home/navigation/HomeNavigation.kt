@@ -14,9 +14,7 @@ import com.kanukim97.home.HomeViewModel
 
 const val homeRoute = "Home"
 
-fun NavGraphBuilder.homeScreen(
-    navigateToDetail: (String) -> Unit,
-) {
+fun NavGraphBuilder.homeScreen(navigateToDetail: (String) -> Unit) {
     composable(
         route = homeRoute,
         exitTransition = {
@@ -34,16 +32,6 @@ fun NavGraphBuilder.homeScreen(
             )
         }
     ) {
-        val homeViewModel = hiltViewModel<HomeViewModel>()
-        val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
-        val gridUiState by homeViewModel.itemGridUiState.collectAsStateWithLifecycle()
-
-        HomeRoute(
-            navigateToDetail = navigateToDetail,
-            getBannerUiState = homeViewModel::getBannerUiState,
-            getItemGridUiState = homeViewModel::getItemGridUiState,
-            getMainBannerState = bannerUiState,
-            getItemsState = gridUiState
-        )
+        HomeRoute(navigateToDetail)
     }
 }

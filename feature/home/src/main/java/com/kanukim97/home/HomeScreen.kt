@@ -13,12 +13,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kanukim97.designsystem.theme.EatTypography
 import com.kanukim97.home.component.HomeBanner
 import com.kanukim97.home.component.HomeItemGrid
@@ -30,16 +33,15 @@ import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.kanukim97.home.state.BannerUiState
+import com.kanukim97.home.state.ItemGridUiState
 
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun HomeRoute(
     navigateToDetail: (String) -> Unit,
-    getBannerUiState: (String) -> Unit,
-    getItemGridUiState: (String) -> Unit,
-    getMainBannerState: BannerUiState,
-    getItemsState: ItemGridUiState
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
@@ -61,6 +63,9 @@ internal fun HomeRoute(
     val locationLatitude = remember { mutableDoubleStateOf(0.0) }
     val locationLongitude = remember { mutableDoubleStateOf(0.0) }
 
+    val bannerUiState by homeViewModel.bannerUiState.collectAsStateWithLifecycle()
+    val listItemUiState by homeViewModel.itemGridUiState.collectAsStateWithLifecycle()
+
     LaunchedEffect(
         key1 = locationPermissionState,
         key2 = locationLatitude,
@@ -80,8 +85,8 @@ internal fun HomeRoute(
                 locationLatitude.doubleValue = location.latitude
                 locationLongitude.doubleValue = location.longitude
 
-                getBannerUiState("${location.latitude}, ${location.longitude}")
-                getItemGridUiState("${location.latitude}, ${location.longitude}")
+                homeViewModel.getBannerUiState("${location.latitude}, ${location.longitude}")
+                homeViewModel.getItemGridUiState("${location.latitude}, ${location.longitude}")
             }
         }
     }
@@ -100,8 +105,8 @@ internal fun HomeRoute(
     }
 
     HomeScreen(
-        bannerState = getMainBannerState,
-        itemGridState = getItemsState,
+        bannerState = bannerUiState,
+        itemGridState = listItemUiState,
         itemOnClick = navigateToDetail,
     )
 }
