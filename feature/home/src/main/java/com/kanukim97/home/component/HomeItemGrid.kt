@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import com.kanukim97.designsystem.component.EatCircularProgressIndicator
 import com.kanukim97.designsystem.component.EatVerticalGrid
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.home.ItemGridUiState
+import com.kanukim97.home.state.ItemGridUiState
 import com.kanukim97.ui.GridItem
 
 @Composable

@@ -2,9 +2,10 @@ package com.kanukim97.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kanukim97.domain.model.NearByPlaceItemModel
 import com.kanukim97.domain.network.GetGridItemUseCase
 import com.kanukim97.domain.network.GetMainBannerUseCase
+import com.kanukim97.home.state.BannerUiState
+import com.kanukim97.home.state.ItemGridUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
