@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ui"
+    namespace = "com.kanukim97.ui"
 }
 
 dependencies {

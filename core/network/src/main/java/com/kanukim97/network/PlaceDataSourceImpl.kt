@@ -1,9 +1,8 @@
 package com.kanukim97.network
 
-import com.example.network.BuildConfig
+import com.kanukim97.network.api.PlaceApiService
 import com.kanukim97.model.network.detailPlace.DetailedPlace
 import com.kanukim97.model.network.nearBySearch.NearBySearch
-import com.example.network.api.PlaceApiService
 import com.kanukim97.network.constant.Constants
 import javax.inject.Inject
 import javax.inject.Singleton

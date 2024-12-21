@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.collection"
+    namespace = "com.kanukim97.collection"
 }
 
 dependencies {

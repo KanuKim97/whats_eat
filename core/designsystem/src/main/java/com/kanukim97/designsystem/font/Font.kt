@@ -3,7 +3,7 @@ package com.kanukim97.designsystem.font
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import com.example.designsystem.R
+import com.kanukim97.designsystem.R
 
 val pretendard = FontFamily(
     Font(

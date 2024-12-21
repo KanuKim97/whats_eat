@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.domain"
+    namespace = "com.kanukim97.domain"
     defaultConfig.buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
     buildFeatures.buildConfig = true
 }

@@ -5,8 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "com.example.whats_eat"
-    defaultConfig.applicationId = "com.example.whats_eat"
+    namespace = "com.kanukim97.whats_eat"
+    defaultConfig.applicationId = "com.kanukim97.whats_eat"
 
     buildTypes {
         release {

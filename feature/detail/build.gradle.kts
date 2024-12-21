@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.detail"
+    namespace = "com.kanukim97.detail"
 }
 
 dependencies {

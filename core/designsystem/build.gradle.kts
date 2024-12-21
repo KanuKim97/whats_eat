@@ -5,5 +5,5 @@ plugins {
 }
 
 android {
-    namespace = "com.example.designsystem"
+    namespace = "com.kanukim97.designsystem"
 }

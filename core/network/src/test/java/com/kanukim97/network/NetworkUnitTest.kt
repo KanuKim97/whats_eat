@@ -1,7 +1,6 @@
 package com.kanukim97.network
 
-import com.example.network.BuildConfig
-import com.example.network.api.PlaceApiService
+import com.kanukim97.network.api.PlaceApiService
 import com.kanukim97.network.constant.Constants
 import com.kanukim97.network.util.addDefaultTimeOut
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

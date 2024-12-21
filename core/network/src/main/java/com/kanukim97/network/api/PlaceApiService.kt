@@ -1,4 +1,4 @@
-package com.example.network.api
+package com.kanukim97.network.api
 
 import com.kanukim97.model.network.detailPlace.DetailedPlace
 import com.kanukim97.model.network.nearBySearch.NearBySearch
