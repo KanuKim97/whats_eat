@@ -1,4 +1,4 @@
-package com.example.whats_eat
+package com.kanukim97.whats_eat
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

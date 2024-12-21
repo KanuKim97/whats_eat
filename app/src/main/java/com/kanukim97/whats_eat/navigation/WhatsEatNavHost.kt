@@ -1,4 +1,4 @@
-package com.example.whats_eat.navigation
+package com.kanukim97.whats_eat.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition

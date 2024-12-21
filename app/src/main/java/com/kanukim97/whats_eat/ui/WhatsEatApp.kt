@@ -1,4 +1,4 @@
-package com.example.whats_eat.ui
+package com.kanukim97.whats_eat.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ import com.kanukim97.designsystem.component.EatLargeTopAppBar
 import com.kanukim97.designsystem.icons.EatIcons
 import com.kanukim97.detail.navigation.detailRoute
 import com.kanukim97.home.navigation.homeRoute
-import com.example.whats_eat.navigation.WhatsEatNavHost
+import com.kanukim97.whats_eat.navigation.WhatsEatNavHost
 
 @Composable
 fun WhatsEatApp(modifier: Modifier = Modifier) {
