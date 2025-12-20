@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.common"
+    namespace = "com.kanukim97.common"
 }
 
 dependencies {

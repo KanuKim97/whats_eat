@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.database"
+    namespace = "com.kanukim97.database"
     testOptions.unitTests.isIncludeAndroidResources = true
 }
 

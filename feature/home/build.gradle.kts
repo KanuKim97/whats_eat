@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.home"
+    namespace = "com.kanukim97.home"
 }
 
 dependencies {

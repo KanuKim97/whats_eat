@@ -1,6 +1,6 @@
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import com.example.convention.configure.applicationConfigure
-import com.example.convention.configure.composeConfigure
+import com.kanukim97.convention.configure.applicationConfigure
+import com.kanukim97.convention.configure.composeConfigure
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

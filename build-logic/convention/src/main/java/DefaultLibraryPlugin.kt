@@ -1,5 +1,5 @@
 import com.android.build.gradle.LibraryExtension
-import com.example.convention.configure.defaultLibraryConfigure
+import com.kanukim97.convention.configure.defaultLibraryConfigure
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

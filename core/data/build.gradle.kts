@@ -6,7 +6,7 @@ plugins {
 
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.kanukim97.data"
 }
 
 dependencies {
