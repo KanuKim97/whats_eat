@@ -1,4 +1,4 @@
-package com.kanukim97.common
+package com.kanukim97.util.dispatcher
 
 import javax.inject.Qualifier
 
@@ -6,7 +6,10 @@ import javax.inject.Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class IODispatcher
 
-
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class DefaultDispatcher
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class MainDispatcher

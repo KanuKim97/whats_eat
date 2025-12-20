@@ -1,15 +1,12 @@
 package com.kanukim97.data.repository
 
-import com.kanukim97.common.IODispatcher
 import com.kanukim97.data.mapper.entityToModelMapper
 import com.kanukim97.data.mapper.modelToEntityMapper
 import com.kanukim97.database.dao.EatDao
 import com.kanukim97.model.domain.CollectionModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import java.sql.SQLDataException
@@ -17,7 +14,6 @@ import javax.inject.Inject
 
 class DatabaseRepositoryImpl @Inject constructor(
     private val eatDao: EatDao,
-    @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ): DatabaseRepository {
     override fun readAllCollectionEntities(): Flow<List<CollectionModel>> = eatDao
         .readAllCollectionEntities()
@@ -31,14 +27,13 @@ class DatabaseRepositoryImpl @Inject constructor(
                 is ClassNotFoundException -> emit(listOf())
                 else -> emit(listOf())
             }
-        }.flowOn(ioDispatcher)
+        }
 
     override fun readCollectionEntity(
         placeID: String
     ): Flow<CollectionModel> = eatDao
         .readCollectionEntity(placeID)
         .map { entity -> entityToModelMapper(entity) }
-        .flowOn(ioDispatcher)
 
     override fun saveUserCollection(
         content: CollectionModel
@@ -52,7 +47,7 @@ class DatabaseRepositoryImpl @Inject constructor(
             is ClassNotFoundException -> emit(Result.failure(exception))
             else -> emit(Result.failure(exception))
         }
-    }.flowOn(ioDispatcher)
+    }
 
     override fun deleteUserCollection(
         content: CollectionModel
@@ -66,5 +61,5 @@ class DatabaseRepositoryImpl @Inject constructor(
             is ClassNotFoundException -> emit(Result.failure(exception))
             else -> emit(Result.failure(exception))
         }
-    }.flowOn(ioDispatcher)
+    }
 }

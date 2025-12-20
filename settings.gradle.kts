@@ -19,7 +19,6 @@ rootProject.name = "what's_eat"
 include(":app")
 
 // Core Module
-include(":core:common")
 include(":core:designsystem")
 include(":core:ui")
 include(":core:data")
@@ -27,6 +26,7 @@ include(":core:domain")
 include(":core:model")
 include(":core:network")
 include(":core:database")
+include(":core:util")
 
 // Feature Module
 include(":feature:collection")

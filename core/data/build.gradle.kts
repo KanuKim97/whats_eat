@@ -16,7 +16,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
 
-    implementation(project(":core:common"))
+    implementation(project(":core:util"))
     implementation(project(":core:database"))
     implementation(project(":core:network"))
     implementation(project(":core:model"))
