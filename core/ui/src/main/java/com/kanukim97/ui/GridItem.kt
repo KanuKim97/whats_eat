@@ -21,14 +21,16 @@ import com.kanukim97.designsystem.theme.EatTypography
 
 @Composable
 fun GridItem(
-    gridItems: GridItemsModel,
+    id: String,
+    name: String,
+    imageUrl: String,
     itemOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .wrapContentSize()
-            .clickable(onClick = { itemOnClick(gridItems.placeID) }),
+            .clickable(onClick = { itemOnClick(id) }),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -37,11 +39,11 @@ fun GridItem(
             horizontalAlignment = Alignment.Start,
             content = {
                 EatImageLoader(
-                    imageModel = gridItems.photoRef,
+                    imageModel = imageUrl,
                     modifier = modifier.size(160.dp)
                 )
                 Text(
-                    text = gridItems.name,
+                    text = name,
                     modifier = modifier
                         .width(160.dp)
                         .wrapContentHeight(),

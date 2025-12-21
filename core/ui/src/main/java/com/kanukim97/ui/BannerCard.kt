@@ -18,12 +18,14 @@ import com.kanukim97.designsystem.theme.EatTypography
 
 @Composable
 fun BannerCard(
-    banner: BannerItemsModel?,
+    id: String,
+    name: String,
+    imageUrl: String,
     bannerOnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     EatCard(
-        onClick = { bannerOnClick(banner?.placeID ?: "") },
+        onClick = { bannerOnClick(id) },
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
@@ -35,13 +37,13 @@ fun BannerCard(
             verticalArrangement = Arrangement.Center,
             content = {
                 EatImageLoader(
-                    imageModel = banner?.photoRef ?: "",
+                    imageModel = imageUrl,
                     modifier = modifier
                         .fillMaxWidth()
                         .height(250.dp)
                 )
                 Text(
-                    text = banner?.name ?: "",
+                    text = name,
                     fontWeight = FontWeight.SemiBold,
                     style = EatTypography.titleMedium,
                     color = MaterialTheme.colorScheme.inverseSurface
