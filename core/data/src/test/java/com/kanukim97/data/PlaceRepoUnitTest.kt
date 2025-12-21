@@ -1,6 +1,6 @@
 package com.kanukim97.data
 
-import com.kanukim97.data.repository.PlaceApiRepository
+import com.kanukim97.data.repository.PlaceRepository
 import com.kanukim97.model.network.detailPlace.DetailedResult
 import com.kanukim97.model.network.nearBySearch.NearBySearchResult
 import io.mockk.clearMocks
@@ -14,22 +14,22 @@ import org.junit.Before
 import org.junit.Test
 
 class PlaceRepoUnitTest {
-    private val placeApiRepositoryImpl = mockk<PlaceApiRepository>()
+    private val placeApiRepositoryImpl = mockk<PlaceRepository>()
 
     private val defaultLatLng = "0.0, 0.0"
     private val defaultPlaceID = "ChIJN1t_tDeuEmsRUsoyG83frY4"
 
     @Before
     fun initRepositoryFunctionsBehavior() {
-        every { placeApiRepositoryImpl.nearByPlace(defaultLatLng) } returns flowOf(listOf())
-        every { placeApiRepositoryImpl.detailedPlace(defaultPlaceID) } returns flowOf(DataLayerDummyData.DUMMY_DETAIL_PLACE_DATA)
+        every { placeApiRepositoryImpl.getNearByPlace(defaultLatLng) } returns flowOf(listOf())
+        every { placeApiRepositoryImpl.getPlaceDetail(defaultPlaceID) } returns flowOf(DataLayerDummyData.DUMMY_DETAIL_PLACE_DATA)
     }
 
     @Test
     fun `execute should return empty list from Repository nearByPlace function`() = runBlocking {
         var result = listOf<NearBySearchResult>()
 
-        placeApiRepositoryImpl.nearByPlace(defaultLatLng).collect{ result = it }
+        placeApiRepositoryImpl.getNearByPlace(defaultLatLng).collect{ result = it }
 
         assertEquals(
             result,
@@ -41,7 +41,7 @@ class PlaceRepoUnitTest {
     fun `execute should return DetailedResult from Repository Detailed Place function`() = runBlocking {
         var result: DetailedResult? = null
 
-        placeApiRepositoryImpl.detailedPlace(defaultPlaceID).collect{ result = it }
+        placeApiRepositoryImpl.getPlaceDetail(defaultPlaceID).collect{ result = it }
 
         assertEquals(
             result,

@@ -1,7 +1,6 @@
 package com.kanukim97.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -11,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface EatDao {
     @Query("SELECT * FROM collection_entity")
-    fun readAllCollectionEntities(): Flow<List<CollectionEntity>>
+    fun readAllCollections(): Flow<List<CollectionEntity>>
 
     @Query("SELECT * FROM Collection_Entity WHERE placeID = (:placeID)")
-    fun readCollectionEntity(placeID: String): Flow<CollectionEntity>
+    fun readCollection(placeID: String): Flow<CollectionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveUserCollection(content: CollectionEntity)
+    suspend fun saveCollection(content: CollectionEntity)
 
-    @Delete(entity = CollectionEntity::class)
-    suspend fun deleteUserCollection(content: CollectionEntity)
+    @Query("DELETE FROM collection_entity WHERE placeID = (:placeID)")
+    suspend fun deleteCollectionById(placeID: String)
 }

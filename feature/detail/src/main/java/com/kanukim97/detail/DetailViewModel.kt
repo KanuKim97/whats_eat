@@ -4,10 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kanukim97.detail.navigation.PlaceIdArgs
-import com.kanukim97.domain.network.GetPlaceDetailUseCase
-import com.kanukim97.domain.database.SaveCollectionUseCase
-import com.kanukim97.model.domain.CollectionModel
-import com.kanukim97.model.domain.DetailedModel
+import com.kanukim97.domain.usecases.GetPlaceDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -24,8 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    getPlaceDetailUseCase: GetPlaceDetailUseCase,
-    private val saveUserCollectionUseCase: SaveCollectionUseCase
+//    getPlaceDetailUseCase: GetPlaceDetailUseCase,
+//    private val saveUserCollectionUseCase: SaveCollectionUseCase
 ): ViewModel() {
     private val _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
     val saveCollectionState: StateFlow<SaveCollectionState> = _saveCollectionState

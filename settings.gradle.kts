@@ -23,11 +23,9 @@ include(":core:designsystem")
 include(":core:ui")
 include(":core:data")
 include(":core:domain")
-include(":core:model")
-include(":core:network")
 include(":core:database")
+include(":core:remote")
 include(":core:util")
-
 // Feature Module
 include(":feature:collection")
 include(":feature:home")

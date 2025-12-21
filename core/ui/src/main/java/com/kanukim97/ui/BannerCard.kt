@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.kanukim97.designsystem.component.EatCard
 import com.kanukim97.designsystem.component.EatImageLoader
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.model.domain.BannerItemsModel
 
 @Composable
 fun BannerCard(

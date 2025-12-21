@@ -1,11 +1,8 @@
 package com.kanukim97.domain
 
-import com.kanukim97.model.domain.BannerItemsModel
-import com.kanukim97.model.domain.DetailedModel
-import com.kanukim97.model.domain.GridItemsModel
-import com.kanukim97.domain.network.GetGridItemUseCase
-import com.kanukim97.domain.network.GetMainBannerUseCase
-import com.kanukim97.domain.network.GetPlaceDetailUseCase
+import com.kanukim97.domain.usecases.GetBannerUseCase
+import com.kanukim97.domain.usecases.GetPlaceDetailUseCase
+import com.kanukim97.domain.usecases.GetPlaceItemsUseCase
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -18,8 +15,8 @@ import org.junit.Test
 
 
 class DomainLayerNetworkPackageUnitTest {
-    private val getMainBannerUseCase = mockk<GetMainBannerUseCase>()
-    private val getGridItemUseCase = mockk<GetGridItemUseCase>()
+    private val getMainBannerUseCase = mockk<GetBannerUseCase>()
+    private val getGridItemUseCase = mockk<GetPlaceItemsUseCase>()
     private val getPlaceDetailUseCase = mockk<GetPlaceDetailUseCase>()
 
     private val defaultLatLng = "0.0, 0.0"

@@ -28,8 +28,6 @@ import com.kanukim97.designsystem.component.EatTextButton
 import com.kanukim97.designsystem.theme.EatShape
 import com.kanukim97.designsystem.theme.EatTheme
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.model.domain.DetailedModel
-import com.kanukim97.model.domain.CollectionModel
 import com.kanukim97.ui.PlaceInfo
 import com.kanukim97.ui.preview.DevicePreview
 import com.google.android.gms.maps.model.CameraPosition

@@ -1,14 +1,13 @@
 package com.kanukim97.data.repository
 
-import com.kanukim97.model.domain.CollectionModel
+import com.kanukim97.data.model.PlaceCollection
 import kotlinx.coroutines.flow.Flow
 
 interface DatabaseRepository {
-    fun readAllCollectionEntities(): Flow<List<CollectionModel>>
+    fun readAllCollections(): Flow<List<PlaceCollection>>
 
-    fun readCollectionEntity(placeID: String): Flow<CollectionModel>
+    fun readCollection(placeID: String): Flow<PlaceCollection>
 
-    fun saveUserCollection(content: CollectionModel): Flow<Result<Unit>>
 
-    fun deleteUserCollection(content: CollectionModel): Flow<Result<Unit>>
+    suspend fun deleteCollection(id: String)
 }

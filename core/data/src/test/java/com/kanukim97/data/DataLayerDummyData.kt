@@ -1,6 +1,5 @@
 package com.kanukim97.data
 
-import com.kanukim97.model.domain.CollectionModel
 import com.kanukim97.model.network.CurrentOpeningHours
 import com.kanukim97.model.network.Geometry
 import com.kanukim97.model.network.OpeningHours

@@ -36,11 +36,11 @@ class DataBaseUnitTest {
     @Test
     @Throws(Exception::class)
     fun insert_collection_into_database() = runTest {
-        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[0])
-        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[1])
-        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[2])
+        eatDAO.saveCollection(DUMMY_ENTITIES_LIST[0])
+        eatDAO.saveCollection(DUMMY_ENTITIES_LIST[1])
+        eatDAO.saveCollection(DUMMY_ENTITIES_LIST[2])
 
-        val result = eatDAO.readCollectionEntity(DUMMY_ENTITIES_LIST[0].placeID).first()
+        val result = eatDAO.readCollection(DUMMY_ENTITIES_LIST[0].placeID).first()
 
         assertEquals(DUMMY_ENTITIES_LIST[0], result)
     }
@@ -48,13 +48,13 @@ class DataBaseUnitTest {
     @Test
     @Throws(Exception::class)
     fun delete_collection_into_database() = runTest {
-        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[0])
-        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[1])
-        eatDAO.saveUserCollection(DUMMY_ENTITIES_LIST[2])
+        eatDAO.saveCollection(DUMMY_ENTITIES_LIST[0])
+        eatDAO.saveCollection(DUMMY_ENTITIES_LIST[1])
+        eatDAO.saveCollection(DUMMY_ENTITIES_LIST[2])
 
-        eatDAO.deleteUserCollection(DUMMY_ENTITIES_LIST[0])
+        eatDAO.deleteCollectionById(DUMMY_ENTITIES_LIST[0])
 
-        val result = eatDAO.readAllCollectionEntities().first()
+        val result = eatDAO.readAllCollections().first()
 
         assertEquals(listOf(DUMMY_ENTITIES_LIST[1], DUMMY_ENTITIES_LIST[2]), result)
     }

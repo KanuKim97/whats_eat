@@ -2,10 +2,8 @@ package com.kanukim97.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kanukim97.domain.network.GetGridItemUseCase
-import com.kanukim97.domain.network.GetMainBannerUseCase
-import com.kanukim97.model.domain.BannerItemsModel
-import com.kanukim97.model.domain.GridItemsModel
+import com.kanukim97.domain.usecases.GetPlaceItemsUseCase
+import com.kanukim97.domain.usecases.GetBannerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getMainBannerUseCase: GetMainBannerUseCase,
-    private val getGridItemUseCase: GetGridItemUseCase
+    private val getMainBannerUseCase: GetBannerUseCase,
+    private val getGridItemUseCase: GetPlaceItemsUseCase
 ): ViewModel() {
     private var _bannerUiState = MutableStateFlow<BannerUiState>(BannerUiState.Init)
     val bannerUiState: StateFlow<BannerUiState> = _bannerUiState
@@ -42,7 +40,7 @@ class HomeViewModel @Inject constructor(
 
     private fun bannerUiState(
         latLng: String,
-        getMainBannerUseCase: GetMainBannerUseCase
+        getMainBannerUseCase: GetBannerUseCase
     ): Flow<BannerUiState> {
         return getMainBannerUseCase(latLng)
             .onStart { _bannerUiState.value = BannerUiState.IsLoading }
@@ -53,7 +51,7 @@ class HomeViewModel @Inject constructor(
 
     private fun itemGridUiState(
         latLng: String,
-        getGridItemUseCase: GetGridItemUseCase
+        getGridItemUseCase: GetPlaceItemsUseCase
     ): Flow<ItemGridUiState> {
         return getGridItemUseCase(latLng)
             .onStart { _itemGridUiState.value = ItemGridUiState.IsLoading }

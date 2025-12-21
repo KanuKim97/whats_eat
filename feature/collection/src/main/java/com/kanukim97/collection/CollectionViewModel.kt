@@ -2,8 +2,6 @@ package com.kanukim97.collection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kanukim97.domain.database.ReadAllCollectionUseCase
-import com.kanukim97.model.domain.CollectionModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
-    readAllCollectionUseCase: ReadAllCollectionUseCase,
+//    readAllCollectionUseCase: ReadAllCollectionUseCase,
 ): ViewModel() {
     val readAllCollectionUiState: StateFlow<ReadAllCollectionUiState> =
         readAllCollectionState(readAllCollectionUseCase)

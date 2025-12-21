@@ -3,7 +3,6 @@ package com.kanukim97.data
 import com.kanukim97.data.mapper.entityToModelMapper
 import com.kanukim97.data.mapper.modelToEntityMapper
 import com.kanukim97.database.model.CollectionEntity
-import com.kanukim97.model.domain.CollectionModel
 import org.junit.Test
 import org.junit.Assert.assertEquals
 

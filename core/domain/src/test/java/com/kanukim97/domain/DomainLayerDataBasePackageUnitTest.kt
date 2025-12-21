@@ -1,10 +1,6 @@
 package com.kanukim97.domain
 
-import com.kanukim97.domain.database.ReadAllCollectionUseCase
-import com.kanukim97.domain.database.ReadCollectionUseCase
-import com.kanukim97.domain.database.SaveCollectionUseCase
 import com.kanukim97.domain.DomainLayerDummyData.DUMMY_COLLECTION_DATA
-import com.kanukim97.model.domain.CollectionModel
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk

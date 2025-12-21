@@ -1,8 +1,5 @@
 package com.kanukim97.domain
 
-import com.kanukim97.model.domain.CollectionModel
-import com.kanukim97.model.domain.DetailedModel
-
 internal object DomainLayerDummyData {
     val DUMMY_COLLECTION_DATA = listOf(
         CollectionModel(

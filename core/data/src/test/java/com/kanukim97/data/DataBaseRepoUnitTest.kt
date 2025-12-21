@@ -1,7 +1,6 @@
 package com.kanukim97.data
 
 import com.kanukim97.data.repository.DatabaseRepository
-import com.kanukim97.model.domain.CollectionModel
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -24,8 +23,8 @@ class DataBaseRepoUnitTest {
 
     @Before
     fun initRepositoryFunctionsBehavior() {
-        every { databaseRepositoryImpl.readAllCollectionEntities() } returns flowOf(DataLayerDummyData.DUMMY_COLLECTION_DATA)
-        every { databaseRepositoryImpl.readCollectionEntity("2") } returns flowOf(DataLayerDummyData.DUMMY_COLLECTION_DATA[1])
+        every { databaseRepositoryImpl.readAllCollections() } returns flowOf(DataLayerDummyData.DUMMY_COLLECTION_DATA)
+        every { databaseRepositoryImpl.readCollection("2") } returns flowOf(DataLayerDummyData.DUMMY_COLLECTION_DATA[1])
     }
 
 
@@ -34,7 +33,7 @@ class DataBaseRepoUnitTest {
         var result = listOf<CollectionModel>()
 
         databaseRepositoryImpl
-            .readAllCollectionEntities()
+            .readAllCollections()
             .collect { transactionResult -> result = transactionResult }
 
         assertEquals(
@@ -46,7 +45,7 @@ class DataBaseRepoUnitTest {
     @Test
     fun `execute readCollectionEntity should return data successful`() = runTest {
         databaseRepositoryImpl
-            .readCollectionEntity("2")
+            .readCollection("2")
             .collectLatest { assertEquals(DataLayerDummyData.DUMMY_COLLECTION_DATA[1], it) }
     }
 

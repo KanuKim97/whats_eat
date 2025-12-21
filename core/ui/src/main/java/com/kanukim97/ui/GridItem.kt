@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kanukim97.designsystem.component.EatImageLoader
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.model.domain.GridItemsModel
 
 @Composable
 fun GridItem(
