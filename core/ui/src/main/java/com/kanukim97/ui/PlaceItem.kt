@@ -20,7 +20,7 @@ import com.kanukim97.designsystem.component.EatImageLoader
 import com.kanukim97.designsystem.theme.EatTypography
 
 @Composable
-fun GridItem(
+fun PlaceItem(
     id: String,
     name: String,
     imageUrl: String,
