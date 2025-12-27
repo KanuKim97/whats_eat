@@ -44,12 +44,8 @@ fun NavGraphBuilder.collectionScreen() {
                     easing = LinearEasing
                 )
             )
-        },
-        content = {
-            val collectionViewModel = hiltViewModel<CollectionViewModel>()
-            val readAllContentUiState by collectionViewModel.readAllCollectionUiState.collectAsStateWithLifecycle()
-
-            CollectionRoute(readAllContentUiState)
         }
-    )
+    ) {
+        CollectionRoute()
+    }
 }

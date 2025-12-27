@@ -7,7 +7,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:domain"))
+    implementation(libs.kotlinx.immutable.collections)
+
+    implementation(project(":core:data"))
     implementation(project(":core:ui"))
     implementation(project(":core:designsystem"))
 }

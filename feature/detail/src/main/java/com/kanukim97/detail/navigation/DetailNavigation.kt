@@ -21,9 +21,8 @@ import com.kanukim97.detail.DetailViewModel
 const val detailRoute = "Detail"
 const val placeIDArgs = "placeID"
 
-internal class PlaceIdArgs(val placeID: String) {
-    constructor(savedStateHandle: SavedStateHandle):
-        this(placeID = checkNotNull(savedStateHandle[placeIDArgs]))
+internal class PlaceIdArgs(val id: String) {
+    constructor(savedStateHandle: SavedStateHandle): this(id = checkNotNull(savedStateHandle[placeIDArgs]))
 }
 
 fun NavController.onNavigateDetail(placeID: String) {
@@ -59,17 +58,6 @@ fun NavGraphBuilder.detailScreen() {
             )
         }
     ) {
-        val detailViewModel = hiltViewModel<DetailViewModel>()
-        val detailUiState by detailViewModel.detailUiState.collectAsStateWithLifecycle()
-        val saveCollectionState by detailViewModel.saveCollectionState.collectAsStateWithLifecycle()
-
-        val scrollState = rememberScrollState()
-
-        DetailRoute(
-            detailUiState = detailUiState,
-            saveCollectionUiState = saveCollectionState,
-            scrollState = scrollState,
-            saveCollection = detailViewModel::saveCollection
-        )
+        DetailRoute()
     }
 }

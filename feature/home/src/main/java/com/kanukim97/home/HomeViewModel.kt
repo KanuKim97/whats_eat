@@ -2,6 +2,8 @@ package com.kanukim97.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kanukim97.domain.entities.Banner
+import com.kanukim97.domain.entities.Place
 import com.kanukim97.domain.usecases.GetPlaceItemsUseCase
 import com.kanukim97.domain.usecases.GetBannerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,7 +73,7 @@ sealed interface BannerUiState {
 
     data object IsLoading: BannerUiState
 
-    data class IsSuccess(val banner: List<BannerItemsModel>?): BannerUiState
+    data class IsSuccess(val banner: List<Banner>?): BannerUiState
 
     data class IsFailed(val message: String = ""): BannerUiState
 }
@@ -81,7 +83,7 @@ sealed interface ItemGridUiState {
 
     data object IsLoading: ItemGridUiState
 
-    data class IsSuccess(val item: List<GridItemsModel>?): ItemGridUiState
+    data class IsSuccess(val item: List<Place>?): ItemGridUiState
 
     data object IsFailed: ItemGridUiState
 }

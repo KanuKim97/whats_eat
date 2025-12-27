@@ -3,89 +3,94 @@ package com.kanukim97.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kanukim97.detail.action.DetailUiAction
 import com.kanukim97.detail.navigation.PlaceIdArgs
+import com.kanukim97.detail.state.DetailUiModel
+import com.kanukim97.detail.state.DetailUiState
 import com.kanukim97.domain.usecases.GetPlaceDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-//    getPlaceDetailUseCase: GetPlaceDetailUseCase,
-//    private val saveUserCollectionUseCase: SaveCollectionUseCase
+    private val getPlaceDetailUseCase: GetPlaceDetailUseCase
 ): ViewModel() {
-    private val _saveCollectionState = MutableStateFlow<SaveCollectionState>(SaveCollectionState.Init)
-    val saveCollectionState: StateFlow<SaveCollectionState> = _saveCollectionState
+    private val args by lazy { PlaceIdArgs(savedStateHandle) }
 
-    val detailUiState = detailState(
-        placeID = PlaceIdArgs(savedStateHandle).placeID,
-        getPlaceDetailUseCase = getPlaceDetailUseCase
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = DetailUiState.IsLoading
-    )
+    private val _uiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
+    val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()
 
-    fun saveCollection(content: CollectionModel): Job = viewModelScope.launch {
-        saveCollectionState(
-            collection = content,
-            saveUserCollectionUseCase = saveUserCollectionUseCase
-        ).collect { state ->
-            _saveCollectionState.value = state
+    private val _viewModelEvent = Channel<Event>(Channel.BUFFERED)
+    val viewModelEvent: Flow<Event> = _viewModelEvent.receiveAsFlow()
+
+    init {
+        viewModelScope.launch {
+            getPlaceDetailUseCase(args.id)
+                .catch {
+                    _uiState.update { DetailUiState.Failed }
+                }.map { info ->
+                    DetailUiModel(
+                        id = info?.id ?: "",
+                        name = info?.name ?: "",
+                        address = info?.address ?: "",
+                        imageUrl = info?.imageUrl ?: "",
+                        latitude = info?.latitude ?: 0.0,
+                        longitude = info?.longitude ?: 0.0,
+                        rating = info?.rating ?: "",
+                        phoneNumber = info?.phoneNumber ?: "",
+                        isOpened = info?.isOpenNow == true
+                    )
+                }.collect { data ->
+                    _uiState.update { DetailUiState.Success(data) }
+                }
         }
     }
 
-    private fun saveCollectionState(
-        collection: CollectionModel,
-        saveUserCollectionUseCase: SaveCollectionUseCase
-    ): Flow<SaveCollectionState> {
-        return saveUserCollectionUseCase(collection)
-            .onStart { _saveCollectionState.value = SaveCollectionState.IsLoading }
-            .catch { exception ->
-                _saveCollectionState.value = SaveCollectionState.IsFailed(exception.message)
+    fun handleAction(action: DetailUiAction) {
+        when (action) {
+            DetailUiAction.OnBackBtnClick -> {
+                _viewModelEvent.trySend(Event.NavigateBack)
             }
-            .map { SaveCollectionState.IsSuccess }
-    }
-}
+            DetailUiAction.OnCallBtnClick -> {
 
-private fun detailState(
-    placeID: String,
-    getPlaceDetailUseCase: GetPlaceDetailUseCase
-): Flow<DetailUiState> {
-    return getPlaceDetailUseCase(placeID)
-        .onStart { DetailUiState.IsLoading }
-        .catch { exception ->
-            exception.printStackTrace()
+            }
+            DetailUiAction.OnGetDirectionsBtnClick -> {
 
-            DetailUiState.IsFailed
+            }
+            is DetailUiAction.OnLikeBtnClick -> {
+
+            }
+            DetailUiAction.OnSeeAllReviewBtnClick -> {
+
+            }
+            DetailUiAction.OnSeeFullMenuClick -> {
+
+            }
+            DetailUiAction.OnShareBtnClick -> {
+
+            }
         }
-        .map<DetailedModel, DetailUiState> { result -> DetailUiState.IsSuccess(result) }
-}
+    }
 
-sealed interface DetailUiState {
-    data object IsLoading: DetailUiState
+    sealed interface Event {
+        data object NavigateBack: Event
 
-    data class IsSuccess(val info: DetailedModel): DetailUiState
+        data class ShowDialog(val msg: String): Event
 
-    data object IsFailed: DetailUiState
-}
+        data class ShowSnackBar(val msg: String): Event
 
-sealed interface SaveCollectionState {
-    data object Init: SaveCollectionState
-
-    data object IsLoading: SaveCollectionState
-
-    data object IsSuccess: SaveCollectionState
-
-    data class IsFailed(val message: String? = null): SaveCollectionState
+        data class ShowToast(val msg: String): Event
+    }
 }

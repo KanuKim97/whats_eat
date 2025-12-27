@@ -1,6 +1,6 @@
 package com.kanukim97.data
 
-import com.kanukim97.data.repository.DatabaseRepository
+import com.kanukim97.data.repository.CollectionRepository
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -19,7 +19,7 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class DataBaseRepoUnitTest {
-    private val databaseRepositoryImpl = mockk<DatabaseRepository>()
+    private val databaseRepositoryImpl = mockk<CollectionRepository>()
 
     @Before
     fun initRepositoryFunctionsBehavior() {

@@ -44,9 +44,14 @@ fun HomeItemGrid(
                     EatVerticalGrid(modifier = modifier.fillMaxSize()) {
                         items(
                             items = itemGridUiState.item,
-                            key = { item -> item.placeID }
+                            key = { item -> item.id }
                         ) { item ->
-                            PlaceItem(gridItems = item, itemOnClick = itemOnClick)
+                            PlaceItem(
+                                id = item.id,
+                                name = item.name,
+                                imageUrl = item.imageUrl ?: "",
+                                itemOnClick = itemOnClick
+                            )
                         }
                     }
                 }

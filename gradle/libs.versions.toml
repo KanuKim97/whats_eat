@@ -3,7 +3,9 @@ core = "1.13.1"
 agp = "8.5.2"
 kotlin = "2.0.0"
 kotlin-ksp = "2.0.0-1.0.23"
-kotlin-coroutine = "1.8.1"
+kotlin-coroutine = "1.10.2"
+kotlin-immutable-list = "0.4.0"
+
 hilt = "2.50"
 logging-interceptor = "4.11.0"
 room = "2.6.1"
@@ -50,6 +52,7 @@ androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-coroutine" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlin-coroutine" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlin-coroutine" }
+kotlinx-immutable-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-immutable-list" }
 
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
