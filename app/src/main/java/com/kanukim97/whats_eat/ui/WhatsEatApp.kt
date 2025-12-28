@@ -45,23 +45,23 @@ fun WhatsEatApp(modifier: Modifier = Modifier) {
                             actionIconOnClick = { navController.toCollectionScreen() }
                         )
                     }
-                    destination.contains(detailRoute) -> {
-                        EatCenterAlignedAppBar(
-                            navigationIcon = EatIcons.arrowBackOutlined,
-                            navigationIconOnClick = { navController.popBackStack() },
-                            actions = {
-                                IconButton(
-                                    onClick = { navController.toCollectionScreen() },
-                                    content = {
-                                        Icon(
-                                            imageVector = EatIcons.CollectionOutlined,
-                                            contentDescription = "Collection"
-                                        )
-                                    }
-                                )
-                            }
-                        )
-                    }
+//                    destination.contains(detailRoute) -> {
+//                        EatCenterAlignedAppBar(
+//                            navigationIcon = EatIcons.arrowBackOutlined,
+//                            navigationIconOnClick = { navController.popBackStack() },
+//                            actions = {
+//                                IconButton(
+//                                    onClick = { navController.toCollectionScreen() },
+//                                    content = {
+//                                        Icon(
+//                                            imageVector = EatIcons.CollectionOutlined,
+//                                            contentDescription = "Collection"
+//                                        )
+//                                    }
+//                                )
+//                            }
+//                        )
+//                    }
                     destination.contains(collectionRoute) -> {
                         EatCenterAlignedAppBar(
                             navigationIcon = EatIcons.arrowBackOutlined,

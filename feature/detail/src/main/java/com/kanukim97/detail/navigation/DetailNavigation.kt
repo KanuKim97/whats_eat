@@ -5,18 +5,13 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.kanukim97.detail.DetailRoute
-import com.kanukim97.detail.DetailViewModel
+import com.kanukim97.detail.screen.DetailRoute
 
 const val detailRoute = "Detail"
 const val placeIDArgs = "placeID"

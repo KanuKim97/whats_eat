@@ -1,12 +1,12 @@
-package com.kanukim97.detail
+package com.kanukim97.detail.screen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kanukim97.detail.action.DetailUiAction
+import com.kanukim97.detail.screen.action.DetailUiAction
 import com.kanukim97.detail.navigation.PlaceIdArgs
-import com.kanukim97.detail.state.DetailUiModel
-import com.kanukim97.detail.state.DetailUiState
+import com.kanukim97.detail.screen.state.DetailUiModel
+import com.kanukim97.detail.screen.state.DetailUiState
 import com.kanukim97.domain.usecases.GetPlaceDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

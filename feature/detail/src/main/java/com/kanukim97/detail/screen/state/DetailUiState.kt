@@ -1,4 +1,4 @@
-package com.kanukim97.detail.state
+package com.kanukim97.detail.screen.state
 
 import androidx.compose.runtime.Stable
 

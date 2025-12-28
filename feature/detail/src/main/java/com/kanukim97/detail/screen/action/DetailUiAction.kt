@@ -1,4 +1,4 @@
-package com.kanukim97.detail.action
+package com.kanukim97.detail.screen.action
 
 sealed interface DetailUiAction {
     data object OnBackBtnClick: DetailUiAction
