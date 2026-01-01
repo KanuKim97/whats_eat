@@ -40,7 +40,7 @@ class DataBaseUnitTest {
         eatDAO.saveCollection(DUMMY_ENTITIES_LIST[1])
         eatDAO.saveCollection(DUMMY_ENTITIES_LIST[2])
 
-        val result = eatDAO.readCollection(DUMMY_ENTITIES_LIST[0].placeID).first()
+        val result = eatDAO.readCollection(DUMMY_ENTITIES_LIST[0].id).first()
 
         assertEquals(DUMMY_ENTITIES_LIST[0], result)
     }

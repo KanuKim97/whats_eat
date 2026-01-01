@@ -4,6 +4,7 @@ import com.kanukim97.data.mapper.entityToModelMapper
 import com.kanukim97.data.model.PlaceCollection
 import com.kanukim97.data.repository.CollectionRepository
 import com.kanukim97.database.dao.EatDao
+import com.kanukim97.database.model.CollectionEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -11,9 +12,7 @@ import java.io.IOException
 import java.sql.SQLDataException
 import javax.inject.Inject
 
-class CollectionRepositoryImpl @Inject constructor(
-    private val eatDao: EatDao
-): CollectionRepository {
+class CollectionRepositoryImpl @Inject constructor(private val eatDao: EatDao): CollectionRepository {
 
     override fun readAllCollections(): Flow<List<PlaceCollection>> = eatDao
         .readAllCollections()
@@ -33,6 +32,16 @@ class CollectionRepositoryImpl @Inject constructor(
         .readCollection(placeID)
         .map { entity -> entityToModelMapper(entity) }
 
+    override suspend fun saveCollection(
+        id: String,
+        name: String,
+        latLng: String,
+        imageUrl: String
+    ) {
+        val entity = CollectionEntity(id = id, name = name, latLng = latLng, imageUrl = imageUrl)
+
+        eatDao.saveCollection(entity)
+    }
 
     override suspend fun deleteCollection(id: String) {
         eatDao.deleteCollectionById(id)

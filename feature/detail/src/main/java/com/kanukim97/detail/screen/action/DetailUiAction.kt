@@ -3,12 +3,7 @@ package com.kanukim97.detail.screen.action
 sealed interface DetailUiAction {
     data object OnBackBtnClick: DetailUiAction
 
-    data class OnLikeBtnClick(
-        val id: String,
-        val name: String,
-        val latLng: String,
-        val imageUrl: String
-    ): DetailUiAction
+    data object OnAddCollection : DetailUiAction
 
     data object OnShareBtnClick: DetailUiAction
 

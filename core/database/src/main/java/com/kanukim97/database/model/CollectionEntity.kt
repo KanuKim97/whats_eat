@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Collection_Entity")
 data class CollectionEntity(
-    @PrimaryKey val placeID: String,
-    @ColumnInfo("placeName") val placeName: String,
-    @ColumnInfo("placeImgUrl") val placeImgUrl: String,
-    @ColumnInfo("placeLatLng") val placeLatLng: String
+    @PrimaryKey val id: String,
+    @ColumnInfo("placeName") val name: String,
+    @ColumnInfo("placeImgUrl") val imageUrl: String,
+    @ColumnInfo("placeLatLng") val latLng: String
 )

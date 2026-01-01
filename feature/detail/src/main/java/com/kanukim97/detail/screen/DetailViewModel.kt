@@ -3,6 +3,7 @@ package com.kanukim97.detail.screen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kanukim97.data.repository.CollectionRepository
 import com.kanukim97.detail.screen.action.DetailUiAction
 import com.kanukim97.detail.navigation.PlaceIdArgs
 import com.kanukim97.detail.screen.state.DetailUiModel
@@ -24,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getPlaceDetailUseCase: GetPlaceDetailUseCase
+    private val getPlaceDetailUseCase: GetPlaceDetailUseCase,
+    private val collectionRepository: CollectionRepository
 ): ViewModel() {
     private val args by lazy { PlaceIdArgs(savedStateHandle) }
 
@@ -62,22 +64,39 @@ class DetailViewModel @Inject constructor(
             DetailUiAction.OnBackBtnClick -> {
                 _viewModelEvent.trySend(Event.NavigateBack)
             }
+            DetailUiAction.OnShareBtnClick -> {
+
+            }
+            DetailUiAction.OnAddCollection -> {
+                if (_uiState.value !is DetailUiState.Success) return
+
+                val data = (_uiState.value as DetailUiState.Success).info
+
+                viewModelScope.launch {
+                    runCatching {
+                        collectionRepository.saveCollection(
+                            id = data.id,
+                            name = data.name,
+                            latLng = "${data.latitude},${data.longitude}",
+                            imageUrl = data.imageUrl
+                        )
+                    }.onSuccess {
+
+                    }.onFailure {
+
+                    }
+                }
+            }
             DetailUiAction.OnCallBtnClick -> {
 
             }
             DetailUiAction.OnGetDirectionsBtnClick -> {
 
             }
-            is DetailUiAction.OnLikeBtnClick -> {
-
-            }
             DetailUiAction.OnSeeAllReviewBtnClick -> {
 
             }
             DetailUiAction.OnSeeFullMenuClick -> {
-
-            }
-            DetailUiAction.OnShareBtnClick -> {
 
             }
         }

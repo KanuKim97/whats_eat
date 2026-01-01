@@ -44,7 +44,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,10 +52,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.kanukim97.designsystem.component.EatCircularProgressIndicator
 import com.kanukim97.designsystem.component.EatImageLoader
-import com.kanukim97.designsystem.component.EatTextButton
 import com.kanukim97.designsystem.theme.EatShape
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.ui.PlaceInfo
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -101,7 +98,6 @@ internal fun DetailRoute(viewModel: DetailViewModel = hiltViewModel()) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantDetailScreen(
     uiState: DetailUiState,
@@ -154,7 +150,7 @@ fun RestaurantDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             IconButton(
-                                onClick = { },
+                                onClick = { onAction(DetailUiAction.OnBackBtnClick) },
                                 modifier = Modifier.size(48.dp),
                                 colors = IconButtonDefaults.iconButtonColors(
                                     containerColor = Color.White.copy(alpha = 0.2f),
@@ -170,7 +166,7 @@ fun RestaurantDetailScreen(
 
                             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                 IconButton(
-                                    onClick = { },
+                                    onClick = { onAction(DetailUiAction.OnShareBtnClick) },
                                     modifier = Modifier.size(48.dp),
                                     colors = IconButtonDefaults.iconButtonColors(
                                         containerColor = Color.White.copy(alpha = 0.2f),
@@ -183,7 +179,7 @@ fun RestaurantDetailScreen(
                                     )
                                 }
                                 IconButton(
-                                    onClick = { },
+                                    onClick = { onAction(DetailUiAction.OnAddCollection) },
                                     modifier = Modifier.size(48.dp),
                                     colors = IconButtonDefaults.iconButtonColors(
                                         containerColor = Color.White.copy(alpha = 0.2f),
@@ -302,7 +298,7 @@ fun RestaurantDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Button(
-                                onClick = { },
+                                onClick = { onAction(DetailUiAction.OnGetDirectionsBtnClick) },
                                 modifier = Modifier
                                     .weight(1f)
                                     .height(48.dp),
@@ -326,7 +322,7 @@ fun RestaurantDetailScreen(
                             }
 
                             IconButton(
-                                onClick = { },
+                                onClick = { onAction(DetailUiAction.OnCallBtnClick) },
                                 modifier = Modifier.border(1.dp, Color.LightGray, EatShape.large),
                                 colors = IconButtonDefaults.iconButtonColors(
                                     containerColor = Color.Transparent,

@@ -9,19 +9,19 @@ import com.kanukim97.remote.response.detailPlace.DetailedResultResponse
 fun entityToModelMapper(
     entity: CollectionEntity
 ): PlaceCollection = PlaceCollection(
-    id = entity.placeID,
-    name = entity.placeName,
-    latLng = entity.placeLatLng,
-    imageUrl = entity.placeImgUrl
+    id = entity.id,
+    name = entity.name,
+    latLng = entity.latLng,
+    imageUrl = entity.imageUrl
 )
 
 fun modelToEntityMapper(
     model: PlaceCollection
 ): CollectionEntity = CollectionEntity(
-    placeID = model.id,
-    placeName = model.name,
-    placeLatLng = model.latLng,
-    placeImgUrl = model.imageUrl
+    id = model.id,
+    name = model.name,
+    latLng = model.latLng,
+    imageUrl = model.imageUrl
 )
 
 fun DetailedResultResponse?.toDataModel(): DetailPlaceResult? {

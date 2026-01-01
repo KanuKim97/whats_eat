@@ -11,10 +11,10 @@ import org.junit.Assert.assertEquals
  */
 class MapperUnitTest {
     private val collectionEntity: CollectionEntity = CollectionEntity(
-        placeID = "dummy",
-        placeName = "dummy",
-        placeLatLng = "dummy",
-        placeImgUrl = "dummy"
+        id = "dummy",
+        name = "dummy",
+        latLng = "dummy",
+        imageUrl = "dummy"
     )
     private val collectionModel: CollectionModel =
         CollectionModel(
