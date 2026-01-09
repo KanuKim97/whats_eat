@@ -1,5 +1,6 @@
 package com.kanukim97.detail.screen
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -64,9 +64,11 @@ import com.kanukim97.designsystem.icons.EatIcons
 import com.kanukim97.designsystem.theme.Gray
 import com.kanukim97.detail.screen.action.DetailUiAction
 import com.kanukim97.detail.screen.state.DetailUiState
+import androidx.core.net.toUri
 
 @Composable
 internal fun DetailRoute(viewModel: DetailViewModel = hiltViewModel()) {
+    val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -86,6 +88,28 @@ internal fun DetailRoute(viewModel: DetailViewModel = hiltViewModel()) {
                     }
                     is DetailViewModel.Event.ShowToast -> {
 
+                    }
+                    is DetailViewModel.Event.ShowCallIntent -> {
+                        val intent = Intent(Intent.ACTION_DIAL, "tel:${event.phoneNumber}".toUri())
+                        context.startActivity(intent)
+                    }
+                    is DetailViewModel.Event.ShowMapsIntent -> {
+                        val intent = Intent(Intent.ACTION_VIEW, "geo:${event.latLng}?q=${event.name}".toUri()).apply {
+                            setPackage("com.google.android.apps.maps")
+                        }
+
+                        if (intent.resolveActivity(context.packageManager) == null) return@collect
+
+                        context.startActivity(intent)
+                    }
+                    is DetailViewModel.Event.ShowShareIntent -> {
+                        val intent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, event.shareText)
+                        }
+                        val intentChooser = Intent.createChooser(intent, null)
+
+                        context.startActivity(intentChooser)
                     }
                 }
             }

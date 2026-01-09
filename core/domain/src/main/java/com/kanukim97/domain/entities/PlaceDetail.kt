@@ -9,5 +9,6 @@ data class PlaceDetail(
     val phoneNumber: String,
     val latitude: Double,
     val longitude: Double,
-    val isOpenNow: Boolean?
+    val isOpenNow: Boolean?,
+    val url: String
 )

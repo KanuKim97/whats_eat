@@ -21,5 +21,6 @@ data class DetailUiModel(
     val phoneNumber: String,
     val latitude: Double,
     val longitude: Double,
-    val isOpened: Boolean
+    val isOpened: Boolean,
+    val url: String
 )

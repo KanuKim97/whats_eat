@@ -9,5 +9,6 @@ data class DetailPlaceResult(
     val rating: Double?,
     val latitude: Double,
     val longitude: Double,
-    val isOpened: Boolean?
+    val isOpened: Boolean?,
+    val url: String
 )

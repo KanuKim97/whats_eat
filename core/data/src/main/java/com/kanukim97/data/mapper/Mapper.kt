@@ -40,6 +40,7 @@ fun DetailedResultResponse?.toDataModel(): DetailPlaceResult? {
         phoneNumber = this.formattedPhoneNumber ?: "",
         latitude = this.geometry?.location?.lat ?: 0.0,
         longitude = this.geometry?.location?.lng ?: 0.0,
-        isOpened = this.currentOpeningHours?.openNow ?: false
+        isOpened = this.currentOpeningHours?.openNow ?: false,
+        url = this.url ?: ""
     )
 }

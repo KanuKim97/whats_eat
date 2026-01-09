@@ -22,7 +22,8 @@ class GetPlaceDetailUseCase @Inject constructor(private val repository: PlaceRep
                     phoneNumber = result.phoneNumber,
                     latitude = result.latitude,
                     longitude = result.longitude,
-                    isOpenNow = result.isOpened
+                    isOpenNow = result.isOpened,
+                    url = result.url
                 )
             }
     }

@@ -51,7 +51,8 @@ class DetailViewModel @Inject constructor(
                         longitude = info?.longitude ?: 0.0,
                         rating = info?.rating ?: "",
                         phoneNumber = info?.phoneNumber ?: "",
-                        isOpened = info?.isOpenNow == true
+                        isOpened = info?.isOpenNow == true,
+                        url = info?.url ?: ""
                     )
                 }.collect { data ->
                     _uiState.update { DetailUiState.Success(data) }
@@ -65,7 +66,12 @@ class DetailViewModel @Inject constructor(
                 _viewModelEvent.trySend(Event.NavigateBack)
             }
             DetailUiAction.OnShareBtnClick -> {
+                if (_uiState.value !is DetailUiState.Success) return
 
+                val shareText = (_uiState.value as? DetailUiState.Success)?.info?.url
+                if (shareText.isNullOrBlank()) return
+
+                _viewModelEvent.trySend(Event.ShowShareIntent(shareText = shareText))
             }
             DetailUiAction.OnAddCollection -> {
                 if (_uiState.value !is DetailUiState.Success) return
@@ -88,9 +94,23 @@ class DetailViewModel @Inject constructor(
                 }
             }
             DetailUiAction.OnCallBtnClick -> {
+                if (_uiState.value !is DetailUiState.Success) return
+                val phoneNumber = (_uiState.value as? DetailUiState.Success)?.info?.phoneNumber ?: return
 
+                _viewModelEvent.trySend(Event.ShowCallIntent(phoneNumber))
             }
             DetailUiAction.OnGetDirectionsBtnClick -> {
+                if (_uiState.value !is DetailUiState.Success) return
+
+                val name = (_uiState.value as? DetailUiState.Success)?.info?.name ?: return
+                val latitude = (_uiState.value as? DetailUiState.Success)?.info?.latitude ?: return
+                val longitude = (_uiState.value as? DetailUiState.Success)?.info?.longitude ?: return
+
+                if (latitude == 0.0 || longitude == 0.0) return
+
+                _viewModelEvent.trySend(
+                    Event.ShowMapsIntent(latLng = "${latitude},${longitude}", name = name)
+                )
 
             }
             DetailUiAction.OnSeeAllReviewBtnClick -> {
@@ -104,6 +124,12 @@ class DetailViewModel @Inject constructor(
 
     sealed interface Event {
         data object NavigateBack: Event
+
+        data class ShowCallIntent(val phoneNumber: String): Event
+
+        data class ShowShareIntent(val shareText: String): Event
+
+        data class ShowMapsIntent(val latLng: String, val name: String): Event
 
         data class ShowDialog(val msg: String): Event
 
