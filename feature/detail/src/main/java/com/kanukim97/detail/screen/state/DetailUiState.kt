@@ -22,5 +22,6 @@ data class DetailUiModel(
     val latitude: Double,
     val longitude: Double,
     val isOpened: Boolean,
+    val reviewsCount: Int?,
     val url: String
 )

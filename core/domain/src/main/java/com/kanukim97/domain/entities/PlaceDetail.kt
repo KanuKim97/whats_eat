@@ -5,6 +5,7 @@ data class PlaceDetail(
     val name: String,
     val imageUrl: String?,
     val rating: String,
+    val reviewsCount: Int?,
     val address: String,
     val phoneNumber: String,
     val latitude: Double,

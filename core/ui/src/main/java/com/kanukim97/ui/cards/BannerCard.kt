@@ -1,4 +1,4 @@
-package com.kanukim97.ui
+package com.kanukim97.ui.cards
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,6 +68,7 @@ import com.kanukim97.designsystem.theme.Gray
 import com.kanukim97.detail.screen.action.DetailUiAction
 import com.kanukim97.detail.screen.state.DetailUiState
 import androidx.core.net.toUri
+import com.kanukim97.ui.cards.ReviewCard
 
 @Composable
 internal fun DetailRoute(viewModel: DetailViewModel = hiltViewModel()) {
@@ -248,7 +252,6 @@ fun RestaurantDetailScreen(
                     }
 
                     Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
-
                         Row(
                             modifier = Modifier
                                 .padding(bottom = 8.dp)
@@ -293,11 +296,14 @@ fun RestaurantDetailScreen(
                                 text = uiState.info.rating,
                                 style = EatTypography.labelLarge
                             )
-                            Text(
-                                text = "(69 Reviews)",
-                                color = Color.Gray,
-                                style = EatTypography.labelMedium.copy(fontWeight = FontWeight.Medium)
-                            )
+
+                            if (uiState.info.reviewsCount != null) {
+                                Text(
+                                    text = "(${uiState.info.reviewsCount} Reviews)",
+                                    color = Color.Gray,
+                                    style = EatTypography.labelMedium.copy(fontWeight = FontWeight.Medium)
+                                )
+                            }
                         }
 
                         Row(
@@ -362,6 +368,45 @@ fun RestaurantDetailScreen(
                         }
 
                         HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = buildAnnotatedString {
+                                    append("Reviews")
+                                    append("(${uiState.info.reviewsCount})")
+                                },
+                                style = EatTypography.titleMedium
+                            )
+
+                            Text(
+                                text = "See All",
+                                modifier = Modifier.clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    onClick = { onAction(DetailUiAction.OnSeeAllReviewBtnClick) }
+                                ),
+                                style = EatTypography.labelMedium
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            ReviewCard()
+                            ReviewCard()
+                            ReviewCard()
+                        }
+
 
                         Text(
                             text = "Location",

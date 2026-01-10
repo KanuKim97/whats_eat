@@ -52,7 +52,8 @@ class DetailViewModel @Inject constructor(
                         rating = info?.rating ?: "",
                         phoneNumber = info?.phoneNumber ?: "",
                         isOpened = info?.isOpenNow == true,
-                        url = info?.url ?: ""
+                        url = info?.url ?: "",
+                        reviewsCount = info?.reviewsCount
                     )
                 }.collect { data ->
                     _uiState.update { DetailUiState.Success(data) }
@@ -111,7 +112,6 @@ class DetailViewModel @Inject constructor(
                 _viewModelEvent.trySend(
                     Event.ShowMapsIntent(latLng = "${latitude},${longitude}", name = name)
                 )
-
             }
             DetailUiAction.OnSeeAllReviewBtnClick -> {
 

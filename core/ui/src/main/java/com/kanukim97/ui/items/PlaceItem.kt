@@ -1,4 +1,4 @@
-package com.kanukim97.ui
+package com.kanukim97.ui.items
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

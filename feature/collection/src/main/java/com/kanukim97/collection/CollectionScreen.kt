@@ -17,7 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kanukim97.collection.state.CollectionUiState
 import com.kanukim97.designsystem.component.EatCircularProgressIndicator
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.ui.CollectionCard
+import com.kanukim97.ui.cards.CollectionCard
 
 @Composable
 internal fun CollectionRoute(viewModel: CollectionViewModel = hiltViewModel()) {

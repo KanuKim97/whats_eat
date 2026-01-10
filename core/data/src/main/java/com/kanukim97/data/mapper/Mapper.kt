@@ -36,6 +36,7 @@ fun DetailedResultResponse?.toDataModel(): DetailPlaceResult? {
             this.map { photo -> photo.getFullPhotoReference(BuildConfig.API_KEY) }
         },
         rating = this.rating,
+        reviewCount = this.userRatingsTotal,
         address = this.formattedAddress ?: "",
         phoneNumber = this.formattedPhoneNumber ?: "",
         latitude = this.geometry?.location?.lat ?: 0.0,

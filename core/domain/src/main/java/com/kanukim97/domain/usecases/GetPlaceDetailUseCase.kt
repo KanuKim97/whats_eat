@@ -19,6 +19,7 @@ class GetPlaceDetailUseCase @Inject constructor(private val repository: PlaceRep
                     imageUrl = result.imageUrls.firstOrNull() ,
                     rating = result.rating?.toString() ?: "",
                     address = result.address,
+                    reviewsCount = result.reviewCount,
                     phoneNumber = result.phoneNumber,
                     latitude = result.latitude,
                     longitude = result.longitude,

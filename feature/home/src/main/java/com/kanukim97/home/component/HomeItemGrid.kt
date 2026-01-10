@@ -13,7 +13,7 @@ import com.kanukim97.designsystem.component.EatCircularProgressIndicator
 import com.kanukim97.designsystem.component.EatVerticalGrid
 import com.kanukim97.designsystem.theme.EatTypography
 import com.kanukim97.home.ItemGridUiState
-import com.kanukim97.ui.PlaceItem
+import com.kanukim97.ui.items.PlaceItem
 
 @Composable
 fun HomeItemGrid(

@@ -7,6 +7,7 @@ data class DetailPlaceResult(
     val address: String,
     val phoneNumber: String,
     val rating: Double?,
+    val reviewCount: Int?,
     val latitude: Double,
     val longitude: Double,
     val isOpened: Boolean?,

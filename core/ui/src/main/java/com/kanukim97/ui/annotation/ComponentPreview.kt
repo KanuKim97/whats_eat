@@ -1,4 +1,4 @@
-package com.kanukim97.ui.preview
+package com.kanukim97.ui.annotation
 
 import androidx.compose.ui.tooling.preview.Preview
 

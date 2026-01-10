@@ -18,7 +18,7 @@ import com.kanukim97.designsystem.component.EatCircularProgressIndicator
 import com.kanukim97.designsystem.component.EatHorizontalPager
 import com.kanukim97.designsystem.theme.EatTypography
 import com.kanukim97.home.BannerUiState
-import com.kanukim97.ui.BannerCard
+import com.kanukim97.ui.cards.BannerCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.kanukim97.designsystem.theme.EatTypography
 import com.kanukim97.home.component.HomeBanner
 import com.kanukim97.home.component.HomeItemGrid
-import com.kanukim97.ui.PermissionAlertDialog
+import com.kanukim97.ui.dialog.PermissionAlertDialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
