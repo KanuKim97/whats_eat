@@ -1,4 +1,4 @@
-package com.kanukim97.data.model
+package com.kanukim97.domain.entities
 
 
 data class NearByPlaceResult(

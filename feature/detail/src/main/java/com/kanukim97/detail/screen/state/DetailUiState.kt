@@ -23,5 +23,14 @@ data class DetailUiModel(
     val longitude: Double,
     val isOpened: Boolean,
     val reviewsCount: Int?,
-    val url: String
+    val url: String,
+    val reviews: List<Review>
+)
+
+@Stable
+data class Review(
+    val userImageUrl: String,
+    val authorName: String,
+    val rating: Int?,
+    val text: String?,
 )

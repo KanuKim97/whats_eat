@@ -1,7 +1,7 @@
 package com.kanukim97.domain.usecases
 
-import com.kanukim97.data.repository.PlaceRepository
 import com.kanukim97.domain.entities.Place
+import com.kanukim97.domain.repository.PlaceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

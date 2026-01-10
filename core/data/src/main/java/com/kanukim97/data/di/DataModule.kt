@@ -1,9 +1,9 @@
 package com.kanukim97.data.di
 
-import com.kanukim97.data.repository.CollectionRepository
 import com.kanukim97.data.impl.CollectionRepositoryImpl
-import com.kanukim97.data.repository.PlaceRepository
 import com.kanukim97.data.impl.PlaceRepositoryImpl
+import com.kanukim97.domain.repository.CollectionRepository
+import com.kanukim97.domain.repository.PlaceRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

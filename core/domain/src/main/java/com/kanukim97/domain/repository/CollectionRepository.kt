@@ -1,6 +1,6 @@
-package com.kanukim97.data.repository
+package com.kanukim97.domain.repository
 
-import com.kanukim97.data.model.PlaceCollection
+import com.kanukim97.domain.entities.PlaceCollection
 import kotlinx.coroutines.flow.Flow
 
 interface CollectionRepository {

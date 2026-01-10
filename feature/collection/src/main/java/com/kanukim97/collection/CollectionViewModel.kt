@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kanukim97.collection.state.Collection
 import com.kanukim97.collection.state.CollectionUiState
-import com.kanukim97.data.repository.CollectionRepository
+import com.kanukim97.domain.repository.CollectionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow

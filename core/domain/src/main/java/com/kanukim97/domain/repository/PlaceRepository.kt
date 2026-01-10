@@ -1,7 +1,7 @@
-package com.kanukim97.data.repository
+package com.kanukim97.domain.repository
 
-import com.kanukim97.data.model.DetailPlaceResult
-import com.kanukim97.data.model.NearByPlaceResult
+import com.kanukim97.domain.entities.DetailPlaceResult
+import com.kanukim97.domain.entities.NearByPlaceResult
 import kotlinx.coroutines.flow.Flow
 
 interface PlaceRepository {

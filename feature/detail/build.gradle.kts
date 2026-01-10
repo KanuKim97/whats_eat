@@ -10,9 +10,9 @@ android {
 dependencies {
     implementation(libs.bundles.gms)
 
-    implementation(project(":core:util"))
-    implementation(project(":core:data"))
     implementation(project(":core:domain"))
+
     implementation(project(":core:ui"))
     implementation(project(":core:designsystem"))
+    implementation(project(":core:util"))
 }

@@ -3,11 +3,12 @@ package com.kanukim97.detail.screen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kanukim97.data.repository.CollectionRepository
 import com.kanukim97.detail.screen.action.DetailUiAction
 import com.kanukim97.detail.navigation.PlaceIdArgs
 import com.kanukim97.detail.screen.state.DetailUiModel
 import com.kanukim97.detail.screen.state.DetailUiState
+import com.kanukim97.detail.screen.state.Review
+import com.kanukim97.domain.repository.CollectionRepository
 import com.kanukim97.domain.usecases.GetPlaceDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -53,7 +54,15 @@ class DetailViewModel @Inject constructor(
                         phoneNumber = info?.phoneNumber ?: "",
                         isOpened = info?.isOpenNow == true,
                         url = info?.url ?: "",
-                        reviewsCount = info?.reviewsCount
+                        reviewsCount = info?.reviewsCount,
+                        reviews = info?.review?.map { review ->
+                            Review(
+                                userImageUrl = review.profilePhotoUrl ?: "",
+                                authorName = review.authorName,
+                                rating = review.rating,
+                                text = review.content
+                            )
+                        } ?: emptyList()
                     )
                 }.collect { data ->
                     _uiState.update { DetailUiState.Success(data) }
@@ -94,7 +103,7 @@ class DetailViewModel @Inject constructor(
                     }
                 }
             }
-            DetailUiAction.OnCallBtnClick -> {
+            DetailUiAction.OnDialIconBtnClick -> {
                 if (_uiState.value !is DetailUiState.Success) return
                 val phoneNumber = (_uiState.value as? DetailUiState.Success)?.info?.phoneNumber ?: return
 

@@ -1,9 +1,10 @@
 package com.kanukim97.data.mapper
 
 import com.kanukim97.data.BuildConfig
-import com.kanukim97.data.model.DetailPlaceResult
-import com.kanukim97.data.model.PlaceCollection
 import com.kanukim97.database.model.CollectionEntity
+import com.kanukim97.domain.entities.DetailPlaceResult
+import com.kanukim97.domain.entities.PlaceCollection
+import com.kanukim97.domain.entities.Review
 import com.kanukim97.remote.response.detailPlace.DetailedResultResponse
 
 fun entityToModelMapper(
@@ -24,7 +25,7 @@ fun modelToEntityMapper(
     imageUrl = model.imageUrl
 )
 
-fun DetailedResultResponse?.toDataModel(): DetailPlaceResult? {
+fun DetailedResultResponse?.toEntity(): DetailPlaceResult? {
     if (this == null) return null
 
     return DetailPlaceResult(
@@ -42,6 +43,14 @@ fun DetailedResultResponse?.toDataModel(): DetailPlaceResult? {
         latitude = this.geometry?.location?.lat ?: 0.0,
         longitude = this.geometry?.location?.lng ?: 0.0,
         isOpened = this.currentOpeningHours?.openNow ?: false,
-        url = this.url ?: ""
+        url = this.url ?: "",
+        reviews = this.reviews?.map { review ->
+            Review(
+                authorName = review.authorName ?: "",
+                profilePhotoUrl = review.profilePhotoUrl,
+                rating = review.rating,
+                content = review.text
+            )
+        } ?: emptyList()
     )
 }

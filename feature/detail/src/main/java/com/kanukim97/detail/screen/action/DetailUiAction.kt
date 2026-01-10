@@ -13,6 +13,6 @@ sealed interface DetailUiAction {
 
     data object OnGetDirectionsBtnClick: DetailUiAction
 
-    data object OnCallBtnClick: DetailUiAction
+    data object OnDialIconBtnClick: DetailUiAction
 }
 

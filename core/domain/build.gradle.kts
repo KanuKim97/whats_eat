@@ -1,29 +1,38 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
-    id("com.whats-eat.default-library")
+    id("java-library")
+    alias(libs.plugins.kotlin.jvm)
+    id("com.github.gmazzo.buildconfig") version "6.0.6"
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
 }
 
-android {
-    namespace = "com.kanukim97.domain"
-    defaultConfig.buildConfigField("String", "PLACE_API_KEY", getApiKey("MAPS_API_KEY"))
-    buildFeatures.buildConfig = true
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
+}
+
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) {
+        load(file.inputStream())
+    }
+}
+
+buildConfig {
+    buildConfigField("String", "PLACE_API_KEY", localProperties.getProperty("MAPS_API_KEY") ?: "")
 }
 
 dependencies {
-    implementation(libs.hilt)
+    implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
-
-    implementation(project(":core:util"))
-    implementation(project(":core:data"))
-
-    testImplementation(libs.junit)
-    testImplementation (libs.mockk)
-    androidTestImplementation (libs.mockk.android)
-
-    androidTestImplementation(libs.androidx.junit)
 }
-
-fun getApiKey(propertyKey: String): String = gradleLocalProperties(rootDir, providers).getProperty(propertyKey)

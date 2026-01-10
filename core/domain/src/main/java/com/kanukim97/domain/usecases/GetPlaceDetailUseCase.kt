@@ -1,7 +1,7 @@
 package com.kanukim97.domain.usecases
 
-import com.kanukim97.data.repository.PlaceRepository
 import com.kanukim97.domain.entities.PlaceDetail
+import com.kanukim97.domain.repository.PlaceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
@@ -24,7 +24,8 @@ class GetPlaceDetailUseCase @Inject constructor(private val repository: PlaceRep
                     latitude = result.latitude,
                     longitude = result.longitude,
                     isOpenNow = result.isOpened,
-                    url = result.url
+                    url = result.url,
+                    review = result.reviews?.slice(0..3) ?: emptyList()
                 )
             }
     }

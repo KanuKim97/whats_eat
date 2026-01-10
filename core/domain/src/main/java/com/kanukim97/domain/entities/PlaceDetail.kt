@@ -11,5 +11,6 @@ data class PlaceDetail(
     val latitude: Double,
     val longitude: Double,
     val isOpenNow: Boolean?,
-    val url: String
+    val url: String,
+    val review: List<Review> = emptyList()
 )

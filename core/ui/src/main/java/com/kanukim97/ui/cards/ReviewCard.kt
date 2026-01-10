@@ -20,13 +20,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.kanukim97.designsystem.component.EatImageLoader
 import com.kanukim97.designsystem.theme.EatTypography
-import com.kanukim97.ui.annotation.ComponentPreview
 
-@ComponentPreview
 @Composable
-fun ReviewCard() {
+fun ReviewCard(
+    profileImageUrl: String,
+    name: String,
+    review: String,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
             disabledContainerColor = MaterialTheme.colorScheme.background
@@ -50,11 +53,11 @@ fun ReviewCard() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 EatImageLoader(
-                    imageModel = "https://picsum.photos/200",
+                    imageModel = profileImageUrl,
                     modifier = Modifier.size(36.dp)
                 )
                 Text(
-                    text = "누군가가 나도모르는 어떤 사람이",
+                    text = name,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -63,7 +66,7 @@ fun ReviewCard() {
             }
 
             Text(
-                text = "dasjkhfjdkaslhfdasjklfhllaksjhfklashfladjkshfjlak",
+                text = review,
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,

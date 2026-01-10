@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
+    implementation(project(":core:domain"))
     implementation(project(":core:util"))
     implementation(project(":core:database"))
     implementation(project(":core:remote"))
