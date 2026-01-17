@@ -1,9 +1,10 @@
-package com.kanukim97.collection
+package com.kanukim97.collection.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kanukim97.collection.state.Collection
-import com.kanukim97.collection.state.CollectionUiState
+import com.kanukim97.collection.screen.action.CollectionUiAction
+import com.kanukim97.collection.screen.state.Collection
+import com.kanukim97.collection.screen.state.CollectionUiState
 import com.kanukim97.domain.repository.CollectionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
@@ -20,7 +21,6 @@ import javax.inject.Inject
 class CollectionViewModel @Inject constructor(
     private val collectionRepository: CollectionRepository
 ): ViewModel() {
-
     private val _uiState = MutableStateFlow<CollectionUiState>(CollectionUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
@@ -43,6 +43,23 @@ class CollectionViewModel @Inject constructor(
                         _uiState.update { CollectionUiState.Success(collections) }
                     }
                 }
+        }
+    }
+
+    fun handleAction(action: CollectionUiAction) {
+        when (action) {
+            CollectionUiAction.OnBackBtnClick -> {
+
+            }
+            is CollectionUiAction.OnSearchQuery -> {
+
+            }
+            is CollectionUiAction.OnClickCollection -> {
+
+            }
+            is CollectionUiAction.OnDeleteCollection -> {
+
+            }
         }
     }
 

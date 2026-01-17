@@ -5,14 +5,10 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.kanukim97.collection.CollectionRoute
-import com.kanukim97.collection.CollectionViewModel
+import com.kanukim97.collection.screen.CollectionRoute
 
 const val collectionRoute = "Collection"
 

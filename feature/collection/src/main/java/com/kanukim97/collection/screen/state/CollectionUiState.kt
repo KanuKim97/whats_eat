@@ -1,4 +1,4 @@
-package com.kanukim97.collection.state
+package com.kanukim97.collection.screen.state
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
