@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.gms.location)
+    implementation(libs.bundles.gms)
     implementation(libs.compose.permission)
 
     implementation(project(":core:util"))

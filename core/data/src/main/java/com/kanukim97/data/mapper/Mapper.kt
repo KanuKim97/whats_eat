@@ -2,14 +2,14 @@ package com.kanukim97.data.mapper
 
 import com.kanukim97.data.BuildConfig
 import com.kanukim97.database.model.CollectionEntity
-import com.kanukim97.domain.entities.DetailPlaceResult
-import com.kanukim97.domain.entities.PlaceCollection
+import com.kanukim97.domain.entities.DetailRestaurantInformationResult
+import com.kanukim97.domain.entities.RestaurantCollectionItem
 import com.kanukim97.domain.entities.Review
 import com.kanukim97.remote.response.detailPlace.DetailedResultResponse
 
 fun entityToModelMapper(
     entity: CollectionEntity
-): PlaceCollection = PlaceCollection(
+): RestaurantCollectionItem = RestaurantCollectionItem(
     id = entity.id,
     name = entity.name,
     latLng = entity.latLng,
@@ -17,7 +17,7 @@ fun entityToModelMapper(
 )
 
 fun modelToEntityMapper(
-    model: PlaceCollection
+    model: RestaurantCollectionItem
 ): CollectionEntity = CollectionEntity(
     id = model.id,
     name = model.name,
@@ -25,10 +25,10 @@ fun modelToEntityMapper(
     imageUrl = model.imageUrl
 )
 
-fun DetailedResultResponse?.toEntity(): DetailPlaceResult? {
+fun DetailedResultResponse?.toEntity(): DetailRestaurantInformationResult? {
     if (this == null) return null
 
-    return DetailPlaceResult(
+    return DetailRestaurantInformationResult(
         id = this.placeId ?: "",
         name = this.name ?: "",
         imageUrls = with(this.photos) {

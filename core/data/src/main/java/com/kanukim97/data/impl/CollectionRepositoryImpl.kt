@@ -3,7 +3,7 @@ package com.kanukim97.data.impl
 import com.kanukim97.data.mapper.entityToModelMapper
 import com.kanukim97.database.dao.EatDao
 import com.kanukim97.database.model.CollectionEntity
-import com.kanukim97.domain.entities.PlaceCollection
+import com.kanukim97.domain.entities.RestaurantCollectionItem
 import com.kanukim97.domain.repository.CollectionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -16,7 +16,7 @@ class CollectionRepositoryImpl @Inject constructor(
     private val eatDao: EatDao
 ): CollectionRepository {
 
-    override fun readAllCollections(): Flow<List<PlaceCollection>> = eatDao
+    override fun readAllCollections(): Flow<List<RestaurantCollectionItem>> = eatDao
         .readAllCollections()
         .map { entities ->
             entities.map { entity -> entityToModelMapper(entity) }
@@ -30,7 +30,7 @@ class CollectionRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun readCollection(placeID: String): Flow<PlaceCollection> = eatDao
+    override fun readCollection(placeID: String): Flow<RestaurantCollectionItem> = eatDao
         .readCollection(placeID)
         .map { entity -> entityToModelMapper(entity) }
 

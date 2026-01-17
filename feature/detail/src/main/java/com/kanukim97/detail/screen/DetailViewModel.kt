@@ -9,7 +9,7 @@ import com.kanukim97.detail.screen.state.DetailUiModel
 import com.kanukim97.detail.screen.state.DetailUiState
 import com.kanukim97.detail.screen.state.Review
 import com.kanukim97.domain.repository.CollectionRepository
-import com.kanukim97.domain.usecases.GetPlaceDetailUseCase
+import com.kanukim97.domain.usecases.GetRestaurantInformationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getPlaceDetailUseCase: GetPlaceDetailUseCase,
+    private val getPlaceDetailUseCase: GetRestaurantInformationUseCase,
     private val collectionRepository: CollectionRepository
 ): ViewModel() {
     private val args by lazy { PlaceIdArgs(savedStateHandle) }

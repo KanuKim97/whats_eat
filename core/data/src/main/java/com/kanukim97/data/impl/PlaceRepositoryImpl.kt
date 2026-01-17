@@ -5,24 +5,23 @@ import com.kanukim97.data.exception.InvalidRequestException
 import com.kanukim97.data.exception.QueryLimitException
 import com.kanukim97.data.exception.RequestDeniedException
 import com.kanukim97.data.mapper.toEntity
-import com.kanukim97.domain.entities.DetailPlaceResult
-import com.kanukim97.domain.entities.NearByPlaceResult
-import com.kanukim97.domain.repository.PlaceRepository
+import com.kanukim97.domain.entities.DetailRestaurantInformationResult
+import com.kanukim97.domain.entities.NearByRestaurantResult
+import com.kanukim97.domain.repository.RestaurantRepository
 import com.kanukim97.remote.services.PlaceServices
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class PlaceRepositoryImpl @Inject constructor(
-    private val network: PlaceServices
-): PlaceRepository {
-    override fun getNearByPlace(latLng: String): Flow<List<NearByPlaceResult>> = flow {
+class PlaceRepositoryImpl @Inject constructor(private val network: PlaceServices): RestaurantRepository {
+    override fun getNearByRestaurant(latitude: Double, longitude: Double): Flow<List<NearByRestaurantResult>> = flow {
+        val latLng = "$latitude,$longitude"
         val response = network.getNearbyPlaces(latLng)
 
         when (response.status) {
             "OK" -> {
                 val result = response.results.map { item ->
-                    NearByPlaceResult(
+                    NearByRestaurantResult(
                         id = item.placeId ?: "",
                         name = item.name ?: "",
                         imageUrls = with(item.photos) {
@@ -33,8 +32,7 @@ class PlaceRepositoryImpl @Inject constructor(
                         rating = item.rating,
                         latitude = item.geometry?.location?.lat ?: 0.0,
                         longitude = item.geometry?.location?.lng ?: 0.0,
-                        ref = item.reference,
-                        vicinity = item.vicinity,
+                        reviewCount = item.userRatingsTotal
                     )
                 }
 
@@ -61,7 +59,7 @@ class PlaceRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getPlaceDetail(id: String): Flow<DetailPlaceResult?> = flow {
+    override fun getRestaurantInfo(id: String): Flow<DetailRestaurantInformationResult?> = flow {
         val response = network.getDetails(id)
 
         when (response.status) {

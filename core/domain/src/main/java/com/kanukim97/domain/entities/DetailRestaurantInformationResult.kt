@@ -1,16 +1,16 @@
 package com.kanukim97.domain.entities
 
-data class PlaceDetail(
+data class DetailRestaurantInformationResult(
     val id: String,
     val name: String,
-    val imageUrl: String?,
-    val rating: String,
-    val reviewsCount: Int?,
+    val imageUrls: List<String>,
     val address: String,
     val phoneNumber: String,
+    val rating: Double?,
+    val reviewCount: Int?,
     val latitude: Double,
     val longitude: Double,
-    val isOpenNow: Boolean?,
+    val isOpened: Boolean?,
     val url: String,
-    val review: List<Review> = emptyList()
+    val reviews: List<Review>? = emptyList()
 )

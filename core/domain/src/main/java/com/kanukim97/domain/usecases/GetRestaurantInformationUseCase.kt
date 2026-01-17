@@ -1,19 +1,19 @@
 package com.kanukim97.domain.usecases
 
-import com.kanukim97.domain.entities.PlaceDetail
-import com.kanukim97.domain.repository.PlaceRepository
+import com.kanukim97.domain.entities.RestaurantInformation
+import com.kanukim97.domain.repository.RestaurantRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
-class GetPlaceDetailUseCase @Inject constructor(private val repository: PlaceRepository) {
-    operator fun invoke(id: String): Flow<PlaceDetail?>{
+class GetRestaurantInformationUseCase @Inject constructor(private val repository: RestaurantRepository) {
+    operator fun invoke(id: String): Flow<RestaurantInformation?>{
         return repository
-            .getPlaceDetail(id)
+            .getRestaurantInfo(id)
             .mapNotNull { result ->
                 if (result == null) return@mapNotNull null
 
-                PlaceDetail(
+                RestaurantInformation(
                     id = result.id,
                     name = result.name,
                     imageUrl = result.imageUrls.firstOrNull() ,
